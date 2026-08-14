@@ -395,7 +395,7 @@ document.addEventListener('DOMContentLoaded',function(){
 function doLogin(){
   const email=document.getElementById('loginEmail').value.trim().toLowerCase();
   const pass=document.getElementById('loginPass').value;
-  const ok=(email==='laura.amadop@claro.com.co'||email==='nicolas.santos@claro.com.co'||email==='edespitia@overlap.net.co')&&pass==='1234';
+  const ok=(email==='laura.amadop@claro.com.co'||email==='nicolas.santos@claro.com.co'||email==='edespitia@overlap.net.co'||email==='valentina.campos@claro.com.co')&&pass==='1234';
   if(ok){document.getElementById('loginOverlay').classList.add('hidden');}
   else{document.getElementById('loginErr').style.display='block';setTimeout(function(){document.getElementById('loginErr').style.display='none';},3000);}
 }
