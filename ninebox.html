@@ -1121,7 +1121,31 @@ footer{
 <script src="ficha_data.js?v=des2026"></script>
 <script>
 /* ---------- Data & config ---------- */
-const RAW = JSON.parse(document.getElementById('dataStore').textContent);
+let RAW = JSON.parse(document.getElementById('dataStore').textContent);
+
+// ── CARGADOR SUPABASE ────────────────────────────────────────────
+// Intenta cargar la data viva desde Supabase. Si falla, usa el dataStore embebido.
+const SUPABASE_URL='https://yxxpjttdmwruyeqiuxzu.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4eHBqdHRkbXdydXllcWl1eHp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4MTQyNzUsImV4cCI6MjEwMjM5MDI3NX0.fxQc7o6Qv8Rvd8-PHJF_R-OEME-hbhbPPDnktjiNi9U';
+
+async function loadNineboxSupabase(){
+  try{
+    const hdr={headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY}};
+    const rows=await fetch(SUPABASE_URL+'/rest/v1/ninebox?select=*',hdr).then(r=>r.json());
+    if(!Array.isArray(rows)||!rows.length) throw new Error('sin datos');
+    RAW=rows.map(({updated_at,...r})=>{if(r.caja!==null)r.caja=+r.caja;if(r.nivel_reporte!==null)r.nivel_reporte=+r.nivel_reporte;return r;});
+    document.getElementById('dataStore').textContent=JSON.stringify(RAW);
+    renderTableHead();
+    renderAll();
+    renderOtrosTable();
+    renderStats();
+    renderSuggestions();
+    console.log('Supabase: ninebox vivo cargado,',RAW.length,'participantes');
+  }catch(err){
+    console.warn('Supabase no disponible, usando data embebida',err);
+  }
+}
+loadNineboxSupabase();
 
 // CD members set (global)
 const CD_NAMES = new Set(RAW.filter(d=>norm(d.direccion)===norm('Comité Directivo')).map(d=>d.nombre));

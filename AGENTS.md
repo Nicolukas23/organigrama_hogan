@@ -65,11 +65,25 @@ Si se agrega/quita un usuario, actualizar TODOS los que lo requieran.
   `Resultados Hogan.xlsx`, `Hogan comite directivo.xlsx`.
 
 ### practicantes.html
-- Array embebido en el HTML con todos los practicantes.
+- Array embebido en el HTML con todos los practicantes (fallback).
 - Fuente: `HC Practicantes y Aprendices (1).xlsx`.
 
 ### dimensionamiento.html
 - Data embebida en el HTML.
+
+## Supabase (data viva)
+
+- Proyecto: `organigrama-hogan` (ref `yxxpjttdmwruyeqiuxzu`). Credenciales en `.env`
+  (gitignored). RLS: lectura pública con anon key.
+- Tablas: `personas`, `desempeno`, `talentos`, `objetivos`, `evaluacion_360`, `clima`,
+  `sucesores`, `ninebox`, `practicantes`, `tableros_json` (hogan/index/organigrama).
+- Todos los tableros HTML cargan la data viva desde Supabase con un "cargador" async
+  que hace fetch con la anon key, reconstruye la variable global (RAW/DATA) y re-render.
+  Si Supabase falla, usan la data embebida como fallback.
+- Los cargadores están identificados con el comentario `// ── CARGADOR SUPABASE ──`.
+  IMPORTANTE: cuando edites un tablero, respetar que `let RAW`/`let DATA` y mantener
+  el cargador (no convertirlo a `const` ni borrarlo).
+- La anon key está inline en cada HTML (clave pública, solo lectura).
 
 ## Scripts de mantenimiento
 
@@ -77,6 +91,10 @@ Si se agrega/quita un usuario, actualizar TODOS los que lo requieran.
 - `rebuild_hogan*.js` — regeneran data de Hogan desde Excels.
 - `update_desempeno.js` — actualiza desempeño en ficha.
 - `analizador_hv.py` / `ver_modelos.py` — análisis de hojas de vida / modelos.
+- `sync_supabase.js` — lee los Excels y hace upsert a Supabase (`--tabla=` selectivo).
+  Los tableros que dependen de Supabase reflejan los cambios automáticamente.
+- `sync_tableros.js` — sube a Supabase la data embebida en ninebox/practicantes/hogan/
+  index/organigrama (`--tablero=` selectivo). Necesario tras regenerar esos HTML.
 
 ## Git
 
