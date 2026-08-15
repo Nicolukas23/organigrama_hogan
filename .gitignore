@@ -8,3 +8,4 @@ node_modules/
 *.xlsx
 ~$*
 Practicantes fotos/
+.env
