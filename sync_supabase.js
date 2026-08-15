@@ -80,6 +80,38 @@ function extractPersonas() {
   const info = {};
   // Fuente principal: hoja INFORMACION de Info Ficha Talento 1.xlsx
   const data = readSheet(`${PROYECTOS}/Info Ficha Talento 1.xlsx`, 'INFORMACION');
+  // Fuente secundaria: Planta (nombre, cargo, empresa, region, ciudades)
+  const plantilla = readSheet(`${PROYECTOS}/Planta_de_Personal_Mayo_2026.xlsx`, 'Planta Claro');
+  const plantaMap = {};
+  if (plantilla) {
+    const ph = findHeaderRow(plantilla, 'expediente');
+    if (ph >= 0) {
+      const phd = headersAt(plantilla, ph);
+      const pc = {
+        expediente: phd.findIndex(x => x.includes('expediente') && !x.includes('jefe')),
+        nombre: phd.findIndex(x => x.includes('apellidos y nombres')),
+        cargo: phd.findIndex(x => x.includes('cargo')),
+        empresa: phd.findIndex(x => x.includes('compañia') && !x.includes('directo')),
+        region: phd.findIndex(x => x.includes('region gv')),
+        ciudades: phd.findIndex(x => x.includes('ciudad') && !x.includes('centro')),
+        estado: phd.findIndex(x => x.includes('estado')),
+      };
+      for (let i = ph + 1; i < plantilla.length; i++) {
+        const row = plantilla[i];
+        if (!row || !row[pc.expediente]) continue;
+        const exp = String(row[pc.expediente]).trim();
+        if (!exp || exp === 'undefined') continue;
+        plantaMap[exp] = {
+          nombre: getVal(row, pc.nombre) || '',
+          cargo: getVal(row, pc.cargo) || '',
+          empresa: getVal(row, pc.empresa) || '',
+          region: getVal(row, pc.region) || '',
+          ciudades: getVal(row, pc.ciudades) || '',
+          estado: getVal(row, pc.estado) || '',
+        };
+      }
+    }
+  }
   if (!data) return info;
   const hr = findHeaderRow(data, 'cedula');
   if (hr < 0) return info;
@@ -99,10 +131,15 @@ function extractPersonas() {
     if (!row || !row[c.expediente]) continue;
     const exp = String(row[c.expediente]).trim();
     if (!exp || exp === 'undefined') continue;
+    const pl = plantaMap[exp] || {};
     info[exp] = {
       expediente: exp,
-      nombre: getVal(row, c.nombre) || '',
-      cargo: '',
+      nombre: getVal(row, c.nombre) || pl.nombre || '',
+      cargo: pl.cargo || '',
+      empresa: pl.empresa || '',
+      region: pl.region || '',
+      ciudades: pl.ciudades || '',
+      estado: pl.estado || '',
       direccion_comite: getVal(row, c.direccion_comite) || '',
       area: getVal(row, c.area) || '',
       gerencia: getVal(row, c.gerencia) || '',
