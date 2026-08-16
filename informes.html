@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informes · Ficha de Talento & Hogan — Claro Colombia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{
+  --bg:#12080a;--bg-1:#1a0e10;--panel:#1e1215;--panel-2:#26181b;
+  --border:rgba(255,255,255,.08);--border-soft:rgba(255,255,255,.05);
+  --text:#F4F1EA;--text-dim:#98A2B3;--text-faint:#59626f;
+  --crimson:#E8283F;--crimson-soft:rgba(232,40,63,.14);--gold:#D8AD64;
+  --blue:#0033A0;--green:#059669;--amber:#D97706;
+  --radius:14px;--ease:cubic-bezier(.22,1,.36,1);
+}
+:root.light{
+  --bg:#f5f3f0;--bg-1:#eae7e3;--panel:#ffffff;--panel-2:#f9f7f5;
+  --border:rgba(0,0,0,.08);--border-soft:rgba(0,0,0,.05);
+  --text:#1a1a1a;--text-dim:#6b7280;--text-faint:#9ca3af;
+  --crimson:#dc2626;--crimson-soft:rgba(220,38,38,.1);--gold:#92600a;
+  --blue:#0033A0;--green:#059669;--amber:#D97706;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);
+  min-height:100vh;transition:background .3s var(--ease),color .3s var(--ease);
+}
+::selection{background:var(--crimson);color:#fff}
+
+/* ── LOGIN ─────────────────────────────── */
+.login-overlay{
+  position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(1200px 600px at 20% -10%,var(--crimson-soft),transparent 60%),var(--bg);
+}
+.login-overlay.hidden{display:none}
+.login-box{
+  width:min(92vw,400px);background:var(--panel);border:1px solid var(--border);border-radius:20px;
+  padding:36px 32px;box-shadow:0 30px 80px rgba(0,0,0,.45);
+}
+.login-logo{display:flex;align-items:center;gap:10px;color:var(--crimson);font-weight:800;font-size:15px;letter-spacing:.5px}
+.login-logo svg{filter:drop-shadow(0 0 10px rgba(232,40,63,.5))}
+.login-title{font-size:22px;font-weight:800;margin-top:20px}
+.login-subtitle{color:var(--text-dim);font-size:13px;margin-top:4px;margin-bottom:24px}
+.login-field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.login-field label{font-size:12px;font-weight:600;color:var(--text-dim)}
+.login-field input{
+  background:var(--bg-1);border:1px solid var(--border);border-radius:10px;color:var(--text);
+  padding:11px 14px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;
+}
+.login-field input:focus{border-color:var(--crimson)}
+.login-error{display:none;color:var(--crimson);font-size:12px;margin-bottom:12px;font-weight:600}
+.login-btn{
+  width:100%;padding:13px;border:none;border-radius:10px;background:linear-gradient(135deg,#E8283F,#B01C2E);
+  color:#fff;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;transition:transform .2s var(--ease),box-shadow .2s;
+}
+.login-btn:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(232,40,63,.35)}
+
+/* ── WRAP ──────────────────────────────── */
+.wrap{max-width:1380px;margin:0 auto;padding:24px 28px 60px}
+
+/* Hero */
+.hero{position:relative;padding:26px 28px;border-radius:20px;border:1px solid var(--border);overflow:hidden;margin-bottom:20px;background:linear-gradient(135deg,var(--panel) 0%,var(--panel-2) 100%)}
+.hero::before{content:'';position:absolute;top:-60%;right:-10%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(232,40,63,.18),transparent 60%)}
+.hero-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.eyebrow{color:var(--crimson);font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase}
+.theme-toggle{
+  background:var(--bg-1);border:1px solid var(--border);color:var(--text-dim);border-radius:10px;
+  padding:8px 14px;cursor:pointer;font-family:inherit;font-size:13px;transition:all .2s;
+}
+.theme-toggle:hover{color:var(--crimson);border-color:var(--crimson)}
+.hero h1{font-size:clamp(22px,3vw,32px);font-weight:900;margin-top:8px;letter-spacing:-.5px}
+.hero h1 em{font-style:normal;color:var(--crimson)}
+.hero-sub{color:var(--text-dim);font-size:14px;margin-top:6px;max-width:640px}
+.hero-stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.stat{
+  background:var(--bg-1);border:1px solid var(--border);border-radius:12px;padding:10px 16px;min-width:110px;
+}
+.stat .n{font-size:20px;font-weight:800}
+.stat .l{font-size:11px;color:var(--text-dim);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.stat.badge-ok .n{color:var(--green)}
+.stat.badge-warn .n{color:var(--amber)}
+.stat.badge-crim .n{color:var(--crimson)}
+
+/* Action bar */
+.actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.actions .spacer{flex:1}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;border:none;border-radius:10px;padding:10px 16px;
+  font-family:inherit;font-weight:700;font-size:13px;cursor:pointer;transition:all .2s var(--ease);color:#fff;
+}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
+.btn-dl-ficha{background:linear-gradient(135deg,#0033A0,#002066)}
+.btn-dl-hogan{background:linear-gradient(135deg,#7C3AED,#5B21B6)}
+.btn-bulk{background:var(--bg-1);color:var(--text);border:1px solid var(--border)}
+.btn-bulk:hover{border-color:var(--crimson);color:var(--crimson)}
+.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.btn:active:not(:disabled){transform:translateY(0)}
+
+/* ── FILTERS ───────────────────────────── */
+.filters{
+  background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:18px;margin-bottom:20px;
+}
+.filters-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px}
+.field input,.field select{
+  background:var(--bg-1);border:1px solid var(--border);border-radius:9px;color:var(--text);
+  padding:9px 12px;font-size:13px;font-family:inherit;outline:none;transition:border-color .2s;width:100%;
+}
+.field input:focus,.field select:focus{border-color:var(--crimson)}
+select option{background:var(--panel);color:var(--text)}
+.filters-row2{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
+.checkbox-pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--text-dim);cursor:pointer;user-select:none;background:var(--bg-1);border:1px solid var(--border);border-radius:20px;padding:6px 12px;transition:all .2s}
+.checkbox-pill:hover{border-color:var(--crimson);color:var(--text)}
+.checkbox-pill input{accent-color:var(--crimson)}
+.btn-reset{
+  background:transparent;border:1px solid var(--border);color:var(--text-dim);border-radius:9px;padding:8px 14px;
+  cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;transition:all .2s;
+}
+.btn-reset:hover{color:var(--crimson);border-color:var(--crimson)}
+
+/* Multiselect direccion */
+.multi-wrap{position:relative}
+.multi-trigger{
+  background:var(--bg-1);border:1px solid var(--border);border-radius:9px;color:var(--text);
+  padding:9px 12px;font-size:13px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px;
+}
+.multi-trigger span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-dim)}
+.multi-dd{
+  position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;background:var(--panel-2);border:1px solid var(--border);
+  border-radius:10px;max-height:260px;overflow:auto;display:none;box-shadow:0 20px 50px rgba(0,0,0,.4);
+}
+.multi-dd.open{display:block}
+.multi-dd label{display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:12px;cursor:pointer;color:var(--text)}
+.multi-dd label:hover{background:var(--crimson-soft)}
+.multi-dd input{accent-color:var(--crimson)}
+.multi-dd .dd-actions{display:flex;gap:6px;padding:8px;border-top:1px solid var(--border);position:sticky;bottom:0;background:var(--panel-2)}
+.multi-dd .dd-actions button{flex:1;border:1px solid var(--border);background:transparent;color:var(--text-dim);border-radius:7px;padding:6px;font-family:inherit;font-size:11px;cursor:pointer}
+
+/* ── TABLE ─────────────────────────────── */
+.tbl-wrap{background:var(--panel);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+.tbl-head{
+  display:grid;grid-template-columns:44px 1fr 1.2fr 1.1fr .9fr 120px;gap:12px;padding:12px 18px;
+  font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);align-items:center;
+}
+.tbl-row{
+  display:grid;grid-template-columns:44px 1fr 1.2fr 1.1fr .9fr 120px;gap:12px;padding:14px 18px;align-items:center;
+  border-bottom:1px solid var(--border-soft);transition:background .15s;cursor:pointer;
+}
+.tbl-row:hover{background:var(--crimson-soft)}
+.tbl-row.selected{background:var(--crimson-soft);box-shadow:inset 3px 0 0 var(--crimson)}
+.tbl-row:last-child{border-bottom:none}
+.tbl-row input[type=checkbox]{width:16px;height:16px;accent-color:var(--crimson);cursor:pointer}
+.person{display:flex;align-items:center;gap:12px;min-width:0}
+.avatar{
+  width:38px;height:38px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:13px;color:#fff;background:linear-gradient(135deg,#E8283F,#7A0F1D);
+}
+.avatar.hogan{background:linear-gradient(135deg,#7C3AED,#4C1D95)}
+.p-name{font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p-name .badge{display:inline-block;margin-left:6px;font-size:9px;font-weight:800;padding:2px 6px;border-radius:6px;letter-spacing:.3px;vertical-align:middle}
+.badge-f{background:rgba(0,51,160,.25);color:#7aa2ff}
+.badge-h{background:rgba(124,58,237,.25);color:#c4a5ff}
+.p-cargo{font-size:11px;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p-dir{font-size:11px;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p-jefe{font-size:11px;color:var(--text-faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p-caja{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;font-weight:800;font-size:13px}
+.row-actions{display:flex;gap:6px}
+.mini-btn{
+  border:none;border-radius:8px;padding:7px 10px;font-family:inherit;font-weight:700;font-size:11px;cursor:pointer;color:#fff;transition:transform .15s var(--ease);white-space:nowrap;
+}
+.mini-btn:disabled{opacity:.3;cursor:not-allowed}
+.mini-btn:hover:not(:disabled){transform:translateY(-1px)}
+.mini-f{background:#0033A0}
+.mini-h{background:#7C3AED}
+.mini-pdf{background:var(--crimson)}
+.empty{padding:50px;text-align:center;color:var(--text-dim);font-size:14px}
+.pager{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-top:1px solid var(--border);font-size:13px;color:var(--text-dim)}
+.pager button{background:var(--bg-1);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:7px 14px;cursor:pointer;font-family:inherit;font-weight:600}
+.pager button:disabled{opacity:.3;cursor:not-allowed}
+
+/* ── TOAST ─────────────────────────────── */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);z-index:2000;
+  background:var(--panel-2);border:1px solid var(--border);border-radius:12px;padding:13px 20px;
+  font-size:13px;font-weight:600;display:flex;align-items:center;gap:10px;opacity:0;pointer-events:none;transition:all .3s var(--ease);
+  box-shadow:0 20px 50px rgba(0,0,0,.4);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast .spin{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--crimson);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── LOADING ───────────────────────────── */
+.loading{
+  position:fixed;inset:0;z-index:1500;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+  background:var(--bg);opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.loading.show{opacity:1;pointer-events:auto}
+.loading .ring{width:44px;height:44px;border:3px solid var(--border);border-top-color:var(--crimson);border-radius:50%;animation:spin .8s linear infinite}
+.loading p{color:var(--text-dim);font-size:13px;font-weight:600}
+
+/* ── RESPONSIVE ────────────────────────── */
+@media(max-width:900px){
+  .tbl-head,.tbl-row{grid-template-columns:40px 1fr;gap:8px}
+  .tbl-head>span:nth-child(n+3){display:none}
+  .tbl-row>div:nth-child(n+3){display:none}
+  .hero{padding:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="loading show" id="loading"><div class="ring"></div><p id="loadingText">Cargando data…</p></div>
+
+<!-- LOGIN -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <div class="login-logo">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+      <span>Informes Talento</span>
+    </div>
+    <h2 class="login-title">Iniciar sesión</h2>
+    <p class="login-subtitle">Descarga informes de Ficha de Talento y Hogan</p>
+    <div class="login-field"><label>Correo electrónico</label><input type="email" id="loginEmail" placeholder="usuario@claro.com.co" autocomplete="off"></div>
+    <div class="login-field"><label>Contraseña</label><input type="password" id="loginPass" placeholder="••••"></div>
+    <div class="login-error" id="loginError">Correo o contraseña incorrectos</div>
+    <button class="login-btn" id="loginBtn">Ingresar</button>
+  </div>
+</div>
+
+<div class="wrap" id="mainWrap" style="display:none">
+  <header class="hero">
+    <div class="hero-top">
+      <span class="eyebrow">Planeación de Talento · Centro de Informes</span>
+      <button class="theme-toggle" id="themeToggle" title="Cambiar modo claro/oscuro">☾</button>
+    </div>
+    <h1>Informes de <em>Ficha de Talento</em> &amp; <em>Hogan</em></h1>
+    <p class="hero-sub">Filtra como en el Nine Box y descarga los informes individuales en PDF: la ficha completa de talento o el reporte Hogan de competencias.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="n" id="statTotal">—</div><div class="l">Personas</div></div>
+      <div class="stat badge-ok"><div class="n" id="statFicha">—</div><div class="l">Con ficha</div></div>
+      <div class="stat badge-warn"><div class="n" id="statHogan">—</div><div class="l">Con Hogan</div></div>
+      <div class="stat badge-crim"><div class="n" id="statSel">0</div><div class="l">Seleccionados</div></div>
+    </div>
+  </header>
+
+  <div class="actions">
+    <span style="font-size:13px;color:var(--text-dim);font-weight:600" id="countVisible">— personas</span>
+    <span class="spacer"></span>
+    <button class="btn btn-bulk" id="btnSelAll">Seleccionar visibles</button>
+    <button class="btn btn-dl-ficha" id="btnBulkFicha">⬇ Descargar fichas seleccionadas</button>
+    <button class="btn btn-dl-hogan" id="btnBulkHogan">⬇ Descargar Hogan seleccionados</button>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters">
+    <div class="filters-grid">
+      <div class="field" style="grid-column:span 2">
+        <label>Buscar</label>
+        <input type="text" id="fSearch" placeholder="Nombre o jefe…">
+      </div>
+      <div class="field">
+        <label>Dirección</label>
+        <div class="multi-wrap">
+          <div class="multi-trigger" id="dirTrigger"><span id="dirLabel">Todas</span>▾</div>
+          <div class="multi-dd" id="dirDD">
+            <div style="padding:8px 12px;font-size:12px;font-weight:700;color:var(--text-dim)">Direcciones</div>
+            <div id="dirList"></div>
+            <div class="dd-actions">
+              <button id="dirAll">Todas</button>
+              <button id="dirNone">Ninguna</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field"><label>Región</label><select id="fRegion"><option value="">Todas</option></select></div>
+      <div class="field"><label>Ciudad</label><select id="fCiudad"><option value="">Todas</option></select></div>
+      <div class="field"><label>Gerencia</label><select id="fGerencia"><option value="">Todas</option></select></div>
+      <div class="field"><label>Jefe directo</label><select id="fJefe"><option value="">Todos</option></select></div>
+      <div class="field"><label>Sucesor</label><select id="fSucesor"><option value="">Todos</option><option>Si</option><option>No</option></select></div>
+    </div>
+    <div class="filters-row2">
+      <span style="font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px">Nivel de reporte</span>
+      <label class="checkbox-pill"><input type="checkbox" class="niv" value="1"> N1</label>
+      <label class="checkbox-pill"><input type="checkbox" class="niv" value="2"> N2</label>
+      <label class="checkbox-pill"><input type="checkbox" class="niv" value="3"> N3</label>
+      <span style="width:1px;height:20px;background:var(--border)"></span>
+      <span style="font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px">Caja</span>
+      <label class="checkbox-pill"><input type="checkbox" class="caja" value="4"> C4</label>
+      <label class="checkbox-pill"><input type="checkbox" class="caja" value="5"> C5</label>
+      <label class="checkbox-pill"><input type="checkbox" class="caja" value="6"> C6</label>
+      <label class="checkbox-pill"><input type="checkbox" class="caja" value="7"> C7</label>
+      <label class="checkbox-pill"><input type="checkbox" class="caja" value="8"> C8</label>
+      <label class="checkbox-pill"><input type="checkbox" class="caja" value="9"> C9</label>
+      <span class="spacer"></span>
+      <button class="btn-reset" id="btnReset">✕ Limpiar filtros</button>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="tbl-wrap">
+    <div class="tbl-head">
+      <input type="checkbox" id="checkAll" title="Seleccionar todos los visibles">
+      <span>Persona</span><span>Cargo</span><span>Dirección</span><span>Jefe</span><span>Caja</span><span>Informes</span>
+    </div>
+    <div id="tbody"></div>
+    <div class="pager">
+      <button id="pgPrev">‹ Anterior</button>
+      <span id="pgInfo">—</span>
+      <button id="pgNext">Siguiente ›</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><div class="spin"></div><span id="toastMsg">Procesando…</span></div>
+
+<script src="ficha_data.js?v=des2026"></script>
+<script>
+/* ══════════════════ DATA & CONFIG ══════════════════ */
+const SUPABASE_URL='https://yxxpjttdmwruyeqiuxzu.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4eHBqdHRkbXdydXllcWl1eHp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4MTQyNzUsImV4cCI6MjEwMjM5MDI3NX0.fxQc7o6Qv8Rvd8-PHJF_R-OEME-hbhbPPDnktjiNi9U';
+
+const AUTHORIZED_EMAILS=['laura.amadop@claro.com.co','edespitia@overlap.net.co','nicolas.santos@claro.com.co','angie.rodriguez@claro.com.co','luis.moralesc@claro.com.co','valentina.campos@claro.com.co'];
+const AUTHORIZED_PASS='1234';
+
+let RAW=[];          // ninebox personas (con filtros)
+const CD_DIR='Comité Directivo';
+const PAGE_SIZE=25;
+
+/* normalización */
+function norm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function ini(n){return n.split(' ').filter(w=>w.length>2).slice(0,2).map(w=>w[0]).join('').toUpperCase()||n.slice(0,2).toUpperCase();}
+function uniq(arr){return [...new Set(arr)].filter(Boolean).sort((a,b)=>a.localeCompare(b,'es'));}
+
+/* ── CARGADOR SUPABASE ── */
+// La lista (personas ninebox con filtros) se trae viva de Supabase.
+// Los datos de los informes (ficha + hogan) se leen de ficha_data.js (window.DATA),
+// fuente canónica keyed por expediente. Si Supabase falla, la lista se arma de window.DATA.
+async function loadData(){
+  const show=document.getElementById('loading');
+  const txt=document.getElementById('loadingText');
+  const W=window.DATA||{};
+  try{
+    txt.textContent='Conectando a Supabase…';
+    const hdr={headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY}};
+    const nb=await fetch(SUPABASE_URL+'/rest/v1/ninebox?select=*',hdr).then(r=>r.json());
+    if(!Array.isArray(nb)||!nb.length) throw new Error('sin ninebox');
+    RAW=nb.map(({updated_at,...r})=>{if(r.caja!==null)r.caja=+r.caja;if(r.nivel_reporte!==null)r.nivel_reporte=+r.nivel_reporte;return r;});
+    console.log('Supabase: lista ninebox viva,',RAW.length,'personas');
+  }catch(err){
+    console.warn('Supabase no disponible, lista desde ficha_data.js',err);
+    const informacion=W.informacion||{};
+    RAW=Object.keys(informacion).filter(exp=>informacion[exp].nombre&&informacion[exp].jefe).map(exp=>{
+      const i=informacion[exp];
+      return {expediente:exp,nombre:i.nombre,cargo:i.cargo||'',email:i.email||'',region:i.region||'',direccion:i.direccion_comite||'',direccion_area:i.area||'',gerencia:i.gerencia||'',ciudad:i.ciudades||'',jefe:i.jefe||'',nivel_reporte:0,caja:0,sucesor:''};
+    });
+  }finally{
+    show.classList.remove('show');
+  }
+}
+
+/* Acceso a datos de informes (siempre desde window.DATA / ficha_data.js) */
+function FICHA(exp){
+  const W=window.DATA||{};
+  const p=RAW.find(x=>x.expediente===exp);
+  return {
+    info:W.informacion?.[exp]||{},
+    desempeno:W.desempeno?.[exp]||{},
+    talentos:W.talentos?.[exp]||[],
+    objetivos:W.objetivos?.[exp]||[],
+    tres60:W.tres60?.[exp]||[],
+    clima:W.clima?.[exp]||[],
+    hogan:W.hogan?.[exp]||null,
+    persona:p
+  };
+}
+function hasFicha(exp){const W=window.DATA||{};return !!(W.informacion?.[exp]&&(W.desempeno?.[exp]||W.talentos?.[exp]||W.tres60?.[exp]));}
+
+/* ══════════════════ FILTERS ══════════════════ */
+const state={search:'',direccion:[],gerencia:'',jefe:'',region:'',ciudad:'',sucesor:'',nivelReporte:[],cajas:[],page:1};
+let CD_NAMES=new Set();
+function buildCD(){CD_NAMES=new Set(RAW.filter(d=>norm(d.direccion)===norm(CD_DIR)).map(d=>d.nombre));}
+const DIR_OPTIONS=()=>uniq(RAW.map(d=>d.direccion));
+
+function fillSelect(id,vals,keep){
+  const el=document.getElementById(id);
+  const cur=el.value;
+  el.innerHTML='<option value="">'+(id==='fJefe'?'Todos':id==='fCiudad'?'Todas':'Todas')+'</option>';
+  vals.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;el.appendChild(o);});
+  if(keep&&cur)el.value=cur;
+}
+function buildDirOptions(){
+  const list=document.getElementById('dirList');
+  list.innerHTML='';
+  DIR_OPTIONS().forEach(d=>{
+    const l=document.createElement('label');
+    l.innerHTML='<input type="checkbox" value="'+esc(d)+'"><span>'+esc(d)+'</span>';
+    l.querySelector('input').addEventListener('change',()=>{
+      state.direccion=[...document.querySelectorAll('#dirList input:checked')].map(i=>i.value);
+      state.page=1;render();
+    });
+    list.appendChild(l);
+  });
+  updateDirLabel();
+}
+function updateDirLabel(){
+  const el=document.getElementById('dirLabel');
+  el.textContent=state.direccion.length?state.direccion.length+' seleccionada(s)':'Todas';
+}
+function cascading(){
+  let base=RAW;
+  if(state.direccion.length){
+    const hasCD=state.direccion.some(d=>norm(d)===norm(CD_DIR));
+    if(hasCD&&!state.jefe){
+      base=base.filter(d=>CD_NAMES.has(d.jefe));
+    }else{
+      base=base.filter(d=>state.direccion.some(dd=>norm(dd)===norm(d.direccion)));
+    }
+  }
+  fillSelect('fGerencia',uniq(base.map(d=>d.gerencia)),true);
+  let base2=base;
+  if(state.gerencia)base2=base2.filter(d=>norm(d.gerencia)===norm(state.gerencia));
+  fillSelect('fJefe',uniq(base2.map(d=>d.jefe).filter(j=>norm(j)!==norm('DE GUSMAO RIBEIRO RODRIGO'))),true);
+  let base3=base2;
+  if(state.jefe){
+    const jIsCD=CD_NAMES.has(state.jefe);
+    base3=base3.filter(d=>jIsCD?norm(d.jefe)===norm(state.jefe):norm(d.jefe)===norm(state.jefe)||norm(d.nombre)===norm(state.jefe));
+  }
+  fillSelect('fCiudad',uniq(base3.filter(d=>!state.region||d.region===state.region).map(d=>d.ciudad)),true);
+}
+function applyFilters(){
+  let list=RAW;
+  const q=norm(state.search);
+  if(q){
+    const jefeSet=new Set(list.map(d=>d.nombre));
+    list=list.filter(d=>{
+      const matchJefe=norm(d.jefe).includes(q);
+      const matchName=norm(d.nombre).includes(q);
+      if(matchName&&!matchJefe&&jefeSet.has(d.nombre))return false;
+      return matchJefe||matchName;
+    });
+  }
+  if(state.direccion.length){
+    const hasCD=state.direccion.some(d=>norm(d)===norm(CD_DIR));
+    if(hasCD&&!state.jefe){
+      list=list.filter(d=>CD_NAMES.has(d.jefe));
+    }else if(hasCD&&state.jefe){
+      list=list.filter(d=>norm(d.jefe)===norm(state.jefe));
+    }else{
+      list=list.filter(d=>state.direccion.some(dd=>norm(dd)===norm(d.direccion)));
+    }
+  }
+  if(state.gerencia)list=list.filter(d=>norm(d.gerencia)===norm(state.gerencia));
+  if(state.jefe){
+    const jIsCD=CD_NAMES.has(state.jefe);
+    list=list.filter(d=>jIsCD?norm(d.jefe)===norm(state.jefe):norm(d.jefe)===norm(state.jefe)||norm(d.nombre)===norm(state.jefe));
+  }
+  if(state.region)list=list.filter(d=>d.region===state.region);
+  if(state.ciudad)list=list.filter(d=>d.ciudad===state.ciudad);
+  if(state.sucesor)list=list.filter(d=>(d.sucesor||'').toUpperCase()===state.sucesor.toUpperCase());
+  if(state.nivelReporte.length)list=list.filter(d=>state.nivelReporte.includes(d.nivel_reporte));
+  if(state.cajas.length)list=list.filter(d=>state.cajas.includes(d.caja));
+  return list;
+}
+
+/* ══════════════════ HOGAN MATCH ══════════════════ */
+function findHogan(person){
+  const W=window.DATA||{};
+  const h=W.hogan&&W.hogan[person.expediente];
+  if(h&&((h.competencias||[]).length||(h.hpi&&Object.keys(h.hpi).length)||(h.hds&&Object.keys(h.hds).length)||(h.mvpi&&Object.keys(h.mvpi).length))) return h;
+  return null;
+}
+function hasHogan(person){return !!findHogan(person);}
+
+/* ══════════════════ RENDER ══════════════════ */
+let filtered=[];
+function render(){
+  filtered=applyFilters();
+  const total=filtered.length;
+  const pages=Math.max(1,Math.ceil(total/PAGE_SIZE));
+  if(state.page>pages)state.page=pages;
+  const start=(state.page-1)*PAGE_SIZE;
+  const slice=filtered.slice(start,start+PAGE_SIZE);
+  document.getElementById('statTotal').textContent=total;
+  document.getElementById('statFicha').textContent=filtered.filter(p=>hasFicha(p.expediente)).length;
+  document.getElementById('statHogan').textContent=filtered.filter(hasHogan).length;
+  document.getElementById('countVisible').textContent=total+' persona'+(total===1?'':'s');
+  document.getElementById('pgInfo').textContent='Página '+state.page+' de '+pages+' · '+total+' resultados';
+  document.getElementById('pgPrev').disabled=state.page<=1;
+  document.getElementById('pgNext').disabled=state.page>=pages;
+  const tb=document.getElementById('tbody');
+  if(!slice.length){tb.innerHTML='<div class="empty">Sin resultados con los filtros actuales.</div>';updateSel();return;}
+  tb.innerHTML=slice.map(p=>{
+    const fOk=hasFicha(p.expediente);
+    const h=findHogan(p);
+    const hOk=!!h;
+    const cajaCol=['#47505c','#58626f','#69737f','#9c6a2e','#c99a46','#7fa65e','#1d6e8c','#2f9271','#1e7a4e'][p.caja-1]||'#374151';
+    const sel=selected.has(p.expediente);
+    return '<div class="tbl-row'+(sel?' selected':'')+'" data-exp="'+p.expediente+'">'+
+      '<input type="checkbox" data-cb="'+p.expediente+'"'+(sel?' checked':'')+'>'+
+      '<div class="person">'+
+        '<div class="avatar'+(hOk?' hogan':'')+'">'+ini(p.nombre)+'</div>'+
+        '<div style="min-width:0">'+
+          '<div class="p-name">'+esc(p.nombre)+
+            (fOk?'<span class="badge badge-f">F</span>':'')+
+            (hOk?'<span class="badge badge-h">H</span>':'')+
+          '</div>'+
+          '<div class="p-cargo">'+esc(p.cargo||'—')+'</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="p-dir">'+esc(p.direccion||'—')+'</div>'+
+      '<div class="p-dir">'+esc(p.gerencia||'—')+'</div>'+
+      '<div class="p-jefe">'+esc(p.jefe||'—')+'</div>'+
+      '<div><span class="p-caja" style="background:'+cajaCol+';color:#fff">'+(p.caja||'—')+'</span></div>'+
+      '<div class="row-actions">'+
+        '<button class="mini-btn mini-f" data-dl="ficha" data-exp="'+p.expediente+'"'+(fOk?'':' disabled')+'>Ficha</button>'+
+        '<button class="mini-btn mini-h" data-dl="hogan" data-exp="'+p.expediente+'"'+(hOk?'':' disabled')+'>Hogan</button>'+
+        '<button class="mini-btn mini-pdf" data-dl="both" data-exp="'+p.expediente+'"'+(fOk&&hOk?'':' disabled')+'>PDF</button>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+  updateSel();
+}
+function updateSel(){
+  document.getElementById('statSel').textContent=selected.size;
+  const allVis=document.getElementById('checkAll');
+  allVis.checked=filtered.length>0&&filtered.every(p=>selected.has(p.expediente));
+  allVis.indeterminate=selected.size>0&&!allVis.checked;
+  document.querySelectorAll('[data-cb]').forEach(cb=>{cb.checked=selected.has(cb.dataset.cb);});
+  document.querySelectorAll('.tbl-row').forEach(row=>{row.classList.toggle('selected',selected.has(row.dataset.exp));});
+}
+const selected=new Set();
+
+/* ══════════════════ PDF HELPERS ══════════════════ */
+function toast(msg){const t=document.getElementById('toast');document.getElementById('toastMsg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
+function delay(ms){return new Promise(r=>setTimeout(r,ms));}
+function hexToRgb(hex){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return[r,g,b];}
+
+async function htmlToPdf(el,fileName,scale){
+  try{
+    const canvas=await html2canvas(el,{scale:scale||2,useCORS:true,backgroundColor:'#ffffff',logging:false});
+    const{jsPDF}=window.jspdf;
+    const W=210,H=297;
+    const imgW=canvas.width,imgH=canvas.height;
+    const ratio=imgW/imgH;
+    let pdfW=W,pdfH=W/ratio;
+    const doc=new jsPDF({orientation:pdfH>=pdfW?'portrait':'landscape',unit:'mm',format:'a4'});
+    if(pdfH>H){
+      // multipágina
+      const pageH=H;
+      let remaining=pdfH,offset=0,first=true;
+      while(remaining>0){
+        if(!first)doc.addPage();
+        const sliceH=Math.min(pageH,remaining);
+        const sh=sliceH*pdfW/W;
+        const sy=offset*pdfW/W;
+        doc.addImage(canvas,'PNG',0,-sy,pdfW,imgH*pdfW/imgW);
+        offset+=sliceH;remaining-=sliceH;first=false;
+      }
+    }else{
+      doc.addImage(canvas,'PNG',0,0,pdfW,imgH*pdfW/imgW);
+    }
+    doc.save(fileName);
+    return true;
+  }catch(e){console.error(e);return false;}
+}
+
+/* ══════════════════ FICHA REPORT HTML ══════════════════ */
+function fichaReportHTML(p){
+  const f=FICHA(p.expediente);
+  const info=f.info, d=f.desempeno, tal=f.talentos, obj=f.objetivos, t360=f.tres60, cli=f.clima;
+
+  const toNum=v=>{const n=parseFloat(v);return isNaN(n)?null:n;};
+  const avg=arr=>{const v=arr.map(toNum).filter(x=>x!==null);return v.length?(v.reduce((a,b)=>a+b,0)/v.length).toFixed(2):null;};
+  const total360=avg(t360.flatMap(x=>[x.lider,x.propio,x.reporte,x.par]));
+
+  const dRows=[[d.y2024,'2024','#dc2626'],[d.y2025,'2025','#059669'],[d.y2026,'2026','#d97706']].filter(x=>x[0]!=null);
+  const maxD=Math.max(...dRows.map(x=>+x[0]),1);
+  const dBar=dRows.map(x=>{
+    const pct=Math.round((x[0]/maxD)*100);
+    return '<div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1">'+
+      '<div style="font-size:13px;font-weight:800;color:'+x[2]+'">'+Math.round(x[0])+'</div>'+
+      '<div style="height:70px;width:34px;background:#f1f1f1;border-radius:6px;position:relative;overflow:hidden">'+
+        '<div style="position:absolute;bottom:0;left:0;right:0;height:'+pct+'%;background:'+x[2]+'"></div>'+
+      '</div><div style="font-size:11px;color:#666;font-weight:600">'+x[1]+'</div></div>';
+  }).join('');
+
+  const talRows=tal.length?tal.map(t=>{
+    const v=t.score;
+    const col=v>=103?'#059669':v>=100?'#0891b2':'#d97706';
+    return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">'+
+      '<div style="flex:1;font-size:12px;font-weight:600">'+esc(t.talento||'—')+'</div>'+
+      '<div style="width:140px;height:8px;background:#f1f1f1;border-radius:4px;overflow:hidden"><div style="height:100%;width:'+Math.min(100,Math.round((v/110)*100))+'%;background:'+col+'"></div></div>'+
+      '<div style="font-size:12px;font-weight:800;width:28px;text-align:right;color:'+col+'">'+v+'</div></div>';
+  }).join(''):'<div style="font-size:12px;color:#999">Sin datos de talentos.</div>';
+
+  const objRows=obj.slice(0,4).map(o=>'<div style="border-left:3px solid #0033A0;padding:6px 10px;margin-bottom:8px;background:#f8faff;border-radius:0 8px 8px 0"><div style="font-size:10px;font-weight:700;color:#0033A0;text-transform:uppercase">'+esc(o.talento||'')+'</div><div style="font-size:12px;color:#333">'+esc(o.obj||'—')+'</div></div>').join('');
+  const objBlock=obj.length?objRows:'<div style="font-size:12px;color:#999">Sin objetivos registrados.</div>';
+
+  const t360Rows=t360.length?t360.map(x=>{
+    const cell=v=>v!=null?'<span style="font-weight:800;color:'+(v>=4?'#059669':v>=3?'#d97706':'#dc2626')+'">'+v+'</span>':'<span style="color:#ccc">—</span>';
+    return '<tr><td style="padding:6px 8px;border-bottom:1px solid #eee;font-size:12px">'+esc(x.valor||'—')+'</td>'+
+      '<td style="text-align:center;border-bottom:1px solid #eee">'+cell(x.lider)+'</td>'+
+      '<td style="text-align:center;border-bottom:1px solid #eee">'+cell(x.propio)+'</td>'+
+      '<td style="text-align:center;border-bottom:1px solid #eee">'+cell(x.reporte)+'</td>'+
+      '<td style="text-align:center;border-bottom:1px solid #eee">'+cell(x.par)+'</td></tr>';
+  }).join(''):'';
+  const t360Block=t360.length?
+    '<div style="margin-top:14px"><div style="font-size:13px;font-weight:800;color:#111;margin-bottom:6px">Evaluación 360°</div>'+
+    '<table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr style="background:#f6f7f9"><th style="text-align:left;padding:7px 8px">Aspecto evaluado</th><th>Líder</th><th>Propio</th><th>Reporte</th><th>Pares</th></tr></thead><tbody>'+t360Rows+'</tbody></table>'+
+    '<div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap">'+
+      (total360?'<div style="background:#0033A0;color:#fff;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:800">Promedio: '+total360+'</div>':'')+
+      (avg(t360.map(x=>x.propio))?'<div style="background:#f1f1f1;border-radius:8px;padding:8px 14px;font-size:12px"><b>Autopercepción:</b> '+avg(t360.map(x=>x.propio))+'</div>':'')+
+      (avg(t360.map(x=>x.lider))?'<div style="background:#f1f1f1;border-radius:8px;padding:8px 14px;font-size:12px"><b>Líder:</b> '+avg(t360.map(x=>x.lider))+'</div>':'')+
+      (avg(t360.map(x=>x.reporte))?'<div style="background:#f1f1f1;border-radius:8px;padding:8px 14px;font-size:12px"><b>Equipo:</b> '+avg(t360.map(x=>x.reporte))+'</div>':'')+
+    '</div></div>':'<div style="font-size:12px;color:#999">Sin evaluación 360°.</div>';
+
+  const cliRows=cli.length?cli.map(c=>{
+    const pct=Math.round((c.pct||0)*100);
+    const col=pct>=70?'#059669':pct>=50?'#d97706':'#dc2626';
+    return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">'+
+      '<div style="flex:1;font-size:12px;font-weight:600">'+esc(c.dim||'—')+'</div>'+
+      '<div style="width:120px;height:8px;background:#f1f1f1;border-radius:4px;overflow:hidden"><div style="height:100%;width:'+Math.min(100,pct)+'%;background:'+col+'"></div></div>'+
+      '<div style="font-size:12px;font-weight:800;width:40px;text-align:right;color:'+col+'">'+pct+'%</div></div>';
+  }).join(''):'<div style="font-size:12px;color:#999">Sin datos de clima.</div>';
+
+  const meta=[['Cargo',info.cargo||p.cargo],['Región',p.region],['Ciudad',p.ciudad],['Dir. Comité',info.direccion_comite||p.direccion],['Dir. Área',info.direccion_area||p.direccion_area],['Gerencia',info.gerencia||p.gerencia],['Jefe',info.jefe||p.jefe],['Desempeño',p.desempeno],['Potencial',p.potencial]];
+  const metaHtml=meta.filter(m=>m[1]).map(m=>'<div style="flex:1 1 45%;font-size:12px;margin-bottom:6px"><span style="color:#999">'+esc(m[0])+':</span> <b>'+esc(m[1])+'</b></div>').join('');
+
+  return '<div style="width:794px;font-family:Helvetica,Arial,sans-serif;color:#111;background:#fff">'+
+      '<div style="background:linear-gradient(135deg,#0033A0 0%,#001a5c 100%);color:#fff;padding:34px 38px;display:flex;justify-content:space-between;align-items:center">'+
+        '<div><div style="font-size:11px;letter-spacing:2px;font-weight:700;opacity:.8;text-transform:uppercase">Claro Colombia · Planeación de Talento</div>'+
+        '<div style="font-size:26px;font-weight:900;margin-top:6px">'+esc(p.nombre)+'</div>'+
+        '<div style="font-size:14px;opacity:.9;margin-top:4px">'+esc(p.cargo||'')+'</div>'+
+        '<div style="font-size:12px;opacity:.7;margin-top:2px">Ficha de Talento · Expediente '+esc(p.expediente)+'</div></div>'+
+        '<div style="width:72px;height:72px;border-radius:16px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900">'+ini(p.nombre)+'</div>'+
+      '</div>'+
+      '<div style="padding:26px 38px">'+
+        '<div style="display:flex;flex-wrap:wrap;gap:2px 14px">'+metaHtml+'</div>'+
+      '</div>'+
+      '<div style="padding:0 38px">'+
+        (dRows.length?'<div style="margin-bottom:22px"><div style="font-size:13px;font-weight:800;color:#111;margin-bottom:10px">DESEMPEÑO</div><div style="display:flex;gap:16px;background:#fafafa;border:1px solid #eee;border-radius:10px;padding:14px">'+dBar+'</div></div>':'')+
+        '<div style="margin-bottom:22px"><div style="font-size:13px;font-weight:800;color:#111;margin-bottom:10px">TALENTOS / COMPORTAMIENTOS</div>'+talRows+'</div>'+
+        '<div style="margin-bottom:22px"><div style="font-size:13px;font-weight:800;color:#111;margin-bottom:10px">OBJETIVOS DE DESARROLLO</div>'+objBlock+'</div>'+
+        '<div style="margin-bottom:22px"><div style="font-size:13px;font-weight:800;color:#111;margin-bottom:10px">CLIMA</div>'+cliRows+'</div>'+
+        '<div style="margin-bottom:22px">'+t360Block+'</div>'+
+        (p.sucesor&&p.sucesor.toLowerCase()!=='no'?'<div style="margin-top:10px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px 16px"><div style="font-size:12px;font-weight:800;color:#059669;text-transform:uppercase">Sucesor identificado</div><div style="font-size:13px;margin-top:2px">'+esc(p.sucesor)+'</div></div>':'')+
+      '</div>'+
+      '<div style="padding:20px 38px 30px;color:#999;font-size:10px">Generado por Centro de Informes · Data Claro Colombia · '+new Date().toLocaleString('es-CO')+'</div>'+
+    '</div>';
+}
+
+/* ══════════════════ HOGAN REPORT HTML ══════════════════ */
+function hoganReportHTML(p,h){
+  const comps=h.competencias||[];
+  const tipoCol={'Estratégico':'#2563eb','Operación':'#059669','Sólido':'#2563eb','Alta Versatilidad':'#059669','LÍDER ESTRATÉGICO':'#2563eb','LÍDER DE OPERACIÓN':'#059669'}[h.tipo]||'#7C3AED';
+
+  const rows=comps.map(c=>{
+    const v=c.puntaje;
+    if(v==null)return '';
+    const sc=v>=70?'#059669':v>=50?'#d97706':'#dc2626';
+    const scBg=v>=70?'#ecfdf5':v>=50?'#fffbeb':'#fef2f2';
+    const scBd=v>=70?'#a7f3d0':v>=50?'#fde68a':'#fecaca';
+    return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;background:'+scBg+';border:1px solid '+scBd+';border-radius:9px;padding:9px 12px">'+
+      '<div style="flex:1;font-size:12px;font-weight:700">'+esc(c.nombre)+'</div>'+
+      '<div style="width:130px;height:9px;background:rgba(0,0,0,.06);border-radius:5px;overflow:hidden"><div style="height:100%;width:'+Math.min(100,v)+'%;background:'+sc+'"></div></div>'+
+      '<div style="font-size:13px;font-weight:900;width:30px;text-align:right;color:'+sc+'">'+v+'</div></div>';
+  }).join('');
+
+  const bar=(title,color,data)=>{
+    const items=Object.entries(data||{});
+    if(!items.length)return '';
+    return '<div style="flex:1;min-width:220px"><div style="font-size:11px;font-weight:900;color:'+color+';text-transform:uppercase;margin-bottom:8px">'+title+'</div>'+
+      items.map(([k,v])=>{
+        const pct=Math.min(100,v);
+        return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><div style="width:130px;text-align:right;font-size:10px;color:#666;flex-shrink:0">'+esc(k)+'</div>'+
+          '<div style="flex:1;height:10px;background:#f1f1f1;border-radius:4px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:'+color+'"></div></div>'+
+          '<div style="width:24px;font-size:11px;font-weight:700;text-align:right">'+v+'</div></div>';
+      }).join('')+'</div>';
+  };
+
+  const bullets=txt=>{
+    const parts=String(txt||'').split(/•\s*/).map(s=>s.trim()).filter(Boolean);
+    return parts.length?'<div style="font-size:11px;color:#333;line-height:1.7">'+parts.map(p=>'<div style="margin-bottom:3px">• '+esc(p)+'</div>').join('')+'</div>':'';
+  };
+  const hasHpi=!!(h.hpi&&Object.keys(h.hpi).length);
+  const hasHds=!!(h.hds&&Object.keys(h.hds).length);
+  const hasMvpi=!!(h.mvpi&&Object.keys(h.mvpi).length);
+  const hasFort=!!(h.fortalezas&&h.fortalezas.trim());
+  const hasDesc=!!(h.descarriladores&&h.descarriladores.trim());
+  const hasMotiv=!!(h.motivadores&&h.motivadores.trim());
+  const hasFoco=!!(h.foco&&h.foco.trim());
+
+  return '<div style="width:794px;font-family:Helvetica,Arial,sans-serif;color:#111;background:#fff">'+
+      '<div style="background:linear-gradient(135deg,#7C3AED 0%,#4C1D95 100%);color:#fff;padding:34px 38px;display:flex;justify-content:space-between;align-items:center">'+
+        '<div><div style="font-size:11px;letter-spacing:2px;font-weight:700;opacity:.8;text-transform:uppercase">Claro Colombia · Valoración de Potencial</div>'+
+        '<div style="font-size:26px;font-weight:900;margin-top:6px">'+esc(p.nombre)+'</div>'+
+        '<div style="font-size:14px;opacity:.9;margin-top:4px">'+esc(p.cargo||'')+'</div>'+
+        '<div style="font-size:12px;opacity:.7;margin-top:2px">Informe Hogan · Expediente '+esc(p.expediente)+'</div></div>'+
+        '<div style="text-align:right">'+
+          (h.tipo?'<div style="display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:800">'+esc(h.tipo)+'</div>':'')+
+        '</div>'+
+      '</div>'+
+      '<div style="padding:26px 38px">'+
+        '<div style="font-size:13px;font-weight:800;color:#111;margin-bottom:12px">COMPETENCIAS</div>'+
+        rows+
+      '</div>'+
+      '<div style="padding:0 38px 24px;display:flex;gap:20px;flex-wrap:wrap">'+
+        bar('HPI · Fortalezas & Estilo','#a16207',h.hpi)+
+        bar('HDS · Riesgos bajo presión','#b91c1c',h.hds)+
+        bar('MVPI · Motivadores & Valores','#1d4ed8',h.mvpi)+
+      '</div>'+
+      (hasFort||hasDesc||hasMotiv?'<div style="padding:0 38px 24px;display:flex;gap:20px">'+
+        (hasFort?'<div style="flex:1;background:#fef9c3;border:1px solid #fde68a;border-radius:12px;padding:14px 16px"><div style="font-size:11px;font-weight:900;color:#a16207;text-transform:uppercase;margin-bottom:8px">Fortalezas</div>'+bullets(h.fortalezas)+'</div>':'')+
+        (hasDesc?'<div style="flex:1;background:#fee2e2;border:1px solid #fecaca;border-radius:12px;padding:14px 16px"><div style="font-size:11px;font-weight:900;color:#b91c1c;text-transform:uppercase;margin-bottom:8px">Descarriladores</div>'+bullets(h.descarriladores)+'</div>':'')+
+        (hasMotiv?'<div style="flex:1;background:#dbeafe;border:1px solid #bfdbfe;border-radius:12px;padding:14px 16px"><div style="font-size:11px;font-weight:900;color:#1d4ed8;text-transform:uppercase;margin-bottom:8px">Motivadores</div>'+bullets(h.motivadores)+'</div>':'')+
+      '</div>':'')+
+      (hasFoco?'<div style="padding:0 38px 24px"><div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:16px 20px"><div style="font-size:12px;font-weight:900;color:#15803d;text-transform:uppercase;margin-bottom:6px">Foco de desarrollo</div>'+bullets(h.foco)+'</div></div>':'')+
+      '<div style="padding:0 38px 30px;color:#999;font-size:10px">Generado por Centro de Informes · Data Claro Colombia · '+new Date().toLocaleString('es-CO')+'</div>'+
+    '</div>';
+}
+
+/* ══════════════════ DOWNLOADS ══════════════════ */
+async function downloadFicha(p){
+  const html=fichaReportHTML(p);
+  const hidden=document.createElement('div');
+  hidden.style.cssText='position:absolute;left:-9999px;top:0;width:794px;z-index:-1;background:#fff';
+  hidden.innerHTML=html;
+  document.body.appendChild(hidden);
+  const ok=await htmlToPdf(hidden.firstElementChild,'Ficha_Talento_'+p.nombre.replace(/\s+/g,'_')+'.pdf',1.6);
+  document.body.removeChild(hidden);
+  return ok;
+}
+async function downloadHogan(p,h){
+  const html=hoganReportHTML(p,h);
+  const hidden=document.createElement('div');
+  hidden.style.cssText='position:absolute;left:-9999px;top:0;width:794px;z-index:-1;background:#fff';
+  hidden.innerHTML=html;
+  document.body.appendChild(hidden);
+  const ok=await htmlToPdf(hidden.firstElementChild,'Hogan_'+p.nombre.replace(/\s+/g,'_')+'.pdf',1.6);
+  document.body.removeChild(hidden);
+  return ok;
+}
+
+/* ══════════════════ EVENTS ══════════════════ */
+document.getElementById('loginBtn').addEventListener('click',doLogin);
+document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+function doLogin(){
+  const email=document.getElementById('loginEmail').value.trim().toLowerCase();
+  const pass=document.getElementById('loginPass').value;
+  if(!AUTHORIZED_EMAILS.includes(email)||pass!==AUTHORIZED_PASS){
+    document.getElementById('loginError').style.display='block';return;
+  }
+  document.getElementById('loginError').style.display='none';
+  document.getElementById('loginOverlay').classList.add('hidden');
+  document.getElementById('mainWrap').style.display='';
+  render();
+}
+(function(){if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light');})();
+document.getElementById('themeToggle').addEventListener('click',()=>{
+  document.documentElement.classList.toggle('light');
+  localStorage.setItem('theme',document.documentElement.classList.contains('light')?'light':'dark');
+  document.getElementById('themeToggle').textContent=document.documentElement.classList.contains('light')?'☀':'☾';
+});
+
+document.getElementById('fSearch').addEventListener('input',e=>{state.search=e.target.value;state.page=1;render();});
+document.getElementById('fRegion').addEventListener('change',e=>{state.region=e.target.value;state.ciudad='';document.getElementById('fCiudad').value='';state.page=1;render();});
+document.getElementById('fCiudad').addEventListener('change',e=>{state.ciudad=e.target.value;state.page=1;render();});
+document.getElementById('fGerencia').addEventListener('change',e=>{state.gerencia=e.target.value;state.page=1;render();});
+document.getElementById('fJefe').addEventListener('change',e=>{state.jefe=e.target.value;state.page=1;render();});
+document.getElementById('fSucesor').addEventListener('change',e=>{state.sucesor=e.target.value;state.page=1;render();});
+document.querySelectorAll('.niv').forEach(cb=>cb.addEventListener('change',()=>{state.nivelReporte=[...document.querySelectorAll('.niv:checked')].map(c=>+c.value);state.page=1;render();}));
+document.querySelectorAll('.caja').forEach(cb=>cb.addEventListener('change',()=>{state.cajas=[...document.querySelectorAll('.caja:checked')].map(c=>+c.value);state.page=1;render();}));
+document.getElementById('btnReset').addEventListener('click',()=>{
+  Object.assign(state,{search:'',direccion:[],gerencia:'',jefe:'',region:'',ciudad:'',sucesor:'',nivelReporte:[],cajas:[],page:1});
+  document.getElementById('fSearch').value='';
+  document.getElementById('fRegion').value='';
+  document.getElementById('fCiudad').value='';
+  document.getElementById('fGerencia').value='';
+  document.getElementById('fJefe').value='';
+  document.getElementById('fSucesor').value='';
+  document.querySelectorAll('.niv,.caja').forEach(c=>c.checked=false);
+  document.querySelectorAll('#dirList input').forEach(i=>i.checked=false);
+  updateDirLabel();cascading();render();
+});
+
+document.getElementById('dirTrigger').addEventListener('click',e=>{e.stopPropagation();document.getElementById('dirDD').classList.toggle('open');});
+document.getElementById('dirAll').addEventListener('click',()=>{document.querySelectorAll('#dirList input').forEach(i=>{i.checked=true;});state.direccion=DIR_OPTIONS();state.page=1;updateDirLabel();cascading();render();});
+document.getElementById('dirNone').addEventListener('click',()=>{document.querySelectorAll('#dirList input').forEach(i=>{i.checked=false;});state.direccion=[];state.page=1;updateDirLabel();cascading();render();});
+document.addEventListener('click',e=>{if(!e.target.closest('.multi-wrap'))document.getElementById('dirDD').classList.remove('open');});
+
+document.getElementById('checkAll').addEventListener('change',e=>{
+  if(e.target.checked){filtered.forEach(p=>selected.add(p.expediente));}
+  else{filtered.forEach(p=>selected.delete(p.expediente));}
+  updateSel();
+});
+document.getElementById('tbody').addEventListener('change',e=>{
+  if(e.target.matches('[data-cb]')){
+    const exp=e.target.dataset.cb;
+    if(e.target.checked)selected.add(exp);else selected.delete(exp);
+    updateSel();
+  }
+});
+document.getElementById('tbody').addEventListener('click',e=>{
+  const row=e.target.closest('.tbl-row');
+  const dlBtn=e.target.closest('[data-dl]');
+  if(dlBtn){
+    e.stopPropagation();
+    const exp=dlBtn.dataset.exp;
+    const p=RAW.find(x=>x.expediente===exp);
+    if(!p)return;
+    const h=findHogan(p);
+    const type=dlBtn.dataset.dl;
+    const q=async()=>{
+      toast('Generando PDF…');
+      let ok=true;
+      if(type==='ficha'||type==='both'){ok=await downloadFicha(p);}
+      if(ok&&(type==='hogan'||type==='both')&&h){ok=await downloadHogan(p,h);}
+      toast(ok?'PDF descargado ✓':'Error al generar PDF');
+    };
+    q();
+    return;
+  }
+  if(row){
+    const exp=row.dataset.exp;
+    if(selected.has(exp))selected.delete(exp);else selected.add(exp);
+    updateSel();
+  }
+});
+document.getElementById('btnSelAll').addEventListener('click',()=>{
+  filtered.forEach(p=>selected.add(p.expediente));
+  updateSel();
+  toast(selected.size+' personas seleccionadas');
+});
+document.getElementById('btnBulkFicha').addEventListener('click',async()=>{
+  if(!selected.size){toast('Selecciona al menos una persona');return;}
+  toast('Descargando '+selected.size+' fichas…');
+  const list=filtered.filter(p=>selected.has(p.expediente));
+  for(const p of list){
+    try{await downloadFicha(p);}catch(e){console.error(e);}
+  }
+  toast('Fichas descargadas ✓');
+});
+document.getElementById('btnBulkHogan').addEventListener('click',async()=>{
+  if(!selected.size){toast('Selecciona al menos una persona');return;}
+  toast('Descargando '+selected.size+' informes Hogan…');
+  const list=filtered.filter(p=>selected.has(p.expediente)&&findHogan(p));
+  for(const p of list){
+    const h=findHogan(p);
+    try{await downloadHogan(p,h);}catch(e){console.error(e);}
+  }
+  toast('Informes Hogan descargados ✓');
+});
+document.getElementById('pgPrev').addEventListener('click',()=>{if(state.page>1){state.page--;render();}});
+document.getElementById('pgNext').addEventListener('click',()=>{if(state.page<Math.ceil(filtered.length/PAGE_SIZE)){state.page++;render();}});
+
+/* ══════════════════ INIT ══════════════════ */
+async function init(){
+  await loadData();
+  buildCD();
+  buildDirOptions();
+  fillSelect('fRegion',uniq(RAW.map(d=>d.region)));
+  cascading();
+  document.getElementById('themeToggle').textContent=document.documentElement.classList.contains('light')?'☀':'☾';
+  console.log('Informes listo,',RAW.length,'personas');
+}
+init();
+</script>
+</body>
+</html>

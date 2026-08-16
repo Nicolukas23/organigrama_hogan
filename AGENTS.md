@@ -22,6 +22,7 @@ nunca búsquedas globales del directorio.
 | Dimensionamiento | `dimensionamiento.html` | Data embebida | `VALID_EMAILS` (~línea 654) |
 | Practicantes | `practicantes.html` | Data embebida (array en el HTML) | `AUTHORIZED_EMAILS` (~línea 247) |
 | Tablero UMM | `tablero_umm.html` | `window.DATA` embebido | — |
+| Informes | `informes.html` | Lista: Supabase `ninebox` (vivo). Informes: `ficha_data.js` (`window.DATA`: informacion/desempeno/talentos/objetivos/tres60/clima/hogan, keyed por expediente) | `AUTHORIZED_EMAILS` (~línea 328) |
 
 ## Usuarios autorizados (login)
 
