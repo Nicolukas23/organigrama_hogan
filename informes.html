@@ -166,6 +166,7 @@ select option{background:var(--panel);color:var(--text)}
 .p-name .badge{display:inline-block;margin-left:6px;font-size:9px;font-weight:800;padding:2px 6px;border-radius:6px;letter-spacing:.3px;vertical-align:middle}
 .badge-f{background:rgba(0,51,160,.25);color:#7aa2ff}
 .badge-h{background:rgba(124,58,237,.25);color:#c4a5ff}
+.badge-both{background:linear-gradient(135deg,rgba(0,51,160,.35),rgba(124,58,237,.35));color:#fff;font-size:10px;padding:2px 8px}
 .p-cargo{font-size:11px;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .p-dir{font-size:11px;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .p-jefe{font-size:11px;color:var(--text-faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -508,8 +509,9 @@ function render(){
         '<div class="avatar'+(hOk?' hogan':'')+'">'+ini(p.nombre)+'</div>'+
         '<div style="min-width:0">'+
           '<div class="p-name">'+esc(p.nombre)+
-            (fOk?'<span class="badge badge-f">F</span>':'')+
-            (hOk?'<span class="badge badge-h">H</span>':'')+
+            (fOk&&hOk?'<span class="badge badge-both">F+H</span>':
+              fOk?'<span class="badge badge-f">F</span>':
+              hOk?'<span class="badge badge-h">H</span>':'')+
           '</div>'+
           '<div class="p-cargo">'+esc(p.cargo||'—')+'</div>'+
         '</div>'+
