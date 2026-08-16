@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Informes · Ficha de Talento & Hogan — Claro Colombia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -284,6 +287,7 @@ select option{background:var(--panel);color:var(--text)}
       <div class="field"><label>Gerencia</label><select id="fGerencia"><option value="">Todas</option></select></div>
       <div class="field"><label>Jefe directo</label><select id="fJefe"><option value="">Todos</option></select></div>
       <div class="field"><label>Sucesor</label><select id="fSucesor"><option value="">Todos</option><option>Si</option><option>No</option></select></div>
+      <div class="field"><label>Informes</label><select id="fInformes"><option value="">Todos</option><option value="ficha">Ficha</option><option value="hogan">Hogan</option><option value="both">Ambos (F+H)</option></select></div>
     </div>
     <div class="filters-row2">
       <span style="font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px">Nivel de reporte</span>
@@ -384,7 +388,7 @@ function FICHA(exp){
 function hasFicha(exp){const W=window.DATA||{};return !!(W.informacion?.[exp]&&(W.desempeno?.[exp]||W.talentos?.[exp]||W.tres60?.[exp]));}
 
 /* ══════════════════ FILTERS ══════════════════ */
-const state={search:'',direccion:[],gerencia:'',jefe:'',region:'',ciudad:'',sucesor:'',nivelReporte:[],cajas:[],page:1};
+const state={search:'',direccion:[],gerencia:'',jefe:'',region:'',ciudad:'',sucesor:'',informes:'',nivelReporte:[],cajas:[],page:1};
 let CD_NAMES=new Set();
 function buildCD(){CD_NAMES=new Set(RAW.filter(d=>norm(d.direccion)===norm(CD_DIR)).map(d=>d.nombre));}
 const DIR_OPTIONS=()=>uniq(RAW.map(d=>d.direccion));
@@ -465,6 +469,9 @@ function applyFilters(){
   if(state.region)list=list.filter(d=>d.region===state.region);
   if(state.ciudad)list=list.filter(d=>d.ciudad===state.ciudad);
   if(state.sucesor)list=list.filter(d=>(d.sucesor||'').toUpperCase()===state.sucesor.toUpperCase());
+  if(state.informes==='ficha')list=list.filter(d=>hasFicha(d.expediente));
+  else if(state.informes==='hogan')list=list.filter(d=>hasHogan(d));
+  else if(state.informes==='both')list=list.filter(d=>hasFicha(d.expediente)&&hasHogan(d));
   if(state.nivelReporte.length)list=list.filter(d=>state.nivelReporte.includes(d.nivel_reporte));
   if(state.cajas.length)list=list.filter(d=>state.cajas.includes(d.caja));
   return list;
@@ -482,6 +489,19 @@ function hasHogan(person){return !!findHogan(person);}
 /* ══════════════════ RENDER ══════════════════ */
 let filtered=[];
 function render(){
+  const hasStructFilter=state.direccion.length||state.gerencia||state.jefe||state.region||state.ciudad||state.search||state.sucesor||state.informes||state.nivelReporte.length||state.cajas.length;
+  if(!hasStructFilter){
+    filtered=[];
+    document.getElementById('statTotal').textContent='0';
+    document.getElementById('statFicha').textContent='0';
+    document.getElementById('statHogan').textContent='0';
+    document.getElementById('countVisible').textContent='0 personas';
+    document.getElementById('pgInfo').textContent='Página 1 de 1 · 0 resultados';
+    document.getElementById('pgPrev').disabled=true;
+    document.getElementById('pgNext').disabled=true;
+    document.getElementById('tbody').innerHTML='<div class="empty">Selecciona una dirección, gerencia o jefe para ver las personas.</div>';
+    updateSel();return;
+  }
   filtered=applyFilters();
   const total=filtered.length;
   const pages=Math.max(1,Math.ceil(total/PAGE_SIZE));
@@ -1100,16 +1120,18 @@ document.getElementById('fCiudad').addEventListener('change',e=>{state.ciudad=e.
 document.getElementById('fGerencia').addEventListener('change',e=>{state.gerencia=e.target.value;state.page=1;render();});
 document.getElementById('fJefe').addEventListener('change',e=>{state.jefe=e.target.value;state.page=1;render();});
 document.getElementById('fSucesor').addEventListener('change',e=>{state.sucesor=e.target.value;state.page=1;render();});
+document.getElementById('fInformes').addEventListener('change',e=>{state.informes=e.target.value;state.page=1;render();});
 document.querySelectorAll('.niv').forEach(cb=>cb.addEventListener('change',()=>{state.nivelReporte=[...document.querySelectorAll('.niv:checked')].map(c=>+c.value);state.page=1;render();}));
 document.querySelectorAll('.caja').forEach(cb=>cb.addEventListener('change',()=>{state.cajas=[...document.querySelectorAll('.caja:checked')].map(c=>+c.value);state.page=1;render();}));
 document.getElementById('btnReset').addEventListener('click',()=>{
-  Object.assign(state,{search:'',direccion:[],gerencia:'',jefe:'',region:'',ciudad:'',sucesor:'',nivelReporte:[],cajas:[],page:1});
+  Object.assign(state,{search:'',direccion:[],gerencia:'',jefe:'',region:'',ciudad:'',sucesor:'',informes:'',nivelReporte:[],cajas:[],page:1});
   document.getElementById('fSearch').value='';
   document.getElementById('fRegion').value='';
   document.getElementById('fCiudad').value='';
   document.getElementById('fGerencia').value='';
   document.getElementById('fJefe').value='';
   document.getElementById('fSucesor').value='';
+  document.getElementById('fInformes').value='';
   document.querySelectorAll('.niv,.caja').forEach(c=>c.checked=false);
   document.querySelectorAll('#dirList input').forEach(i=>i.checked=false);
   updateDirLabel();cascading();render();
