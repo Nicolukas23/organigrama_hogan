@@ -95,6 +95,7 @@ body{
 .btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
 .btn-dl-ficha{background:linear-gradient(135deg,#0033A0,#002066)}
 .btn-dl-hogan{background:linear-gradient(135deg,#7C3AED,#5B21B6)}
+.btn-dl-both{background:linear-gradient(135deg,#E8283F,#7A0F1D)}
 .btn-bulk{background:var(--bg-1);color:var(--text);border:1px solid var(--border)}
 .btn-bulk:hover{border-color:var(--crimson);color:var(--crimson)}
 .btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
@@ -177,7 +178,7 @@ select option{background:var(--panel);color:var(--text)}
 .mini-btn:hover:not(:disabled){transform:translateY(-1px)}
 .mini-f{background:#0033A0}
 .mini-h{background:#7C3AED}
-.mini-pdf{background:var(--crimson)}
+.mini-both{background:linear-gradient(135deg,#E8283F,#7A0F1D)}
 .empty{padding:50px;text-align:center;color:var(--text-dim);font-size:14px}
 .pager{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-top:1px solid var(--border);font-size:13px;color:var(--text-dim)}
 .pager button{background:var(--bg-1);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:7px 14px;cursor:pointer;font-family:inherit;font-weight:600}
@@ -240,7 +241,7 @@ select option{background:var(--panel);color:var(--text)}
       <button class="theme-toggle" id="themeToggle" title="Cambiar modo claro/oscuro">☾</button>
     </div>
     <h1>Informes de <em>Ficha de Talento</em> &amp; <em>Hogan</em></h1>
-    <p class="hero-sub">Filtra como en el Nine Box y descarga los informes individuales en PDF: la ficha completa de talento o el reporte Hogan de competencias.</p>
+    <p class="hero-sub">Filtra como en el Nine Box, selecciona personas y descarga en un clic sus dos informes: la Ficha de Talento y el reporte Hogan.</p>
     <div class="hero-stats">
       <div class="stat"><div class="n" id="statTotal">—</div><div class="l">Personas</div></div>
       <div class="stat badge-ok"><div class="n" id="statFicha">—</div><div class="l">Con ficha</div></div>
@@ -253,8 +254,7 @@ select option{background:var(--panel);color:var(--text)}
     <span style="font-size:13px;color:var(--text-dim);font-weight:600" id="countVisible">— personas</span>
     <span class="spacer"></span>
     <button class="btn btn-bulk" id="btnSelAll">Seleccionar visibles</button>
-    <button class="btn btn-dl-ficha" id="btnBulkFicha">⬇ Descargar fichas seleccionadas</button>
-    <button class="btn btn-dl-hogan" id="btnBulkHogan">⬇ Descargar Hogan seleccionados</button>
+    <button class="btn btn-dl-both" id="btnBulkBoth">⬇ Descargar informes seleccionados (Ficha + Hogan)</button>
   </div>
 
   <!-- FILTERS -->
@@ -519,9 +519,7 @@ function render(){
       '<div class="p-jefe">'+esc(p.jefe||'—')+'</div>'+
       '<div><span class="p-caja" style="background:'+cajaCol+';color:#fff">'+(p.caja||'—')+'</span></div>'+
       '<div class="row-actions">'+
-        '<button class="mini-btn mini-f" data-dl="ficha" data-exp="'+p.expediente+'"'+(fOk?'':' disabled')+'>Ficha</button>'+
-        '<button class="mini-btn mini-h" data-dl="hogan" data-exp="'+p.expediente+'"'+(hOk?'':' disabled')+'>Hogan</button>'+
-        '<button class="mini-btn mini-pdf" data-dl="both" data-exp="'+p.expediente+'"'+(fOk&&hOk?'':' disabled')+'>PDF</button>'+
+        '<button class="mini-btn mini-both" data-dl="both" data-exp="'+p.expediente+'"'+(fOk||hOk?'':' disabled')+'>Descargar</button>'+
       '</div>'+
     '</div>';
   }).join('');
@@ -815,14 +813,11 @@ document.getElementById('tbody').addEventListener('click',e=>{
     const exp=dlBtn.dataset.exp;
     const p=RAW.find(x=>x.expediente===exp);
     if(!p)return;
-    const h=findHogan(p);
-    const type=dlBtn.dataset.dl;
     const q=async()=>{
       toast('Generando PDF…');
-      let ok=true;
-      if(type==='ficha'||type==='both'){ok=await downloadFicha(p);}
-      if(ok&&(type==='hogan'||type==='both')&&h){ok=await downloadHogan(p,h);}
-      toast(ok?'PDF descargado ✓':'Error al generar PDF');
+      const r=await downloadPersonBoth(p);
+      const ok=r.some(Boolean);
+      toast(ok?'Informes descargados ✓':'Sin informes disponibles para esta persona');
     };
     q();
     return;
@@ -838,24 +833,25 @@ document.getElementById('btnSelAll').addEventListener('click',()=>{
   updateSel();
   toast(selected.size+' personas seleccionadas');
 });
-document.getElementById('btnBulkFicha').addEventListener('click',async()=>{
+// Descarga ambos informes (Ficha + Hogan) por persona. Para las seleccionadas,
+// genera un PDF por informe disponible; si el navegador lo permite, se descargan juntos.
+async function downloadPersonBoth(p){
+  const results=[];
+  if(hasFicha(p.expediente)){try{results.push(await downloadFicha(p));}catch(e){console.error(e);results.push(false);}}
+  if(hasHogan(p)){try{results.push(await downloadHogan(p,findHogan(p)));}catch(e){console.error(e);results.push(false);}}
+  return results;
+}
+document.getElementById('btnBulkBoth').addEventListener('click',async()=>{
   if(!selected.size){toast('Selecciona al menos una persona');return;}
-  toast('Descargando '+selected.size+' fichas…');
   const list=filtered.filter(p=>selected.has(p.expediente));
+  toast('Generando informes de '+list.length+' persona(s)…');
+  let okTotal=0,fail=0;
   for(const p of list){
-    try{await downloadFicha(p);}catch(e){console.error(e);}
+    const r=await downloadPersonBoth(p);
+    r.forEach(ok=>{if(ok)okTotal++;else fail++;});
+    await delay(250);
   }
-  toast('Fichas descargadas ✓');
-});
-document.getElementById('btnBulkHogan').addEventListener('click',async()=>{
-  if(!selected.size){toast('Selecciona al menos una persona');return;}
-  toast('Descargando '+selected.size+' informes Hogan…');
-  const list=filtered.filter(p=>selected.has(p.expediente)&&findHogan(p));
-  for(const p of list){
-    const h=findHogan(p);
-    try{await downloadHogan(p,h);}catch(e){console.error(e);}
-  }
-  toast('Informes Hogan descargados ✓');
+  toast(fail?'Informes listos ('+okTotal+' generados, '+fail+' sin datos)':'Informes descargados ✓');
 });
 document.getElementById('pgPrev').addEventListener('click',()=>{if(state.page>1){state.page--;render();}});
 document.getElementById('pgNext').addEventListener('click',()=>{if(state.page<Math.ceil(filtered.length/PAGE_SIZE)){state.page++;render();}});
