@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Informes · Ficha de Talento & Hogan — Claro Colombia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
@@ -570,167 +570,485 @@ async function htmlToPdf(el,fileName,scale){
 }
 
 /* ══════════════════ FICHA REPORT HTML ══════════════════ */
-function fichaReportHTML(p){
+const COMP_DESC={"V. Ejecutivo":{"Toma de Decisiones":{"def":"Capacidad para analizar información, evaluar riesgos y oportunidades, Asi como la  toma decisiones oportunas y fundamentadas que contribuyan al logro de los objetivos estratégicos de la organización.","alto":"Toma decisiones de manera estructurada y bien fundamentada, evaluando riesgos, alternativas e impactos de forma rapida.","medio":"Logra equilibrar el análisis y la agilidad, tomando decisiones oportunas con un nivel adecuado de evaluación.","bajo":"Le toma mas tiempo la toma de decisiones, suele  profundizar  en el análisis previo lo que lo demora en llevarlo a la acción.","dominio":"LIDERAZGO"},"Liderar a otros":{"def":"Capacidad para inspirar, orientar y movilizar a las personas hacia el logro de objetivos comunes, desarrollando equipos de alto desempeño y promoviendo una cultura alineada con la estrategia organizacional.","alto":"Demuestra una capacidad consistente para movilizar, orientar y generar compromiso en las personas hacia los objetivos organizacionales.","medio":"Lidera efectivamente cuando la situación lo requiere, manteniendo un balance entre la orientación a resultados y la gestión de las personas.","bajo":"Tiende a influir más desde su conocimiento o experiencia que desde un rol de liderazgo directo, mostrando menor inclinación a dirigir o movilizar equipos.","dominio":"LIDERAZGO"},"Impulsar el Cambio":{"def":"Capacidad para promover, liderar y facilitar procesos de transformación, adaptándose al entorno y movilizando a otros hacia la adopción efectiva de nuevas formas de trabajo.","alto":"Promueve activamente nuevas iniciativas y busca oportunidades para transformar procesos, prácticas y formas de trabajo.","medio":"Se adapta positivamente a los cambios y participa en iniciativas de transformación cuando identifica beneficios claros.","bajo":"Prefiere contextos estables y predecibles, mostrando una mayor tendencia a mantener prácticas conocidas y probadas.","dominio":"LIDERAZGO"},"Impulsar la Estrategia":{"def":"Capacidad para definir, comunicar y ejecutar una visión de largo plazo, alineando recursos, decisiones e iniciativas con los objetivos estratégicos y las prioridades del negocio.","alto":"Mantiene una visión amplia del negocio, anticipando escenarios futuros y alineando sus acciones con objetivos de largo plazo.","medio":"Comprende la estrategia organizacional y contribuye a su ejecución, combinando perspectivas tácticas y estratégicas.","bajo":"Tiende a enfocarse principalmente en la operación y en los resultados inmediatos, requiriendo apoyo para ampliar su visión de largo plazo.","dominio":"LIDERAZGO"},"Desarrollo de Otros":{"def":"Capacidad para formar y potenciar el aprendizaje y desarrollo de otros. Implica un genuino esfuerzo para fomentar el aprendizaje a largo plazo y/o el desarrollo de otros, más allá de su responsabilidad específica y cotidiana.","alto":"Dedica tiempo y esfuerzo a fortalecer las capacidades de las personas, promoviendo activamente su crecimiento y desarrollo.","medio":"Apoya el desarrollo de otros cuando identifica oportunidades o necesidades específicas dentro del equipo.","bajo":"Tiende a concentrarse en el cumplimiento de objetivos y resultados, brindando menor acompañamiento al crecimiento de los colaboradores.","dominio":"LIDERAZGO"},"Impulsar la Innovación":{"def":"Capacidad para promover y materializar nuevas ideas, enfoques y soluciones que generen valor para la organización, impulsando la mejora continua, la transformación y la adaptación al cambio.","alto":"Busca constantemente nuevas ideas y enfoques, promoviendo soluciones creativas para generar mejoras y valor.","medio":"Mantiene apertura hacia nuevas propuestas, evaluando su viabilidad antes de implementarlas.","bajo":"Prefiere soluciones conocidas y metodologías probadas, priorizando la estabilidad y la eficiencia operativa.","dominio":"NEGOCIOS"},"Escuchar a Otros":{"def":"Capacidad para comprender e integrar diversas perspectivas, necesidades e intereses, fortaleciendo la toma de decisiones y la construcción de relaciones estratégicas.","alto":"Demuestra una alta disposición para comprender perspectivas diversas, fomentando espacios de diálogo y participación.","medio":"Escucha y considera diferentes puntos de vista, integrándolos cuando son relevantes para la situación.","bajo":"Tiende a enfocarse principalmente en los hechos y resultados, pudiendo dedicar menos atención a las necesidades o percepciones de los demás.","dominio":"INTERPERSONAL"},"Influenciar a otros":{"def":"Capacidad para generar compromiso y movilizar a personas, equipos y grupos de interés hacia el logro de objetivos estratégicos mediante credibilidad, visión y comunicación efectiva.","alto":"Logra generar adhesión y compromiso en otros, comunicando sus ideas de manera persuasiva y movilizando acciones.","medio":"Influye a través de argumentos sólidos y relaciones de confianza, adaptando su estilo según la situación.","bajo":"Tiende a influir principalmente desde su conocimiento técnico o experiencia, mostrando menor inclinación a persuadir activamente.","dominio":"INTERPERSONAL"},"Responsabilidad":{"def":"Capacidad para asumir la responsabilidad por las decisiones y resultados de su ámbito de gestión, garantizando el cumplimiento de los objetivos organizacionales y actuando con integridad.","alto":"Asume con compromiso sus obligaciones, mantiene consistencia en el cumplimiento de acuerdos y responde por los resultados obtenidos.","medio":"Cumple adecuadamente con sus compromiso y mantiene un seguimiento razonable de los mismos.","bajo":"Puede mostrar una orientación más flexible frente a normas, procesos o compromisos, requiriendo mayor estructura y seguimiento.","dominio":"INTERPERSONAL"},"Comunicación de Impacto":{"def":"Capacidad para comunicar información estratégica de manera clara, persuasiva y orientada a la toma de decisiones, adaptando el mensaje a diferentes audiencias.","alto":"Comunica sus ideas de manera clara, segura y persuasiva, logrando captar la atención e influir en diferentes audiencias.","medio":"Se comunica efectivamente en la mayoría de situaciones, adaptando su mensaje según el contexto y los interlocutores.","bajo":"Tiende a utilizar un estilo de comunicación más reservado o técnico, requiriendo mayor esfuerzo para generar impacto o visibilidad en sus mensajes.","dominio":"NEGOCIOS"}},"V. Gerente":{"Toma de Decisiones":{"def":"Capacidad para analizar información, evaluar riesgos y oportunidades, Asi como la  toma decisiones oportunas y fundamentadas que contribuyan al logro de los objetivos estratégicos de la organización.","alto":"Toma decisiones de manera estructurada y bien fundamentada, evaluando riesgos, alternativas e impactos de forma rapida.","medio":"Toma decisiones adecuadas, utilizando la información disponible y consultando cuando la situación lo requiere.","bajo":"Tiende a retrasar o escalar decisiones que podría asumir directamente, afectando la oportunidad en la respuesta o la ejecución.","dominio":"LIDERAZGO"},"Construcción de Equipos":{"def":"Capacidad para conformar, fortalecer y desarrollar equipos de trabajo efectivos, promoviendo la colaboración y el cumplimiento de objetivos planteados.","alto":"Fortalece el desempeño del equipo, promueve la colaboración y desarrolla las capacidades de las personas para alcanzar los resultados del área.","medio":"Mantiene un ambiente de trabajo adecuado y facilita la coordinación entre los integrantes del equipo para cumplir los objetivos establecidos.","bajo":"Presenta dificultades para integrar al equipo, generar compromiso o desarrollar las capacidades necesarias para alcanzar los resultados esperados.","dominio":"LIDERAZGO"},"Impulsar la Ejecución":{"def":"Capacidad para asegurar el cumplimiento oportuno y eficiente de las actividades, metas y procesos definidos.","alto":"Asegura el cumplimiento de los planes de trabajo mediante seguimiento constante, priorización efectiva y gestión oportuna de desviaciones.","medio":"Mantiene el avance de las actividades y realiza seguimiento a los compromisos más relevantes para garantizar los resultados esperados.","bajo":"Puede presentar dificultades para dar seguimiento, gestionar prioridades o asegurar el cumplimiento oportuno de los compromisos.","dominio":"LIDERAZGO"},"Delegación":{"def":"Capacidad para asignar tareas y responsabilidades de manera clara, asegurando su adecuada ejecución y seguimiento.","alto":"Asigna responsabilidades de manera clara, empodera a las personas y realiza seguimiento efectivo sin necesidad de intervenir constantemente.","medio":"Distribuye tareas de acuerdo con las capacidades del equipo y realiza seguimiento cuando las situaciones lo requieren.","bajo":"Tiende a centralizar actividades o a realizar un seguimiento insuficiente, limitando la autonomía y efectividad del equipo.","dominio":"LIDERAZGO"},"Visión del Negocio":{"def":"Capacidad para comprender el funcionamiento del negocio y reconocer cómo su rol y sus acciones impactan en los resultados del área y de la organización.","alto":"Comprende cómo las decisiones y resultados de su área impactan los objetivos del negocio, orientando las acciones del equipo hacia la generación de valor.","medio":"Reconoce la relación entre las actividades de su área y los resultados organizacionales, alineando su gestión con las prioridades establecidas.","bajo":"Se enfoca principalmente en la operación de corto plazo, con menor comprensión del impacto de sus decisiones en los resultados del negocio.","dominio":"NEGOCIOS"},"Resolución de Problemas":{"def":"Capacidad para identificar, analizar y dar solución a problemas.","alto":"Identifica oportunamente problemas, analiza sus causas y lidera la implementación de soluciones efectivas para evitar su recurrencia.","medio":"Resuelve los problemas habituales de su gestión y busca apoyo cuando enfrenta situaciones de mayor complejidad.","bajo":"Puede presentar dificultades para identificar causas raíz o implementar soluciones sostenibles ante problemas recurrentes.","dominio":"NEGOCIOS"},"Impulsar la Diversidad":{"def":"Capacidad para promover el respeto por las diferencias individuales y contribuir a un ambiente de trabajo inclusivo.","alto":"Promueve activamente el respeto por las diferencias, fomenta la participación de diversas perspectivas y contribuye a un ambiente inclusivo.","medio":"Mantiene relaciones respetuosas y favorece la participación de los diferentes integrantes del equipo.","bajo":"Puede mostrar dificultades para valorar perspectivas distintas o generar espacios de participación equitativos.","dominio":"INTERPERSONAL"},"Trabajo en Equipo":{"def":"Capacidad para colaborar activamente con otros, compartiendo información y esfuerzos para el logro de objetivos comunes.","alto":"Fomenta la colaboración entre áreas y personas, compartiendo información y recursos para alcanzar objetivos comunes.","medio":"Trabaja de manera colaborativa con otros y contribuye al logro de metas compartidas cuando la situación lo requiere.","bajo":"Tiende a trabajar de manera aislada o a priorizar los objetivos individuales sobre los colectivos.","dominio":"INTERPERSONAL"},"Responsabilidad":{"def":"Capacidad para asumir la responsabilidad por las decisiones y resultados de su ámbito de gestión, garantizando el cumplimiento de los objetivos organizacionales y actuando con integridad.","alto":"Asume la responsabilidad por los resultados de su gestión, cumple sus compromisos y actúa con integridad frente a las decisiones que toma.","medio":"Responde adecuadamente por sus responsabilidades y cumple con los compromisos establecidos en su rol.","bajo":"Puede requerir mayor seguimiento para asegurar el cumplimiento de compromisos o la asunción de responsabilidades frente a los resultados.","dominio":"INTERPERSONAL"},"Manejo de la Ambigüedad":{"def":"Se maneja cómodamente en situaciones turbias e impredecibles.","alto":"Mantiene la efectividad ante cambios, incertidumbre o información incompleta, guiando al equipo en contextos de transformación.","medio":"Se adapta a situaciones cambiantes y mantiene el foco en los resultados aun cuando existen elementos de incertidumbre.","bajo":"Prefiere contextos definidos y puede requerir mayor claridad, estructura o dirección cuando enfrenta escenarios ambiguos.","dominio":"INTERPERSONAL"}}};
+const ABBR={"Toma de Decisiones":"TD","Liderar a otros":"LO","Impulsar el Cambio":"IC","Impulsar la Estrategia":"IE","Desarrollo de Otros":"DO","Impulsar la Innovación":"IN","Escuchar a Otros":"EO","Influenciar a otros":"IF","Responsabilidad":"RE","Comunicación de Impacto":"CI","Construcción de Equipos":"CE","Impulsar la Ejecución":"EJ","Delegación":"DG","Visión del Negocio":"VN","Resolución de Problemas":"RP","Impulsar la Diversidad":"DV","Trabajo en Equipo":"TE","Manejo de la Ambigüedad":"MA"};
+function scol(v){if(v===null||v===undefined)return '#9CA3AF';if(v>=70)return '#059669';if(v>=50)return '#D97706';return '#DC2626';}
+function getCompLevel(score){if(score>=70)return 'alto';if(score>=50)return 'medio';return 'bajo';}
+function getCompDesc(perfil,comp,score){
+  let d=COMP_DESC[perfil]&&COMP_DESC[perfil][comp];
+  if(!d){const alt=perfil==='V. Ejecutivo'?'V. Gerente':'V. Ejecutivo';d=COMP_DESC[alt]&&COMP_DESC[alt][comp];}
+  if(!d)return{text:'',level:getCompLevel(score)};
+  return{text:d[getCompLevel(score)],level:getCompLevel(score)};
+}
+function iniReport(n){return n.split(' ').filter(w=>w.length>2).slice(0,2).map(w=>w[0]).join('').toUpperCase()||n.slice(0,2).toUpperCase();}
+function resolvePhoto(exp){
+  const SUPABASE_STORAGE='https://yxxpjttdmwruyeqiuxzu.supabase.co/storage/v1/object/public/fotos';
+  return new Promise(res=>{
+    const exts=['.png','.jpg','.jpeg'];
+    let i=0;
+    (function tryNext(){
+      if(i>=exts.length){res(null);return;}
+      const url=SUPABASE_STORAGE+'/'+exp+exts[i];
+      fetch(url,{method:'HEAD'}).then(r=>{
+        if(r.ok)res(url);else{i++;tryNext();}
+      }).catch(()=>{i++;tryNext();});
+    })();
+  });
+}
+
+/* Radar 360 canvas (misma geometría que ficha_talento.drawRadar360) */
+function drawRadar360(canvas,data){
+  const ctx=canvas.getContext('2d');
+  canvas.width=700;canvas.height=500;
+  const W=canvas.width,H=canvas.height;
+  const cx=W/2,cy=H/2,R=130;
+  const vals={};
+  data.forEach(d=>{if(d.num)vals[d.num]={val:d,lbl:d.valor};});
+  const keys=Object.keys(vals).sort((a,b)=>Number(a)-Number(b));
+  const n=keys.length;
+  if(n===0)return;
+  ctx.clearRect(0,0,W,H);
+  for(let ring=1;ring<=5;ring++){
+    const r=R*ring/5;
+    ctx.beginPath();
+    for(let i=0;i<=n;i++){
+      const angle=(Math.PI*2/n)*i-Math.PI/2;
+      const x=cx+r*Math.cos(angle),y=cy+r*Math.sin(angle);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.closePath();ctx.strokeStyle='rgba(0,0,0,.1)';ctx.stroke();
+  }
+  ctx.font='9px Inter';ctx.fillStyle='#374151';
+  keys.forEach((k,i)=>{
+    const angle=(Math.PI*2/n)*i-Math.PI/2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+R*Math.cos(angle),cy+R*Math.sin(angle));ctx.strokeStyle='rgba(0,0,0,.06)';ctx.stroke();
+    const lx=cx+(R+25)*Math.cos(angle),ly=cy+(R+25)*Math.sin(angle);
+    ctx.textAlign=Math.cos(angle)>0.1?'left':Math.cos(angle)<-0.1?'right':'center';
+    ctx.textBaseline=Math.sin(angle)>0.1?'top':Math.sin(angle)<-0.1?'bottom':'middle';
+    ctx.fillText(vals[k].lbl,lx,ly);
+  });
+  function drawSet(color,getVal,alpha){
+    ctx.beginPath();
+    for(let i=0;i<=n;i++){
+      const idx=i%n;
+      const angle=(Math.PI*2/n)*idx-Math.PI/2;
+      const v=getVal(vals[keys[idx]].val);
+      const r=R*(v||0)/5;
+      const x=cx+r*Math.cos(angle),y=cy+r*Math.sin(angle);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.closePath();ctx.fillStyle=color.replace('1)',alpha+')');ctx.fill();ctx.strokeStyle=color;ctx.lineWidth=2;ctx.stroke();
+    for(let i=0;i<n;i++){
+      const angle=(Math.PI*2/n)*i-Math.PI/2;
+      const v=getVal(vals[keys[i]].val);
+      const r=R*(v||0)/5;
+      ctx.beginPath();ctx.arc(cx+r*Math.cos(angle),cy+r*Math.sin(angle),3,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();
+    }
+  }
+  drawSet('rgba(233,123,26,1)',d=>d.lider,.06);
+  drawSet('rgba(37,99,235,1)',d=>d.propio,.06);
+  drawSet('rgba(226,24,54,1)',d=>d.reporte,.06);
+  drawSet('rgba(8,145,178,1)',d=>d.par,.06);
+}
+
+/* Radar Hogan canvas (misma geometría que hogan.radarSVG) */
+function drawHoganRadar(canvas,scores,color){
+  const ctx=canvas.getContext('2d');
+  canvas.width=240;canvas.height=240;
+  const size=canvas.width,cx=size/2,cy=size/2,r=size/2-18;
+  const entries=Object.entries(scores||{}).filter(([k,v])=>k!=='Potencial'&&k!=='Potential'&&v!=null);
+  if(entries.length<3)return;
+  const n=entries.length,fs=Math.max(7,Math.min(10,size/12));
+  const angles=entries.map((_,i)=>Math.PI*2*i/n-Math.PI/2);
+  ctx.clearRect(0,0,size,size);
+  const gridColor='#D1D5DB';
+  [.25,.5,.75,1].forEach(p=>{ctx.beginPath();angles.forEach((a,i)=>{const x=cx+r*p*Math.cos(a),y=cy+r*p*Math.sin(a);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});ctx.closePath();ctx.strokeStyle=gridColor;ctx.lineWidth=.6;ctx.stroke();});
+  angles.forEach(a=>{ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));ctx.strokeStyle=gridColor;ctx.lineWidth=.5;ctx.stroke();});
+  const pts=entries.map(([k,v],i)=>({x:cx+r*(v/100)*Math.cos(angles[i]),y:cy+r*(v/100)*Math.sin(angles[i])}));
+  ctx.beginPath();pts.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y));ctx.closePath();
+  ctx.fillStyle=color+'33';ctx.fill();ctx.strokeStyle=color;ctx.lineWidth=1.5;ctx.stroke();
+  pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,2.5,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=.7;ctx.stroke();});
+  ctx.font='bold '+fs+'px Arial';ctx.fillStyle='#374151';ctx.textAlign='center';ctx.textBaseline='middle';
+  entries.forEach(([k,v],i)=>{
+    const a=angles[i],px=cx+r*Math.cos(a),py=cy+r*Math.sin(a),off=10,lx=px+off*Math.cos(a),ly=py+off*Math.sin(a);
+    const align=a>=-.1&&a<=.1?'center':(a>0&&a<Math.PI?'start':'end');
+    ctx.textAlign=align;
+    ctx.fillText(ABBR[k]||k,lx,ly);
+  });
+}
+
+function fichaReportHTML(p,photoUrl){
   const f=FICHA(p.expediente);
   const info=f.info, d=f.desempeno, tal=f.talentos, obj=f.objetivos, t360=f.tres60, cli=f.clima;
+  const W=window.DATA||{};
+  const form=W.formacion&&W.formacion[p.expediente];
+  const comite=W.comite&&W.comite[p.expediente];
+  const CD=['52185300','79947402','80425417','1128466768','85467103','32781111','79516122','80150353','1138186','79577126','79695754','1020751309'];
+  const isCD=CD.includes(p.expediente);
 
   const toNum=v=>{const n=parseFloat(v);return isNaN(n)?null:n;};
   const avg=arr=>{const v=arr.map(toNum).filter(x=>x!==null);return v.length?(v.reduce((a,b)=>a+b,0)/v.length).toFixed(2):null;};
   const total360=avg(t360.flatMap(x=>[x.lider,x.propio,x.reporte,x.par]));
 
-  const dRows=[[d.y2024,'2024','#dc2626'],[d.y2025,'2025','#059669'],[d.y2026,'2026','#d97706']].filter(x=>x[0]!=null);
-  const maxD=Math.max(...dRows.map(x=>+x[0]),1);
-  const dBar=dRows.map(x=>{
-    const pct=Math.round((x[0]/maxD)*100);
-    return '<div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1">'+
-      '<div style="font-size:13px;font-weight:800;color:'+x[2]+'">'+Math.round(x[0])+'</div>'+
-      '<div style="height:70px;width:34px;background:#f1f1f1;border-radius:6px;position:relative;overflow:hidden">'+
-        '<div style="position:absolute;bottom:0;left:0;right:0;height:'+pct+'%;background:'+x[2]+'"></div>'+
-      '</div><div style="font-size:11px;color:#666;font-weight:600">'+x[1]+'</div></div>';
-  }).join('');
+  // meta
+  let edad='—';
+  if(info.fecha_nacimiento){
+    const fnac=new Date(info.fecha_nacimiento);
+    const hoy=new Date();
+    let e=hoy.getFullYear()-fnac.getFullYear();
+    const m=hoy.getMonth()-fnac.getMonth();
+    if(m<0||(m===0&&hoy.getDate()<fnac.getDate()))e--;
+    edad=e+' años';
+  }
+  const rawAntig=info.antiguedad;
+  const matchAntig=typeof rawAntig==='string'?rawAntig.match(/(d+)/):null;
+  const antig=matchAntig?matchAntig[1]+' años':typeof rawAntig==='number'?Math.floor(rawAntig)+' años':(rawAntig||'—');
 
-  const talRows=tal.length?tal.map(t=>{
-    const v=t.score;
-    const col=v>=103?'#059669':v>=100?'#0891b2':'#d97706';
-    return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">'+
-      '<div style="flex:1;font-size:12px;font-weight:600">'+esc(t.talento||'—')+'</div>'+
-      '<div style="width:140px;height:8px;background:#f1f1f1;border-radius:4px;overflow:hidden"><div style="height:100%;width:'+Math.min(100,Math.round((v/110)*100))+'%;background:'+col+'"></div></div>'+
-      '<div style="font-size:12px;font-weight:800;width:28px;text-align:right;color:'+col+'">'+v+'</div></div>';
-  }).join(''):'<div style="font-size:12px;color:#999">Sin datos de talentos.</div>';
+  const meta=[
+    ['Edad',edad],['Cargo',info.cargo||p.cargo],['Dir. Comité',info.direccion_comite||p.direccion],
+    ['Gerencia',info.gerencia||p.gerencia],['Jefe',info.jefe||p.jefe],['Antigüedad',antig]
+  ].filter(m=>m[1]);
+  const metaHtml=meta.map((m,i)=>'<span>'+(i?'<span class="ih-sep">|</span>':'')+'<strong>'+esc(m[0])+':</strong> '+esc(m[1])+'</span>').join('');
 
-  const objRows=obj.slice(0,4).map(o=>'<div style="border-left:3px solid #0033A0;padding:6px 10px;margin-bottom:8px;background:#f8faff;border-radius:0 8px 8px 0"><div style="font-size:10px;font-weight:700;color:#0033A0;text-transform:uppercase">'+esc(o.talento||'')+'</div><div style="font-size:12px;color:#333">'+esc(o.obj||'—')+'</div></div>').join('');
-  const objBlock=obj.length?objRows:'<div style="font-size:12px;color:#999">Sin objetivos registrados.</div>';
+  const photoHtml=photoUrl?'<img src="'+photoUrl+'" alt="'+esc(p.nombre)+'">':'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
 
-  const t360Rows=t360.length?t360.map(x=>{
-    const cell=v=>v!=null?'<span style="font-weight:800;color:'+(v>=4?'#059669':v>=3?'#d97706':'#dc2626')+'">'+v+'</span>':'<span style="color:#ccc">—</span>';
-    return '<tr><td style="padding:6px 8px;border-bottom:1px solid #eee;font-size:12px">'+esc(x.valor||'—')+'</td>'+
-      '<td style="text-align:center;border-bottom:1px solid #eee">'+cell(x.lider)+'</td>'+
-      '<td style="text-align:center;border-bottom:1px solid #eee">'+cell(x.propio)+'</td>'+
-      '<td style="text-align:center;border-bottom:1px solid #eee">'+cell(x.reporte)+'</td>'+
-      '<td style="text-align:center;border-bottom:1px solid #eee">'+cell(x.par)+'</td></tr>';
-  }).join(''):'';
-  const t360Block=t360.length?
-    '<div style="margin-top:14px"><div style="font-size:13px;font-weight:800;color:#111;margin-bottom:6px">Evaluación 360°</div>'+
-    '<table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr style="background:#f6f7f9"><th style="text-align:left;padding:7px 8px">Aspecto evaluado</th><th>Líder</th><th>Propio</th><th>Reporte</th><th>Pares</th></tr></thead><tbody>'+t360Rows+'</tbody></table>'+
-    '<div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap">'+
-      (total360?'<div style="background:#0033A0;color:#fff;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:800">Promedio: '+total360+'</div>':'')+
-      (avg(t360.map(x=>x.propio))?'<div style="background:#f1f1f1;border-radius:8px;padding:8px 14px;font-size:12px"><b>Autopercepción:</b> '+avg(t360.map(x=>x.propio))+'</div>':'')+
-      (avg(t360.map(x=>x.lider))?'<div style="background:#f1f1f1;border-radius:8px;padding:8px 14px;font-size:12px"><b>Líder:</b> '+avg(t360.map(x=>x.lider))+'</div>':'')+
-      (avg(t360.map(x=>x.reporte))?'<div style="background:#f1f1f1;border-radius:8px;padding:8px 14px;font-size:12px"><b>Equipo:</b> '+avg(t360.map(x=>x.reporte))+'</div>':'')+
-    '</div></div>':'<div style="font-size:12px;color:#999">Sin evaluación 360°.</div>';
+  // Experiencia & Formación
+  let expHtml='',formHtml='';
+  if(form){
+    const row=c=>'<tr><td>'+esc(c)+'</td></tr>';
+    const ci=(form.cargos_int&&form.cargos_int.length)?form.cargos_int.map(row).join(''):'<tr><td class="empty-msg">Sin datos</td></tr>';
+    const ce=(form.cargos_ext&&form.cargos_ext.length)?form.cargos_ext.map(row).join(''):'<tr><td class="empty-msg">Sin datos</td></tr>';
+    if(form.cargos_int&&form.cargos_int.length){
+      expHtml='<div class="section-title orange">Experiencia laboral y educación</div><div class="grid-2">'+
+        '<div><div class="sub-title">Experiencia interna</div><table class="data-table"><thead><tr><th>Historial de cargos</th></tr></thead><tbody>'+ci+'</tbody></table></div>'+
+        '<div><div class="sub-title">Experiencia externa</div><table class="data-table"><thead><tr><th>Historial de cargos</th></tr></thead><tbody>'+(form.cargos_ext&&form.cargos_ext.length?ce:'<tr><td class="empty-msg">Sin datos</td></tr>')+'</tbody></table></div></div>';
+    }else if(form.cargos_ext&&form.cargos_ext.length){
+      expHtml='<div class="section-title orange">Experiencia laboral y educación</div><div class="grid-2">'+
+        '<div><div class="sub-title">Experiencia interna</div><table class="data-table"><thead><tr><th>Historial de cargos</th></tr></thead><tbody>'+ci+'</tbody></table></div>'+
+        '<div><div class="sub-title">Experiencia externa</div><table class="data-table"><thead><tr><th>Historial de cargos</th></tr></thead><tbody>'+ce+'</tbody></table></div></div>';
+    }
+    const titulos=(form.titulos||[]).filter(t=>!/^\d+$/.test(String(t).trim()));
+    const formaciones=(form.formaciones||[]).filter(t=>!/^\d+$/.test(String(t).trim()));
+    if(titulos.length||formaciones.length){
+      const chip=t=>'<div style="margin:4px 0;padding:6px 10px;border-radius:6px;font-size:12px;">'+esc(t)+'</div>';
+      formHtml='<div class="section-title blue">Formación</div><div class="formation-grid">'+
+        '<div class="formation-card"><div class="fc-title" style="background:#1e40af;">Formación profesional</div><div class="fc-content">'+(titulos.length?'<div style="background:#f0f4ff;border-radius:8px;padding:4px;">'+titulos.map(t=>chip(t)).join('')+'</div>':'<span style="color:#9ca3af;">Sin datos</span>')+'</div></div>'+
+        '<div class="formation-card"><div class="fc-title" style="background:#e97b1a;">Formación complementaria</div><div class="fc-content">'+(formaciones.length?'<div style="background:#fff7ed;border-radius:8px;padding:4px;">'+formaciones.map(t=>chip(t)).join('')+'</div>':'<span style="color:#9ca3af;">Sin datos</span>')+'</div></div>'+
+        '</div>';
+    }
+  }
 
-  const cliRows=cli.length?cli.map(c=>{
-    const pct=Math.round((c.pct||0)*100);
-    const col=pct>=70?'#059669':pct>=50?'#d97706':'#dc2626';
-    return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">'+
-      '<div style="flex:1;font-size:12px;font-weight:600">'+esc(c.dim||'—')+'</div>'+
-      '<div style="width:120px;height:8px;background:#f1f1f1;border-radius:4px;overflow:hidden"><div style="height:100%;width:'+Math.min(100,pct)+'%;background:'+col+'"></div></div>'+
-      '<div style="font-size:12px;font-weight:800;width:40px;text-align:right;color:'+col+'">'+pct+'%</div></div>';
-  }).join(''):'<div style="font-size:12px;color:#999">Sin datos de clima.</div>';
+  // Desempeño
+  const dVals=[{v:d.y2024,label:'2024',color:'#e21836'},{v:d.y2025,label:'2025',color:'#16a34a'},{v:d.y2026,label:'2026',color:'#e97b1a'}].filter(x=>x.v!=null);
+  const dCard=dVals.length?'<div class="chart-card"><div class="chart-title">Resultados de desempeño</div><div class="bar-chart">'+dVals.map(x=>{
+    const max=Math.max(...dVals.map(y=>+y.v),1);
+    const h=Math.round((+x.v/max)*130);
+    return '<div class="bar-col"><span class="bar-value">'+Math.round(+x.v)+'</span><div class="bar" style="height:'+h+'px;background:'+x.color+';"></div><span class="bar-label">'+x.label+'</span></div>';
+  }).join('')+'</div></div>':'';
 
-  const meta=[['Cargo',info.cargo||p.cargo],['Región',p.region],['Ciudad',p.ciudad],['Dir. Comité',info.direccion_comite||p.direccion],['Dir. Área',info.direccion_area||p.direccion_area],['Gerencia',info.gerencia||p.gerencia],['Jefe',info.jefe||p.jefe],['Desempeño',p.desempeno],['Potencial',p.potencial]];
-  const metaHtml=meta.filter(m=>m[1]).map(m=>'<div style="flex:1 1 45%;font-size:12px;margin-bottom:6px"><span style="color:#999">'+esc(m[0])+':</span> <b>'+esc(m[1])+'</b></div>').join('');
+  // Comportamientos
+  const groups={};
+  tal.forEach(x=>{const name=x.talento||'Sin nombre';if(!groups[name])groups[name]=[];groups[name].push(x.score);});
+  const compCard=Object.keys(groups).length?'<div class="chart-card" style="display:flex;flex-direction:column;"><div class="chart-title">Valoración de comportamientos 2026</div><div style="flex:1;display:flex;flex-direction:column;justify-content:center;">'+Object.entries(groups).map(([name,scores])=>{
+    const av=(scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1);
+    const pct=Math.min(100,Math.round((av/110)*100));
+    const color=av>=103?'#16a34a':av>=100?'#0891b2':'#e97b1a';
+    return '<div class="score-bar-row"><span class="score-bar-label">'+esc(name)+'</span><div class="score-bar-track"><div class="score-bar-fill" style="width:'+pct+'%;background:'+color+';"></div></div><span class="score-bar-val">'+av+'</span></div>';
+  }).join('')+'</div></div>':'';
 
-  return '<div style="width:794px;font-family:Helvetica,Arial,sans-serif;color:#111;background:#fff">'+
-      '<div style="background:linear-gradient(135deg,#0033A0 0%,#001a5c 100%);color:#fff;padding:34px 38px;display:flex;justify-content:space-between;align-items:center">'+
-        '<div><div style="font-size:11px;letter-spacing:2px;font-weight:700;opacity:.8;text-transform:uppercase">Claro Colombia · Planeación de Talento</div>'+
-        '<div style="font-size:26px;font-weight:900;margin-top:6px">'+esc(p.nombre)+'</div>'+
-        '<div style="font-size:14px;opacity:.9;margin-top:4px">'+esc(p.cargo||'')+'</div>'+
-        '<div style="font-size:12px;opacity:.7;margin-top:2px">Ficha de Talento · Expediente '+esc(p.expediente)+'</div></div>'+
-        '<div style="width:72px;height:72px;border-radius:16px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900">'+ini(p.nombre)+'</div>'+
-      '</div>'+
-      '<div style="padding:26px 38px">'+
-        '<div style="display:flex;flex-wrap:wrap;gap:2px 14px">'+metaHtml+'</div>'+
-      '</div>'+
-      '<div style="padding:0 38px">'+
-        (dRows.length?'<div style="margin-bottom:22px"><div style="font-size:13px;font-weight:800;color:#111;margin-bottom:10px">DESEMPEÑO</div><div style="display:flex;gap:16px;background:#fafafa;border:1px solid #eee;border-radius:10px;padding:14px">'+dBar+'</div></div>':'')+
-        '<div style="margin-bottom:22px"><div style="font-size:13px;font-weight:800;color:#111;margin-bottom:10px">TALENTOS / COMPORTAMIENTOS</div>'+talRows+'</div>'+
-        '<div style="margin-bottom:22px"><div style="font-size:13px;font-weight:800;color:#111;margin-bottom:10px">OBJETIVOS DE DESARROLLO</div>'+objBlock+'</div>'+
-        '<div style="margin-bottom:22px"><div style="font-size:13px;font-weight:800;color:#111;margin-bottom:10px">CLIMA</div>'+cliRows+'</div>'+
-        '<div style="margin-bottom:22px">'+t360Block+'</div>'+
-        (p.sucesor&&p.sucesor.toLowerCase()!=='no'?'<div style="margin-top:10px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px 16px"><div style="font-size:12px;font-weight:800;color:#059669;text-transform:uppercase">Sucesor identificado</div><div style="font-size:13px;margin-top:2px">'+esc(p.sucesor)+'</div></div>':'')+
-      '</div>'+
-      '<div style="padding:20px 38px 30px;color:#999;font-size:10px">Generado por Centro de Informes · Data Claro Colombia · '+new Date().toLocaleString('es-CO')+'</div>'+
-    '</div>';
+  // Objetivos
+  const objCard=obj.length?'<div class="chart-card"><div class="chart-title">Objetivos de desarrollo 2026</div>'+obj.slice(0,4).map(o=>'<div class="talent-obj"><div class="to-talent">'+esc(o.talento||'—')+'</div><div class="to-obj" style="text-align:center;">'+esc(o.obj||'—')+'</div></div>').join('')+'</div>':'';
+
+  const cards=[dCard,compCard,objCard].filter(Boolean);
+  const valoracionesHtml=cards.length?'<div class="section-title">Valoraciones</div><div class="grid-3"'+(cards.length===1?' style="display:flex;justify-content:center;gap:12px;"':'')+'>'+cards.join('')+'</div>':'';
+
+  // CD: Desempeño de Desarrollo 1Q
+  let cdHtml='';
+  if(isCD&&comite){
+    cdHtml='<div class="section-title orange">Desempeño de Desarrollo 1Q</div><div class="grid-2" style="margin-bottom:12px;">'+
+      '<div class="chart-card"><div class="chart-title">Resultados de Productividad</div><div style="font-size:20px;font-weight:bold;text-align:center;padding:10px;">'+esc(comite.productividad||'—')+'</div></div>'+
+      '<div class="chart-card"><div class="chart-title">Resultado de Desempeño 1Q</div><div style="font-size:20px;font-weight:bold;text-align:center;padding:10px;">'+esc(comite.desempeno_1q||'—')+'</div></div>'+
+      '</div><div class="chart-card"><div class="chart-title">Objetivo PDI</div><div style="font-size:12px;line-height:1.6;padding:10px;white-space:pre-wrap;">'+esc(comite.objetivo_pdi||'—')+'</div></div>';
+  }
+
+  // 360
+  const pill=(label,val,cls)=>'<div class="score-pill '+cls+'"><div class="sp-label">'+label+'</div><div class="sp-value">'+(val||'—')+'</div></div>';
+  const s360=t360.length?'<div class="section-title blue">Valoración 360°</div><div class="scores-row">'+
+    pill('Resultado 360°',total360,'total')+
+    pill('Autoevaluación',avg(t360.map(x=>x.propio)),'auto')+
+    pill('Líder',avg(t360.map(x=>x.lider)),'lider')+
+    pill('Equipo',avg(t360.map(x=>x.reporte)),'equipo')+
+    pill('Pares',avg(t360.map(x=>x.par)),'pares')+
+    '</div><div class="chart-card"><canvas id="reportRadar360" width="700" height="500"></canvas></div>':'';
+
+  // Clima
+  const cliValid=cli.filter(x=>x.dim&&x.pct!=null&&x.pct>0);
+  const cliDims={};cliValid.forEach(x=>{cliDims[x.dim]=x.pct;});
+  const cliEntries=Object.entries(cliDims).sort((a,b)=>b[1]-a[1]);
+  const cliAvg=cliEntries.length?Math.round(cliEntries.reduce((s,e)=>s+e[1],0)/cliEntries.length*100):null;
+  const getClimaColor=v=>{if(v>=70)return '#16a34a';if(v>=40)return '#e97b1a';return '#e21836';};
+  const shortNames={'Objetivos Y Procesos Organizacionales':'Obj. Procesos','Desarrollo Profesional Y Capacitacion':'Des. Profesional','Orientación Al Servicio':'Orient. Servicio','Satisfaccion Y Compromiso Organizacional':'Satisfacción','Orientación A Resultados Y Logro De Objetivos':'Orient. Resultados','Trabajo En Equipo':'Trabajo Equipo','Cultura, Equidad Y Código De Ética':'Cultura Y Ética','Comunicación Organizacional':'Comunicación','Administración De Recursos':'Adm. Recursos'};
+  const climaHtml=cliEntries.length?'<div class="section-title blue">Clima organizacional</div>'+
+    '<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;"><span style="font-size:13px;font-weight:700;color:#1a1d23;">Resultado general:</span><span style="font-family:Space Grotesk,sans-serif;font-size:22px;font-weight:800;color:'+getClimaColor(cliAvg)+';">'+cliAvg+'%</span></div>'+
+    '<div class="chart-card"><div class="bar-chart" style="height:260px;flex-wrap:wrap;">'+cliEntries.map(e=>{
+      const h=Math.round(e[1]*170);
+      const pct=Math.round(e[1]*100);
+      return '<div class="bar-col"><span class="bar-value">'+pct+'%</span><div class="bar" style="height:'+h+'px;background:'+getClimaColor(pct)+';width:36px;"></div><span class="bar-label" style="font-size:10px;text-align:center;max-width:80px;word-wrap:break-word;">'+esc(shortNames[e[0]]||e[0])+'</span></div>';
+    }).join('')+'</div></div>':'';
+
+  // Hogan (HPI/HDS/MVPI)
+  const hg=f.hogan;
+  let hoganHtml='';
+  if(hg&&(hg.hpi&&Object.keys(hg.hpi).length||hg.hds&&Object.keys(hg.hds).length||hg.mvpi&&Object.keys(hg.mvpi).length)){
+    const barColor=t=>t==='hpi'?'#eab308':t==='hds'?'#dc2626':'#2563eb';
+    const titleBg=t=>t==='hpi'?'#fef9c3':t==='hds'?'#fee2e2':'#dbeafe';
+    const titleColor=t=>t==='hpi'?'#a16207':t==='hds'?'#b91c1c':'#1d4ed8';
+    const svgIcons={hpi:'<svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>',
+      hds:'<svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>',
+      mvpi:'<svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2z"/></svg>'};
+    const iconBg={hpi:'background:#fef9c3;color:#a16207;',hds:'background:#fee2e2;color:#b91c1c;',mvpi:'background:#dbeafe;color:#1d4ed8;'};
+    const sections=[['COMPETENCIAS / FORTALEZAS & ESTILO',hg.hpi,'hpi'],['HDS – RIESGOS BAJO PRESIÓN',hg.hds,'hds'],['MVPI – MOTIVADORES & VALORES',hg.mvpi,'mvpi']].filter(s=>s[1]&&Object.keys(s[1]).length);
+    function renderBarSection(title,data,type){
+      let html='<div style="background:#fff;border:1px solid #e2e5ea;border-radius:10px;padding:16px 20px;">';
+      html+='<div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;">';
+      html+='<div style="width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;'+iconBg[type]+'">'+svgIcons[type]+'</div>';
+      html+='<div style="font-family:Space Grotesk,sans-serif;font-size:13px;font-weight:700;color:'+titleColor(type)+';text-align:center;">'+title+'</div></div>';
+      Object.entries(data).forEach(([name,val])=>{
+        const pct=Math.min(100,val);
+        html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">';
+        html+='<div style="width:140px;text-align:right;font-size:11px;color:#6b7280;flex-shrink:0;">'+esc(name)+'</div>';
+        html+='<div style="flex:1;height:14px;background:#e2e5ea;border-radius:4px;overflow:hidden;">';
+        html+='<div style="width:'+pct+'%;height:100%;background:'+barColor(type)+';border-radius:4px;"></div></div>';
+        html+='<div style="width:28px;font-size:12px;font-weight:700;color:#1a1d23;text-align:right;">'+val+'</div></div>';
+      });
+      html+='</div>';
+      return html;
+    }
+    const barsHtml=sections.map(s=>renderBarSection(s[0],s[1],s[2])).join('');
+    const bullets=txt=>{
+      if(!txt)return '';
+      let t=String(txt).replace(/\n+/g,' ').replace(/•\s*/g,'•').trim();
+      return t.split('•').map(s=>s.trim()).filter(Boolean).map(p=>'• '+esc(p)).join('\n');
+    };
+    const hasDesc=!!(hg.descarriladores&&hg.descarriladores.trim());
+    const hasMotiv=!!(hg.motivadores&&hg.motivadores.trim());
+    const card=(title,color,bg,body,fallback)=>'<div class="chart-card" style="text-align:left;"><div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:'+color+';padding:6px 16px;background:'+bg+';justify-content:center;border-radius:8px;margin-bottom:10px;">'+title+'</div>'+(body?('<div style="font-size:11px;color:#1a1d23;line-height:1.7;white-space:pre-line;">'+body+'</div>'):('<div style="font-size:11px;color:#9ca3af;font-style:italic;text-align:center;padding:8px;">'+fallback+'</div>'))+'</div>';
+    const svgFort='<svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>';
+    const svgWarn='<svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>';
+    const svgHeart='<svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+    const cardWithIcon=(iconHtml,title,color,bg,body,fallback)=>'<div class="chart-card" style="text-align:left;"><div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:'+color+';padding:6px 16px;background:'+bg+';justify-content:center;border-radius:8px;margin-bottom:10px;">'+iconHtml+title+'</div>'+(body?('<div style="font-size:11px;color:#1a1d23;line-height:1.7;white-space:pre-line;">'+body+'</div>'):('<div style="font-size:11px;color:#9ca3af;font-style:italic;text-align:center;padding:8px;">'+fallback+'</div>'))+'</div>';
+    const textHtml='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:12px;">'+
+      cardWithIcon(svgFort,'FORTALEZAS (HPI)','#a16207','#fef9c3',bullets(hg.fortalezas),'Sin datos')+
+      cardWithIcon(svgWarn,hasDesc?'DESCARRILADORES (HDS)':'OPORTUNIDADES DE DESARROLLO','#b91c1c','#fee2e2',bullets(hasDesc?hg.descarriladores:hg.oportunidades),'Sin datos')+
+      cardWithIcon(svgHeart,'MOTIVADORES (MVPI)','#1d4ed8','#dbeafe',bullets(hasMotiv?hg.motivadores:null),'Sin datos')+
+      '</div>';
+    let focoHtml='';
+    if(hg.foco&&hg.foco.trim()){
+      const topHpi=Object.entries(hg.hpi||{}).sort((a,b)=>b[1]-a[1]).slice(0,3);
+      const hpiLine=topHpi.map(([n,v])=>'<b>'+esc(n)+'</b> '+v).join(' · ');
+      let focoLines='<div style="font-size:12px;color:#a16207;margin-bottom:4px;text-align:center;">HPI Fortalezas: '+hpiLine+'</div>';
+      if(hg.hds){const top=Object.entries(hg.hds).sort((a,b)=>b[1]-a[1]).slice(0,3);focoLines+='<div style="font-size:12px;color:#dc2626;margin-bottom:4px;text-align:center;">HDS Riesgo: '+top.map(([n,v])=>'<b>'+esc(n)+'</b> '+v).join(' · ')+'</div>';}
+      if(hg.mvpi){const top=Object.entries(hg.mvpi).sort((a,b)=>b[1]-a[1]).slice(0,3);focoLines+='<div style="font-size:12px;color:#2563eb;margin-bottom:12px;text-align:center;">MVPI Motivadores: '+top.map(([n,v])=>'<b>'+esc(n)+'</b> '+v).join(' · ')+'</div>';}
+      const items=String(hg.foco).split(/•\s*/).map(s=>s.trim()).filter(Boolean);
+      const focoBullets=items.map(item=>'<div style="display:flex;gap:6px;margin-bottom:4px;font-size:11px;color:#1a1d23;line-height:1.5;"><span style="color:#15803d;flex-shrink:0;">•</span><span>'+esc(item)+'</span></div>').join('');
+      focoHtml='<div style="font-family:Space Grotesk,sans-serif;font-size:14px;font-weight:700;color:#15803d;text-align:center;margin-bottom:10px;">FOCO DE DESARROLLO</div>'+
+        '<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:20px 24px;">'+focoLines+'<div style="margin-top:8px;">'+focoBullets+'</div></div>';
+    }
+    hoganHtml='<div style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:10px;font-family:Space Grotesk,sans-serif;font-size:16px;font-weight:700;color:#fff;background:#dc2626;padding:10px 0;border-radius:8px;margin-top:12px;">Valoración de Comportamientos Hogan'+(hg.tipo?'<span style="padding:2px 12px;border-radius:100px;font-size:11px;font-weight:700;color:#fff;background:'+({'Alta Versatilidad':'#059669','Sólido':'#2563eb','Experto':'#e97b1a','Alto potencial':'#7c3aed'}[hg.tipo]||'rgba(255,255,255,0.25)')+';">'+esc(hg.tipo)+'</span>':'')+'</div>'+
+      '<div style="display:grid;grid-template-columns:'+(sections.length===1?'1fr':sections.length===2?'1fr 1fr':'1fr 1fr 1fr')+';gap:12px;margin-top:12px;">'+barsHtml+'</div>'+
+      textHtml+focoHtml;
+  }
+
+  // Competencias Hogan (Resultados Hogan)
+  let compHoganHtml='';
+  if(hg&&hg.competencias&&hg.competencias.length){
+    const sorted=[...hg.competencias].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
+    const chart='<div style="display:flex;flex-direction:column;gap:6px;">'+sorted.map(c=>{
+      const v=c.puntaje!=null?c.puntaje:c.score;
+      const grad=Array.from({length:11},(_,g)=>'<div style="position:absolute;left:'+(g*10)+'%;top:0;bottom:0;width:1px;background:#e0e0e0;"></div>').join('');
+      return '<div style="display:flex;align-items:center;gap:8px;"><div style="width:170px;text-align:right;font-size:12px;color:#333;font-weight:500;flex-shrink:0;">'+esc(c.nombre)+'</div>'+
+        '<div style="flex:1;position:relative;height:24px;background:#f5f5f5;border:1px solid #ddd;overflow:hidden;">'+grad+
+        '<div style="position:absolute;left:0;top:0;bottom:0;width:'+v+'%;background:#c0392b;"></div>'+
+        '<div style="position:absolute;top:50%;left:'+v+'%;transform:translate(4px,-50%);font-size:11px;font-weight:800;color:#c0392b;white-space:nowrap;">'+v+'</div></div></div>';
+    }).join('')+'</div>';
+    const fortLines=String(hg.fortalezas||'').split('•').map(s=>s.trim()).filter(Boolean);
+    const oportLines=String(hg.oportunidades||'').split('•').map(s=>s.trim()).filter(Boolean);
+    const listBlock=lines=>lines.map(line=>{
+      const match=line.match(/^(.+?)\s*\(\d+\)\s*[—–-]?\s*(.*)$/);
+      return '<div style="padding:8px 0;border-bottom:1px solid #eee;font-size:12px;color:#333;">'+(match?'<span style="font-weight:700;color:#2d5a27;">'+esc(match[1].trim())+'</span>'+(match[2]?' — '+esc(match[2]):''):'• '+esc(line))+'</div>';
+    }).join('');
+    compHoganHtml='<div class="section-title" style="background:#1a1a2e;">Resultados Hogan</div>'+
+      '<div class="chart-card"><div class="chart-title">Perfil de Competencias — Escala 0 a 100</div>'+chart+'</div>'+
+      ((fortLines.length||oportLines.length)?'<div class="grid-2" style="margin-top:12px;">'+
+        (fortLines.length?'<div class="chart-card" style="text-align:left;"><div class="chart-title" style="color:#16a34a;font-weight:700;">Fortalezas</div>'+listBlock(fortLines)+'</div>':'')+
+        (oportLines.length?'<div class="chart-card" style="text-align:left;"><div class="chart-title" style="color:#e97b1a;font-weight:700;">Oportunidades de desarrollo</div>'+listBlock(oportLines)+'</div>':'')+
+      '</div>':'');
+  }
+
+  const style='<style>'+
+    '.fr{width:794px;background:#f4f5f7;font-family:"Inter",sans-serif;color:#1a1d23;}'+
+    '.fr .header{background:#e21836;color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:center;}'+
+    '.fr .header.cd{background:#111;}'+
+    '.fr .header h1{font-family:Space Grotesk,sans-serif;font-size:26px;font-weight:700;margin:0;}'+
+    '.fr .main{padding:24px 28px 40px;}'+
+    '.fr .section-title{background:#e21836;color:#fff;padding:10px 18px;border-radius:8px;font-weight:700;font-size:15px;margin:24px 0 12px;text-align:center;}'+
+    '.fr .section-title.orange{background:#e97b1a;}'+
+    '.fr .section-title.blue{background:#0891b2;}'+
+    '.fr .sub-title{background:#0891b2;color:#fff;padding:8px 14px;border-radius:6px;font-weight:600;font-size:13px;margin:16px 0 8px;}'+
+    '.fr .data-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px;}'+
+    '.fr .data-table th{background:#1a1d23;color:#fff;padding:10px 14px;text-align:left;font-weight:600;font-size:12px;}'+
+    '.fr .data-table td{padding:10px 14px;border-bottom:1px solid #e2e5ea;color:#6b7280;}'+
+    '.fr .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}'+
+    '.fr .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;}'+
+    '.fr .chart-card{background:#fff;border:1px solid #e2e5ea;border-radius:12px;padding:16px;text-align:center;}'+
+    '.fr .chart-card .chart-title{font-size:12px;font-weight:600;color:#6b7280;margin-bottom:12px;}'+
+    '.fr .bar-chart{display:flex;align-items:flex-end;gap:12px;height:170px;justify-content:center;margin:12px 0;overflow:visible;}'+
+    '.fr .bar-col{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;overflow:visible;}'+
+    '.fr .bar{width:50px;border-radius:4px 4px 0 0;flex-shrink:0;}'+
+    '.fr .bar-label{font-size:10px;color:#6b7280;text-align:center;word-wrap:break-word;max-width:80px;line-height:1.2;}'+
+    '.fr .bar-value{font-size:13px;font-weight:700;white-space:nowrap;}'+
+    '.fr .score-bar-row{display:flex;align-items:center;gap:10px;margin:6px 0;}'+
+    '.fr .score-bar-label{font-size:12px;color:#6b7280;min-width:100px;text-align:right;}'+
+    '.fr .score-bar-track{flex:1;height:18px;background:#e5e7eb;border-radius:100px;overflow:hidden;}'+
+    '.fr .score-bar-fill{height:100%;border-radius:100px;}'+
+    '.fr .score-bar-val{font-size:12px;font-weight:700;min-width:40px;}'+
+    '.fr .scores-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0;}'+
+    '.fr .score-pill{text-align:center;padding:12px 8px;border-radius:8px;}'+
+    '.fr .score-pill .sp-label{font-size:11px;font-weight:600;margin-bottom:4px;}'+
+    '.fr .score-pill .sp-value{font-family:Space Grotesk,sans-serif;font-size:24px;font-weight:800;}'+
+    '.fr .score-pill.total{background:#1a1d23;color:#fff;}'+
+    '.fr .score-pill.auto{background:#e97b1a;color:#fff;}'+
+    '.fr .score-pill.lider{background:#e97b1a;color:#fff;}'+
+    '.fr .score-pill.equipo{background:#e21836;color:#fff;}'+
+    '.fr .score-pill.pares{background:#0891b2;color:#fff;}'+
+    '.fr .talent-obj{display:grid;grid-template-columns:110px 1fr;margin:8px 0;border:1px solid #e2e5ea;border-radius:8px;overflow:hidden;}'+
+    '.fr .talent-obj .to-talent{background:#1a1d23;color:#fff;padding:10px 12px;font-size:12px;font-weight:600;}'+
+    '.fr .talent-obj .to-obj{padding:10px 14px;font-size:13px;color:#6b7280;}'+
+    '.fr .formation-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}'+
+    '.fr .formation-card{background:#fff;border:1px solid #e2e5ea;border-radius:12px;padding:14px;}'+
+    '.fr .formation-card .fc-title{color:#fff;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;margin-bottom:8px;text-align:center;}'+
+    '.fr .formation-card .fc-content{font-size:12px;color:#6b7280;line-height:1.5;}'+
+    '.fr .info-header{background:#fff;border:1px solid #e2e5ea;border-radius:12px;padding:20px 28px;margin-bottom:24px;display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.06);}'+
+    '.fr .ih-photo{width:160px;height:160px;border-radius:8px;background:linear-gradient(135deg,#e2e5ea,#c9cdd4);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:3px solid #e21836;overflow:hidden;}'+
+    '.fr .ih-photo svg{width:36px;height:36px;opacity:.45;}'+
+    '.fr .ih-photo img{width:100%;height:100%;border-radius:8px;object-fit:cover;}'+
+    '.fr .ih-text{display:flex;flex-direction:column;gap:6px;flex:1;min-width:200px;}'+
+    '.fr .ih-name{font-family:Space Grotesk,sans-serif;font-size:22px;font-weight:700;color:#1a1d23;letter-spacing:-.02em;}'+
+    '.fr .ih-meta{display:flex;flex-wrap:wrap;gap:4px 8px;font-size:13px;color:#6b7280;align-items:center;}'+
+    '.fr .ih-meta strong{color:#1a1d23;font-weight:600;}'+
+    '.fr .ih-sep{color:#d1d5db;font-weight:300;}'+
+    '.fr .empty-msg{color:#6b7280;font-size:13px;text-align:center;padding:20px;}'+
+    '.fr .chart-card canvas{max-width:100%;}'+
+    '</style>';
+
+  return '<div class="fr">'+style+
+    '<div class="header'+(isCD?' cd':'')+'"><h1>Planeación de Talento · Ficha de Talento</h1></div>'+
+    '<div class="main">'+
+      '<div class="info-header"><div class="ih-photo">'+photoHtml+'</div><div class="ih-text"><span class="ih-name">'+esc(p.nombre)+'</span><div class="ih-meta">'+metaHtml+'</div></div></div>'+
+      expHtml+formHtml+cdHtml+valoracionesHtml+s360+climaHtml+hoganHtml+compHoganHtml+
+      (p.sucesor&&p.sucesor.toLowerCase()!=='no'?'<div style="margin-top:12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px 16px;"><div style="font-size:12px;font-weight:800;color:#059669;text-transform:uppercase;">Sucesor identificado</div><div style="font-size:13px;margin-top:2px;">'+esc(p.sucesor)+'</div></div>':'')+
+    '</div>'+
+    '<div style="padding:16px 38px 24px;color:#9ca3af;font-size:10px;">Generado por Centro de Informes · Data Claro Colombia · '+new Date().toLocaleString('es-CO')+'</div>'+
+  '</div>';
 }
 
 /* ══════════════════ HOGAN REPORT HTML ══════════════════ */
 function hoganReportHTML(p,h){
   const comps=h.competencias||[];
-  const tipoCol={'Estratégico':'#2563eb','Operación':'#059669','Sólido':'#2563eb','Alta Versatilidad':'#059669','LÍDER ESTRATÉGICO':'#2563eb','LÍDER DE OPERACIÓN':'#059669'}[h.tipo]||'#7C3AED';
+  const scores={};
+  comps.forEach(c=>{if(c&&c.nombre!=null)scores[c.nombre]=c.puntaje!=null?c.puntaje:c.score;});
+  const entries=Object.entries(scores).filter(([k])=>k!=='Potencial'&&k!=='Potential');
+  const colHex=entries.length>=3?'#0033A0':'#6B7280';
+  const perfil=h.perfil||'V. Ejecutivo';
+  const jefe=RAW.find(x=>x.expediente===p.expediente&&norm(x.jefe));
+  const metaJefe=p.jefe||'—';
 
-  const rows=comps.map(c=>{
-    const v=c.puntaje;
-    if(v==null)return '';
-    const sc=v>=70?'#059669':v>=50?'#d97706':'#dc2626';
-    const scBg=v>=70?'#ecfdf5':v>=50?'#fffbeb':'#fef2f2';
-    const scBd=v>=70?'#a7f3d0':v>=50?'#fde68a':'#fecaca';
-    return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;background:'+scBg+';border:1px solid '+scBd+';border-radius:9px;padding:9px 12px">'+
-      '<div style="flex:1;font-size:12px;font-weight:700">'+esc(c.nombre)+'</div>'+
-      '<div style="width:130px;height:9px;background:rgba(0,0,0,.06);border-radius:5px;overflow:hidden"><div style="height:100%;width:'+Math.min(100,v)+'%;background:'+sc+'"></div></div>'+
-      '<div style="font-size:13px;font-weight:900;width:30px;text-align:right;color:'+sc+'">'+v+'</div></div>';
+  const grad=(()=>{
+    const v=h.tipo||'';
+    if(v==='Alta Versatilidad')return 'linear-gradient(135deg,#4C1D95 0%,#7C3AED 100%)';
+    if(v==='Media Versatilidad')return 'linear-gradient(135deg,#1E3A5F 0%,#2563EB 100%)';
+    if(v==='Profundidad')return 'linear-gradient(135deg,#78350F 0%,#B45309 100%)';
+    return 'linear-gradient(135deg,#1E3A5F 0%,#2563EB 100%)';
+  })();
+
+  const compCards=entries.map(([k,v])=>{
+    if(v===null||v===undefined)return '';
+    const desc=getCompDesc(perfil,k,v);
+    const bgMap={alto:'#D1FAE5',medio:'#FFEDD5',bajo:'#FEE2E2'};
+    const borderMap={alto:'#A7F3D0',medio:'#FED7AA',bajo:'#FECACA'};
+    const bg=bgMap[desc.level]||'#F9FAFB';
+    const col=scol(v);
+    return '<div style="margin-bottom:6px;padding:7px 9px;border-radius:8px;background:'+bg+';border-left:3px solid '+(borderMap[desc.level]||'#E5E7EB')+';">'+
+      '<div style="font-size:13px;font-weight:700;color:#111;margin-bottom:2px;display:flex;justify-content:space-between;align-items:center;"><span>'+esc(k)+'</span><span style="font-size:12px;font-weight:600;color:'+col+';background:'+bg+';padding:1px 6px;border-radius:4px;border:1px solid '+(borderMap[desc.level]||'#E5E7EB')+';">'+v+'</span></div>'+
+      (desc.text?'<div style="font-size:12px;color:#4B5563;line-height:1.45;">'+esc(desc.text)+'</div>':'')+
+      '</div>';
   }).join('');
 
-  const bar=(title,color,data)=>{
-    const items=Object.entries(data||{});
-    if(!items.length)return '';
-    return '<div style="flex:1;min-width:220px"><div style="font-size:11px;font-weight:900;color:'+color+';text-transform:uppercase;margin-bottom:8px">'+title+'</div>'+
-      items.map(([k,v])=>{
-        const pct=Math.min(100,v);
-        return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><div style="width:130px;text-align:right;font-size:10px;color:#666;flex-shrink:0">'+esc(k)+'</div>'+
-          '<div style="flex:1;height:10px;background:#f1f1f1;border-radius:4px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:'+color+'"></div></div>'+
-          '<div style="width:24px;font-size:11px;font-weight:700;text-align:right">'+v+'</div></div>';
-      }).join('')+'</div>';
-  };
+  const sorted=entries.slice().sort((a,b)=>b[1]-a[1]);
+  const best=sorted.filter(([k,v])=>v>=70).slice(0,3);
+  const weak=sorted.filter(([k,v])=>v<49).slice(0,3);
+  const ins=rows=>rows.map(([k,v])=>{
+    const bg=v>=70?'#D1FAE5':v>=50?'#FFEDD5':'#FEE2E2';
+    const tc=v>=70?'#065F46':v>=50?'#9A3412':'#991B1B';
+    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 10px;margin-bottom:4px;border-radius:6px;background:'+bg+'"><span style="font-size:12px;font-weight:600;color:'+tc+'">* '+esc(k)+'</span><span style="font-size:12px;font-weight:700;color:'+tc+'">'+v+'</span></div>';
+  }).join('');
 
-  const bullets=txt=>{
-    const parts=String(txt||'').split(/•\s*/).map(s=>s.trim()).filter(Boolean);
-    return parts.length?'<div style="font-size:11px;color:#333;line-height:1.7">'+parts.map(p=>'<div style="margin-bottom:3px">• '+esc(p)+'</div>').join('')+'</div>':'';
-  };
-  const hasHpi=!!(h.hpi&&Object.keys(h.hpi).length);
-  const hasHds=!!(h.hds&&Object.keys(h.hds).length);
-  const hasMvpi=!!(h.mvpi&&Object.keys(h.mvpi).length);
-  const hasFort=!!(h.fortalezas&&h.fortalezas.trim());
-  const hasDesc=!!(h.descarriladores&&h.descarriladores.trim());
-  const hasMotiv=!!(h.motivadores&&h.motivadores.trim());
-  const hasFoco=!!(h.foco&&h.foco.trim());
+  const hasHpi=h.hpi&&Object.keys(h.hpi).length;
+  const hasHds=h.hds&&Object.keys(h.hds).length;
+  const hasMvpi=h.mvpi&&Object.keys(h.mvpi).length;
+  const bulletBlock=txt=>String(txt||'').split(/•\s*/).map(s=>s.trim()).filter(Boolean).map(p=>'<div style="margin-bottom:3px">• '+esc(p)+'</div>').join('');
 
-  return '<div style="width:794px;font-family:Helvetica,Arial,sans-serif;color:#111;background:#fff">'+
-      '<div style="background:linear-gradient(135deg,#7C3AED 0%,#4C1D95 100%);color:#fff;padding:34px 38px;display:flex;justify-content:space-between;align-items:center">'+
-        '<div><div style="font-size:11px;letter-spacing:2px;font-weight:700;opacity:.8;text-transform:uppercase">Claro Colombia · Valoración de Potencial</div>'+
-        '<div style="font-size:26px;font-weight:900;margin-top:6px">'+esc(p.nombre)+'</div>'+
-        '<div style="font-size:14px;opacity:.9;margin-top:4px">'+esc(p.cargo||'')+'</div>'+
-        '<div style="font-size:12px;opacity:.7;margin-top:2px">Informe Hogan · Expediente '+esc(p.expediente)+'</div></div>'+
-        '<div style="text-align:right">'+
-          (h.tipo?'<div style="display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:800">'+esc(h.tipo)+'</div>':'')+
+  return '<div style="width:794px;background:#fff;font-family:Inter,Arial,sans-serif;color:#111;border-radius:20px;overflow:hidden;">'+
+    '<div style="padding:20px 24px;background:'+grad+';color:#fff;display:flex;gap:14px;align-items:flex-start;">'+
+      '<div style="width:52px;height:52px;border-radius:13px;background:'+colHex+';display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.2rem;color:#fff;flex-shrink:0;">'+iniReport(p.nombre)+'</div>'+
+      '<div style="flex:1;">'+
+        '<div style="font-size:1.15rem;font-weight:800;letter-spacing:-.02em;line-height:1.2;">'+esc(p.nombre)+'</div>'+
+        '<div style="color:rgba(255,255,255,.65);font-size:.79rem;margin-top:2px;">'+esc(p.cargo||'')+'</div>'+
+        '<div style="color:rgba(255,255,255,.45);font-size:.69rem;margin-top:3px;">Jefe: '+esc(metaJefe)+'</div>'+
+        '<div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">'+
+          (h.tipo?'<div style="background:rgba(255,255,255,.13);padding:7px 13px;border-radius:9px;"><div style="color:#fff;font-size:1.2rem;font-weight:800;line-height:1;">'+esc(h.tipo)+'</div><div style="color:rgba(255,255,255,.55);font-size:.62rem;text-transform:uppercase;letter-spacing:.04em;margin-top:1px;">Tipo</div></div>':'')+
+          (scores.Potencial!=null||scores.Potential!=null?'<div style="background:rgba(255,255,255,.13);padding:7px 13px;border-radius:9px;"><div style="color:#fff;font-size:1.2rem;font-weight:800;line-height:1;">'+(scores.Potencial!=null?scores.Potencial:scores.Potential)+'</div><div style="color:rgba(255,255,255,.55);font-size:.62rem;text-transform:uppercase;letter-spacing:.04em;margin-top:1px;">Potencial</div></div>':'')+
         '</div>'+
       '</div>'+
-      '<div style="padding:26px 38px">'+
-        '<div style="font-size:13px;font-weight:800;color:#111;margin-bottom:12px">COMPETENCIAS</div>'+
-        rows+
+    '</div>'+
+    '<div style="padding:18px 22px;">'+
+      (entries.length>=3?'<div style="display:flex;justify-content:center;margin-bottom:16px;"><canvas id="reportHoganRadar" width="240" height="240"></canvas></div>':'')+
+      '<div style="font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#9CA3AF;margin-bottom:12px;display:flex;align-items:center;gap:6px;"><span style="width:6px;height:6px;border-radius:50%;background:#0033A0;flex-shrink:0;"></span>Competencias</div>'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">'+compCards+'</div>'+
+      '<div style="margin-top:14px;padding-top:12px;border-top:1px solid #E5E7EB;">'+
+        (best.length?'<div style="font-size:.75rem;font-weight:700;color:#059669;margin-bottom:5px;">FORTALEZAS</div>'+ins(best):'')+
+        (weak.length?'<div style="font-size:.75rem;font-weight:700;color:#D97706;margin:10px 0 5px;">OPORTUNIDADES</div>'+ins(weak):'')+
       '</div>'+
-      '<div style="padding:0 38px 24px;display:flex;gap:20px;flex-wrap:wrap">'+
-        bar('HPI · Fortalezas & Estilo','#a16207',h.hpi)+
-        bar('HDS · Riesgos bajo presión','#b91c1c',h.hds)+
-        bar('MVPI · Motivadores & Valores','#1d4ed8',h.mvpi)+
-      '</div>'+
-      (hasFort||hasDesc||hasMotiv?'<div style="padding:0 38px 24px;display:flex;gap:20px">'+
-        (hasFort?'<div style="flex:1;background:#fef9c3;border:1px solid #fde68a;border-radius:12px;padding:14px 16px"><div style="font-size:11px;font-weight:900;color:#a16207;text-transform:uppercase;margin-bottom:8px">Fortalezas</div>'+bullets(h.fortalezas)+'</div>':'')+
-        (hasDesc?'<div style="flex:1;background:#fee2e2;border:1px solid #fecaca;border-radius:12px;padding:14px 16px"><div style="font-size:11px;font-weight:900;color:#b91c1c;text-transform:uppercase;margin-bottom:8px">Descarriladores</div>'+bullets(h.descarriladores)+'</div>':'')+
-        (hasMotiv?'<div style="flex:1;background:#dbeafe;border:1px solid #bfdbfe;border-radius:12px;padding:14px 16px"><div style="font-size:11px;font-weight:900;color:#1d4ed8;text-transform:uppercase;margin-bottom:8px">Motivadores</div>'+bullets(h.motivadores)+'</div>':'')+
-      '</div>':'')+
-      (hasFoco?'<div style="padding:0 38px 24px"><div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:16px 20px"><div style="font-size:12px;font-weight:900;color:#15803d;text-transform:uppercase;margin-bottom:6px">Foco de desarrollo</div>'+bullets(h.foco)+'</div></div>':'')+
-      '<div style="padding:0 38px 30px;color:#999;font-size:10px">Generado por Centro de Informes · Data Claro Colombia · '+new Date().toLocaleString('es-CO')+'</div>'+
-    '</div>';
+    '</div>'+
+    (hasHpi||hasHds||hasMvpi?'<div style="padding:0 22px 18px;display:flex;gap:16px;flex-wrap:wrap;">'+
+      (hasHpi?'<div style="flex:1;min-width:220px;"><div style="font-size:11px;font-weight:900;color:#a16207;text-transform:uppercase;margin-bottom:8px;">HPI · Fortalezas & Estilo</div>'+Object.entries(h.hpi).map(([k,v])=>'<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;"><div style="width:120px;text-align:right;font-size:10px;color:#666;flex-shrink:0;">'+esc(k)+'</div><div style="flex:1;height:10px;background:#f1f1f1;border-radius:4px;overflow:hidden;"><div style="height:100%;width:'+Math.min(100,v)+'%;background:#eab308;"></div></div><div style="width:24px;font-size:11px;font-weight:700;text-align:right;">'+v+'</div></div>').join('')+'</div>':'')+
+      (hasHds?'<div style="flex:1;min-width:220px;"><div style="font-size:11px;font-weight:900;color:#b91c1c;text-transform:uppercase;margin-bottom:8px;">HDS · Riesgos bajo presión</div>'+Object.entries(h.hds).map(([k,v])=>'<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;"><div style="width:120px;text-align:right;font-size:10px;color:#666;flex-shrink:0;">'+esc(k)+'</div><div style="flex:1;height:10px;background:#f1f1f1;border-radius:4px;overflow:hidden;"><div style="height:100%;width:'+Math.min(100,v)+'%;background:#dc2626;"></div></div><div style="width:24px;font-size:11px;font-weight:700;text-align:right;">'+v+'</div></div>').join('')+'</div>':'')+
+      (hasMvpi?'<div style="flex:1;min-width:220px;"><div style="font-size:11px;font-weight:900;color:#1d4ed8;text-transform:uppercase;margin-bottom:8px;">MVPI · Motivadores & Valores</div>'+Object.entries(h.mvpi).map(([k,v])=>'<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;"><div style="width:120px;text-align:right;font-size:10px;color:#666;flex-shrink:0;">'+esc(k)+'</div><div style="flex:1;height:10px;background:#f1f1f1;border-radius:4px;overflow:hidden;"><div style="height:100%;width:'+Math.min(100,v)+'%;background:#2563eb;"></div></div><div style="width:24px;font-size:11px;font-weight:700;text-align:right;">'+v+'</div></div>').join('')+'</div>':'')+
+    '</div>':'')+
+    (h.fortalezas||h.descarriladores||h.motivadores?'<div style="padding:0 22px 18px;display:flex;gap:16px;flex-wrap:wrap;">'+
+      (h.fortalezas?'<div style="flex:1;background:#fef9c3;border:1px solid #fde68a;border-radius:12px;padding:14px 16px;"><div style="font-size:11px;font-weight:900;color:#a16207;text-transform:uppercase;margin-bottom:8px;">Fortalezas</div>'+bulletBlock(h.fortalezas)+'</div>':'')+
+      (h.descarriladores?'<div style="flex:1;background:#fee2e2;border:1px solid #fecaca;border-radius:12px;padding:14px 16px;"><div style="font-size:11px;font-weight:900;color:#b91c1c;text-transform:uppercase;margin-bottom:8px;">Descarriladores</div>'+bulletBlock(h.descarriladores)+'</div>':'')+
+      (h.motivadores?'<div style="flex:1;background:#dbeafe;border:1px solid #bfdbfe;border-radius:12px;padding:14px 16px;"><div style="font-size:11px;font-weight:900;color:#1d4ed8;text-transform:uppercase;margin-bottom:8px;">Motivadores</div>'+bulletBlock(h.motivadores)+'</div>':'')+
+    '</div>':'')+
+    (h.foco?'<div style="padding:0 22px 18px;"><div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:16px 20px;"><div style="font-size:12px;font-weight:900;color:#15803d;text-transform:uppercase;margin-bottom:6px;">Foco de desarrollo</div>'+bulletBlock(h.foco)+'</div></div>':'')+
+    '<div style="padding:0 22px 20px;color:#9ca3af;font-size:10px;">Generado por Centro de Informes · Data Claro Colombia · '+new Date().toLocaleString('es-CO')+'</div>'+
+  '</div>';
 }
 
 /* ══════════════════ DOWNLOADS ══════════════════ */
 async function downloadFicha(p){
-  const html=fichaReportHTML(p);
+  const photoUrl=await resolvePhoto(p.expediente);
+  const html=fichaReportHTML(p,photoUrl);
   const hidden=document.createElement('div');
   hidden.style.cssText='position:absolute;left:-9999px;top:0;width:794px;z-index:-1;background:#fff';
   hidden.innerHTML=html;
   document.body.appendChild(hidden);
+  const f=FICHA(p.expediente);
+  if(f.tres60&&f.tres60.length){
+    const cv=hidden.querySelector('#reportRadar360');
+    if(cv)drawRadar360(cv,f.tres60);
+  }
+  await delay(80);
   const ok=await htmlToPdf(hidden.firstElementChild,'Ficha_Talento_'+p.nombre.replace(/\s+/g,'_')+'.pdf',1.6);
   document.body.removeChild(hidden);
   return ok;
@@ -741,6 +1059,13 @@ async function downloadHogan(p,h){
   hidden.style.cssText='position:absolute;left:-9999px;top:0;width:794px;z-index:-1;background:#fff';
   hidden.innerHTML=html;
   document.body.appendChild(hidden);
+  const scores={};(h.competencias||[]).forEach(c=>{if(c&&c.nombre!=null)scores[c.nombre]=c.puntaje!=null?c.puntaje:c.score;});
+  const entries=Object.entries(scores).filter(([k,v])=>k!=='Potencial'&&k!=='Potential'&&v!=null);
+  if(entries.length>=3){
+    const cv=hidden.querySelector('#reportHoganRadar');
+    if(cv)drawHoganRadar(cv,scores,'#0033A0');
+  }
+  await delay(80);
   const ok=await htmlToPdf(hidden.firstElementChild,'Hogan_'+p.nombre.replace(/\s+/g,'_')+'.pdf',1.6);
   document.body.removeChild(hidden);
   return ok;
@@ -837,8 +1162,13 @@ document.getElementById('btnSelAll').addEventListener('click',()=>{
 // genera un PDF por informe disponible; si el navegador lo permite, se descargan juntos.
 async function downloadPersonBoth(p){
   const results=[];
-  if(hasFicha(p.expediente)){try{results.push(await downloadFicha(p));}catch(e){console.error(e);results.push(false);}}
-  if(hasHogan(p)){try{results.push(await downloadHogan(p,findHogan(p)));}catch(e){console.error(e);results.push(false);}}
+  if(hasFicha(p.expediente)){
+    try{results.push(await downloadFicha(p));}catch(e){console.error('Ficha error:',e);results.push(false);}
+    if(hasHogan(p))await delay(600);
+  }
+  if(hasHogan(p)){
+    try{results.push(await downloadHogan(p,findHogan(p)));}catch(e){console.error('Hogan error:',e);results.push(false);}
+  }
   return results;
 }
 document.getElementById('btnBulkBoth').addEventListener('click',async()=>{
@@ -849,7 +1179,7 @@ document.getElementById('btnBulkBoth').addEventListener('click',async()=>{
   for(const p of list){
     const r=await downloadPersonBoth(p);
     r.forEach(ok=>{if(ok)okTotal++;else fail++;});
-    await delay(250);
+    await delay(800);
   }
   toast(fail?'Informes listos ('+okTotal+' generados, '+fail+' sin datos)':'Informes descargados ✓');
 });
