@@ -149,7 +149,7 @@ console.log('Hogan:', Object.keys(hogan).length);
 
 // Output just desempeno update to the existing file
 // Read current file and replace desempeno section
-const filePath = '/Users/nicolassantos/Desktop/Proyectos/ficha_data.js';
+const filePath = '/Users/nicolassantos/Desktop/Proyectos/data/ficha_data.js';
 const content = fs.readFileSync(filePath, 'utf8');
 
 // Replace desempeno section

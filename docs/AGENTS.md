@@ -14,15 +14,15 @@ nunca búsquedas globales del directorio.
 
 | Tablero | Archivo | Dónde vive la data | Login |
 |---|---|---|---|
-| Nine Box | `ninebox.html` | `<script id="dataStore">` embebido (~línea 1124 `const RAW`) + `OTROS_SUCESORES` + `SUCESION` | `AUTHORIZED_EMAILS` (~línea 2544) |
-| Ficha de Talento | `ficha_talento.html` | Archivo externo `ficha_data.js` (770KB: `window.DATA`, `window.SUCESORES`, `window.SUCESION`) | Sin login |
-| Hogan | `hogan.html` | Data embebida en el HTML (perfiles de personas por expediente) | `doLogin()` (~línea 398) |
-| Organigrama Claro | `organigrama_hogan_claro.html` | Data embebida | `doLogin()` (~línea 397) |
-| Índice | `index.html` | Data embebida | `doLogin()` (~línea 398) |
-| Dimensionamiento | `dimensionamiento.html` | Data embebida | `VALID_EMAILS` (~línea 654) |
-| Practicantes | `practicantes.html` | Data embebida (array en el HTML) | `AUTHORIZED_EMAILS` (~línea 247) |
-| Tablero UMM | `tablero_umm.html` | `window.DATA` embebido | — |
-| Informes | `informes.html` | Lista: Supabase `ninebox` (vivo). Informes: `ficha_data.js` (`window.DATA`: informacion/desempeno/talentos/objetivos/tres60/clima/hogan, keyed por expediente) | `AUTHORIZED_EMAILS` (~línea 328) |
+| Nine Box | `tableros/ninebox.html` | `<script id="dataStore">` embebido (~línea 1124 `const RAW`) + `OTROS_SUCESORES` + `SUCESION` | `AUTHORIZED_EMAILS` (~línea 2544) |
+| Ficha de Talento | `tableros/ficha_talento.html` | Archivo externo `data/ficha_data.js` (770KB: `window.DATA`, `window.SUCESORES`, `window.SUCESION`) | Sin login |
+| Hogan | `tableros/hogan.html` | Data embebida en el HTML (perfiles de personas por expediente) | `doLogin()` (~línea 398) |
+| Organigrama Claro | `tableros/organigrama_hogan_claro.html` | Data embebida | `doLogin()` (~línea 397) |
+| Índice | `tableros/index.html` | Data embebida | `doLogin()` (~línea 398) |
+| Dimensionamiento | `tableros/dimensionamiento.html` | Data embebida | `VALID_EMAILS` (~línea 654) |
+| Practicantes | `tableros/practicantes.html` | Data embebida (array en el HTML) | `AUTHORIZED_EMAILS` (~línea 247) |
+| Tablero UMM | `tableros/tablero_umm.html` | `window.DATA` embebido | — |
+| Informes | `tableros/informes.html` | Lista: Supabase `ninebox` (vivo). Informes: `data/ficha_data.js` (`window.DATA`: informacion/desempeno/talentos/objetivos/tres60/clima/hogan, keyed por expediente) | `AUTHORIZED_EMAILS` (~línea 328) |
 
 ## Usuarios autorizados (login)
 
@@ -47,21 +47,21 @@ Si se agrega/quita un usuario, actualizar TODOS los que lo requieran.
   (se eliminan personas con caja 0 y que no son jefe de nadie; DE GUSMAO no cuenta).
 - OTROS_SUCESORES en el HTML. Filtro "Comité Directivo" muestra 69 reportes
   (personas cuyo jefe es miembro CD), no los 9 miembros CD.
-- Scripts de origen: `rebuild_ficha.js` (lee `PARTICIPANTES NINE BOX (22).xlsx` y la
+- Scripts de origen: `scripts/rebuild_ficha.js` (lee `PARTICIPANTES NINE BOX (22).xlsx` y la
   `Planta_de_Personal_Mayo_2026.xlsx`).
 
 ### ficha_talento.html (data externa)
-- La data está en `ficha_data.js` (770KB), NO embebida en el HTML.
-- Para regenerarla: ejecutar `node rebuild_ficha.js` (lee `Info Ficha Talento 1.xlsx`,
+- La data está en `data/ficha_data.js` (770KB), NO embebida en el HTML.
+- Para regenerarla: ejecutar `node scripts/rebuild_ficha.js` (lee `Info Ficha Talento 1.xlsx`,
   `Info Ficha Talento 2.xlsx`, `Planta_de_Personal_Mayo_2026.xlsx`).
-- El HTML la carga con `<script src="ficha_data.js?v=...">` (linea 295).
-- Las fotos se cargan desde la carpeta `FOTOS/` usando el expediente (`p.exp`).
-- IMPORTANTE: `ficha_data.js` es enorme (770KB). NUNCA leerlo completo con Read;
+- El HTML la carga con `<script src="../data/ficha_data.js?v=...">` (linea 295).
+- Las fotos se cargan desde la carpeta `data/FOTOS/` usando el expediente (`p.exp`).
+- IMPORTANTE: `data/ficha_data.js` es enorme (770KB). NUNCA leerlo completo con Read;
   usar Grep con patrones específicos o el script para regenerarlo.
 
 ### hogan.html, organigrama_hogan_claro.html, index.html
 - Perfiles embebidos en el HTML (objeto por expediente con competencias, HPI, HDS, MVPI).
-- Para regenerar: `rebuild_hogan_final.js` (o variantes `rebuild_hogan*.js`).
+- Para regenerar: `scripts/rebuild_hogan_final.js`.
 - Fuente: `fichas_hogan_actualizado (4) (1).xlsx`, `Competencias Hogan.xlsx`,
   `Resultados Hogan.xlsx`, `Hogan comite directivo.xlsx`.
 
@@ -88,13 +88,13 @@ Si se agrega/quita un usuario, actualizar TODOS los que lo requieran.
 
 ## Scripts de mantenimiento
 
-- `rebuild_ficha.js` — regenera `ficha_data.js` desde los Excels de Info Ficha Talento + Planta.
-- `rebuild_hogan*.js` — regeneran data de Hogan desde Excels.
-- `update_desempeno.js` — actualiza desempeño en ficha.
-- `analizador_hv.py` / `ver_modelos.py` — análisis de hojas de vida / modelos.
-- `sync_supabase.js` — lee los Excels y hace upsert a Supabase (`--tabla=` selectivo).
+- `scripts/rebuild_ficha.js` — regenera `data/ficha_data.js` desde los Excels de Info Ficha Talento + Planta.
+- `scripts/rebuild_hogan_final.js` — regenera data de Hogan desde Excels.
+- `scripts/update_desempeno.js` — actualiza desempeño en ficha.
+- `analisis/analizador_hv.py` / `analisis/ver_modelos.py` — análisis de hojas de vida / modelos.
+- `scripts/sync_supabase.js` — lee los Excels y hace upsert a Supabase (`--tabla=` selectivo).
   Los tableros que dependen de Supabase reflejan los cambios automáticamente.
-- `sync_tableros.js` — sube a Supabase la data embebida en ninebox/practicantes/hogan/
+- `scripts/sync_tableros.js` — sube a Supabase la data embebida en ninebox/practicantes/hogan/
   index/organigrama (`--tablero=` selectivo). Necesario tras regenerar esos HTML.
 
 ## Git

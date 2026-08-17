@@ -120,7 +120,7 @@ tr:hover{cursor:pointer;}
   <div class="ficha-modal-inner" id="fichaContent"></div>
 </div>
 
-<script src="ficha_data.js"></script>
+<script src="../data/ficha_data.js"></script>
 <script>
 const D = window.DATA;
 const SUC = window.SUCESORES || [];
@@ -267,7 +267,7 @@ function openFicha(id) {
   const clim = D.clima[id] || [];
   const t60 = D.tres60[id] || [];
   const nb = NB_BOXES[id] || {};
-  const photoPath = 'FOTOS/' + id + '.png';
+  const photoPath = '../data/FOTOS/' + id + '.png';
 
   let html = '<div style="padding:24px;">';
   html += '<div style="background:#fff;border:1px solid #e2e5ea;border-radius:12px;padding:20px;display:flex;gap:20px;align-items:center;margin-bottom:20px;">';

@@ -395,7 +395,7 @@ const output = {
 
 // Write to file
 const jsContent = `window.DATA = ${JSON.stringify(output)};\n`;
-fs.writeFileSync('/Users/nicolassantos/Desktop/Proyectos/ficha_data.js', jsContent);
+fs.writeFileSync('/Users/nicolassantos/Desktop/Proyectos/data/ficha_data.js', jsContent);
 
 console.log('\n=== SUMMARY ===');
 console.log(`informacion: ${Object.keys(informacion).length}`);

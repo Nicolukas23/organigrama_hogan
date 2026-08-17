@@ -292,7 +292,7 @@ body{background:var(--bg);font-family:'Inter',sans-serif;color:var(--text);min-h
   <span>Planeación de Talento · Ficha de Talento — Claro Colombia 2026</span>
 </footer>
 
-<script src="ficha_data.js?v=202607302100"></script>
+<script src="../data/ficha_data.js?v=202607302100"></script>
 <script>
 // ── CARGADOR SUPABASE ────────────────────────────────────────────
 // Intenta cargar la data viva desde Supabase. Si falla, usa ficha_data.js estático.
@@ -403,12 +403,12 @@ function loadFicha(p){
   const tryPhoto=function(idx){
     if(idx>=3){return;}
     const exts=['.png','.jpg','.jpeg'];
-    fetch('FOTOS/'+p.exp+exts[idx],{method:'HEAD'}).then(function(r){
+    fetch('../data/FOTOS/'+p.exp+exts[idx],{method:'HEAD'}).then(function(r){
       if(r.ok){
         ihPhoto.innerHTML='';
         var i=new Image();
         i.alt=p.nombre;
-        i.src='FOTOS/'+p.exp+exts[idx];
+        i.src='../data/FOTOS/'+p.exp+exts[idx];
         ihPhoto.appendChild(i);
       }else{
         tryPhoto(idx+1);

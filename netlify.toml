@@ -3,6 +3,6 @@
 
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/tableros/index.html"
   status = 200
   conditions = {Role = ["admin"]}

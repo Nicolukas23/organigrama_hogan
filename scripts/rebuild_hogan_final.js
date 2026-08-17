@@ -80,7 +80,7 @@ personSheets.forEach(sheetName => {
 });
 
 // Read ficha_data.js
-let fichaContent = fs.readFileSync('/Users/nicolassantos/Desktop/Proyectos/ficha_data.js', 'utf8');
+let fichaContent = fs.readFileSync('/Users/nicolassantos/Desktop/Proyectos/data/ficha_data.js', 'utf8');
 
 // Find hogan section
 const hoganStart = fichaContent.indexOf('"hogan":{');
@@ -146,5 +146,5 @@ const beforeHogan = fichaContent.substring(0, objStart);
 const afterHogan = fichaContent.substring(objEnd);
 const newContent = beforeHogan + hoganStr + afterHogan;
 
-fs.writeFileSync('/Users/nicolassantos/Desktop/Proyectos/ficha_data.js', newContent);
+fs.writeFileSync('/Users/nicolassantos/Desktop/Proyectos/data/ficha_data.js', newContent);
 console.log('\nDone! ficha_data.js cleaned and updated');
