@@ -88,6 +88,8 @@ Si se agrega/quita un usuario, actualizar TODOS los que lo requieran.
 
 ## Scripts de mantenimiento
 
+- `data/nav.js` — Barra de navegación compartida + búsqueda global (Ctrl+K) + atajos de teclado. Se incluye en todos los tableros.
+- `data/nav.css` — Estilos compartidos: nav bar, modal de búsqueda, responsive breakpoints, tema oscuro consistente.
 - `scripts/rebuild_ficha.js` — regenera `data/ficha_data.js` desde los Excels de Info Ficha Talento + Planta.
 - `scripts/rebuild_hogan_final.js` — regenera data de Hogan desde Excels.
 - `scripts/update_desempeno.js` — actualiza desempeño en ficha.

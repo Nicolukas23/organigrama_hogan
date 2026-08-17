@@ -7,10 +7,10 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>Nine Box · Planeación de Talento 2026</title><!-- v2 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>"><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="stylesheet" href="../data/nav.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 :root{
@@ -1941,7 +1941,8 @@ function showConfirmDialog(nombre, oldCaja, newCaja, onConfirm){
 }
 
 function initDragDrop(){
-  // Drag from table rows
+/* Session restore */
+(function(){var s=localStorage.getItem('portal_session');if(s){try{var obj=JSON.parse(s);if(obj.email && (Date.now()-obj.ts)<86400000){var ol=document.getElementById('loginOverlay');if(ol)ol.classList.add('hidden');}}catch(e){}}})();  // Drag from table rows
   document.getElementById('tableBody').addEventListener('dragstart', e=>{
     const tr = e.target.closest('tr');
     if(!tr || !tr.dataset.name) return;
@@ -2591,7 +2592,7 @@ function doLogin(){
   isLoggedIn = true;
   loggedInUser = email;
   document.getElementById('loginOverlay').classList.add('hidden');
-  document.getElementById('mainWrap').style.display = '';
+  localStorage.setItem('portal_session',JSON.stringify({email:email,ts:Date.now()}));  document.getElementById('mainWrap').style.display = '';
 }
 
 function doLogout(){
@@ -2773,5 +2774,6 @@ function openOtrosModal(p){
 
 document.getElementById('otrosSearch')?.addEventListener('input', renderOtrosTable);
 </script>
+<script src="../data/nav.js"></script>
 </body>
 </html>

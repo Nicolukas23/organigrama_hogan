@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Desempeño Practicantes · Claro Colombia 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>"><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="../data/nav.css"><script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
 :root{
   --bg:#0f172a;--bg-1:#1e293b;--bg-2:#334155;
@@ -261,7 +261,7 @@ function doLogin(){
   }
   isLoggedIn=true;
   document.getElementById('loginOverlay').classList.add('hidden');
-  document.getElementById('mainHeader').style.display='flex';
+  localStorage.setItem('portal_session',JSON.stringify({email:email,ts:Date.now()}));  document.getElementById('mainHeader').style.display='flex';
 }
 
 document.getElementById('logoutBtn').addEventListener('click',()=>{isLoggedIn=false;location.reload();});
@@ -636,7 +636,8 @@ const SUPABASE_URL='https://yxxpjttdmwruyeqiuxzu.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4eHBqdHRkbXdydXllcWl1eHp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4MTQyNzUsImV4cCI6MjEwMjM5MDI3NX0.fxQc7o6Qv8Rvd8-PHJF_R-OEME-hbhbPPDnktjiNi9U';
 
 async function loadPracticantesSupabase(){
-  try{
+/* Session restore */
+(function(){var s=localStorage.getItem('portal_session');if(s){try{var obj=JSON.parse(s);if(obj.email && (Date.now()-obj.ts)<86400000){var ol=document.getElementById('loginOverlay');if(ol)ol.classList.add('hidden');}}catch(e){}}})();  try{
     const hdr={headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY}};
     const rows=await fetch(SUPABASE_URL+'/rest/v1/practicantes?select=*',hdr).then(r=>r.json());
     if(!Array.isArray(rows)||!rows.length) throw new Error('sin datos');
@@ -658,5 +659,6 @@ async function loadPracticantesSupabase(){
 }
 loadPracticantesSupabase();
 </script>
+<script src="../data/nav.js"></script>
 </body>
 </html>

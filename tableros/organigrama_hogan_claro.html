@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Resultados de Hogan · Claro Colombia</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>"><link rel="stylesheet" href="../data/nav.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
@@ -387,7 +387,8 @@ function toggleTheme(){
   document.getElementById('theme-btn').textContent=document.body.classList.contains('dark')?'☀':'☾';
 }
 document.addEventListener('DOMContentLoaded',function(){
-  document.getElementById('theme-btn').textContent=document.body.classList.contains('dark')?'☀':'☾';
+/* Session restore */
+(function(){var s=localStorage.getItem('portal_session');if(s){try{var obj=JSON.parse(s);if(obj.email && (Date.now()-obj.ts)<86400000){var ol=document.getElementById('loginOverlay');if(ol)ol.classList.add('hidden');}}catch(e){}}})();  document.getElementById('theme-btn').textContent=document.body.classList.contains('dark')?'☀':'☾';
   document.getElementById('loginPass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
   document.getElementById('loginEmail').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
 });
@@ -396,7 +397,7 @@ function doLogin(){
   const pass=document.getElementById('loginPass').value;
   const ok=(email==='laura.amadop@claro.com.co'||email==='nicolas.santos@claro.com.co'||email==='edespitia@overlap.net.co'||email==='valentina.campos@claro.com.co')&&pass==='1234';
   if(ok){document.getElementById('loginOverlay').classList.add('hidden');}
-  else{document.getElementById('loginErr').style.display='block';setTimeout(function(){document.getElementById('loginErr').style.display='none';},3000);}
+  localStorage.setItem('portal_session',JSON.stringify({email:email,ts:Date.now()}));  else{document.getElementById('loginErr').style.display='block';setTimeout(function(){document.getElementById('loginErr').style.display='none';},3000);}
 }
 
 /* ── COLORS ─────────────────────────────────────────────────────────── */
@@ -1752,5 +1753,6 @@ async function loadOrganigramaSupabase(){
 }
 loadOrganigramaSupabase();
 </script>
+<script src="../data/nav.js"></script>
 </body>
 </html>

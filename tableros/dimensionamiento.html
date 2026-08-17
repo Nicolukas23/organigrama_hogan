@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Dimensionamiento Directos × Ciudad</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>"><link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
+<link rel="stylesheet" href="../data/nav.css"><style>
 :root{--bg:#f8f9fa;--surface:#fff;--surface2:#f1f3f5;--border:#e2e6eb;--text:#1e293b;--text2:#475569;--text3:#94a3b8;--crimson:#8b1a2b;--crimson-light:#c53030;--blue:#1e3a5f;--blue2:#334155;--green:#059669;--green-bg:#d1fae5;--orange:#d97706;--orange-bg:#ffedd5;--red:#dc2626;--red-bg:#fee2e2;--gold:#d8ad64;--shadow:0 1px 3px rgba(0,0,0,.08);--shadow-lg:0 4px 12px rgba(0,0,0,.1)}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
@@ -424,7 +424,8 @@ function chipColor(v){return v>=70?'green':v>=50?'orange':'red'}
 
 // ─── FILTERS ─────────────────────────────────────────────────────────
 function initFilters(){
-  const fReg=document.getElementById('fRegional');
+/* Session restore */
+(function(){var s=localStorage.getItem('portal_session');if(s){try{var obj=JSON.parse(s);if(obj.email && (Date.now()-obj.ts)<86400000){var ol=document.getElementById('loginOverlay');if(ol)ol.classList.add('hidden');}}catch(e){}}})();  const fReg=document.getElementById('fRegional');
   REGIONS.forEach(r=>{const o=document.createElement('option');o.value=r;o.textContent=r;fReg.appendChild(o);});
   updateCiudades();
   fReg.addEventListener('change',e=>{state.region=e.target.value;state.ciudad='';updateCiudades();applyFilters();});
@@ -657,7 +658,7 @@ document.getElementById('loginBtn').addEventListener('click',()=>{
   const pass=document.getElementById('loginPass').value;
   if(VALID_EMAILS.includes(email)&&pass==='1234'){
     document.getElementById('loginOverlay').classList.add('hidden');
-  }else{
+  localStorage.setItem('portal_session',JSON.stringify({email:email,ts:Date.now()}));  }else{
     document.getElementById('loginError').style.display='block';
   }
 });
@@ -667,5 +668,6 @@ document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='
 initFilters();
 applyFilters();
 </script>
+<script src="../data/nav.js"></script>
 </body>
 </html>

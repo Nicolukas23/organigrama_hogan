@@ -7,6 +7,8 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>Informes · Ficha de Talento & Hogan — Claro Colombia</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+<link rel="stylesheet" href="../data/nav.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -1209,14 +1211,24 @@ async function downloadPersonBoth(p){
 document.getElementById('btnBulkBoth').addEventListener('click',async()=>{
   if(!selected.size){toast('Selecciona al menos una persona');return;}
   const list=filtered.filter(p=>selected.has(p.expediente));
-  toast('Generando informes de '+list.length+' persona(s)…');
+  const prog=document.getElementById('bulkProgress');
+  const fill=document.getElementById('bulkProgressFill');
+  const txt=document.getElementById('bulkProgressText');
+  prog.classList.add('show');
   let okTotal=0,fail=0;
-  for(const p of list){
+  for(let i=0;i<list.length;i++){
+    const p=list[i];
+    const pct=Math.round(((i)/list.length)*100);
+    fill.style.width=pct+'%';
+    txt.textContent='Generando '+p.nombre+'... ('+(i+1)+'/'+list.length+')';
     const r=await downloadPersonBoth(p);
     r.forEach(ok=>{if(ok)okTotal++;else fail++;});
     await delay(2000);
   }
+  fill.style.width='100%';
+  txt.textContent=fail?'Listo: '+okTotal+' generados, '+fail+' sin datos':'Todos los informes descargados ✓';
   toast(fail?'Informes listos ('+okTotal+' generados, '+fail+' sin datos)':'Informes descargados ✓');
+  setTimeout(()=>{prog.classList.remove('show');fill.style.width='0%';},4000);
 });
 document.getElementById('pgPrev').addEventListener('click',()=>{if(state.page>1){state.page--;render();}});
 document.getElementById('pgNext').addEventListener('click',()=>{if(state.page<Math.ceil(filtered.length/PAGE_SIZE)){state.page++;render();}});
@@ -1233,5 +1245,13 @@ async function init(){
 }
 init();
 </script>
+
+<!-- Progress bar for bulk download -->
+<div class="app-progress" id="bulkProgress">
+  <div class="app-progress-bar"><div class="app-progress-fill" id="bulkProgressFill" style="width:0%"></div></div>
+  <div class="app-progress-text" id="bulkProgressText">Preparando...</div>
+</div>
+
+<script src="../data/nav.js"></script>
 </body>
 </html>
