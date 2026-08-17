@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual Técnico · Organigrama Hogan — Claro Colombia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a25;--surface3:#22222f;--border:rgba(255,255,255,.08);--text:#e8e8ed;--text-dim:#8888a0;--text-faint:#55556a;--red:#e8283f;--blue:#3b82f6;--green:#10b981;--amber:#f59e0b;--purple:#8b5cf6;--cyan:#06b6d4;--pink:#ec4899;--radius:12px;--ease:cubic-bezier(.22,1,.36,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex}
+::selection{background:var(--red);color:#fff}
+
+/* ── SIDEBAR ── */
+.sidebar{width:280px;background:var(--surface);border-right:1px solid var(--border);height:100vh;position:sticky;top:0;overflow-y:auto;flex-shrink:0;transition:transform .3s var(--ease)}
+.sidebar-header{padding:24px 20px 16px;border-bottom:1px solid var(--border)}
+.sidebar-header h2{font-size:15px;font-weight:800;color:var(--red);letter-spacing:.5px}
+.sidebar-header p{font-size:11px;color:var(--text-dim);margin-top:4px}
+.sidebar-nav{padding:12px 0}
+.nav-section{padding:8px 20px 4px;font-size:10px;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;font-size:13px;color:var(--text-dim);transition:all .15s;border-left:3px solid transparent;text-decoration:none}
+.nav-item:hover{background:var(--surface2);color:var(--text)}
+.nav-item.active{background:var(--surface2);color:var(--red);border-left-color:var(--red);font-weight:600}
+.nav-item .icon{width:18px;text-align:center;font-size:14px}
+.nav-item .badge{margin-left:auto;background:var(--red);color:#fff;font-size:9px;padding:2px 7px;border-radius:10px;font-weight:700}
+
+/* ── MAIN ── */
+.main{flex:1;min-width:0;padding:40px 48px 80px}
+.main h1{font-size:32px;font-weight:900;letter-spacing:-.03em;margin-bottom:8px}
+.main h1 em{color:var(--red);font-style:normal}
+.main .subtitle{font-size:15px;color:var(--text-dim);margin-bottom:32px;line-height:1.6}
+.main h2{font-size:22px;font-weight:800;margin:40px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.main h3{font-size:16px;font-weight:700;margin:24px 0 10px;color:var(--text)}
+.main h4{font-size:13px;font-weight:700;margin:16px 0 8px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px}
+p{font-size:14px;line-height:1.7;color:var(--text-dim);margin-bottom:12px}
+p strong{color:var(--text);font-weight:600}
+
+/* ── COMPONENTS ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px}
+.card-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.card-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.card-title{font-size:14px;font-weight:700}
+.card-desc{font-size:12px;color:var(--text-dim)}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;text-align:center}
+.stat-card .num{font-size:28px;font-weight:900;font-family:'JetBrains Mono',monospace}
+.stat-card .label{font-size:11px;color:var(--text-dim);margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+
+code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:2px 7px;color:var(--cyan)}
+pre{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.6;color:var(--text-dim);margin:12px 0}
+pre .kw{color:var(--purple)}
+pre .str{color:var(--green)}
+pre .comment{color:var(--text-faint);font-style:italic}
+pre .cmd{color:var(--amber)}
+
+.badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;letter-spacing:.3px}
+.badge-red{background:rgba(232,40,63,.15);color:var(--red)}
+.badge-blue{background:rgba(59,130,246,.15);color:var(--blue)}
+.badge-green{background:rgba(16,185,129,.15);color:var(--green)}
+.badge-amber{background:rgba(245,158,11,.15);color:var(--amber)}
+.badge-purple{background:rgba(139,92,246,.15);color:var(--purple)}
+.badge-cyan{background:rgba(6,182,212,.15);color:var(--cyan)}
+
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+th{background:var(--surface2);color:var(--text);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:10px 14px;text-align:left;border-bottom:2px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-dim)}
+tr:hover td{background:var(--surface2)}
+
+.alert{border-radius:var(--radius);padding:14px 18px;font-size:13px;margin:12px 0;display:flex;align-items:flex-start;gap:10px}
+.alert-info{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);color:var(--blue)}
+.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:var(--amber)}
+.alert-danger{background:rgba(232,40,63,.08);border:1px solid rgba(232,40,63,.2);color:var(--red)}
+.alert-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);color:var(--green)}
+
+.flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:16px 0}
+.flow-step{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 16px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px}
+.flow-step .num{width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800}
+.flow-arrow{color:var(--text-faint);font-size:16px}
+
+.section{display:none}
+.section.active{display:block}
+
+.toc{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:100}
+.toc a{display:block;width:8px;height:8px;border-radius:50%;background:var(--surface3);margin:6px 0;transition:all .2s}
+.toc a:hover{background:var(--red);transform:scale(1.4)}
+.toc a.active{background:var(--red)}
+
+.search-box{position:relative;margin-bottom:24px}
+.search-box input{width:100%;padding:12px 16px 12px 42px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:14px;font-family:inherit;outline:none;transition:border-color .2s}
+.search-box input:focus{border-color:var(--red)}
+.search-box .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-faint)}
+
+.dir-tree{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.8;color:var(--text-dim);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0}
+.dir-tree .folder{color:var(--amber);font-weight:600}
+.dir-tree .file{color:var(--cyan)}
+.dir-tree .desc{color:var(--text-faint);font-style:italic}
+
+.copy-btn{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--text-dim);cursor:pointer;transition:all .15s}
+.copy-btn:hover{background:var(--surface3);color:var(--text)}
+
+.arch-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;cursor:pointer;transition:all .2s}
+.arch-card:hover{border-color:var(--red);transform:translateY(-2px)}
+.arch-card .arch-name{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan)}
+.arch-card .arch-desc{font-size:12px;color:var(--text-dim);margin-top:6px}
+.arch-card .arch-badge{margin-top:8px}
+
+/* ── MOBILE ── */
+.menu-toggle{display:none;position:fixed;top:12px;left:12px;z-index:200;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);cursor:pointer;font-size:16px}
+@media(max-width:900px){
+  .sidebar{position:fixed;z-index:150;transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{padding:24px 16px 60px}
+  .menu-toggle{display:block}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .toc{display:none}
+}
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h2>📋 MANUAL TÉCNICO</h2>
+    <p>Organigrama Hogan · Claro Colombia</p>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-section">Inicio</div>
+    <a class="nav-item active" data-section="intro" onclick="showSection('intro')"><span class="icon">🏠</span> Visión General</a>
+    <a class="nav-item" data-section="equipo" onclick="showSection('equipo')"><span class="icon">👥</span> Usuarios y Acceso</a>
+
+    <div class="nav-section">Arquitectura</div>
+    <a class="nav-item" data-section="repo" onclick="showSection('repo')"><span class="icon">📁</span> Repositorio</a>
+    <a class="nav-item" data-section="supabase" onclick="showSection('supabase')"><span class="icon">⚡</span> Supabase</a>
+    <a class="nav-item" data-section="tableros" onclick="showSection('tableros')"><span class="icon">📊</span> Tableros</a>
+
+    <div class="nav-section">Tableros</div>
+    <a class="nav-item" data-section="ninebox" onclick="showSection('ninebox')"><span class="icon">📦</span> Nine Box</a>
+    <a class="nav-item" data-section="ficha" onclick="showSection('ficha')"><span class="icon">📄</span> Ficha de Talento</a>
+    <a class="nav-item" data-section="hogan" onclick="showSection('hogan')"><span class="icon">🛡️</span> Hogan</a>
+    <a class="nav-item" data-section="informes" onclick="showSection('informes')"><span class="icon">📥</span> Informes</a>
+
+    <div class="nav-section">Operaciones</div>
+    <a class="nav-item" data-section="actualizar" onclick="showSection('actualizar')"><span class="icon">🔄</span> Cómo Actualizar</a>
+    <a class="nav-item" data-section="sync-hub" onclick="showSection('sync-hub')"><span class="icon">🚀</span> Sync Hub</a>
+    <a class="nav-item" data-section="git" onclick="showSection('git')"><span class="icon">🔀</span> Git y Deploy</a>
+    <a class="nav-item" data-section="scripts" onclick="showSection('scripts')"><span class="icon">⚙️</span> Scripts</a>
+
+    <div class="nav-section">Referencia</div>
+    <a class="nav-item" data-section="supabase-tables" onclick="showSection('supabase-tables')"><span class="icon">🗄️</span> Tablas Supabase</a>
+    <a class="nav-item" data-section=" troubleshooting" onclick="showSection('troubleshooting')"><span class="icon">🔧</span> Troubleshooting</a>
+  </div>
+</nav>
+
+<main class="main" id="main">
+
+<!-- ══════════════════ INTRO ══════════════════ -->
+<div class="section active" id="sec-intro">
+  <h1>Manual Técnico · <em>Organigrama Hogan</em></h1>
+  <p class="subtitle">Guía completa del sistema de tableros de talento de Claro Colombia. Documentación técnica, flujo de datos, y procedimientos de mantenimiento.</p>
+
+  <div class="grid-4" style="margin-bottom:24px">
+    <div class="stat-card"><div class="num" style="color:var(--red)">377</div><div class="label">Personas Nine Box</div></div>
+    <div class="stat-card"><div class="num" style="color:var(--blue)">164</div><div class="label">Con Ficha</div></div>
+    <div class="stat-card"><div class="num" style="color:var(--purple)">142</div><div class="label">Con Hogan</div></div>
+    <div class="stat-card"><div class="num" style="color:var(--green)">9</div><div class="label">Tableros</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:rgba(232,40,63,.15);color:var(--red)">🔗</div>
+      <div><div class="card-title">Enlaces Rápidos</div></div>
+    </div>
+    <table>
+      <tr><th>Tablero</th><th>URL</th><th>Archivo</th></tr>
+      <tr><td><strong>Índice</strong></td><td><a href="https://nicolukas23.github.io/organigrama_hogan/index.html" target="_blank" style="color:var(--cyan)">nicolukas23.github.io/organigrama_hogan/index.html</a></td><td><code>index.html</code></td></tr>
+      <tr><td><strong>Nine Box</strong></td><td><a href="https://nicolukas23.github.io/organigrama_hogan/ninebox.html" target="_blank" style="color:var(--cyan)">.../ninebox.html</a></td><td><code>ninebox.html</code></td></tr>
+      <tr><td><strong>Ficha de Talento</strong></td><td><a href="https://nicolukas23.github.io/organigrama_hogan/ficha_talento.html" target="_blank" style="color:var(--cyan)">.../ficha_talento.html</a></td><td><code>ficha_talento.html</code></td></tr>
+      <tr><td><strong>Hogan</strong></td><td><a href="https://nicolukas23.github.io/organigrama_hogan/hogan.html" target="_blank" style="color:var(--cyan)">.../hogan.html</a></td><td><code>hogan.html</code></td></tr>
+      <tr><td><strong>Organigrama</strong></td><td><a href="https://nicolukas23.github.io/organigrama_hogan/organigrama_hogan_claro.html" target="_blank" style="color:var(--cyan)">.../organigrama_hogan_claro.html</a></td><td><code>organigrama_hogan_claro.html</code></td></tr>
+      <tr><td><strong>Informes</strong></td><td><a href="https://nicolukas23.github.io/organigrama_hogan/informes.html" target="_blank" style="color:var(--cyan)">.../informes.html</a></td><td><code>informes.html</code></td></tr>
+      <tr><td><strong>Dimensionamiento</strong></td><td><a href="https://nicolukas23.github.io/organigrama_hogan/dimensionamiento.html" target="_blank" style="color:var(--cyan)">.../dimensionamiento.html</a></td><td><code>dimensionamiento.html</code></td></tr>
+      <tr><td><strong>Practicantes</strong></td><td><a href="https://nicolukas23.github.io/organigrama_hogan/practicantes.html" target="_blank" style="color:var(--cyan)">.../practicantes.html</a></td><td><code>practicantes.html</code></td></tr>
+      <tr><td><strong>Sync Hub</strong></td><td><a href="#" target="_blank" style="color:var(--cyan)">URL de Streamlit Cloud</a></td><td><code>sync-hub repo</code></td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════ USUARIOS ══════════════════ -->
+<div class="section" id="sec-equipo">
+  <h1>👥 Usuarios y Acceso</h1>
+  <p class="subtitle">Quiénes tienen acceso, credenciales y permisos.</p>
+
+  <div class="alert alert-danger"><span>⚠️</span> <div><strong>Regla de seguridad:</strong> Las contraseñas son <code>1234</code> para todos los tableros. NO están centralizadas — están duplicadas en 6 archivos. Si se agrega/quita un usuario, actualizar TODOS los que lo requieran.</div></div>
+
+  <h3>Usuarios autorizados</h3>
+  <table>
+    <tr><th>Correo</th><th>Nine Box</th><th>Practicantes</th><th>Dimension.</th><th>Hogan/Index</th><th>Informes</th></tr>
+    <tr><td><code>laura.amadop@claro.com.co</code></td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+    <tr><td><code>nicolas.santos@claro.com.co</code></td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+    <tr><td><code>edespitia@overlap.net.co</code></td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+    <tr><td><code>angie.rodriguez@claro.com.co</code></td><td>✅</td><td>✅</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td><code>luis.moralesc@claro.com.co</code></td><td>✅</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td><code>valentina.campos@claro.com.co</code></td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+  </table>
+
+  <h3>Ubicación de credenciales por archivo</h3>
+  <table>
+    <tr><th>Archivo</th><th>Variable</th><th>Línea aprox.</th></tr>
+    <tr><td><code>ninebox.html</code></td><td><code>AUTHORIZED_EMAILS</code></td><td>~2544</td></tr>
+    <tr><td><code>practicantes.html</code></td><td><code>AUTHORIZED_EMAILS</code></td><td>~247</td></tr>
+    <tr><td><code>dimensionamiento.html</code></td><td><code>VALID_EMAILS</code></td><td>~654</td></tr>
+    <tr><td><code>hogan.html</code></td><td><code>doLogin()</code></td><td>~398</td></tr>
+    <tr><td><code>index.html</code></td><td><code>doLogin()</code></td><td>~398</td></tr>
+    <tr><td><code>organigrama_hogan_claro.html</code></td><td><code>doLogin()</code></td><td>~397</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════ REPO ══════════════════ -->
+<div class="section" id="sec-repo">
+  <h1>📁 Repositorio</h1>
+  <p class="subtitle">Estructura del proyecto en GitHub.</p>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:rgba(139,92,246,.15);color:var(--purple)">📦</div>
+      <div><div class="card-title">GitHub Repository</div><div class="card-desc">github.com/Nicolukas23/organigrama_hogan · Rama: main</div></div>
+    </div>
+  </div>
+
+  <h3>Estructura de archivos</h3>
+  <div class="dir-tree">
+<span class="folder">organigrama_hogan/</span>
+├── <span class="file">index.html</span>              <span class="desc">← Página principal (login + índice)</span>
+├── <span class="file">ninebox.html</span>            <span class="desc">← Tablero Nine Box (377 personas)</span>
+├── <span class="file">ficha_talento.html</span>      <span class="desc">← Ficha de Talento (164 personas)</span>
+├── <span class="file">hogan.html</span>              <span class="desc">← Tablero Hogan (142 personas)</span>
+├── <span class="file">organigrama_hogan_claro.html</span> <span class="desc">← Organigrama visual</span>
+├── <span class="file">informes.html</span>           <span class="desc">← Centro de Informes (descarga PDFs)</span>
+├── <span class="file">dimensionamiento.html</span>   <span class="desc">← Tablero de Dimensionamiento</span>
+├── <span class="file">practicantes.html</span>       <span class="desc">← Tablero de Practicantes</span>
+├── <span class="file">tablero_umm.html</span>        <span class="desc">← Tablero UMM</span>
+├── <span class="file">ficha_data.js</span>           <span class="desc">← Data externa de Ficha (770KB)</span>
+├── <span class="file">FOTOS/</span>                  <span class="desc">← Fotos de personas (120 archivos)</span>
+│
+├── <span class="folder">sync_hub/</span>               <span class="desc">← App Streamlit (actualización automática)</span>
+│   ├── <span class="file">app.py</span>
+│   ├── <span class="file">sync_engine.py</span>
+│   ├── <span class="file">git_ops.py</span>
+│   └── <span class="file">requirements.txt</span>
+│
+├── <span class="folder">scripts/</span>               <span class="desc">← Scripts de mantenimiento</span>
+│   ├── <span class="file">rebuild_ficha.js</span>     <span class="desc">← Regenera ficha_data.js desde Excels</span>
+│   ├── <span class="file">rebuild_hogan_final.js</span> <span class="desc">← Regenera data Hogan</span>
+│   ├── <span class="file">sync_supabase.js</span>     <span class="desc">← Sync Excel → Supabase</span>
+│   └── <span class="file">sync_tableros.js</span>     <span class="desc">← Sync HTML embebido → Supabase</span>
+│
+├── <span class="file">AGENTS.md</span>              <span class="desc">← Reglas del repo (opencode)</span>
+├── <span class="file">.env</span>                   <span class="desc">← Credenciales Supabase (gitignored)</span>
+├── <span class="file">netlify.toml</span>           <span class="desc">← Config deploy Netlify</span>
+└── <span class="file">vercel.json</span>            <span class="desc">← Config deploy Vercel</span>
+  </div>
+
+  <h3>Despliegue</h3>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(16,185,129,.15);color:var(--green)">🌐</div>
+        <div><div class="card-title">GitHub Pages</div><div class="card-desc">Despliegue principal</div></div>
+      </div>
+      <p><strong>URL:</strong> <code>https://nicolukas23.github.io/organigrama_hogan/</code></p>
+      <p>Se actualiza automáticamente al hacer push a <code>main</code>. Puede tener caché de hasta 10 minutos.</p>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(6,182,212,.15);color:var(--cyan)">⚡</div>
+        <div><div class="card-title">Netlify / Vercel</div><div class="card-desc">Despliegue alternativo</div></div>
+      </div>
+      <p>Configurado con <code>netlify.toml</code> y <code>vercel.json</code>. Deploy automático desde GitHub.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ SUPABASE ══════════════════ -->
+<div class="section" id="sec-supabase">
+  <h1>⚡ Supabase</h1>
+  <p class="subtitle">Base de datos en la nube que alimenta los tableros en tiempo real.</p>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:rgba(16,185,129,.15);color:var(--green)">🔗</div>
+      <div><div class="card-title">Conexión</div></div>
+    </div>
+    <table>
+      <tr><th>Parámetro</th><th>Valor</th></tr>
+      <tr><td>URL</td><td><code>https://yxxpjttdmwruyeqiuxzu.supabase.co</code></td></tr>
+      <tr><td>Proyecto</td><td><code>organigrama-hogan</code></td></tr>
+      <tr><td>Ref</td><td><code>yxxpjttdmwruyeqiuxzu</code></td></tr>
+      <tr><td>Anon Key</td><td><code>eyJhbGci... (lectura pública)</code></td></tr>
+      <tr><td>Service Key</td><td><code>eyJhbGci... (escritura admin)</code></td></tr>
+    </table>
+  </div>
+
+  <div class="alert alert-info"><span>💡</span> <div><strong>Concepto clave:</strong> Supabase es la <strong>fuente de verdad</strong>. Los tableros HTML cargan data de Supabase al abrirse. Si Supabase falla, usan la data embebida como fallback.</div></div>
+
+  <h3>Cómo se conectan los tableros</h3>
+  <p>Cada tablero HTML tiene un <strong>"cargador Supabase"</strong> — un bloque de código JavaScript que:</p>
+  <div class="flow">
+    <div class="flow-step"><span class="num">1</span> Hace fetch a Supabase con la anon key</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="num">2</span> Reconstruye la variable global (RAW/DATA)</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="num">3</span> Re-renderiza la tabla/gráficos</div>
+  </div>
+  <p>Los cargadores están identificados con el comentario <code>// ── CARGADOR SUPABASE ──</code>.</p>
+
+  <div class="alert alert-warn"><span>⚠️</span> <div><strong>Importante:</strong> Al editar un tablero, respetar que <code>let RAW</code> / <code>let DATA</code> y mantener el cargador. NO convertirlo a <code>const</code> ni borrarlo.</div></div>
+
+  <h3>Bucket de Storage: Fotos</h3>
+  <table>
+    <tr><th>Parámetro</th><th>Valor</th></tr>
+    <tr><td>Bucket</td><td><code>fotos</code> (público)</td></tr>
+    <tr><td>URL base</td><td><code>https://yxxpjttdmwruyeqiuxzu.supabase.co/storage/v1/object/public/fotos/</code></td></tr>
+    <tr><td>Formato</td><td><code>&lt;expediente&gt;.png</code> o <code>.jpg</code></td></tr>
+    <tr><td>Archivos</td><td>120 fotos subidas</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════ TABLEROS ══════════════════ -->
+<div class="section" id="sec-tableros">
+  <h1>📊 Tableros — Visión General</h1>
+  <p class="subtitle">Cómo están conformados y de dónde sacan la data.</p>
+
+  <table>
+    <tr><th>Tablero</th><th>Archivo</th><th>Data</th><th>Login</th><th>Fuente principal</th></tr>
+    <tr><td><strong>Nine Box</strong></td><td><code>ninebox.html</code></td><td>Embebida en <code>&lt;script id="dataStore"&gt;</code></td><td><code>AUTHORIZED_EMAILS</code></td><td>Supabase → fallback embebido</td></tr>
+    <tr><td><strong>Ficha de Talento</strong></td><td><code>ficha_talento.html</code></td><td>Externo <code>ficha_data.js</code> (770KB)</td><td>Sin login</td><td><code>window.DATA</code> de JS</td></tr>
+    <tr><td><strong>Hogan</strong></td><td><code>hogan.html</code></td><td>Embebida en el HTML</td><td><code>doLogin()</code></td><td>Supabase → fallback embebido</td></tr>
+    <tr><td><strong>Organigrama</strong></td><td><code>organigrama_hogan_claro.html</code></td><td>Embebida</td><td><code>doLogin()</code></td><td>Supabase → fallback embebido</td></tr>
+    <tr><td><strong>Índice</strong></td><td><code>index.html</code></td><td>Embebida</td><td><code>doLogin()</code></td><td>Supabase → fallback embebido</td></tr>
+    <tr><td><strong>Dimensionamiento</strong></td><td><code>dimensionamiento.html</code></td><td>Embebida</td><td><code>VALID_EMAILS</code></td><td>Supabase → fallback embebido</td></tr>
+    <tr><td><strong>Practicantes</strong></td><td><code>practicantes.html</code></td><td>Array embebido</td><td><code>AUTHORIZED_EMAILS</code></td><td>Embebido (fallback)</td></tr>
+    <tr><td><strong>Informes</strong></td><td><code>informes.html</code></td><td><code>ficha_data.js</code> + Supabase</td><td><code>AUTHORIZED_EMAILS</code></td><td>Supabase + ficha_data.js</td></tr>
+    <tr><td><strong>Tablero UMM</strong></td><td><code>tablero_umm.html</code></td><td><code>window.DATA</code></td><td>—</td><td>Embebido</td></tr>
+  </table>
+
+  <h3>Patrón de carga de datos</h3>
+  <div class="card">
+    <pre><span class="comment">// ── CARGADOR SUPABASE ──</span>
+<span class="kw">let</span> RAW = [];  <span class="comment">// ⚠️ NUNCA usar const</span>
+
+<span class="kw">async function</span> <span class="cmd">loadData</span>() {
+  <span class="kw">try</span> {
+    <span class="comment">// 1. Fetch de Supabase (data viva)</span>
+    <span class="kw">const</span> { data } = <span class="kw">await</span> supabase.from('table').select('*');
+    RAW = data;
+  } <span class="kw">catch</span>(e) {
+    <span class="comment">// 2. Fallback: data embebida en el HTML</span>
+    RAW = WINDOW_EMBEDDED_DATA;
+  }
+  render();  <span class="comment">// 3. Re-renderizar</span>
+}</pre>
+  </div>
+</div>
+
+<!-- ══════════════════ NINE BOX ══════════════════ -->
+<div class="section" id="sec-ninebox">
+  <h1>📦 Nine Box</h1>
+  <p class="subtitle">Tablero principal de gestión de talento — 377 personas.</p>
+
+  <div class="grid-3">
+    <div class="stat-card"><div class="num" style="color:var(--red)">377</div><div class="label">Participantes</div></div>
+    <div class="stat-card"><div class="num" style="color:var(--blue)">9</div><div class="label">Cajas</div></div>
+    <div class="stat-card"><div class="num" style="color:var(--green)">69</div><div class="label">Comité Directivo</div></div>
+  </div>
+
+  <h3>Dónde vive la data</h3>
+  <p>Data principal en <code>&lt;script id="dataStore" type="application/json"&gt;</code> embebido en el HTML (~línea 1124, variable <code>RAW</code>).</p>
+
+  <h3>Fuentes de datos</h3>
+  <table>
+    <tr><th>Dato</th><th>Excel fuente</th><th>Hoja</th></tr>
+    <tr><td>Personas (377)</td><td><code>PARTICIPANTES NINE BOX (22).xlsx</code></td><td><code>observaciones</code></td></tr>
+    <tr><td>Planta personal</td><td><code>Planta_de_Personal_Mayo_2026</code></td><td><code>Planta Claro</code></td></tr>
+    <tr><td>Sucesores</td><td><code>PARTICIPANTES NINE BOX (22).xlsx</code></td><td>Columnas Z/AA</td></tr>
+  </table>
+
+  <h3>Reglas de negocio</h3>
+  <ul style="font-size:13px;color:var(--text-dim);line-height:2;padding-left:20px">
+    <li>Se eliminan personas con <strong>caja = 0</strong> que no son jefe de nadie</li>
+    <li><strong>DE GUSMAO</strong> no cuenta</li>
+    <li>Filtro "Comité Directivo" muestra 69 reportes (personas cuyo jefe es miembro CD), no los 9 miembros CD</li>
+    <li>Contador debe ser <strong>377</strong> exactos</li>
+  </ul>
+
+  <h3>Expedientes retirados (caja 0)</h3>
+  <div class="alert alert-info"><span>📋</span> <div><code>1015436663, 81754409, 1023901384, 67013077, 1032424617, 30402993, 79565536, 1023923983, 52703284, 1013632227, 1015466310, 26428594, 14568049, 80210526, 80058551, 1032491550, 89009161, 1022955506</code></div></div>
+
+  <h3>Scripts de mantenimiento</h3>
+  <table>
+    <tr><th>Script</th><th>Función</th></tr>
+    <tr><td><code>rebuild_ficha.js</code></td><td>Lee Excels → genera <code>ficha_data.js</code></td></tr>
+    <tr><td><code>sync_supabase.js</code></td><td>Lee Excels → upsert a Supabase (8 tablas)</td></tr>
+    <tr><td><code>sync_tableros.js</code></td><td>Lee HTML embebido → sube a Supabase</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════ FICHA ══════════════════ -->
+<div class="section" id="sec-ficha">
+  <h1>📄 Ficha de Talento</h1>
+  <p class="subtitle">Ficha detallada de cada persona con desempeño, 360°, clima, formación y Hogan.</p>
+
+  <h3>Estructura de <code>window.DATA</code></h3>
+  <div class="card">
+    <pre>{
+  <span class="str">"informacion"</span>: { <span class="comment">"exp": {nombre, cargo, gerencia, ...}</span> },  <span class="comment">// 164 personas</span>
+  <span class="str">"desempeno"</span>:   { <span class="comment">"exp": {y2024, y2025, y2026}</span> },
+  <span class="str">"talentos"</span>:    { <span class="comment">"exp": {talento, soy_dueno, ...}</span> },
+  <span class="str">"objetivos"</span>:   { <span class="comment">"exp": {obj, talento}</span> },
+  <span class="str">"tres60"</span>:      { <span class="comment">"exp": [{competencia, lider, propio, reporte, par}]</span> },  <span class="comment">// 106</span>
+  <span class="str">"clima"</span>:       { <span class="comment">"exp": [{dim, pct}]</span> },  <span class="comment">// pct es fracción 0-1</span>
+  <span class="str">"formacion"</span>:   { <span class="comment">"exp": {cargos_int, cargos_ext, titulos, formaciones}</span> },  <span class="comment">// 170</span>
+  <span class="str">"hogan"</span>:       { <span class="comment">"exp": {tipo, competencias, hpi, hds, mvpi, ...}</span> },  <span class="comment">// 142</span>
+  <span class="str">"observaciones"</span>: { ... },
+  <span class="str">"comite"</span>:      { ... },  <span class="comment">// 12 miembros</span>
+  <span class="str">"sucesores"</span>:   { ... }
+}</pre>
+  </div>
+
+  <h3>Data externa</h3>
+  <p>La data está en <code>ficha_data.js</code> (770KB), NO embebida en el HTML. El HTML la carga con:</p>
+  <pre>&lt;script src="ficha_data.js?v=des2026"&gt;&lt;/script&gt;</pre>
+
+  <div class="alert alert-danger"><span>⚠️</span> <div><strong>IMPORTANTE:</strong> <code>ficha_data.js</code> es enorme (770KB). <strong>NUNCA</strong> leerlo completo con Read. Usar Grep con patrones específicos o el script para regenerarlo.</div></div>
+
+  <h3>Fotos</h3>
+  <p>Se cargan desde Supabase Storage: <code>https://...supabase.co/storage/v1/object/public/fotos/&lt;exp&gt;.png</code></p>
+  <p>La función <code>resolvePhoto(exp)</code> prueba .png → .jpg → .jpeg con <code>HEAD</code> requests.</p>
+</div>
+
+<!-- ══════════════════ HOGAN ══════════════════ -->
+<div class="section" id="sec-hogan">
+  <h1>🛡️ Hogan</h1>
+  <p class="subtitle">Assessment de personalidad: competencias, HPI, HDS, MVPI.</p>
+
+  <h3>Estructura de datos por persona</h3>
+  <div class="card">
+    <pre>{
+  <span class="str">"tipo"</span>: <span class="str">"Estratégico"</span>,       <span class="comment">// equivale a versatilidad</span>
+  <span class="str">"competencias"</span>: [
+    { <span class="str">"nombre"</span>: <span class="str">"Liderazgo"</span>, <span class="str">"puntaje"</span>: 75 }  <span class="comment">// o "score" en algunos</span>
+  ],
+  <span class="str">"hpi"</span>:  { <span class="comment">// Competencias / Fortalezas & Estilo</span> },
+  <span class="str">"hds"</span>:  { <span class="comment">// Riesgos bajo presión</span> },
+  <span class="str">"mvpi"</span>: { <span class="comment">// Motivadores & Valores</span> },
+  <span class="str">"fortalezas"</span>: <span class="str">"• ...\n• ..."</span>,
+  <span class="str">"descarriladores"</span>: <span class="str">"• ..."</span>,
+  <span class="str">"motivadores"</span>: <span class="str">"• ..."</span>,
+  <span class="str">"foco"</span>: <span class="str">"• ..."</span>
+}</pre>
+  </div>
+
+  <div class="alert alert-info"><span>💡</span> <div><strong>Nota:</strong> No hay campo <code>versatilidad</code> — <code>h.tipo</code> equivale a versatilidad. Algunos registros usan <code>score</code> en vez de <code>puntaje</code>.</div></div>
+
+  <h3>Tipos de versatilidad</h3>
+  <div class="grid-2">
+    <div class="card" style="border-left:3px solid var(--green)"><strong style="color:var(--green)">Alta Versatilidad</strong><br><span style="font-size:12px;color:var(--text-dim)">Máxima flexibilidad y adaptabilidad</span></div>
+    <div class="card" style="border-left:3px solid var(--blue)"><strong style="color:var(--blue)">Sólido</strong><br><span style="font-size:12px;color:var(--text-dim)">Base consistente con áreas de desarrollo</span></div>
+    <div class="card" style="border-left:3px solid var(--amber)"><strong style="color:var(--amber)">Experto</strong><br><span style="font-size:12px;color:var(--text-dim)">Dominio profundo en área específica</span></div>
+    <div class="card" style="border-left:3px solid var(--purple)"><strong style="color:var(--purple)">Alto potencial</strong><br><span style="font-size:12px;color:var(--text-dim)">Capacidad emergente de liderazgo</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════ INFORMES ══════════════════ -->
+<div class="section" id="sec-informes">
+  <h1>📥 Informes (Descarga PDF)</h1>
+  <p class="subtitle">Centro de Informes — descarga PDFs de Ficha de Talento y Hogan.</p>
+
+  <h3>Flujo de descarga</h3>
+  <div class="flow">
+    <div class="flow-step"><span class="num">1</span> Login</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="num">2</span> Filtrar personas</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="num">3</span> Clic "Descargar"</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="num">4</span> PDF generado</div>
+  </div>
+
+  <h3>Badges de informes</h3>
+  <div class="grid-3">
+    <div class="card" style="text-align:center"><span class="badge badge-blue" style="font-size:14px;padding:6px 16px">F</span><br><span style="font-size:12px;color:var(--text-dim);margin-top:8px;display:block">Solo Ficha</span></div>
+    <div class="card" style="text-align:center"><span class="badge badge-purple" style="font-size:14px;padding:6px 16px">H</span><br><span style="font-size:12px;color:var(--text-dim);margin-top:8px;display:block">Solo Hogan</span></div>
+    <div class="card" style="text-align:center"><span class="badge" style="font-size:14px;padding:6px 16px;background:linear-gradient(135deg,rgba(0,51,160,.35),rgba(139,92,246,.35));color:#fff">F+H</span><br><span style="font-size:12px;color:var(--text-dim);margin-top:8px;display:block">Ambos informes</span></div>
+  </div>
+
+  <h3>Generación de PDFs</h3>
+  <p>Usa <strong>html2canvas</strong> + <strong>jsPDF</strong>. El flujo es:</p>
+  <ol style="font-size:13px;color:var(--text-dim);line-height:2;padding-left:20px">
+    <li>Genera HTML del informe (diseño replicado del tablero)</li>
+    <li>Crea un <code>&lt;div&gt;</code> oculto en el DOM</li>
+    <li>Renderiza con html2canvas a canvas</li>
+    <li>Convierte canvas a PDF con jsPDF (A4, multi-página si es necesario)</li>
+    <li>Descarga via <code>&lt;a&gt;</code> temporal con blob URL</li>
+  </ol>
+
+  <h3>Filtros disponibles</h3>
+  <table>
+    <tr><th>Filtro</th><th>Opciones</th></tr>
+    <tr><td>Dirección</td><td>Multi-select (dropdown con checkboxes)</td></tr>
+    <tr><td>Región</td><td>Select simple</td></tr>
+    <tr><td>Ciudad</td><td>Select (cascada con región)</td></tr>
+    <tr><td>Gerencia</td><td>Select (cascada con dirección)</td></tr>
+    <tr><td>Jefe directo</td><td>Select (cascada con gerencia)</td></tr>
+    <tr><td>Sucesor</td><td>Si / No</td></tr>
+    <tr><td>Informes</td><td>Ficha / Hogan / Ambos (F+H)</td></tr>
+    <tr><td>Nivel de reporte</td><td>N1 / N2 / N3 (checkbox pills)</td></tr>
+    <tr><td>Caja</td><td>C4–C9 (checkbox pills)</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════ ACTUALIZAR ══════════════════ -->
+<div class="section" id="sec-actualizar">
+  <h1>🔄 Cómo Actualizar</h1>
+  <p class="subtitle">Guía paso a paso para actualizar cada tablero.</p>
+
+  <div class="alert alert-success"><span>🚀</span> <div><strong>Método automático:</strong> Usa el <strong>Sync Hub</strong> (app Streamlit) para actualizar todo con un clic. Ver sección <a href="#" onclick="showSection('sync-hub')" style="color:var(--green)">Sync Hub</a>.</div></div>
+
+  <h3>Método manual (cuando el Sync Hub no es opción)</h3>
+
+  <div class="card" style="border-left:3px solid var(--red)">
+    <h4 style="color:var(--red)">Paso 1: Recibir Excels</h4>
+    <p>Recibe de tu compañera:</p>
+    <ul style="font-size:13px;color:var(--text-dim);line-height:2;padding-left:20px">
+      <li><code>Info Ficha Talento 1.xlsx</code> (INFORMACION, Formación, Desempeño 2024/2025)</li>
+      <li><code>Info Ficha Talento 2.xlsx</code> (Desempeño 2026, Talentos, 360, Clima)</li>
+      <li><code>PARTICIPANTES NINE BOX (22).xlsx</code> (observaciones)</li>
+      <li><code>Planta_de_Personal_Mayo_2026.xlsx</code> (Planta Claro)</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--amber)">
+    <h4 style="color:var(--amber)">Paso 2: Sync a Supabase</h4>
+    <pre><span class="cmd">node</span> sync_supabase.js <span class="comment"># sincroniza todo (~3-5 min)</span>
+<span class="cmd">node</span> sync_supabase.js <span class="comment">--tabla=personas</span> <span class="comment"># solo una tabla</span></pre>
+    <p>Lee los Excels y hace upsert a 8 tablas Supabase.</p>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--blue)">
+    <h4 style="color:var(--blue)">Paso 3: Regenerar ficha_data.js</h4>
+    <pre><span class="cmd">node</span> rebuild_ficha.js</pre>
+    <p>Genera <code>ficha_data.js</code> desde los Excels. Tarda ~1-2 min.</p>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--purple)">
+    <h4 style="color:var(--purple)">Paso 4: Actualizar Hogan</h4>
+    <pre><span class="cmd">node</span> rebuild_hogan_final.js</pre>
+    <p>Actualiza la sección Hogan en <code>ficha_data.js</code>.</p>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--green)">
+    <h4 style="color:var(--green)">Paso 5: Sync tableros HTML</h4>
+    <pre><span class="cmd">node</span> sync_tableros.js</pre>
+    <p>Sube la data embebida de ninebox/practicantes/hogan/index/organigrama a Supabase.</p>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--cyan)">
+    <h4 style="color:var(--cyan)">Paso 6: Git push</h4>
+    <pre><span class="cmd">git add</span> .
+<span class="cmd">git commit</span> -m <span class="str">"Sync: actualización de datos"</span>
+<span class="cmd">git push</span> origin main</pre>
+    <p>GitHub Pages se actualiza automáticamente en ~2-5 min.</p>
+  </div>
+</div>
+
+<!-- ══════════════════ SYNC HUB ══════════════════ -->
+<div class="section" id="sec-sync-hub">
+  <h1>🚀 Sync Hub</h1>
+  <p class="subtitle">App Streamlit para actualización automática de tableros.</p>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:rgba(232,40,63,.15);color:var(--red)">🔗</div>
+      <div><div class="card-title">URL de la App</div><div class="card-desc">Accesible desde cualquier navegador</div></div>
+    </div>
+    <p><code>https://sync-hub-xxxxx.streamlit.app</code> (deploy en Streamlit Cloud)</p>
+  </div>
+
+  <h3>Cómo funciona</h3>
+  <div class="flow">
+    <div class="flow-step"><span class="num">1</span> Abre la URL</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="num">2</span> Login</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="num">3</span> Sube Excels</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="num">4</span> Ve diff</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="num">5</span> Sincroniza</div>
+  </div>
+
+  <h3>Pantallas</h3>
+  <table>
+    <tr><th>Pantalla</th><th>Qué muestra</th></tr>
+    <tr><td><strong>Login</strong></td><td>Correo + contraseña (solo usuarios autorizados)</td></tr>
+    <tr><td><strong>Upload</strong></td><td>3-4 drag & drop zones para Excels</td></tr>
+    <tr><td><strong>Diff</strong></td><td>Resumen: nuevos, eliminados, modificados. Tabla detallada expandible.</td></tr>
+    <tr><td><strong>Sync</strong></td><td>Botón "Sincronizar" → Supabase + Git automático</td></tr>
+    <tr><td><strong>Historial</strong></td><td>Últimos syncs (fecha, cambios, estado)</td></tr>
+  </table>
+
+  <h3>Qué hace al sincronizar</h3>
+  <ol style="font-size:13px;color:var(--text-dim);line-height:2;padding-left:20px">
+    <li>Upsert a Supabase (solo los cambios, no todo el Excel)</li>
+    <li>Guarda el Excel en <code>excels_historial/YYYY-MM-DD/</code> en el repo</li>
+    <li>Git commit + push automático via GitHub API</li>
+    <li>Log en tabla <code>sync_log</code> de Supabase</li>
+  </ol>
+
+  <h3>Deploy en Streamlit Cloud</h3>
+  <ol style="font-size:13px;color:var(--text-dim);line-height:2;padding-left:20px">
+    <li>Ve a <a href="https://share.streamlit.io" target="_blank" style="color:var(--cyan)">share.streamlit.io</a></li>
+    <li>Clic "New app" → selecciona repo <code>Nicolukas23/sync-hub</code></li>
+    <li>Main file: <code>app.py</code></li>
+    <li>Advanced settings → Secrets:</li>
+  </ol>
+  <pre>SUPABASE_URL = "https://yxxpjttdmwruyeqiuxzu.supabase.co"
+SUPABASE_SERVICE_KEY = "eyJ..."
+GITHUB_TOKEN = "ghp_..."
+GITHUB_REPO = "Nicolukas23/organigrama_hogan"</pre>
+</div>
+
+<!-- ══════════════════ GIT ══════════════════ -->
+<div class="section" id="sec-git">
+  <h1>🔀 Git y Deploy</h1>
+  <p class="subtitle">Control de versiones y despliegue.</p>
+
+  <h3>Comandos常用</h3>
+  <div class="card">
+    <pre><span class="comment"># Ver estado</span>
+<span class="cmd">git status</span>
+<span class="cmd">git log</span> --oneline -5
+
+<span class="comment"># Hacer cambios</span>
+<span class="cmd">git add</span> .
+<span class="cmd">git commit</span> -m <span class="str">"mensaje descriptivo"</span>
+
+<span class="comment"># Push (requiere token)</span>
+<span class="cmd">git remote set-url origin</span> <span class="str">"https://Nicolukas23:TOKEN@github.com/..."</span>
+<span class="cmd">git push</span> origin main
+<span class="cmd">git remote set-url origin</span> <span class="str">"https://github.com/Nicolukas23/organigrama_hogan.git"</span>
+
+<span class="comment"># Pull</span>
+<span class="cmd">git pull</span> origin main</pre>
+  </div>
+
+  <div class="alert alert-danger"><span>⚠️</span> <div><strong>Regla de oro:</strong> Después de cualquier push exitoso, <strong>SIEMPRE</strong> limpiar el remote para que no quede el token en la URL:<br><code>git remote set-url origin https://github.com/Nicolukas23/organigrama_hogan.git</code></div></div>
+
+  <h3>Flujo de deploy</h3>
+  <div class="flow">
+    <div class="flow-step"><span class="num">1</span> Editar HTML/JS</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="num">2</span> git add + commit</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="num">3</span> git push</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="num">4</span> GitHub Pages auto-deploy</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="num">5</span> URL actualizada (2-5 min)</div>
+  </div>
+
+  <h3>Reglas del repo</h3>
+  <ul style="font-size:13px;color:var(--text-dim);line-height:2;padding-left:20px">
+    <li>Commit <strong>SOLO</strong> cuando el usuario lo pida explícitamente</li>
+    <li>Push a <code>origin/main</code></li>
+    <li>El remote por defecto no lleva token</li>
+    <li>Si GitHub pide auth, el usuario proveerá el token</li>
+  </ul>
+</div>
+
+<!-- ══════════════════ SCRIPTS ══════════════════ -->
+<div class="section" id="sec-scripts">
+  <h1>⚙️ Scripts de Mantenimiento</h1>
+  <p class="subtitle">Scripts Node.js y Python para regenerar data y sincronizar.</p>
+
+  <div class="grid-2">
+    <div class="arch-card">
+      <div class="arch-name">rebuild_ficha.js</div>
+      <div class="arch-desc">Regenera <code>ficha_data.js</code> desde Excels. Lee Info Ficha Talento 1/2 + Planta + Nine Box.</div>
+      <div class="arch-badge"><span class="badge badge-blue">Node.js</span> <span class="badge badge-amber">~1-2 min</span></div>
+    </div>
+    <div class="arch-card">
+      <div class="arch-name">rebuild_hogan_final.js</div>
+      <div class="arch-desc">Actualiza sección Hogan en <code>ficha_data.js</code> desde <code>reporte_sucesores.xlsx</code>.</div>
+      <div class="arch-badge"><span class="badge badge-blue">Node.js</span> <span class="badge badge-green">&lt;5 seg</span></div>
+    </div>
+    <div class="arch-card">
+      <div class="arch-name">sync_supabase.js</div>
+      <div class="arch-desc">Lee Excels → upsert a 8 tablas Supabase. Modo: <code>--tabla=personas</code>.</div>
+      <div class="arch-badge"><span class="badge badge-blue">Node.js</span> <span class="badge badge-amber">~3-5 min</span></div>
+    </div>
+    <div class="arch-card">
+      <div class="arch-name">sync_tableros.js</div>
+      <div class="arch-desc">Lee data embebida de HTML → sube a Supabase (<code>ninebox</code>, <code>tableros_json</code>).</div>
+      <div class="arch-badge"><span class="badge badge-blue">Node.js</span> <span class="badge badge-green">~10-30 seg</span></div>
+    </div>
+    <div class="arch-card">
+      <div class="arch-name">update_desempeno.js</div>
+      <div class="arch-desc">Actualiza desempeño en ficha_data.js.</div>
+      <div class="arch-badge"><span class="badge badge-blue">Node.js</span></div>
+    </div>
+    <div class="arch-card">
+      <div class="arch-name">analizador_hv.py</div>
+      <div class="arch-desc">Análisis de hojas de vida / modelos.</div>
+      <div class="arch-badge"><span class="badge badge-purple">Python</span></div>
+    </div>
+  </div>
+
+  <h3>Requisitos</h3>
+  <pre><span class="comment"># Node.js (para scripts JS)</span>
+npm install
+
+<span class="comment"># Python (para sync_hub y análisis)</span>
+pip install -r requirements.txt</pre>
+</div>
+
+<!-- ══════════════════ TABLAS SUPABASE ══════════════════ -->
+<div class="section" id="sec-supabase-tables">
+  <h1>🗄️ Tablas Supabase</h1>
+  <p class="subtitle">Referencia completa de todas las tablas y su esquema.</p>
+
+  <table>
+    <tr><th>Tabla</th><th>Key</th><th>Registros</th><th>Escritura</th><th>Descripción</th></tr>
+    <tr><td><code>personas</code></td><td>expediente</td><td>~164</td><td>UPSERT</td><td>Info básica: nombre, cargo, gerencia, jefe, región</td></tr>
+    <tr><td><code>formacion</code></td><td>expediente</td><td>~170</td><td>UPSERT</td><td>Educación, experiencia interna/externa</td></tr>
+    <tr><td><code>desempeno</code></td><td>expediente</td><td>~164</td><td>UPSERT</td><td>Scores 2024/2025/2026</td></tr>
+    <tr><td><code>talentos</code></td><td>expediente</td><td>~164</td><td>UPSERT</td><td>Comportamientos: soy_dueno, soy_lider, soy_digital</td></tr>
+    <tr><td><code>objetivos</code></td><td>expediente</td><td>~164</td><td>UPSERT</td><td>Objetivos de desarrollo 2026</td></tr>
+    <tr><td><code>evaluacion_360</code></td><td>—</td><td>~106</td><td>DELETE ALL + INSERT</td><td>Competencias 360°: líder, propio, reporte, pares</td></tr>
+    <tr><td><code>clima</code></td><td>—</td><td>~varios</td><td>DELETE ALL + INSERT</td><td>Dimensiones de clima organizacional</td></tr>
+    <tr><td><code>sucesores</code></td><td>expediente</td><td>~366</td><td>UPSERT</td><td>Sucesores identificados + tiempo</td></tr>
+    <tr><td><code>ninebox</code></td><td>expediente</td><td>377</td><td>UPSERT</td><td>Data embebida del Nine Box</td></tr>
+    <tr><td><code>practicantes</code></td><td>doc</td><td>~varios</td><td>UPSERT</td><td>Data de practicantes</td></tr>
+    <tr><td><code>tableros_json</code></td><td>clave</td><td>3</td><td>UPSERT</td><td>Data completa de hogan/index/organigrama</td></tr>
+    <tr><td><code>sync_log</code></td><td>id (serial)</td><td>—</td><td>INSERT</td><td>Historial de syncs del Sync Hub</td></tr>
+  </table>
+
+  <h3>Diferencia UPSERT vs DELETE ALL + INSERT</h3>
+  <div class="grid-2">
+    <div class="card" style="border-left:3px solid var(--green)">
+      <strong style="color:var(--green)">UPSERT</strong><br>
+      <span style="font-size:12px;color:var(--text-dim)">Actualiza filas existentes, inserta nuevas. Respeta filas que no cambiaron.</span>
+    </div>
+    <div class="card" style="border-left:3px solid var(--red)">
+      <strong style="color:var(--red)">DELETE ALL + INSERT</strong><br>
+      <span style="font-size:12px;color:var(--text-dim)">Borra todo y re-inserta. Usado para tablas planas (360, clima) donde no hay key única.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TROUBLESHOOTING ══════════════════ -->
+<div class="section" id="sec-troubleshooting">
+  <h1>🔧 Troubleshooting</h1>
+  <p class="subtitle">Soluciones a problemas comunes.</p>
+
+  <div class="card">
+    <h4>❌ "El tablero no se actualiza"</h4>
+    <p><strong>Causa:</strong> Caché del navegador.</p>
+    <p><strong>Solución:</strong> <code>Cmd+Shift+R</code> (Mac) o <code>Ctrl+Shift+R</code> (Windows). O abrir en ventana incógnita.</p>
+  </div>
+
+  <div class="card">
+    <h4>❌ "No carga la data de Supabase"</h4>
+    <p><strong>Causa:</strong> Supabase caído o problema de red.</p>
+    <p><strong>Solución:</strong> Verificar <a href="https://status.supabase.com" target="_blank" style="color:var(--cyan)">status.supabase.com</a>. Los tableros usan data embebida como fallback.</p>
+  </div>
+
+  <div class="card">
+    <h4>❌ "El PDF se ve feo / muy grande"</h4>
+    <p><strong>Causa:</strong> Scale de html2canvas.</p>
+    <p><strong>Solución:</strong> Verificar que <code>htmlToPdf</code> use <code>scale: 1.2</code> (no 1.6 o 2.0).</p>
+  </div>
+
+  <div class="card">
+    <h4>❌ "No se descarga el segundo PDF (Hogan)"</h4>
+    <p><strong>Causa:</strong> El navegador bloquea la segunda descarga.</p>
+    <p><strong>Solución:</strong> Verificar que <code>_triggerDownload</code> cree un <code>&lt;a&gt;</code> nuevo por cada descarga (no reutilizar).</p>
+  </div>
+
+  <div class="card">
+    <h4>❌ "Sync Hub no conecta a Supabase"</h4>
+    <p><strong>Causa:</strong> Falta el service key en los secrets de Streamlit.</p>
+    <p><strong>Solución:</strong> Verificar <code>SUPABASE_SERVICE_KEY</code> en Streamlit Cloud → Settings → Secrets.</p>
+  </div>
+
+  <div class="card">
+    <h4>❌ "Git push pide contraseña"</h4>
+    <p><strong>Causa:</strong> Token expirado o remote con token.</p>
+    <p><strong>Solución:</strong> Generar nuevo PAT en <a href="https://github.com/settings/tokens" target="_blank" style="color:var(--cyan)">github.com/settings/tokens</a> (scope: repo).</p>
+  </div>
+
+  <div class="card">
+    <h4>❌ "Contador Nine Box no es 377"</h4>
+    <p><strong>Causa:</strong> Se agregaron personas sin eliminar las que salieron.</p>
+    <p><strong>Solución:</strong> Verificar que personas con caja 0 que no son jefe de nadie estén eliminadas. Ver lista de expedientes retirados en la sección Nine Box.</p>
+  </div>
+</div>
+
+</main>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const sec = document.getElementById('sec-' + id);
+  if (sec) sec.classList.add('active');
+  const nav = document.querySelector('[data-section="' + id + '"]');
+  if (nav) nav.classList.add('active');
+  document.getElementById('main').scrollTop = 0;
+  window.scrollTo(0, 0);
+  // Cerrar sidebar en móvil
+  document.querySelector('.sidebar').classList.remove('open');
+}
+
+// Búsqueda
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && !e.target.matches('input,textarea')) {
+    e.preventDefault();
+    const q = prompt('Buscar:');
+    if (q) {
+      const text = document.body.innerText.toLowerCase();
+      const idx = text.indexOf(q.toLowerCase());
+      if (idx >= 0) {
+        const sections = ['intro','equipo','repo','supabase','tableros','ninebox','ficha','hogan','informes','actualizar','sync-hub','git','scripts','supabase-tables','troubleshooting'];
+        for (const s of sections) {
+          const el = document.getElementById('sec-' + s);
+          if (el && el.innerText.toLowerCase().includes(q.toLowerCase())) {
+            showSection(s);
+            break;
+          }
+        }
+      }
+    }
+  }
+});
+
+// Scroll spy para TOC
+window.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('.section.active h2');
+  // simplified - just highlight current section in nav
+});
+</script>
+
+</body>
+</html>
