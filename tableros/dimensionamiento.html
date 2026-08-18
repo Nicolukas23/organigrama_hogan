@@ -315,6 +315,8 @@ body.dark thead th{background:#1e293b}
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
+/* Session restore */
+(function(){var s=localStorage.getItem('portal_session');if(s){try{var obj=JSON.parse(s);if(obj.email&&(Date.now()-obj.ts)<86400000){var ol=document.getElementById('loginOverlay');if(ol)ol.classList.add('hidden');}}catch(e){}}})();
 const MONTHS=['Ene','Feb','Mar','Abr','May','Jun'];
 const REGIONS=['R1','R2','R3','R4','R5'];
 const REGION_NAMES={R1:'R1 - Caribe',R2:'R2 - Eje Cafetero',R3:'R3 - Sur Occidente',R4:'R4 - Centro',R5:'R5 - Nor oriente'};
@@ -424,8 +426,7 @@ function chipColor(v){return v>=70?'green':v>=50?'orange':'red'}
 
 // ─── FILTERS ─────────────────────────────────────────────────────────
 function initFilters(){
-/* Session restore */
-(function(){var s=localStorage.getItem('portal_session');if(s){try{var obj=JSON.parse(s);if(obj.email && (Date.now()-obj.ts)<86400000){var ol=document.getElementById('loginOverlay');if(ol)ol.classList.add('hidden');}}catch(e){}}})();  const fReg=document.getElementById('fRegional');
+  const fReg=document.getElementById('fRegional');
   REGIONS.forEach(r=>{const o=document.createElement('option');o.value=r;o.textContent=r;fReg.appendChild(o);});
   updateCiudades();
   fReg.addEventListener('change',e=>{state.region=e.target.value;state.ciudad='';updateCiudades();applyFilters();});
@@ -658,7 +659,8 @@ document.getElementById('loginBtn').addEventListener('click',()=>{
   const pass=document.getElementById('loginPass').value;
   if(VALID_EMAILS.includes(email)&&pass==='1234'){
     document.getElementById('loginOverlay').classList.add('hidden');
-  localStorage.setItem('portal_session',JSON.stringify({email:email,ts:Date.now()}));  }else{
+    localStorage.setItem('portal_session',JSON.stringify({email:email,ts:Date.now()}));
+  }else{
     document.getElementById('loginError').style.display='block';
   }
 });
