@@ -1121,7 +1121,7 @@ footer{
 <script src="../data/ficha_data.js?v=des2026"></script>
 <script>
 /* Session restore */
-(function(){var s=localStorage.getItem('portal_session');if(s){try{var obj=JSON.parse(s);if(obj.email&&(Date.now()-obj.ts)<86400000){var ol=document.getElementById('loginOverlay');if(ol)ol.classList.add('hidden');}}catch(e){}}})();
+(function(){var s=localStorage.getItem('portal_session');if(s){try{var obj=JSON.parse(s);if(obj.email&&(Date.now()-obj.ts)<86400000){var ol=document.getElementById('loginOverlay');if(ol)ol.classList.add('hidden');var mw=document.getElementById('mainWrap');if(mw)mw.style.display='';}}catch(e){}}})();
 /* ---------- Data & config ---------- */
 let RAW = JSON.parse(document.getElementById('dataStore').textContent);
 
