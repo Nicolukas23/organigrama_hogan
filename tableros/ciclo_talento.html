@@ -11,157 +11,132 @@
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 .wrap{max-width:1400px;margin:0 auto;padding:24px}
 
-/* ── HERO HEADER ────────────────────────────────────────────────── */
+/* ── HERO ────────────────────────────────────────────────────────── */
 .hero{background:linear-gradient(135deg,#0F172A 0%,#1E3A5F 50%,#7C1D24 100%);border-radius:20px;padding:36px 40px;margin-bottom:28px;color:#fff;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.06)}
-.hero::after{content:'';position:absolute;bottom:-60px;right:60px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.04)}
-.hero h1{font-size:1.6rem;font-weight:800;margin-bottom:6px;position:relative;z-index:1}
-.hero p{font-size:.88rem;color:rgba(255,255,255,.7);position:relative;z-index:1}
-.hero-stats{display:flex;gap:24px;margin-top:20px;position:relative;z-index:1}
-.hero-stat{text-align:center}
-.hero-stat .val{font-size:2rem;font-weight:800;line-height:1}
-.hero-stat .lbl{font-size:.68rem;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
+.hero h1{font-size:1.5rem;font-weight:800;margin-bottom:4px}
+.hero p{font-size:.85rem;color:rgba(255,255,255,.7)}
+.hero-kpis{display:flex;gap:20px;margin-top:20px;flex-wrap:wrap}
+.hero-kpi{text-align:center;background:rgba(255,255,255,.1);border-radius:12px;padding:14px 22px;backdrop-filter:blur(4px)}
+.hero-kpi .v{font-size:1.8rem;font-weight:800;line-height:1}
+.hero-kpi .l{font-size:.65rem;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
 
-/* ── KPI CARDS ──────────────────────────────────────────────────── */
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
-@media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:500px){.kpi-grid{grid-template-columns:1fr}}
-.kpi{border-radius:16px;padding:24px;position:relative;overflow:hidden;cursor:default;transition:transform .2s,box-shadow .2s}
-.kpi:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.15)}
-.kpi::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.12)}
-.kpi-icon{font-size:1.8rem;margin-bottom:10px}
-.kpi-val{font-size:2.2rem;font-weight:800;line-height:1}
-.kpi-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-top:6px;opacity:.8}
-.kpi-sub{font-size:.7rem;opacity:.6;margin-top:4px}
-.kpi-crimson{background:linear-gradient(135deg,#7C1D24,#B91C1C);color:#fff}
-.kpi-blue{background:linear-gradient(135deg,#1E3A5F,#2563EB);color:#fff}
-.kpi-green{background:linear-gradient(135deg,#064E3B,#059669);color:#fff}
-.kpi-purple{background:linear-gradient(135deg,#4C1D95,#7C3AED);color:#fff}
+/* ── KPI ROW ─────────────────────────────────────────────────────── */
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px}
+@media(max-width:1000px){.kpi-row{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
+.kpi{border-radius:14px;padding:18px 16px;text-align:center;position:relative;overflow:hidden;transition:transform .2s}
+.kpi:hover{transform:translateY(-3px)}
+.kpi::after{content:'';position:absolute;top:-15px;right:-15px;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.1)}
+.kpi-val{font-size:1.9rem;font-weight:800;line-height:1}
+.kpi-lbl{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-top:5px;opacity:.85}
+.k1{background:linear-gradient(135deg,#7C1D24,#B91C1C);color:#fff}
+.k2{background:linear-gradient(135deg,#1E3A5F,#2563EB);color:#fff}
+.k3{background:linear-gradient(135deg,#064E3B,#059669);color:#fff}
+.k4{background:linear-gradient(135deg,#7C2D12,#EA580C);color:#fff}
+.k5{background:linear-gradient(135deg,#4C1D95,#7C3AED);color:#fff}
 
-/* ── SECTION ────────────────────────────────────────────────────── */
-.section{background:var(--card-bg);border:1px solid var(--border);border-radius:18px;padding:28px;margin-bottom:22px}
-.section-title{font-size:1.05rem;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:10px}
-.section-title .icon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:1.1rem;flex-shrink:0}
-.section-title .icon.red{background:#FEE2E2;color:#991B1B}
-.section-title .icon.blue{background:#DBEAFE;color:#1E40AF}
-.section-title .icon.green{background:#D1FAE5;color:#065F46}
-.section-title .icon.purple{background:#EDE9FE;color:#5B21B6}
+/* ── SECTION ─────────────────────────────────────────────────────── */
+.sec{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px}
+.sec-title{font-size:.95rem;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.sec-title .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
-/* ── CHARTS ROW ─────────────────────────────────────────────────── */
-.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-@media(max-width:800px){.charts-row{grid-template-columns:1fr}}
-.chart-card{background:var(--surface,#F9FAFB);border:1px solid var(--border);border-radius:14px;padding:22px}
-.chart-card h3{font-size:.82rem;font-weight:700;margin-bottom:16px;color:var(--text2)}
+/* ── CHARTS ──────────────────────────────────────────────────────── */
+.charts2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+@media(max-width:800px){.charts2{grid-template-columns:1fr}}
+.chart-card{background:var(--surface,#F9FAFB);border:1px solid var(--border);border-radius:14px;padding:20px}
+.chart-card h3{font-size:.8rem;font-weight:700;margin-bottom:14px;color:var(--text2)}
+.donut-wrap{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap}
+.donut-legend{display:flex;flex-direction:column;gap:8px}
+.dl-item{display:flex;align-items:center;gap:8px;font-size:.76rem}
+.dl-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.dl-val{font-weight:700;margin-left:auto;min-width:24px;text-align:right}
 
-/* ── DONUT CHART ────────────────────────────────────────────────── */
-.donut-wrap{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap}
-.donut-legend{display:flex;flex-direction:column;gap:10px}
-.donut-legend-item{display:flex;align-items:center;gap:8px;font-size:.78rem}
-.donut-legend-dot{width:12px;height:12px;border-radius:4px;flex-shrink:0}
-.donut-legend-val{font-weight:700;margin-left:auto;min-width:28px;text-align:right}
+/* ── MOBILITY CARDS ──────────────────────────────────────────────── */
+.mob-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.mob-grid{grid-template-columns:1fr}}
+.mob-card{border-radius:14px;padding:22px;text-align:center;position:relative;overflow:hidden;transition:transform .2s}
+.mob-card:hover{transform:scale(1.02)}
+.mob-card::after{content:'';position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.1)}
+.mob-v{font-size:2.4rem;font-weight:900;line-height:1;position:relative;z-index:1}
+.mob-l{font-size:.82rem;font-weight:700;margin-top:6px;position:relative;z-index:1}
+.mob-p{font-size:.72rem;opacity:.7;margin-top:3px;position:relative;z-index:1}
+.mc-vert{background:linear-gradient(135deg,#EDE9FE,#C4B5FD);color:#5B21B6}
+.mc-horiz{background:linear-gradient(135deg,#DBEAFE,#93C5FD);color:#1E40AF}
 
-/* ── ANIMATED BARS ──────────────────────────────────────────────── */
-.anim-bars{display:flex;flex-direction:column;gap:10px}
-.anim-bar-row{display:flex;align-items:center;gap:10px}
-.anim-bar-label{width:130px;font-size:.74rem;color:var(--text2);text-align:right;flex-shrink:0;font-weight:500}
-.anim-bar-track{flex:1;height:32px;background:var(--surface2,#F3F4F6);border-radius:10px;overflow:hidden;position:relative}
-.anim-bar-fill{height:100%;border-radius:10px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;font-size:.72rem;font-weight:700;color:#fff;min-width:fit-content;transition:width 1s cubic-bezier(.4,0,.2,1)}
-.anim-bar-val{font-size:.78rem;font-weight:700;width:44px;text-align:right;flex-shrink:0}
-
-/* ── RISK CARDS ─────────────────────────────────────────────────── */
-.risk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+/* ── RISK + TIME ─────────────────────────────────────────────────── */
+.risk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 @media(max-width:700px){.risk-grid{grid-template-columns:1fr}}
-.risk-card{border-radius:16px;padding:28px 20px;text-align:center;position:relative;overflow:hidden;cursor:default;transition:transform .2s,box-shadow .2s}
-.risk-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.12)}
-.risk-card::before{content:'';position:absolute;top:-30px;right:-30px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.1)}
-.risk-val{font-size:2.8rem;font-weight:900;line-height:1;position:relative;z-index:1}
-.risk-label{font-size:.82rem;font-weight:700;margin-top:8px;position:relative;z-index:1}
-.risk-desc{font-size:.7rem;opacity:.7;margin-top:6px;position:relative;z-index:1;line-height:1.3}
-.risk-alta{background:linear-gradient(135deg,#FEE2E2,#FECACA);color:#991B1B}
-.risk-media{background:linear-gradient(135deg,#FFEDD5,#FED7AA);color:#9A3412}
-.risk-baja{background:linear-gradient(135deg,#D1FAE5,#A7F3D0);color:#065F46}
+.risk-card{border-radius:14px;padding:22px;text-align:center;position:relative;overflow:hidden;transition:transform .2s}
+.risk-card:hover{transform:translateY(-2px)}
+.risk-card::after{content:'';position:absolute;top:-20px;right:-20px;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.12)}
+.risk-v{font-size:2.2rem;font-weight:900;line-height:1;position:relative;z-index:1}
+.risk-l{font-size:.78rem;font-weight:700;margin-top:6px;position:relative;z-index:1}
+.risk-d{font-size:.68rem;opacity:.7;margin-top:4px;position:relative;z-index:1;line-height:1.3}
+.ra{background:linear-gradient(135deg,#FEE2E2,#FECACA);color:#991B1B}
+.rm{background:linear-gradient(135deg,#FFEDD5,#FED7AA);color:#9A3412}
+.rb{background:linear-gradient(135deg,#D1FAE5,#A7F3D0);color:#065F46}
 
-/* ── MOBILITY MATRIX ────────────────────────────────────────────── */
-.mobility-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.mobility-card{border-radius:14px;padding:20px;text-align:center;position:relative;overflow:hidden;cursor:default;transition:transform .2s}
-.mobility-card:hover{transform:scale(1.02)}
-.mobility-val{font-size:2rem;font-weight:800;line-height:1}
-.mobility-label{font-size:.78rem;font-weight:600;margin-top:6px}
-.mobility-pct{font-size:.7rem;opacity:.6;margin-top:2px}
-.mob-interna{background:linear-gradient(135deg,#D1FAE5,#6EE7B7);color:#065F46}
-.mob-transversal{background:linear-gradient(135deg,#FEF3C7,#FDE68A);color:#92400E}
-.mob-horizontal{background:linear-gradient(135deg,#DBEAFE,#93C5FD);color:#1E40AF}
-.mob-vertical{background:linear-gradient(135deg,#EDE9FE,#C4B5FD);color:#5B21B6}
+.time-cards{display:flex;gap:12px;flex-wrap:wrap}
+.time-card{flex:1;min-width:120px;border-radius:12px;padding:16px;text-align:center}
+.time-card .tv{font-size:1.6rem;font-weight:800}
+.time-card .tl{font-size:.7rem;font-weight:600;margin-top:3px}
+.t1{background:linear-gradient(135deg,#D1FAE5,#6EE7B7);color:#065F46}
+.t2{background:linear-gradient(135deg,#DBEAFE,#93C5FD);color:#1E40AF}
+.t3{background:linear-gradient(135deg,#FEF3C7,#FDE68A);color:#92400E}
 
-/* ── TIME DONUT ─────────────────────────────────────────────────── */
-.time-cards{display:flex;gap:14px;flex-wrap:wrap}
-.time-card{flex:1;min-width:140px;border-radius:14px;padding:18px;text-align:center;position:relative;overflow:hidden}
-.time-card .tv{font-size:1.8rem;font-weight:800}
-.time-card .tl{font-size:.72rem;font-weight:600;margin-top:4px}
-.time-1{background:linear-gradient(135deg,#D1FAE5,#6EE7B7);color:#065F46}
-.time-2{background:linear-gradient(135deg,#DBEAFE,#93C5FD);color:#1E40AF}
-.time-3{background:linear-gradient(135deg,#FEF3C7,#FDE68A);color:#92400E}
-.time-other{background:linear-gradient(135deg,#F3F4F6,#E5E7EB);color:#374151}
-
-/* ── TABLE ──────────────────────────────────────────────────────── */
-.table-wrap{overflow-x:auto;margin-top:8px;border-radius:12px;border:1px solid var(--border)}
-table{width:100%;border-collapse:collapse;font-size:.78rem}
-thead{position:sticky;top:0;z-index:2}
-th{background:linear-gradient(135deg,#1E3A5F,#2563EB);color:#fff;padding:12px 14px;text-align:left;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
-td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
-tr:hover td{background:var(--hover)}
-.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:700;white-space:nowrap}
-.badge-green{background:#D1FAE5;color:#065F46}
-.badge-red{background:#FEE2E2;color:#991B1B}
-.badge-blue{background:#DBEAFE;color:#1E40AF}
-.badge-orange{background:#FFEDD5;color:#9A3412}
-.badge-purple{background:#EDE9FE;color:#5B21B6}
-
-/* ── FILTERS ────────────────────────────────────────────────────── */
-.filters{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:16px}
+/* ── FILTERS ─────────────────────────────────────────────────────── */
+.filters{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:14px}
 .filters select,.filters input{padding:8px 12px;border:1.5px solid var(--border);border-radius:10px;font-size:.8rem;background:var(--card-bg);color:var(--text);outline:none;transition:border .15s}
 .filters select:focus,.filters input:focus{border-color:#2563EB}
-.filters label{font-size:.72rem;color:var(--text3);font-weight:600;margin-bottom:3px;display:block}
+.filters label{font-size:.7rem;color:var(--text3);font-weight:600;margin-bottom:3px;display:block}
+
+/* ── TABLE ───────────────────────────────────────────────────────── */
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.78rem}
+th{background:linear-gradient(135deg,#1E3A5F,#2563EB);color:#fff;padding:11px 14px;text-align:left;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;border-right:1px solid rgba(255,255,255,.15)}
+th:last-child{border-right:none}
+td{padding:10px 14px;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+td:last-child{border-right:none}
+tr:hover td{background:var(--hover)}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:700;white-space:nowrap}
+.bg-green{background:#D1FAE5;color:#065F46}
+.bg-blue{background:#DBEAFE;color:#1E40AF}
+.bg-orange{background:#FFEDD5;color:#9A3412}
+.bg-purple{background:#EDE9FE;color:#5B21B6}
+.bg-red{background:#FEE2E2;color:#991B1B}
+.bg-gray{background:#F3F4F6;color:#374151}
+.person-name{font-weight:600;font-size:.8rem}
+.person-cargo{font-size:.7rem;color:var(--text4)}
 </style>
 </head>
 <body>
 
 <div class="wrap">
   <div class="hero" id="hero"></div>
-  <div class="kpi-grid" id="kpis"></div>
-  <div class="charts-row" id="charts1"></div>
-  <div class="section" id="mobilitySection"></div>
-  <div class="section" id="riskSection"></div>
-  <div class="section" id="tableSection"></div>
+  <div class="kpi-row" id="kpis"></div>
+  <div class="charts2" id="charts1"></div>
+  <div class="sec" id="mobSection"></div>
+  <div class="sec" id="timeSection"></div>
+  <div class="sec" id="riskSection"></div>
+  <div class="sec" id="tableSection"></div>
 </div>
 
 <script src="../data/nav.js"></script>
 <script>
 var RAW=[];
 
-/* ════════════════════════════════════════════════════════════════════
-   DATA — pegar JSON del Excel
-   ════════════════════════════════════════════════════════════════════ */
-RAW=[
-];
-
-/* Si el array está vacío, intenta cargar desde Supabase o archivo externo */
-if(RAW.length===0){
-  /* Fallback: datos embebidos generados desde SUCESORES.xlsx */
-  document.addEventListener('DOMContentLoaded',function(){
-    fetch('../data/sucesores_data.json').then(function(r){return r.json()}).then(function(d){RAW=d;render()}).catch(function(e){
-      console.error('Error cargando data:',e);
-    });
+document.addEventListener('DOMContentLoaded',function(){
+  fetch('../data/sucesores_data.json').then(function(r){return r.json()}).then(function(d){RAW=d;render()}).catch(function(e){
+    console.error('Error:',e);
   });
-}else{
-  document.addEventListener('DOMContentLoaded',function(){render()});
-}
+});
 
 function render(){
-/* ── HELPERS ──────────────────────────────────────────────────────── */
-var NIVEL_ORD={'COMITÉ DIRECTIVO':3,'DIRECTOR (A)':2,'GERENTE':1};
+var NL={'COMITÉ DIRECTIVO':3,'DIRECTOR (A)':2,'GERENTE':1};
 function ini(n){return n.split(' ').filter(function(w){return w.length>2}).slice(0,2).map(function(w){return w[0]}).join('').toUpperCase()||n.slice(0,2).toUpperCase()}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function pct(v,t){return t?Math.round(v/t*100):0}
 
 /* ── AGGREGATE ────────────────────────────────────────────────────── */
 var jefes={};
@@ -173,23 +148,20 @@ RAW.forEach(function(r){
 var totalJefes=Object.keys(jefes).length;
 var totalRel=RAW.length;
 var prom=(totalRel/totalJefes).toFixed(1);
-var j1=Object.values(jefes).filter(function(j){return j.sucesores.length===1}).length;
-var j2=totalJefes-j1;
 
-/* Movilidad */
-var mismaDir=0,difDir=0,mismoNivel=0,mayorNivel=0,menorNivel=0;
+/* Movilidad: Vertical = sucesor va a ocupar cargo del titular (nivel menor o igual) */
+/* Horizontal = mismo nivel del titular */
+var vertical=0,horizontal=0;
 RAW.forEach(function(r){
-  var dJ=r['DIRECCION COMITE '],dS=r['DIRECCION COMITE _1'];
-  var nJ=r['FUNCION-NIVEL DE CARGO'],nS=r['FUNCION-NIVEL DE CARGO_1'];
-  if(dJ===dS) mismaDir++; else difDir++;
-  if(nJ===nS) mismoNivel++;
-  else if(NIVEL_ORD[nS]>NIVEL_ORD[nJ]) mayorNivel++;
-  else menorNivel++;
+  var nJ=NL[r['FUNCION-NIVEL DE CARGO']]||0;
+  var nS=NL[r['FUNCION-NIVEL DE CARGO_1']]||0;
+  if(nS<nJ) vertical++;
+  else horizontal++;
 });
 
 /* Tiempo */
 var tiempoCount={};
-RAW.forEach(function(r){var t=r['TIEMPO DE ALISTAMIENTO']||'Sin definir';tiempoCount[t]=(tiempoCount[t]||0)+1;});
+RAW.forEach(function(r){var t=r['TIEMPO DE ALISTAMIENTO'];if(t)tiempoCount[t]=(tiempoCount[t]||0)+1;});
 
 /* Riesgo */
 var riskAlta=0,riskMedia=0,riskBaja=0;
@@ -200,145 +172,136 @@ Object.values(jefes).forEach(function(j){
   else riskBaja++;
 });
 
+/* Direcciones */
+var dirCount={};
+RAW.forEach(function(r){var d=r['DIRECCION COMITE '];dirCount[d]=(dirCount[d]||0)+1;});
+
 /* ── HERO ─────────────────────────────────────────────────────────── */
 document.getElementById('hero').innerHTML=
   '<h1>Ciclo de Talento · Movilidad y Disponibilidad</h1>'+
-  '<p>Análisis integral de sucesores, movilidad vertical, transversal y riesgo de sucesión</p>'+
-  '<div class="hero-stats">'+
-  '<div class="hero-stat"><div class="val">'+totalJefes+'</div><div class="lbl">Cargos Titulares</div></div>'+
-  '<div class="hero-stat"><div class="val">'+totalRel+'</div><div class="lbl">Relaciones Sucesión</div></div>'+
-  '<div class="hero-stat"><div class="val">'+prom+'</div><div class="lbl">Promedio SxCargo</div></div>'+
-  '<div class="hero-stat"><div class="val">100%</div><div class="lbl">Cobertura</div></div>'+
+  '<p>Análisis de sucesores, movilidad vertical y horizontal, riesgo de sucesión</p>'+
+  '<div class="hero-kpis">'+
+  '<div class="hero-kpi"><div class="v">'+totalJefes+'</div><div class="l">Cargos Titulares</div></div>'+
+  '<div class="hero-kpi"><div class="v">'+totalRel+'</div><div class="l">Relaciones</div></div>'+
+  '<div class="hero-kpi"><div class="v">'+prom+'</div><div class="l">Sucesores/Cargo</div></div>'+
+  '<div class="hero-kpi"><div class="v">100%</div><div class="l">Cobertura</div></div>'+
   '</div>';
 
 /* ── KPIs ─────────────────────────────────────────────────────────── */
+var k1=pct(vertical,totalRel);
+var k2=pct(horizontal,totalRel);
+var k3=pct(riskAlta,totalJefes);
+var k4=pct(riskMedia,totalJefes);
 document.getElementById('kpis').innerHTML=
-  '<div class="kpi kpi-crimson"><div class="kpi-icon">👥</div><div class="kpi-val">'+totalJefes+'</div><div class="kpi-label">Cargos Titulares</div><div class="kpi-sub">Líderes con sucesor asignado</div></div>'+
-  '<div class="kpi kpi-blue"><div class="kpi-icon">🔄</div><div class="kpi-val">'+totalRel+'</div><div class="kpi-label">Relaciones Activas</div><div class="kpi-sub">Total de relaciones titular→sucesor</div></div>'+
-  '<div class="kpi kpi-green"><div class="kpi-icon">📊</div><div class="kpi-val">'+prom+'</div><div class="kpi-label">Promedio Sucesores</div><div class="kpi-sub">Por cada cargo titular</div></div>'+
-  '<div class="kpi kpi-purple"><div class="kpi-icon">⚠️</div><div class="kpi-val">'+riskAlta+'</div><div class="kpi-label">Riesgo Alto</div><div class="kpi-sub">Titular ≥55 o sucesor nuevo</div></div>';
+  '<div class="kpi k1"><div class="kpi-val">'+vertical+'</div><div class="kpi-lbl">Vertical ('+k1+'%)</div></div>'+
+  '<div class="kpi k2"><div class="kpi-val">'+horizontal+'</div><div class="kpi-lbl">Horizontal ('+k2+'%)</div></div>'+
+  '<div class="kpi k3"><div class="kpi-val">'+riskAlta+'</div><div class="kpi-lbl">Riesgo Alto ('+k3+'%)</div></div>'+
+  '<div class="kpi k4"><div class="kpi-val">'+riskMedia+'</div><div class="kpi-lbl">Riesgo Medio ('+k4+'%)</div></div>'+
+  '<div class="kpi k5"><div class="kpi-val">'+riskBaja+'</div><div class="kpi-lbl">Riesgo Bajo</div></div>';
 
-/* ── DONUT: MOVILIDAD POR DIRECCIÓN ──────────────────────────────── */
-function donut(id,data,colors,size){
-  var canvas=document.getElementById(id);
-  if(!canvas)return;
-  var ctx=canvas.getContext('2d');
-  var cx=size/2,cy=size/2,r=size/2-10,inner=size/3.5;
+/* ── DONUTS ───────────────────────────────────────────────────────── */
+function drawDonut(id,data,colors,size){
+  var c=document.getElementById(id);if(!c)return;
+  var ctx=c.getContext('2d');
+  var cx=size/2,cy=size/2,r=size/2-8,inner=size/3.2;
   var total=data.reduce(function(a,b){return a+b.val},0);
   var start=-Math.PI/2;
   ctx.clearRect(0,0,size,size);
-  data.forEach(function(d,i){
+  data.forEach(function(d){
+    if(d.val===0)return;
     var angle=(d.val/total)*Math.PI*2;
-    ctx.beginPath();
-    ctx.arc(cx,cy,r,start,start+angle);
-    ctx.arc(cx,cy,inner,start+angle,start,true);
-    ctx.closePath();
-    ctx.fillStyle=colors[i];
-    ctx.fill();
+    ctx.beginPath();ctx.arc(cx,cy,r,start,start+angle);ctx.arc(cx,cy,inner,start+angle,start,true);ctx.closePath();
+    ctx.fillStyle=d.color;ctx.fill();
     start+=angle;
   });
-  /* Center text */
-  ctx.fillStyle=getComputedStyle(document.body).getPropertyValue('--text')||'#111827';
-  ctx.font='bold '+size/7+'px Segoe UI,system-ui';
-  ctx.textAlign='center';
-  ctx.fillText(total,cx,cy-2);
-  ctx.font=size/12+'px Segoe UI,system-ui';
-  ctx.fillStyle=getComputedStyle(document.body).getPropertyValue('--text3')||'#6B7280';
-  ctx.fillText('relaciones',cx,cy+size/14);
+  var cs=getComputedStyle(document.body);
+  ctx.fillStyle=cs.getPropertyValue('--text')||'#111827';
+  ctx.font='bold '+size/6+'px Segoe UI,system-ui';ctx.textAlign='center';
+  ctx.fillText(total,cx,cy+2);
+  ctx.font=(size/11)+'px Segoe UI,system-ui';
+  ctx.fillStyle=cs.getPropertyValue('--text3')||'#6B7280';
+  ctx.fillText('relaciones',cx,cy+size/12);
 }
 
-/* ── CHARTS ROW ───────────────────────────────────────────────────── */
 var charts1HTML=
-  '<div class="chart-card"><h3>📈 Movilidad por Dirección</h3>'+
+  '<div class="chart-card"><h3>📊 Movilidad por Tipo</h3>'+
   '<div class="donut-wrap">'+
-  '<canvas id="donutDir" width="180" height="180"></canvas>'+
+  '<canvas id="donutMov" width="170" height="170"></canvas>'+
   '<div class="donut-legend">'+
-  '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#059669"></div>Misma Dirección<div class="donut-legend-val">'+mismaDir+'</div></div>'+
-  '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#EA580C"></div>Diferente Dirección<div class="donut-legend-val">'+difDir+'</div></div>'+
+  '<div class="dl-item"><div class="dl-dot" style="background:#7C3AED"></div>Vertical<div class="dl-val">'+vertical+' ('+k1+'%)</div></div>'+
+  '<div class="dl-item"><div class="dl-dot" style="background:#2563EB"></div>Horizontal<div class="dl-val">'+horizontal+' ('+k2+'%)</div></div>'+
   '</div></div></div>'+
-  '<div class="chart-card"><h3>📊 Movilidad por Nivel</h3>'+
+  '<div class="chart-card"><h3>📈 Relaciones por Dirección</h3>'+
   '<div class="donut-wrap">'+
-  '<canvas id="donutNivel" width="180" height="180"></canvas>'+
-  '<div class="donut-legend">'+
-  '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#0033A0"></div>Mismo Nivel<div class="donut-legend-val">'+mismoNivel+'</div></div>'+
-  '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#7C3AED"></div>Mayor Nivel<div class="donut-legend-val">'+mayorNivel+'</div></div>'+
-  '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#DC2626"></div>Menor Nivel<div class="donut-legend-val">'+menorNivel+'</div></div>'+
-  '</div></div></div>';
+  '<canvas id="donutDir" width="170" height="170"></canvas>'+
+  '<div class="donut-legend" id="dirLegend"></div>'+
+  '</div></div>';
 document.getElementById('charts1').innerHTML=charts1HTML;
 
-/* Draw donuts */
 setTimeout(function(){
-  donut('donutDir',[mismaDir,difDir],['#059669','#EA580C'],180);
-  donut('donutNivel',[mismoNivel,mayorNivel,menorNivel],['#0033A0','#7C3AED','#DC2626'],180);
+  drawDonut('donutMov',[{val:vertical,color:'#7C3AED'},{val:horizontal,color:'#2563EB'}],null,170);
+  var dirArr=Object.entries(dirCount).sort(function(a,b){return b[1]-a[1]});
+  var dirColors=['#7C1D24','#1E3A5F','#059669','#EA580C','#7C3AED','#0891B2'];
+  var dirData=dirArr.map(function(d,i){return{val:d[1],color:dirColors[i%dirColors.length]}});
+  drawDonut('donutDir',dirData,null,170);
+  document.getElementById('dirLegend').innerHTML=dirArr.map(function(d,i){
+    return '<div class="dl-item"><div class="dl-dot" style="background:'+dirColors[i%dirColors.length]+'"></div>'+esc(d[0].replace('Direccion ','Dir. '))+'<div class="dl-val">'+d[1]+'</div></div>';
+  }).join('');
 },100);
 
-/* ── MOBILITY MATRIX ─────────────────────────────────────────────── */
-var intPct=Math.round(mismaDir/totalRel*100);
-var transPct=Math.round(difDir/totalRel*100);
-var horPct=Math.round(mismoNivel/totalRel*100);
-var vertPct=Math.round(mayorNivel/totalRel*100);
-
-document.getElementById('mobilitySection').innerHTML=
-  '<div class="section-title"><div class="icon blue">🔄</div>Matriz de Movilidad del Talento</div>'+
-  '<div class="mobility-grid">'+
-  '<div class="mobility-card mob-interna"><div class="mobility-val">'+mismaDir+'</div><div class="mobility-label">Movilidad Interna</div><div class="mobility-pct">'+intPct+'% — Misma dirección</div></div>'+
-  '<div class="mobility-card mob-transversal"><div class="mobility-val">'+difDir+'</div><div class="mobility-label">Movilidad Transversal</div><div class="mobility-pct">'+transPct+'% — Diferente dirección</div></div>'+
-  '<div class="mobility-card mob-horizontal"><div class="mobility-val">'+mismoNivel+'</div><div class="mobility-label">Movilidad Horizontal</div><div class="mobility-pct">'+horPct+'% — Mismo nivel</div></div>'+
-  '<div class="mobility-card mob-vertical"><div class="mobility-val">'+mayorNivel+'</div><div class="mobility-label">Promoción Vertical</div><div class="mobility-pct">'+vertPct+'% — Mayor nivel</div></div>'+
+/* ── MOBILITY CARDS ──────────────────────────────────────────────── */
+document.getElementById('mobSection').innerHTML=
+  '<div class="sec-title"><div class="dot" style="background:#2563EB"></div>Análisis de Movilidad</div>'+
+  '<div class="mob-grid">'+
+  '<div class="mob-card mc-vert"><div class="mob-v">'+vertical+'</div><div class="mob-l">Movilidad Vertical</div><div class="mob-p">'+k1+'% — Sucesor va a ocupar el cargo del titular</div></div>'+
+  '<div class="mob-card mc-horiz"><div class="mob-v">'+horizontal+'</div><div class="mob-l">Movilidad Horizontal</div><div class="mob-p">'+k2+'% — Sucesor en mismo nivel del titular</div></div>'+
   '</div>';
 
 /* ── TIME + RISK ─────────────────────────────────────────────────── */
-var tiempoArr=Object.entries(tiempoCount).sort(function(a,b){return b[1]-a[1]});
-var timeClasses={'1 AÑO':'time-1','2 AÑOS':'time-2','3 AÑOS':'time-3'};
-var timeHTML=tiempoArr.map(function(t){
-  var cls=timeClasses[t[0]]||'time-other';
-  return '<div class="time-card '+cls+'"><div class="tv">'+t[1]+'</div><div class="tl">'+esc(t[0])+'</div></div>';
-}).join('');
+var tArr=Object.entries(tiempoCount).sort(function(a,b){return b[1]-a[1]});
+var tClasses={'1 AÑO':'t1','2 AÑOS':'t2','3 AÑOS':'t3'};
+var timeHTML=tArr.map(function(t){return '<div class="time-card '+(tClasses[t[0]]||'t1')+'"><div class="tv">'+t[1]+'</div><div class="tl">'+esc(t[0])+'</div></div>';}).join('');
+
+document.getElementById('timeSection').innerHTML=
+  '<div class="sec-title"><div class="dot" style="background:#EA580C"></div>Tiempo de Alistamiento</div>'+
+  '<div class="time-cards">'+timeHTML+'</div>';
 
 document.getElementById('riskSection').innerHTML=
-  '<div class="section-title"><div class="icon red">⚠️</div>Análisis de Riesgo y Tiempo de Alistamiento</div>'+
-  '<div style="margin-bottom:20px"><h3 style="font-size:.82rem;color:var(--text3);margin-bottom:12px;font-weight:600">Tiempo de Alistamiento Designado</h3>'+
-  '<div class="time-cards">'+timeHTML+'</div></div>'+
-  '<h3 style="font-size:.82rem;color:var(--text3);margin-bottom:12px;font-weight:600">Mapa de Riesgo de Sucesión</h3>'+
+  '<div class="sec-title"><div class="dot" style="background:#DC2626"></div>Mapa de Riesgo de Sucesión</div>'+
   '<div class="risk-grid">'+
-  '<div class="risk-card risk-alta"><div class="risk-val">'+riskAlta+'</div><div class="risk-label">Riesgo Alto</div><div class="risk-desc">Titular ≥55 años o sucesor con ≤1 año de antigüedad</div></div>'+
-  '<div class="risk-card risk-media"><div class="risk-val">'+riskMedia+'</div><div class="risk-label">Riesgo Medio</div><div class="risk-desc">Titular 45-54 años o sucesor con ≤3 años</div></div>'+
-  '<div class="risk-card risk-baja"><div class="risk-val">'+riskBaja+'</div><div class="risk-label">Riesgo Bajo</div><div class="risk-desc">Titular &lt;45 años y sucesor establecido</div></div>'+
+  '<div class="risk-card ra"><div class="risk-v">'+riskAlta+'</div><div class="risk-l">Riesgo Alto ('+pct(riskAlta,totalJefes)+'%)</div><div class="risk-d">Titular ≥55 años o sucesor con ≤1 año</div></div>'+
+  '<div class="risk-card rm"><div class="risk-v">'+riskMedia+'</div><div class="risk-l">Riesgo Medio ('+pct(riskMedia,totalJefes)+'%)</div><div class="risk-d">Titular 45-54 años o sucesor con ≤3 años</div></div>'+
+  '<div class="risk-card rb"><div class="risk-v">'+riskBaja+'</div><div class="risk-l">Riesgo Bajo ('+pct(riskBaja,totalJefes)+'%)</div><div class="risk-d">Titular &lt;45 años y sucesor estable</div></div>'+
   '</div>';
 
 /* ── TABLE ────────────────────────────────────────────────────────── */
-function movLabel(dJ,dS,nJ,nS){
-  if(dJ===dS&&nJ===nS) return 'Interna';
-  if(dJ===dS) return 'Internnivel';
-  if(nJ===nS) return 'Transversal';
-  if(NIVEL_ORD[nS]>NIVEL_ORD[nJ]) return 'Promoción';
-  return 'Descendente';
+function movTipo(r){
+  var nJ=NL[r['FUNCION-NIVEL DE CARGO']]||0;
+  var nS=NL[r['FUNCION-NIVEL DE CARGO_1']]||0;
+  if(nS<nJ) return {txt:'Vertical',cls:'bg-purple'};
+  return {txt:'Horizontal',cls:'bg-blue'};
 }
-function movBadge(dJ,dS,nJ,nS){
-  if(dJ===dS&&nJ===nS) return 'badge-green';
-  if(dJ===dS) return 'badge-blue';
-  if(nJ===nS) return 'badge-orange';
-  if(NIVEL_ORD[nS]>NIVEL_ORD[nJ]) return 'badge-purple';
-  return 'badge-red';
-}
-function calcRiesgo(r){
+function riesgoTxt(r){
   var ed=r['EDAD']||0;var ant=r['Antigüedad'];
-  if(ed>=55||(ant!=null&&ant<=1)) return {txt:'Alto',cls:'badge-red'};
-  if(ed>=45||(ant!=null&&ant<=3)) return {txt:'Medio',cls:'badge-orange'};
-  return {txt:'Bajo',cls:'badge-green'};
+  if(ed>=55||(ant!=null&&ant<=1)) return {txt:'Alto',cls:'bg-red'};
+  if(ed>=45||(ant!=null&&ant<=3)) return {txt:'Medio',cls:'bg-orange'};
+  return {txt:'Bajo',cls:'bg-green'};
 }
 
 var rows=RAW.map(function(r){
-  var dJ=r['DIRECCION COMITE '],dS=r['DIRECCION COMITE _1'];
-  var nJ=r['FUNCION-NIVEL DE CARGO'],nS=r['FUNCION-NIVEL DE CARGO_1'];
-  return '<tr data-dir="'+esc(dJ)+'" data-nivel="'+esc(nJ)+'">'+
-    '<td><div style="display:flex;align-items:center;gap:8px"><div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#7C1D24,#E21836);color:#fff;display:grid;place-items:center;font-size:.65rem;font-weight:700;flex-shrink:0">'+ini(r['APELLIDOS Y NOMBRES  - JEFE'])+'</div><div><strong>'+esc(r['APELLIDOS Y NOMBRES  - JEFE'])+'</strong><br><small style="color:var(--text4)">'+esc(r['CARGO'])+'</small></div></div></td>'+
-    '<td><small>'+esc(dJ)+'</small></td><td><span class="badge badge-blue">'+esc(nJ)+'</span></td><td style="text-align:center">'+esc(r['EDAD'])+'</td>'+
-    '<td><div style="display:flex;align-items:center;gap:8px"><div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#064E3B,#059669);color:#fff;display:grid;place-items:center;font-size:.65rem;font-weight:700;flex-shrink:0">'+ini(r['SUCESOR'])+'</div><div><strong>'+esc(r['SUCESOR'])+'</strong><br><small style="color:var(--text4)">'+esc(r['CARGO SUCESOR'])+'</small></div></div></td>'+
-    '<td><small>'+esc(dS)+'</small></td><td><span class="badge '+movBadge(dJ,dS,nJ,nS)+'">'+movLabel(dJ,dS,nJ,nS)+'</span></td>'+
-    '<td style="text-align:center">'+(r['TIEMPO DE ALISTAMIENTO']?'<span class="badge badge-blue">'+esc(r['TIEMPO DE ALISTAMIENTO'])+'</span>':'—')+'</td>'+
-    '<td style="text-align:center">'+(r['Edad']!=null?esc(r['Edad']):'—')+'</td><td style="text-align:center">'+(r['Antigüedad']!=null?esc(r['Antigüedad'])+'a':'—')+'</td>'+
-    '<td><span class="badge '+calcRiesgo(r).cls+'">'+calcRiesgo(r).txt+'</span></td></tr>';
+  var mt=movTipo(r);
+  var rg=riesgoTxt(r);
+  return '<tr data-dir="'+esc(r['DIRECCION COMITE '])+'" data-nivel="'+esc(r['FUNCION-NIVEL DE CARGO'])+'">'+
+    '<td><div class="person-name">'+esc(r['APELLIDOS Y NOMBRES  - JEFE'])+'</div><div class="person-cargo">'+esc(r['CARGO'])+'</div></td>'+
+    '<td>'+esc(r['DIRECCION COMITE '])+'</td>'+
+    '<td>'+esc(r['EDAD'])+'</td>'+
+    '<td><div class="person-name">'+esc(r['SUCESOR'])+'</div><div class="person-cargo">'+esc(r['CARGO SUCESOR'])+'</div></td>'+
+    '<td>'+esc(r['DIRECCION COMITE _1'])+'</td>'+
+    '<td><span class="badge '+mt.cls+'">'+mt.txt+'</span></td>'+
+    '<td>'+(r['TIEMPO DE ALISTAMIENTO']?'<span class="badge bg-blue">'+esc(r['TIEMPO DE ALISTAMIENTO'])+'</span>':'—')+'</td>'+
+    '<td>'+(r['Edad']!=null?esc(r['Edad']):'—')+'</td>'+
+    '<td>'+(r['Antigüedad']!=null?r['Antigüedad']+'a':'—')+'</td>'+
+    '<td><span class="badge '+rg.cls+'">'+rg.txt+'</span></td></tr>';
 }).join('');
 
 var dirs=[...new Set(RAW.map(function(r){return r['DIRECCION COMITE ']}))].sort();
@@ -347,18 +310,17 @@ var dirOpts=dirs.map(function(d){return '<option value="'+esc(d)+'">'+esc(d)+'</
 var nivOpts=nivels.map(function(n){return '<option value="'+esc(n)+'">'+esc(n)+'</option>'}).join('');
 
 document.getElementById('tableSection').innerHTML=
-  '<div class="section-title"><div class="icon green">📋</div>Detalle de Relaciones Titular → Sucesor</div>'+
+  '<div class="sec-title"><div class="dot" style="background:#059669"></div>Detalle de Relaciones Titular → Sucesor</div>'+
   '<div class="filters">'+
-  '<div><label>Dirección</label><select id="fDir"><option value="">Todas</option>'+dirOpts+'</select></div>'+
-  '<div><label>Nivel</label><select id="fNivel"><option value="">Todos</option>'+nivOpts+'</select></div>'+
-  '<div style="flex:1;min-width:200px"><label>Buscar</label><input type="text" id="fSearch" placeholder="Nombre del jefe o sucesor..." style="width:100%"></div></div>'+
-  '<div class="table-wrap"><table><thead><tr>'+
-  '<th>Titular</th><th>Dirección</th><th>Nivel</th><th>Edad</th>'+
+  '<div><label>Dirección Comité</label><select id="fDir"><option value="">Todas</option>'+dirOpts+'</select></div>'+
+  '<div><label>Función Nivel de Cargo</label><select id="fNivel"><option value="">Todos</option>'+nivOpts+'</select></div>'+
+  '<div style="flex:1;min-width:180px"><label>Buscar</label><input type="text" id="fSearch" placeholder="Nombre del jefe o sucesor..." style="width:100%"></div></div>'+
+  '<div class="tbl-wrap"><table><thead><tr>'+
+  '<th>Titular</th><th>Dirección</th><th>Edad</th>'+
   '<th>Sucesor</th><th>Dir. Sucesor</th><th>Movilidad</th>'+
   '<th>Tiempo</th><th>Edad S.</th><th>Antig.</th><th>Riesgo</th>'+
   '</tr></thead><tbody>'+rows+'</tbody></table></div>';
 
-/* Filters */
 function applyFilters(){
   var dir=document.getElementById('fDir').value;
   var nivel=document.getElementById('fNivel').value;
@@ -375,7 +337,7 @@ document.getElementById('fDir').addEventListener('change',applyFilters);
 document.getElementById('fNivel').addEventListener('change',applyFilters);
 document.getElementById('fSearch').addEventListener('input',applyFilters);
 
-} /* end render */
+}
 </script>
 </body>
 </html>
