@@ -228,9 +228,12 @@ function drawDonut(canvasId,data,colors,size,centerLabel){
 function barListHTML(items,colorFn){
   var max=Math.max.apply(null,items.map(function(it){return it.val;}))||1;
   return '<div class="anim-bars">'+items.map(function(it){
-    var w=Math.max(12,Math.round(it.val/max*100));
+    var w=Math.max(18,Math.round(it.val/max*100));
+    var small=w<30;
+    var inner=small?'':it.val+(it.pct!=null?' ('+it.pct+'%)':'');
+    var outer=small?'<span style="margin-left:8px;font-size:.75rem;font-weight:700;color:'+it.color+'">'+it.val+(it.pct!=null?' ('+it.pct+'%)':'')+'</span>':'';
     return '<div class="anim-bar-row"><div class="anim-bar-label">'+esc(it.label)+'</div>'+
-      '<div class="anim-bar-track"><div class="anim-bar-fill" style="width:'+w+'%;background:'+it.color+'">'+it.val+(it.pct!=null?' ('+it.pct+'%)':'')+'</div></div></div>';
+      '<div class="anim-bar-track"><div class="anim-bar-fill" style="width:'+w+'%;background:'+it.color+'">'+inner+'</div>'+outer+'</div></div>';
   }).join('')+'</div>';
 }
 
