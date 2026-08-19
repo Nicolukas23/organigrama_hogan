@@ -1473,7 +1473,7 @@ function applyFilters(list){
       if(jefeIsCD){
         if(d.jefe !== state.jefe) return false;
       } else {
-        if(d.jefe !== state.jefe && d.nombre !== state.jefe) return false;
+        if(d.jefe !== state.jefe) return false;
       }
     }
     if(!jefeIsCD && state.direccion.length > 0){
