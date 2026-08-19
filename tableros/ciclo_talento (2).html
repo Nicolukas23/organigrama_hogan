@@ -299,6 +299,11 @@ function render(data){
     '<div class="kpi kpi-purple"><div class="kpi-icon">👥</div><div class="kpi-val">'+pct(j2plus,totalJefes)+'%</div><div class="kpi-label">Cargos con 2+ Sucesores</div><div class="kpi-sub">'+j2plus+' con banco profundo</div></div>'+
     '<div class="kpi kpi-gray"><div class="kpi-icon">📊</div><div class="kpi-val">'+prom+'</div><div class="kpi-label">Sucesores Promedio</div><div class="kpi-sub">'+totalRel+' relaciones / '+totalAllJefes+' cargos</div></div>';
 
+    /* ── Cargos por Nivel ── */
+  var nivelCount={};
+  jefesArr.forEach(function(j){nivelCount[j.nivel]=(nivelCount[j.nivel]||0)+1;});
+  var nivelEntries=NIVEL_ORDER.filter(function(n){return nivelCount[n];}).map(function(n){return[n,nivelCount[n]];});
+
   /* ════════════════ CHARTS SECTION ════════════════ */
   var dirColors=['#1E3A5F','#2563EB','#7C1D24','#059669','#7C3AED','#D97706','#0891B2','#DC2626'];
   var bossByDir={};
@@ -320,15 +325,18 @@ function render(data){
     '<div class="charts-grid">'+
       '<div class="chart-card"><h3>Movilidad Horizontal vs. Vertical</h3><div class="chart-note">Sobre el total de relaciones mapeadas</div>'+
         '<div class="chart-canvas-wrap"><div class="donut-wrap"><canvas id="chartMov"></canvas><div class="donut-legend">'+
-        '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#2563EB"></div>Horizontal<div class="donut-legend-val">'+horCount+'</div></div>'+
-        '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#7C3AED"></div>Vertical<div class="donut-legend-val">'+vertCount+'</div></div>'+
-        (indefCount>0?'<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#94A3B8"></div>Sin definir<div class="donut-legend-val">'+indefCount+'</div></div>':'')+
+        '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#2563EB"></div>Horizontal<div class="donut-legend-val">'+horCount+' (' +pct(horCount,horCount+vertCount+indefCount)+'%)</div></div>'+
+        '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#7C3AED"></div>Vertical<div class="donut-legend-val">'+vertCount+' (' +pct(vertCount,horCount+vertCount+indefCount)+'%)</div></div>'+
+        (indefCount>0?'<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#94A3B8"></div>Sin definir<div class="donut-legend-val">'+indefCount+' (' +pct(indefCount,horCount+vertCount+indefCount)+'%)</div></div>':'')+
         '</div></div></div></div>'+
-      '<div class="chart-card"><h3>Cargos Titulares por Dirección</h3><div class="chart-note">Número de cargos titulares únicos por dirección</div><div class="chart-canvas-wrap">'+dirBarsAll+'</div></div>'+
+      '<div class="chart-card"><h3>Distribución de Cargos por Nivel</h3><div class="chart-note">Cargos titulares según su nivel jerárquico</div>'+
+        '<div class="chart-canvas-wrap"><div class="donut-wrap"><canvas id="chartNivel"></canvas><div class="donut-legend">'+
+        nivelEntries.map(function(e,i){var c=['#7C1D24','#2563EB','#059669'];return '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:'+c[i]+'"></div>'+esc(e[0])+'<div class="donut-legend-val">'+e[1]+' ('+pct(e[1],totalAllJefes)+'%)</div></div>';}).join('')+
+        '</div></div></div></div>'+
       '<div class="chart-card"><h3>Movilidad por Dirección de Comité</h3><div class="chart-note">Misma dirección vs. dirección distinta a la del titular</div>'+
         '<div class="chart-canvas-wrap"><div class="donut-wrap"><canvas id="chartSameDir"></canvas><div class="donut-legend">'+
-        '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#059669"></div>Misma dirección<div class="donut-legend-val">'+sameDir+'</div></div>'+
-        '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#EA580C"></div>Dirección distinta<div class="donut-legend-val">'+diffDir+'</div></div>'+
+        '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#059669"></div>Misma dirección<div class="donut-legend-val">'+sameDir+' (' +pct(sameDir,sameDir+diffDir)+'%)</div></div>'+
+        '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#EA580C"></div>Dirección distinta<div class="donut-legend-val">'+diffDir+' (' +pct(diffDir,sameDir+diffDir)+'%)</div></div>'+
         '</div></div></div></div>'+
       '<div class="chart-card"><h3>Tiempo de Alistamiento</h3><div class="chart-note">Distribución del tiempo de alistamiento de los sucesores (n='+totalRel+')</div><div class="chart-canvas-wrap">'+(tiempoBars||'<div class="empty-state">Sin datos para este filtro.</div>')+'</div></div>'+
     '</div>';
@@ -336,6 +344,7 @@ function render(data){
   setTimeout(function(){
     drawDonut('chartMov',[horCount,vertCount].concat(indefCount>0?[indefCount]:[]),['#2563EB','#7C3AED','#94A3B8'],168,'relaciones');
     drawDonut('chartSameDir',[sameDir,diffDir],['#059669','#EA580C'],168,'relaciones');
+    drawDonut('chartNivel',nivelEntries.map(function(e){return e[1];}),['#7C1D24','#2563EB','#059669'],168,'cargos');
   },30);
 
   /* ════════════════ RISK SECTION ════════════════ */
