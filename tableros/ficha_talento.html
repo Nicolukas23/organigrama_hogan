@@ -522,9 +522,25 @@ function loadFicha(p){
     comiteSection.style.display='none';
   }
 
-  // HOGAN
+  // HOGAN — only for CD members and their direct reports
+  const allCDExps=['52185300','79947402','80425417','1128466768','85467103','32781111','79516122','80150353','1138186','79577126','79695754','1020751309'];
+  const isCDOwn=allCDExps.includes(p.exp);
+  let reportsToCD=false;
+  if(!isCDOwn && p.jefe){
+    const jefeNorm=p.jefe.toUpperCase().trim();
+    for(const cdExp of allCDExps){
+      const cdInfo=DATA.informacion[cdExp];
+      if(cdInfo&&cdInfo.nombre&&cdInfo.nombre.toUpperCase().trim()===jefeNorm){reportsToCD=true;break;}
+    }
+  }
+  const showHogan=isCDOwn||reportsToCD;
   const h=DATA.hogan[p.exp];
-  renderHogan(h, p.exp);
+  if(!showHogan){
+    document.getElementById('hoganGrid').style.display='none';
+    document.getElementById('competenciasSection').style.display='none';
+  } else {
+    renderHogan(h, p.exp);
+  }
 }
 
 function renderDesempeno(d){
