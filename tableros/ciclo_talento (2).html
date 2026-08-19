@@ -228,12 +228,10 @@ function drawDonut(canvasId,data,colors,size,centerLabel){
 function barListHTML(items,colorFn){
   var max=Math.max.apply(null,items.map(function(it){return it.val;}))||1;
   return '<div class="anim-bars">'+items.map(function(it){
-    var w=Math.max(18,Math.round(it.val/max*100));
-    var small=w<30;
-    var inner=small?'':it.val+(it.pct!=null?' ('+it.pct+'%)':'');
-    var outer=small?'<span style="margin-left:8px;font-size:.75rem;font-weight:700;color:'+it.color+'">'+it.val+(it.pct!=null?' ('+it.pct+'%)':'')+'</span>':'';
+    var w=Math.max(20,Math.round(it.val/max*100));
+    var txt=it.val+(it.pct!=null?' ('+it.pct+'%)':'')+(it.extra?' '+it.extra:'');
     return '<div class="anim-bar-row"><div class="anim-bar-label">'+esc(it.label)+'</div>'+
-      '<div class="anim-bar-track"><div class="anim-bar-fill" style="width:'+w+'%;background:'+it.color+'">'+inner+'</div>'+outer+'</div></div>';
+      '<div class="anim-bar-track"><div class="anim-bar-fill" style="width:'+w+'%;background:'+it.color+'">'+txt+'</div></div></div>';
   }).join('')+'</div>';
 }
 
@@ -299,15 +297,21 @@ function render(data){
   /* ════════════════ KPIs (indicadores en %) ════════════════ */
   document.getElementById('kpis').innerHTML=
     '<div class="kpi kpi-crimson"><div class="kpi-icon">✅</div><div class="kpi-val">'+pct(totalJefes,totalAllJefes)+'%</div><div class="kpi-label">Cargos con Sucesor</div><div class="kpi-sub">'+totalJefes+' de '+totalAllJefes+' cargos titulares</div></div>'+
-    '<div class="kpi kpi-gray"><div class="kpi-icon">📊</div><div class="kpi-val">'+prom+'</div><div class="kpi-label">Sucesores Promedio</div><div class="kpi-sub">'+totalRel+' relaciones / '+totalAllJefes+' cargos</div></div>'+
+    '<div class="kpi kpi-green"><div class="kpi-icon">⚠️</div><div class="kpi-val">'+sinSucesorPct+'%</div><div class="kpi-label">Cargos sin Sucesor</div><div class="kpi-sub">'+sinSucesor+' de '+totalAllJefes+' cargos sin identificar</div></div>'+
     '<div class="kpi kpi-blue"><div class="kpi-icon">👤</div><div class="kpi-val">'+pct(j1,totalJefes)+'%</div><div class="kpi-label">Cargos con 1 Sucesor</div><div class="kpi-sub">'+j1+' cargos dependen de 1 solo</div></div>'+
     '<div class="kpi kpi-purple"><div class="kpi-icon">👥</div><div class="kpi-val">'+pct(j2plus,totalJefes)+'%</div><div class="kpi-label">Cargos con 2+ Sucesores</div><div class="kpi-sub">'+j2plus+' con banco profundo</div></div>'+
-    '<div class="kpi kpi-green"><div class="kpi-icon">⚠️</div><div class="kpi-val">'+sinSucesorPct+'%</div><div class="kpi-label">Cargos sin Sucesor</div><div class="kpi-sub">'+sinSucesor+' de '+totalAllJefes+' cargos sin identificar</div></div>';
+    '<div class="kpi kpi-gray"><div class="kpi-icon">📊</div><div class="kpi-val">'+prom+'</div><div class="kpi-label">Sucesores Promedio</div><div class="kpi-sub">'+totalRel+' relaciones / '+totalAllJefes+' cargos</div></div>';
 
   /* ════════════════ CHARTS SECTION ════════════════ */
-  var dirLabels=dirEntries.map(function(e){return e[0].replace('Direccion ','').replace('Dirección ','');});
   var dirColors=['#1E3A5F','#2563EB','#7C1D24','#059669','#7C3AED','#D97706','#0891B2','#DC2626'];
-  var dirBars=barListHTML(dirEntries.map(function(e,i){return {label:e[0].replace('Direccion ','').replace('Dirección ',''),val:e[1],color:dirColors[i%dirColors.length]};}));
+  var allDirCounts={};
+  RAW_ALL.forEach(function(r){allDirCounts[r.jDir]=(allDirCounts[r.jDir]||0)+1;});
+  var dirGap=Object.entries(allDirCounts).map(function(e){
+    var covered=relByDir[e[0]]||0;
+    return {label:e[0].replace('Direccion ','').replace('Dirección ',''),total:e[1],covered:covered,missing:e[1]-covered};
+  }).sort(function(a,b){return b.missing-a.missing;});
+  var dirBars=barListHTML(dirGap.map(function(d,i){return {label:d.label,val:d.missing,color:d.missing>0?'#DC2626':dirColors[i%dirColors.length],extra:d.covered+'/'+d.total+' mapeados'};}).filter(function(d){return d.val>0;}));
+  var dirBarsAll=barListHTML(dirGap.map(function(d,i){return {label:d.label,val:d.total,color:dirColors[i%dirColors.length]};}));
 
   var tiempoLabelsMap={'LISTO YA':'Listo Ya','1 AÑO':'1 año','2 AÑOS':'2 años','3 AÑOS':'3 años'};
   var tiempoColors={'LISTO YA':'#059669','1 AÑO':'#2563EB','2 AÑOS':'#D97706','3 AÑOS':'#DC2626'};
@@ -323,9 +327,8 @@ function render(data){
         '<div class="chart-canvas-wrap"><div class="donut-wrap"><canvas id="chartMov"></canvas><div class="donut-legend">'+
         '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#2563EB"></div>Horizontal<div class="donut-legend-val">'+horCount+'</div></div>'+
         '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#7C3AED"></div>Vertical<div class="donut-legend-val">'+vertCount+'</div></div>'+
-        (indefCount>0?'<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#94A3B8"></div>Sin definir<div class="donut-legend-val">'+indefCount+'</div></div>':'')+
         '</div></div></div></div>'+
-      '<div class="chart-card"><h3>Relaciones de Sucesión por Dirección</h3><div class="chart-note">Número de relaciones titular→sucesor mapeadas</div><div class="chart-canvas-wrap">'+dirBars+'</div></div>'+
+      '<div class="chart-card"><h3>Cobertura de Sucesión por Dirección</h3><div class="chart-note">Cargos totales vs. mapeados con sucesor (barras = total por dirección)</div><div class="chart-canvas-wrap">'+dirBarsAll+'</div></div>'+
       '<div class="chart-card"><h3>Movilidad por Dirección de Comité</h3><div class="chart-note">Misma dirección vs. dirección distinta a la del titular</div>'+
         '<div class="chart-canvas-wrap"><div class="donut-wrap"><canvas id="chartSameDir"></canvas><div class="donut-legend">'+
         '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#059669"></div>Misma dirección<div class="donut-legend-val">'+sameDir+'</div></div>'+
@@ -335,7 +338,7 @@ function render(data){
     '</div>';
 
   setTimeout(function(){
-    drawDonut('chartMov',[horCount,vertCount].concat(indefCount>0?[indefCount]:[]),['#2563EB','#7C3AED','#94A3B8'],168,'relaciones');
+    drawDonut('chartMov',[horCount,vertCount],['#2563EB','#7C3AED'],168,'relaciones');
     drawDonut('chartSameDir',[sameDir,diffDir],['#059669','#EA580C'],168,'relaciones');
   },30);
 
