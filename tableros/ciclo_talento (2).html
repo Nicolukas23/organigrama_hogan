@@ -287,8 +287,6 @@ function render(data){
     '<div class="hero-stats">'+
     '<div class="hero-stat"><div class="val">'+totalAllJefes+'</div><div class="lbl">Cargos Titulares</div></div>'+
     '<div class="hero-stat"><div class="val">'+totalRel+'</div><div class="lbl">Relaciones</div></div>'+
-    '<div class="hero-stat"><div class="val">'+prom+'</div><div class="lbl">Sucesores x Cargo</div></div>'+
-    '<div class="hero-stat"><div class="val">'+pct(vertCount,totalRel)+'%</div><div class="lbl">Movilidad Vertical</div></div>'+
     '</div>';
 
   /* ════════════════ FILTER BAR (rebuilt only once, see init) ════════════════ */
@@ -303,13 +301,18 @@ function render(data){
 
   /* ════════════════ CHARTS SECTION ════════════════ */
   var dirColors=['#1E3A5F','#2563EB','#7C1D24','#059669','#7C3AED','#D97706','#0891B2','#DC2626'];
-  var dirBarsAll=barListHTML(dirEntries.map(function(e,i){return {label:e[0].replace('Direccion ','').replace('Dirección ',''),val:e[1],color:dirColors[i%dirColors.length]};}));
+  var bossByDir={};
+  data.forEach(function(r){if(!bossByDir[r.jDir]) bossByDir[r.jDir]={}; bossByDir[r.jDir][r.exp]=1;});
+  var dirEntriesUniq=Object.entries(bossByDir).map(function(e){return [e[0],Object.keys(e[1]).length];}).sort(function(a,b){return b[1]-a[1];});
+  var dirBarsAll=barListHTML(dirEntriesUniq.map(function(e,i){return {label:e[0].replace('Direccion ','').replace('Dirección ',''),val:e[1],color:dirColors[i%dirColors.length]};}));
 
   var tiempoLabelsMap={'LISTO YA':'Listo Ya','1 AÑO':'1 año','2 AÑOS':'2 años','3 AÑOS':'3 años'};
   var tiempoColors={'LISTO YA':'#059669','1 AÑO':'#2563EB','2 AÑOS':'#D97706','3 AÑOS':'#DC2626'};
-  var tiempoBars=barListHTML(TIEMPO_ORDER.filter(function(t){return tiempoCount[t];}).map(function(t){
-    return {label:tiempoLabelsMap[t],val:tiempoCount[t],pct:pct(tiempoCount[t],tiempoDefinedTotal),color:tiempoColors[t]};
-  }));
+  var tiempoItems=TIEMPO_ORDER.filter(function(t){return tiempoCount[t];}).map(function(t){
+    return {label:tiempoLabelsMap[t],val:tiempoCount[t],pct:pct(tiempoCount[t],totalRel),color:tiempoColors[t]};
+  });
+  if(tiempoUndefined>0) tiempoItems.push({label:'Pendiente por definir',val:tiempoUndefined,pct:pct(tiempoUndefined,totalRel),color:'#94A3B8'});
+  var tiempoBars=barListHTML(tiempoItems);
 
   document.getElementById('chartsSection').innerHTML=
     '<div class="section-title"><div class="icon purple">📈</div>Análisis Visual</div>'+
@@ -321,13 +324,13 @@ function render(data){
         '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#7C3AED"></div>Vertical<div class="donut-legend-val">'+vertCount+'</div></div>'+
         (indefCount>0?'<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#94A3B8"></div>Sin definir<div class="donut-legend-val">'+indefCount+'</div></div>':'')+
         '</div></div></div></div>'+
-      '<div class="chart-card"><h3>Cobertura de Sucesión por Dirección</h3><div class="chart-note">Cargos totales vs. mapeados con sucesor (barras = total por dirección)</div><div class="chart-canvas-wrap">'+dirBarsAll+'</div></div>'+
+      '<div class="chart-card"><h3>Cargos Titulares por Dirección</h3><div class="chart-note">Número de cargos titulares únicos por dirección</div><div class="chart-canvas-wrap">'+dirBarsAll+'</div></div>'+
       '<div class="chart-card"><h3>Movilidad por Dirección de Comité</h3><div class="chart-note">Misma dirección vs. dirección distinta a la del titular</div>'+
         '<div class="chart-canvas-wrap"><div class="donut-wrap"><canvas id="chartSameDir"></canvas><div class="donut-legend">'+
         '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#059669"></div>Misma dirección<div class="donut-legend-val">'+sameDir+'</div></div>'+
         '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#EA580C"></div>Dirección distinta<div class="donut-legend-val">'+diffDir+'</div></div>'+
         '</div></div></div></div>'+
-      '<div class="chart-card"><h3>Tiempo de Alistamiento</h3><div class="chart-note">Solo relaciones con tiempo definido (n='+tiempoDefinedTotal+' de '+totalRel+')</div><div class="chart-canvas-wrap">'+(tiempoBars||'<div class="empty-state">Sin datos para este filtro.</div>')+'</div></div>'+
+      '<div class="chart-card"><h3>Tiempo de Alistamiento</h3><div class="chart-note">Distribución del tiempo de alistamiento de los sucesores (n='+totalRel+')</div><div class="chart-canvas-wrap">'+(tiempoBars||'<div class="empty-state">Sin datos para este filtro.</div>')+'</div></div>'+
     '</div>';
 
   setTimeout(function(){
