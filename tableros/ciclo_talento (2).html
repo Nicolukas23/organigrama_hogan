@@ -304,14 +304,7 @@ function render(data){
 
   /* ════════════════ CHARTS SECTION ════════════════ */
   var dirColors=['#1E3A5F','#2563EB','#7C1D24','#059669','#7C3AED','#D97706','#0891B2','#DC2626'];
-  var allDirCounts={};
-  RAW_ALL.forEach(function(r){allDirCounts[r.jDir]=(allDirCounts[r.jDir]||0)+1;});
-  var dirGap=Object.entries(allDirCounts).map(function(e){
-    var covered=relByDir[e[0]]||0;
-    return {label:e[0].replace('Direccion ','').replace('Dirección ',''),total:e[1],covered:covered,missing:e[1]-covered};
-  }).sort(function(a,b){return b.missing-a.missing;});
-  var dirBars=barListHTML(dirGap.map(function(d,i){return {label:d.label,val:d.missing,color:d.missing>0?'#DC2626':dirColors[i%dirColors.length],extra:d.covered+'/'+d.total+' mapeados'};}).filter(function(d){return d.val>0;}));
-  var dirBarsAll=barListHTML(dirGap.map(function(d,i){return {label:d.label,val:d.total,color:dirColors[i%dirColors.length]};}));
+  var dirBarsAll=barListHTML(dirEntries.map(function(e,i){return {label:e[0].replace('Direccion ','').replace('Dirección ',''),val:e[1],color:dirColors[i%dirColors.length]};}));
 
   var tiempoLabelsMap={'LISTO YA':'Listo Ya','1 AÑO':'1 año','2 AÑOS':'2 años','3 AÑOS':'3 años'};
   var tiempoColors={'LISTO YA':'#059669','1 AÑO':'#2563EB','2 AÑOS':'#D97706','3 AÑOS':'#DC2626'};
@@ -327,6 +320,7 @@ function render(data){
         '<div class="chart-canvas-wrap"><div class="donut-wrap"><canvas id="chartMov"></canvas><div class="donut-legend">'+
         '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#2563EB"></div>Horizontal<div class="donut-legend-val">'+horCount+'</div></div>'+
         '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#7C3AED"></div>Vertical<div class="donut-legend-val">'+vertCount+'</div></div>'+
+        (indefCount>0?'<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#94A3B8"></div>Sin definir<div class="donut-legend-val">'+indefCount+'</div></div>':'')+
         '</div></div></div></div>'+
       '<div class="chart-card"><h3>Cobertura de Sucesión por Dirección</h3><div class="chart-note">Cargos totales vs. mapeados con sucesor (barras = total por dirección)</div><div class="chart-canvas-wrap">'+dirBarsAll+'</div></div>'+
       '<div class="chart-card"><h3>Movilidad por Dirección de Comité</h3><div class="chart-note">Misma dirección vs. dirección distinta a la del titular</div>'+
@@ -338,22 +332,14 @@ function render(data){
     '</div>';
 
   setTimeout(function(){
-    drawDonut('chartMov',[horCount,vertCount],['#2563EB','#7C3AED'],168,'relaciones');
+    drawDonut('chartMov',[horCount,vertCount].concat(indefCount>0?[indefCount]:[]),['#2563EB','#7C3AED','#94A3B8'],168,'relaciones');
     drawDonut('chartSameDir',[sameDir,diffDir],['#059669','#EA580C'],168,'relaciones');
   },30);
 
   /* ════════════════ RISK SECTION ════════════════ */
-  var timeHTML=TIEMPO_ORDER.filter(function(t){return tiempoCount[t];}).map(function(t){
-    var cls=t==='LISTO YA'?'time-listo':t==='1 AÑO'?'time-1':t==='2 AÑOS'?'time-2':'time-3';
-    return '<div class="time-card '+cls+'"><div class="tv">'+tiempoCount[t]+'</div><div class="tp">'+pct(tiempoCount[t],tiempoDefinedTotal)+'%</div><div class="tl">'+esc(t)+'</div></div>';
-  }).join('');
-
   document.getElementById('riskSection').innerHTML=
-    '<div class="section-title"><div class="icon red">⚠️</div>Riesgo de Continuidad y Alistamiento</div>'+
+    '<div class="section-title"><div class="icon red">⚠️</div>Riesgo de Continuidad</div>'+
     '<div class="section-sub">Cruce entre la edad del titular y el tiempo de alistamiento del sucesor más próximo, como variables de contexto</div>'+
-    '<h3 style="font-size:.82rem;color:var(--text3);margin-bottom:12px;font-weight:600">Tiempo de Alistamiento Designado (relaciones con dato, n='+tiempoDefinedTotal+')</h3>'+
-    '<div class="time-cards">'+(timeHTML||'<div class="empty-state" style="flex:1">Sin datos de tiempo de alistamiento para este filtro.</div>')+'</div>'+
-    '<h3 style="font-size:.82rem;color:var(--text3);margin:20px 0 12px;font-weight:600">Mapa de Riesgo de Sucesión (por cargo titular)</h3>'+
     '<div class="risk-grid">'+
     '<div class="risk-card risk-alta"><div class="risk-val">'+riskCount['Alta']+'</div><div class="risk-pct">'+pct(riskCount['Alta'],totalJefes)+'%</div><div class="risk-label">Riesgo Alto</div><div class="risk-desc">Titular ≥55 años sin sucesor con alistamiento en ≤1 año</div></div>'+
     '<div class="risk-card risk-media"><div class="risk-val">'+riskCount['Media']+'</div><div class="risk-pct">'+pct(riskCount['Media'],totalJefes)+'%</div><div class="risk-label">Riesgo Medio</div><div class="risk-desc">Titular 45-54 años, o ≥55 con sucesor listo en el corto plazo</div></div>'+
@@ -405,8 +391,8 @@ function init(){
   var nivelsPresent=[...new Set(RAW_ALL.map(function(r){return r.jNivel;}))];
   var nivels=NIVEL_ORDER.filter(function(n){return nivelsPresent.indexOf(n)!==-1;});
 
-  var dirOpts=dirs.map(function(d){return '<option value="'+esc(d)+'">'+esc(d)+'</option>';}).join('');
-  var nivOpts=nivels.map(function(n){return '<option value="'+esc(n)+'">'+esc(n)+'</option>';}).join('');
+  var dirOpts=dirs.map(function(d){return '<option value="'+esc(d.trim())+'">'+esc(d.trim())+'</option>';}).join('');
+  var nivOpts=nivels.map(function(n){return '<option value="'+esc(n.trim())+'">'+esc(n.trim())+'</option>';}).join('');
 
   document.getElementById('filterbar').innerHTML=
     '<div class="fgroup"><label>Dirección de Comité</label><select id="gfDir"><option value="">Todas las direcciones</option>'+dirOpts+'</select></div>'+
@@ -417,10 +403,12 @@ function init(){
   var gfDir=document.getElementById('gfDir'), gfNivel=document.getElementById('gfNivel'), gfCount=document.getElementById('gfCount');
 
   function applyGlobalFilters(){
-    var dir=gfDir.value, nivel=gfNivel.value;
+    var dir=gfDir.value.trim(), nivel=gfNivel.value.trim();
     var filtered=RAW_ALL.filter(function(r){
-      if(dir && r.jDir!==dir) return false;
-      if(nivel && r.jNivel!==nivel) return false;
+      var rDir=(r.jDir||'').trim();
+      var rNivel=(r.jNivel||'').trim();
+      if(dir && rDir!==dir) return false;
+      if(nivel && rNivel!==nivel) return false;
       return true;
     });
     gfCount.textContent='Mostrando '+filtered.length+' de '+RAW_ALL.length+' relaciones';
