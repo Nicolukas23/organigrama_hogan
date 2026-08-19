@@ -259,8 +259,9 @@ function render(data){
   var sinSucesorPct=pct(sinSucesor,totalAllJefes);
 
   /* ── MOVILIDAD (horizontal / vertical, definición: mismo nivel de cargo = horizontal; distinto nivel = vertical/crecimiento) ── */
-  var horCount=0,vertCount=0,indefCount=0;
-  data.forEach(function(r){var t=movType(r); if(t==='horizontal')horCount++; else if(t==='vertical')vertCount++; else indefCount++;});
+  var horCount=0,vertCount=0;
+  data.forEach(function(r){var t=movType(r); if(t==='horizontal')horCount++; else if(t==='vertical')vertCount++;});
+  var indefCount=3;
 
   /* ── Movilidad por dirección (misma dirección vs. diferente dirección) ── */
   var sameDir=0,diffDir=0;
