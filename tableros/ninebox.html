@@ -1470,10 +1470,12 @@ function applyFilters(list){
       if(matchName && !matchJefe && jefeSet.has(d.nombre)) return false;
     }
     if(state.jefe){
+      const normName=n=>n.split(/\s+/).filter(Boolean).sort((a,b)=>a.localeCompare(b,'es')).join(' ');
       if(jefeIsCD){
-        if(d.jefe !== state.jefe) return false;
+        if(normName(d.jefe||'') !== normName(state.jefe)) return false;
       } else {
-        if(d.jefe !== state.jefe) return false;
+        if(normName(d.nombre) === normName(state.jefe)) return false;
+        if(normName(d.jefe||'') !== normName(state.jefe)) return false;
       }
     }
     if(!jefeIsCD && state.direccion.length > 0){
