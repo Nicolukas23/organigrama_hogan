@@ -324,14 +324,14 @@ h1.title span{color:var(--text-dim);font-weight:500;font-size:.85em}
   background:rgba(0,0,0,.25);padding:2px 7px;border-radius:10px;
   font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#fff;
 }
-.cell-items-list{display:flex;flex-direction:column;gap:5px;overflow-y:auto;max-height:200px}
+.cell-items-list{display:flex;flex-direction:column;gap:5px;overflow-y:auto;max-height:220px}
 .cell-items-list::-webkit-scrollbar{width:3px}
 .cell-items-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:4px}
 .card-item{
-  background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.08);
+  background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.08);
   border-radius:9px;padding:7px 9px;cursor:pointer;transition:all .15s;
 }
-.card-item:hover{background:rgba(0,0,0,.45);border-color:#fff;transform:translateY(-1px)}
+.card-item:hover{background:rgba(0,0,0,.5);border-color:#fff;transform:translateY(-1px)}
 .ci-name{font-size:11.5px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ci-sub{font-size:10px;color:rgba(255,255,255,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
 .ci-tags{display:flex;gap:3px;flex-wrap:wrap;margin-top:3px}
@@ -512,12 +512,12 @@ h1.title span{color:var(--text-dim);font-weight:500;font-size:.85em}
     </div>
     <div class="filters-grid">
       <div class="field"><label>Búsqueda</label><input type="text" id="fSearch" placeholder="Nombre, cargo, cédula..." oninput="applyFilters()"></div>
-      <div class="field" id="wrapDir" style="display:none"><label>Dirección</label><select id="fDir" onchange="onDirChange()"><option value="">Todas</option></select></div>
-      <div class="field"><label>Gerencia</label><select id="fGer" onchange="applyFilters()"><option value="">Todas</option></select></div>
-      <div class="field"><label>Jefe Directo</label><select id="fJefe" onchange="applyFilters()"><option value="">Todos</option></select></div>
+      <div class="field" id="wrapDir" style="display:none"><label>Dirección</label><select id="fDir" onchange="onDirChange()"><option value="">Todas las Direcciones</option></select></div>
+      <div class="field"><label>Gerencia</label><select id="fGer" onchange="applyFilters()"><option value="">Todas las Gerencias</option></select></div>
+      <div class="field"><label>Jefe Directo</label><select id="fJefe" onchange="applyFilters()"><option value="">Todos los Jefes</option></select></div>
       <div class="field"><label>Caja 9-Box</label>
         <select id="fCaja" onchange="applyFilters()">
-          <option value="">Todas</option>
+          <option value="">Todas las Cajas</option>
           <option value="9">9 · Alto Potencial</option>
           <option value="8">8 · Sólido</option>
           <option value="7">7 · Experto</option>
@@ -667,6 +667,12 @@ let CUR = null;
 let FILTERED = [];
 let VIEW = 'ninebox';
 
+function getCajaNum(c){
+  if(c === null || c === undefined || c === '') return null;
+  const n = parseInt(c, 10);
+  return isNaN(n) ? null : n;
+}
+
 function normWords(s){
   if(!s) return '';
   return s.normalize('NFKD').replace(/[̀-ͯ]/g,'')
@@ -691,7 +697,14 @@ if(localStorage.getItem('theme') === 'light'){
 function init(){
   try{
     const el = document.getElementById('DS');
-    ALL = el && el.textContent.trim() ? JSON.parse(el.textContent) : [];
+    const raw = el && el.textContent.trim() ? JSON.parse(el.textContent) : [];
+    ALL = raw.map(r => {
+      const copy = { ...r };
+      copy.caja = getCajaNum(copy.caja);
+      copy.nivel_reporte = copy.nivel_reporte != null ? parseInt(copy.nivel_reporte, 10) : null;
+      if(!copy.hogan_scores) copy.hogan_scores = {};
+      return copy;
+    });
     console.log('DataStore cargado exitosamente:', ALL.length, 'registros.');
   }catch(e){
     console.error('Error parseando dataStore:', e);
@@ -877,6 +890,10 @@ function setSession(user){
   badge.textContent = user.rol.toUpperCase();
   badge.className = 'role-tag role-' + user.rol;
 
+  // Explicitly reset filter inputs for new session
+  document.getElementById('fSearch').value = '';
+  document.getElementById('fCaja').value = '';
+
   hideLoginOverlay();
   setupFilters();
   applyFilters();
@@ -919,32 +936,35 @@ function setupFilters(){
   if(CUR.rol === 'admin'){
     wrap.style.display = 'flex';
     const dirs = [...new Set(ALL.map(r => r.direccion).filter(Boolean))].sort();
-    fDir.innerHTML = '<option value="">Todas</option>';
+    fDir.innerHTML = '<option value="">Todas las Direcciones</option>';
     dirs.forEach(d => {
       const o = document.createElement('option');
       o.value = d; o.textContent = d;
       fDir.appendChild(o);
     });
+    fDir.value = '';
   } else {
     wrap.style.display = 'none';
+    fDir.value = '';
   }
 
-  populateSecondaryFilters(getScopedData());
+  populateSecondaryFilters(getScopedData(), true);
 }
 
-function populateSecondaryFilters(data){
+function populateSecondaryFilters(data, isReset = false){
   const fGer = document.getElementById('fGer');
   const fJefe = document.getElementById('fJefe');
-  const gSel = fGer.value, jSel = fJefe.value;
+  const gSel = isReset ? '' : fGer.value;
+  const jSel = isReset ? '' : fJefe.value;
 
   const gers = [...new Set(data.map(r => r.gerencia).filter(Boolean))].sort();
-  fGer.innerHTML = '<option value="">Todas</option>';
+  fGer.innerHTML = '<option value="">Todas las Gerencias</option>';
   gers.forEach(g => {
     const o = document.createElement('option');
     o.value = g; o.textContent = g;
     fGer.appendChild(o);
   });
-  if(gSel && gers.includes(gSel)) fGer.value = gSel;
+  fGer.value = (gSel && gers.includes(gSel)) ? gSel : '';
 
   if(CUR.rol === 'gerente'){
     fGer.value = CUR.scope_ger || '';
@@ -954,19 +974,19 @@ function populateSecondaryFilters(data){
   }
 
   const jefes = [...new Set(data.map(r => r.jefe).filter(Boolean))].sort();
-  fJefe.innerHTML = '<option value="">Todos</option>';
+  fJefe.innerHTML = '<option value="">Todos los Jefes</option>';
   jefes.forEach(j => {
     const o = document.createElement('option');
     o.value = j; o.textContent = j;
     fJefe.appendChild(o);
   });
-  if(jSel && jefes.includes(jSel)) fJefe.value = jSel;
+  fJefe.value = (jSel && jefes.includes(jSel)) ? jSel : '';
 }
 
 function onDirChange(){
   const selDir = document.getElementById('fDir').value;
   const base = selDir ? ALL.filter(r => r.direccion === selDir) : ALL;
-  populateSecondaryFilters(base);
+  populateSecondaryFilters(base, true);
   applyFilters();
 }
 
@@ -983,7 +1003,7 @@ function applyFilters(){
   if(selDir && CUR.rol === 'admin') data = data.filter(r => r.direccion === selDir);
   if(selGer) data = data.filter(r => r.gerencia === selGer);
   if(selJefe) data = data.filter(r => r.jefe === selJefe);
-  if(selCaja) data = data.filter(r => r.caja === parseInt(selCaja));
+  if(selCaja) data = data.filter(r => getCajaNum(r.caja) === parseInt(selCaja, 10));
   
   if(search){
     data = data.filter(r =>
@@ -1001,10 +1021,10 @@ function applyFilters(){
 function resetFilters(){
   document.getElementById('fSearch').value = '';
   document.getElementById('fCaja').value = '';
-  document.getElementById('fDir').value = '';
+  if(CUR.rol === 'admin') document.getElementById('fDir').value = '';
   if(CUR.rol !== 'gerente') document.getElementById('fGer').value = '';
   document.getElementById('fJefe').value = '';
-  populateSecondaryFilters(getScopedData());
+  populateSecondaryFilters(getScopedData(), true);
   applyFilters();
 }
 
@@ -1018,7 +1038,7 @@ function renderAll(){
 
 function renderStats(){
   const n = FILTERED.length;
-  const top = FILTERED.filter(r => [7,8,9].includes(r.caja)).length;
+  const top = FILTERED.filter(r => [7,8,9].includes(getCajaNum(r.caja))).length;
   const hEv = FILTERED.filter(r => r.hogan_potencial !== null && r.hogan_potencial !== undefined);
   const avgPot = hEv.length > 0 ? Math.round(hEv.reduce((a, r) => a + (+r.hogan_potencial || 0), 0) / hEv.length) : 0;
   const suc = FILTERED.filter(r => isSuc(r.sucesor)).length;
@@ -1034,7 +1054,7 @@ function renderStats(){
 
 function renderNinebox(){
   for(let b = 1; b <= 9; b++){
-    const items = FILTERED.filter(r => r.caja === b);
+    const items = FILTERED.filter(r => getCajaNum(r.caja) === b);
     const cntEl = document.getElementById(`cnt${b}`);
     const boxEl = document.getElementById(`box${b}`);
     if(cntEl) cntEl.textContent = items.length;
@@ -1108,6 +1128,7 @@ function renderHogan(){
             <span class="hs-val">${v}</span>
           </div>`;
       });
+      const cNum = getCajaNum(p.caja);
       const card = document.createElement('div');
       card.className = 'hcard';
       card.onclick = () => openModal(p, 'hogan');
@@ -1122,7 +1143,7 @@ function renderHogan(){
         <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px">
           <span class="mini-badge ${vc}">${p.hogan_versatilidad || 'N/A'}</span>
           <span class="mini-badge mb-pot">Potencial: ${p.hogan_potencial} pts</span>
-          ${p.caja ? `<span class="mini-badge" style="background:${BOX_COLORS[p.caja] || '#6b7280'};color:#fff">Caja ${p.caja}</span>` : ''}
+          ${cNum ? `<span class="mini-badge" style="background:${BOX_COLORS[cNum] || '#6b7280'};color:#fff">Caja ${cNum}</span>` : ''}
         </div>
         <div class="hcard-scores">${sc}</div>
         <div style="margin-top:8px;text-align:right;font-size:11px;font-weight:700;color:var(--crimson)">Ver 11 competencias →</div>`;
@@ -1143,6 +1164,7 @@ function renderTable(){
     const vc = p.hogan_versatilidad === 'Alta Versatilidad' ? 'mb-alta' : 
                p.hogan_versatilidad === 'Media Versatilidad' ? 'mb-media' : 
                p.hogan_versatilidad ? 'mb-prof' : '';
+    const cNum = getCajaNum(p.caja);
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><b>${p.nombre}</b></td>
@@ -1151,7 +1173,7 @@ function renderTable(){
       <td style="font-size:12px">${p.direccion || '-'}</td>
       <td style="font-size:12px">${p.gerencia || '-'}</td>
       <td style="font-size:12px">${p.jefe || '-'}</td>
-      <td>${p.caja ? `<span class="mini-badge" style="background:${BOX_COLORS[p.caja] || '#6b7280'};color:#fff">Caja ${p.caja}</span>` : '-'}</td>
+      <td>${cNum ? `<span class="mini-badge" style="background:${BOX_COLORS[cNum] || '#6b7280'};color:#fff">Caja ${cNum}</span>` : '-'}</td>
       <td style="font-weight:700;font-family:'JetBrains Mono'">${p.hogan_potencial !== null && p.hogan_potencial !== undefined ? p.hogan_potencial + ' pts' : '<span style="color:var(--text-faint)">-</span>'}</td>
       <td>${vc ? `<span class="mini-badge ${vc}">${p.hogan_versatilidad}</span>` : '-'}</td>
       <td>${isSuc(p.sucesor) ? '<span style="color:var(--green);font-weight:700">✔</span>' : '<span style="color:var(--text-faint)">No</span>'}</td>
@@ -1181,9 +1203,10 @@ function openModal(p, tab = 'ficha'){
   const vc = p.hogan_versatilidad === 'Alta Versatilidad' ? 'mb-alta' : 
              p.hogan_versatilidad === 'Media Versatilidad' ? 'mb-media' : 
              p.hogan_versatilidad ? 'mb-prof' : '';
+  const cNum = getCajaNum(p.caja);
 
   document.getElementById('mBadges').innerHTML = `
-    ${p.caja ? `<span class="mini-badge" style="background:${BOX_COLORS[p.caja] || '#6b7280'};color:#fff">Caja ${p.caja} · ${BOX_NAMES[p.caja] || ''}</span>` : ''}
+    ${cNum ? `<span class="mini-badge" style="background:${BOX_COLORS[cNum] || '#6b7280'};color:#fff">Caja ${cNum} · ${BOX_NAMES[cNum] || ''}</span>` : ''}
     ${vc ? `<span class="mini-badge ${vc}">${p.hogan_versatilidad}</span>` : ''}
     ${isSuc(p.sucesor) ? '<span class="mini-badge mb-suc">Sucesor</span>' : ''}`;
 
@@ -1248,6 +1271,7 @@ function closeModal(){
 function exportExcel(){
   if(!FILTERED.length){ alert('No hay datos para exportar.'); return; }
   const rows = FILTERED.map(r => {
+    const cNum = getCajaNum(r.caja);
     const obj = {
       'Expediente': r.expediente,
       'Nombre': r.nombre,
@@ -1255,8 +1279,8 @@ function exportExcel(){
       'Dirección': r.direccion,
       'Gerencia': r.gerencia,
       'Jefe': r.jefe,
-      'Caja': r.caja,
-      'Nombre Caja': BOX_NAMES[r.caja] || '',
+      'Caja': cNum,
+      'Nombre Caja': cNum ? BOX_NAMES[cNum] || '' : '',
       'Desempeño': r.desempeno,
       'Potencial 9-Box': r.potencial,
       'Hogan Potencial': r.hogan_potencial,
@@ -1307,8 +1331,8 @@ async function refreshFromSupabase(){
     ALL = valid.map(r => {
       const c = {
         ...r,
-        caja: r.caja !== null && r.caja !== undefined ? +r.caja : null,
-        nivel_reporte: r.nivel_reporte !== null && r.nivel_reporte !== undefined ? +r.nivel_reporte : null
+        caja: getCajaNum(r.caja),
+        nivel_reporte: r.nivel_reporte !== null && r.nivel_reporte !== undefined ? parseInt(r.nivel_reporte, 10) : null
       };
       const hgItem = hMap.get(normWords(c.nombre));
       if(hgItem){
