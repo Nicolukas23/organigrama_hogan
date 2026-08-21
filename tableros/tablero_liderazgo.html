@@ -29,15 +29,16 @@
   --blue: #2563eb;
   --green: #10B981;
 
-  --c1: #47505c;
-  --c2: #58626f;
-  --c3: #69737f;
-  --c4: #9c6a2e;
-  --c5: #c99a46;
-  --c6: #7fa65e;
-  --c7: #1d6e8c;
-  --c8: #2f9271;
-  --c9: #1e7a4e;
+  /* Cajas Ninebox colores exactos */
+  --c1: #47505c; --c1-soft: rgba(71,80,92,.18);
+  --c2: #58626f; --c2-soft: rgba(88,98,111,.18);
+  --c3: #69737f; --c3-soft: rgba(105,115,127,.18);
+  --c4: #9c6a2e; --c4-soft: rgba(156,106,46,.18);
+  --c5: #c99a46; --c5-soft: rgba(201,154,70,.18);
+  --c6: #7fa65e; --c6-soft: rgba(127,166,94,.18);
+  --c7: #1d6e8c; --c7-soft: rgba(29,110,140,.20);
+  --c8: #2f9271; --c8-soft: rgba(47,146,113,.20);
+  --c9: #1e7a4e; --c9-soft: rgba(30,122,78,.22);
 
   --alta-bg: rgba(16,185,129,.18); --alta-txt: #34d399;
   --media-bg: rgba(216,173,100,.18); --media-txt: #facc15;
@@ -263,92 +264,141 @@ header.dash-hdr{
 }
 .f-group select:focus, .f-group input:focus{border-color:var(--crimson)}
 
-/* ── MATRIX VIEW ───────────────────────────────────────────────────── */
-.matrix-wrap{position:relative;margin-top:10px}
-.matrix-grid{
-  display:grid;grid-template-columns:50px 1fr;gap:8px;
+/* ── RESUMEN EJECUTIVO (NINEBOX) ───────────────────────────────────── */
+.exec-summary{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:var(--radius);padding:18px 20px;margin-bottom:24px;
+}
+.exec-head{
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;
+}
+.exec-head h3{
+  font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;
+  display:flex;align-items:center;gap:8px;color:var(--text);margin:0;
+}
+.exec-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+}
+.exec-card{
+  background:var(--bg-1);border:1px solid var(--border-soft);
+  border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px;
+  transition:border-color .2s;
+}
+.exec-card:hover{border-color:var(--border)}
+.ec-label{
+  font-size:11px;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--text-faint);font-weight:700;
+}
+.ec-value{
+  font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:700;
+  color:var(--text);letter-spacing:-0.02em;
+}
+.ec-sub{font-size:12.5px;color:var(--text-dim);line-height:1.4}
+.ec-bar{
+  height:6px;border-radius:100px;background:var(--bg);overflow:hidden;margin-top:4px;
+}
+.ec-bar-fill{height:100%;border-radius:100px;transition:width .8s var(--ease)}
+
+/* ── MATRIX VIEW EXACT DESIGN FROM NINEBOX.HTML ────────────────────── */
+.matrix-wrap{
+  display:grid;grid-template-columns:140px 1fr;gap:12px;margin-top:10px;
 }
 .matrix-yaxis{
-  display:flex;flex-direction:column;justify-content:space-around;
-  padding:20px 0;text-align:center;
+  display:grid;grid-template-rows:36px repeat(3, 1fr);gap:10px;
 }
-.ylabel{
-  writing-mode:vertical-rl;transform:rotate(180deg);
-  font-size:.72rem;font-weight:800;color:var(--text-dim);
-  letter-spacing:.1em;text-transform:uppercase;
+.matrix-yaxis .yspacer{height:36px}
+.matrix-yaxis .ylabel{
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;
+  color:var(--text-dim);line-height:1.25;padding:0 8px;
 }
-.matrix-content{display:flex;flex-direction:column;gap:8px}
+.matrix-main{display:flex;flex-direction:column;gap:10px}
+.matrix-xaxis{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;height:36px;
+}
+.matrix-xaxis .xlabel{
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;
+  color:var(--text-dim);text-align:center;
+}
 .matrix-cells{
   display:grid;grid-template-columns:repeat(3,1fr);
-  grid-template-rows:repeat(3,minmax(210px, auto));
+  grid-template-rows:repeat(3,minmax(200px, auto));
   gap:10px;
-}
-.matrix-xaxis{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:10px;text-align:center;padding:8px 0;
-}
-.xlabel{
-  font-size:.72rem;font-weight:800;color:var(--text-dim);
-  letter-spacing:.08em;text-transform:uppercase;
 }
 
 .cell{
-  border-radius:12px;border:1px solid rgba(255,255,255,.08);
-  padding:12px;display:flex;flex-direction:column;min-height:210px;
-  position:relative;background:rgba(0,0,0,.2);backdrop-filter:blur(4px);
+  position:relative;border-radius:14px;padding:16px;
+  display:flex;flex-direction:column;justify-content:flex-start;
+  min-height:200px;border:1px solid rgba(255,255,255,.08);
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease),filter .25s var(--ease);
+  overflow:visible;
 }
-.cell[data-box="7"]{background:linear-gradient(135deg, rgba(29,110,140,.25), rgba(29,110,140,.1)); border-color:rgba(29,110,140,.4)}
-.cell[data-box="8"]{background:linear-gradient(135deg, rgba(47,146,113,.25), rgba(47,146,113,.1)); border-color:rgba(47,146,113,.4)}
-.cell[data-box="9"]{background:linear-gradient(135deg, rgba(30,122,78,.35), rgba(30,122,78,.15)); border-color:rgba(30,122,78,.6)}
+.cell:hover{
+  transform:translateY(-3px);box-shadow:0 16px 36px rgba(0,0,0,.4);filter:brightness(1.06);
+}
 
-.cell[data-box="4"]{background:linear-gradient(135deg, rgba(156,106,46,.25), rgba(156,106,46,.1)); border-color:rgba(156,106,46,.4)}
-.cell[data-box="5"]{background:linear-gradient(135deg, rgba(201,154,70,.25), rgba(201,154,70,.1)); border-color:rgba(201,154,70,.4)}
-.cell[data-box="6"]{background:linear-gradient(135deg, rgba(127,166,94,.25), rgba(127,166,94,.1)); border-color:rgba(127,166,94,.4)}
+/* Colores de fondo de celdas exactos de ninebox.html */
+.cell[data-box="7"]{background:linear-gradient(150deg, var(--c7), #123c4d); border-color:rgba(29,110,140,.4)}
+.cell[data-box="8"]{background:linear-gradient(150deg, var(--c8), #114430); border-color:rgba(47,146,113,.4)}
+.cell[data-box="9"]{background:linear-gradient(150deg, var(--c9), #0e3f28); border-color:rgba(30,122,78,.5)}
 
-.cell[data-box="1"]{background:linear-gradient(135deg, rgba(71,80,92,.25), rgba(71,80,92,.1)); border-color:rgba(71,80,92,.4)}
-.cell[data-box="2"]{background:linear-gradient(135deg, rgba(88,98,111,.25), rgba(88,98,111,.1)); border-color:rgba(88,98,111,.4)}
-.cell[data-box="3"]{background:linear-gradient(135deg, rgba(105,115,127,.25), rgba(105,115,127,.1)); border-color:rgba(105,115,127,.4)}
+.cell[data-box="4"]{background:linear-gradient(150deg, var(--c4), #4d3316); border-color:rgba(156,106,46,.4)}
+.cell[data-box="5"]{background:linear-gradient(150deg, var(--c5), #6b5321); border-color:rgba(201,154,70,.4)}
+.cell[data-box="6"]{background:linear-gradient(150deg, var(--c6), #3f5730); border-color:rgba(127,166,94,.4)}
 
-.cell-top-meta{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.06);
-}
-.cell-tag{
-  font-size:.75rem;font-weight:800;color:var(--text);
-  display:flex;align-items:center;gap:6px;
-}
-.cell-num-badge{
-  width:18px;height:18px;border-radius:4px;background:rgba(255,255,255,.15);
-  display:grid;place-items:center;font-size:10px;font-weight:800;
-}
-.cell-chip-count{
-  background:rgba(0,0,0,.25);padding:2px 7px;border-radius:10px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#fff;
-}
-.cell-items-list{display:flex;flex-direction:column;gap:6px;flex:1;overflow-y:auto;max-height:260px}
+.cell[data-box="1"]{background:linear-gradient(150deg, var(--c1), #262b32); border-color:rgba(71,80,92,.4)}
+.cell[data-box="2"]{background:linear-gradient(150deg, var(--c2), #2c323b); border-color:rgba(88,98,111,.4)}
+.cell[data-box="3"]{background:linear-gradient(150deg, var(--c3), #323944); border-color:rgba(105,115,127,.4)}
 
-/* ── CARD ITEM ─────────────────────────────────────────────────────── */
+.cell-top-row{
+  display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;
+}
+.cell-meta-info{display:flex;flex-direction:column;gap:2px}
+.cell .cellname{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:#fff;
+  text-shadow:0 1px 4px rgba(0,0,0,.3);
+}
+.cell .count-row{display:flex;align-items:baseline;gap:6px;margin-top:2px}
+.cell .count{
+  font-family:'JetBrains Mono',monospace;font-weight:800;font-size:30px;color:#fff;
+  letter-spacing:-0.02em;line-height:1;
+}
+.cell .count-lbl{font-size:12.5px;color:rgba(255,255,255,.75);font-weight:500}
+.cell .badge{
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  background:rgba(0,0,0,.32);color:#fff;width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  border:1px solid rgba(255,255,255,.1);
+}
+
+.cell-items-list{
+  display:flex;flex-direction:column;gap:6px;margin-top:10px;
+  overflow-y:auto;max-height:220px;padding-right:2px;
+}
+
+/* ── CARD ITEM DENTRO DE MATRIZ ────────────────────────────────────── */
 .card-item{
-  background:var(--panel);border:1px solid var(--border);
+  background:rgba(18,8,10,.85);border:1px solid rgba(255,255,255,.1);
   border-radius:8px;padding:8px 10px;cursor:pointer;
-  transition:all .15s var(--ease);
+  transition:all .15s var(--ease);backdrop-filter:blur(4px);
 }
 .card-item:hover{
-  border-color:var(--text-dim);transform:translateX(2px);
-  box-shadow:0 4px 12px rgba(0,0,0,.3);
+  border-color:var(--text);transform:translateX(2px);
+  background:rgba(30,18,21,.95);box-shadow:0 4px 12px rgba(0,0,0,.4);
 }
-.ci-name{font-size:.8rem;font-weight:700;color:var(--text);line-height:1.2}
-.ci-sub{font-size:.7rem;color:var(--text-dim);margin:2px 0 5px;line-height:1.2}
+.ci-name{font-size:.78rem;font-weight:700;color:var(--text);line-height:1.2}
+.ci-sub{font-size:.68rem;color:var(--text-dim);margin:2px 0 4px;line-height:1.2}
 .ci-tags{display:flex;gap:4px;flex-wrap:wrap}
 .mini-badge{
-  font-size:.65rem;padding:2px 6px;border-radius:4px;font-weight:700;
+  font-size:.62rem;padding:2px 5px;border-radius:4px;font-weight:700;
   display:inline-flex;align-items:center;gap:3px;
 }
 .mb-alta{background:var(--alta-bg);color:var(--alta-txt)}
 .mb-media{background:var(--media-bg);color:var(--media-txt)}
 .mb-prof{background:var(--prof-bg);color:var(--prof-txt)}
-.mb-pot{background:rgba(216,173,100,.15);color:var(--gold)}
-.mb-suc{background:rgba(16,185,129,.15);color:var(--green)}
+.mb-pot{background:rgba(216,173,100,.18);color:var(--gold)}
+.mb-suc{background:rgba(16,185,129,.18);color:var(--green)}
 
 /* ── HOGAN VIEW COMPONENTS ─────────────────────────────────────────── */
 .hogan-team-card{
@@ -419,6 +469,12 @@ header.dash-hdr{
   transition:all .15s;
 }
 .btn-outline:hover{border-color:var(--text);background:var(--bg-1)}
+
+@media (max-width: 980px){
+  .matrix-wrap{grid-template-columns:90px 1fr}
+  .exec-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
 <body>
@@ -548,34 +604,159 @@ header.dash-hdr{
 
   <!-- NINEBOX VIEW -->
   <section id="viewNB">
+    <!-- RESUMEN EJECUTIVO (EXPERTO, SÓLIDO, VERSÁTIL) -->
+    <section class="exec-summary" id="execSummary">
+      <div class="exec-head">
+        <h3>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          Resumen Ejecutivo
+        </h3>
+      </div>
+      <div class="exec-grid" id="execGrid"></div>
+    </section>
+
+    <!-- MATRIZ 9-BOX -->
     <div class="matrix-wrap">
-      <div class="matrix-grid">
-        <div class="matrix-yaxis">
-          <div class="ylabel">Alto Potencial</div>
-          <div class="ylabel">Medio Potencial</div>
-          <div class="ylabel">Bajo Potencial</div>
+      <div class="matrix-yaxis">
+        <div class="yspacer"></div>
+        <div class="ylabel">Alto<br>desempeño</div>
+        <div class="ylabel">Desempeño<br>consistente</div>
+        <div class="ylabel">Bajo<br>desempeño</div>
+      </div>
+      <div class="matrix-main">
+        <div class="matrix-xaxis">
+          <div class="xlabel">Experto</div>
+          <div class="xlabel">Sólido</div>
+          <div class="xlabel">Versátil</div>
         </div>
-        <div class="matrix-content">
-          <div class="matrix-xaxis">
-            <div class="xlabel">Desempeño Bajo</div>
-            <div class="xlabel">Desempeño Medio</div>
-            <div class="xlabel">Desempeño Alto</div>
+        <div class="matrix-cells">
+          <!-- Fila 1 (Alto Desempeño): Cajas 7, 8, 9 -->
+          <div class="cell" data-box="7">
+            <div class="cell-top-row">
+              <div class="cell-meta-info">
+                <div class="cellname">Experto</div>
+                <div class="count-row">
+                  <span class="count" id="cnt7">0</span>
+                  <span class="count-lbl">personas</span>
+                </div>
+              </div>
+              <div class="badge">7</div>
+            </div>
+            <div class="cell-items-list" id="box7"></div>
           </div>
-          <div class="matrix-cells">
-            <!-- Fila 1: 7, 8, 9 -->
-            <div class="cell" data-box="7"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">7</div>Experto</div><span class="cell-chip-count" id="cnt7">0</span></div><div class="cell-items-list" id="box7"></div></div>
-            <div class="cell" data-box="8"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">8</div>Sólido</div><span class="cell-chip-count" id="cnt8">0</span></div><div class="cell-items-list" id="box8"></div></div>
-            <div class="cell" data-box="9"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">9</div>Alto Potencial</div><span class="cell-chip-count" id="cnt9">0</span></div><div class="cell-items-list" id="box9"></div></div>
-            
-            <!-- Fila 2: 4, 5, 6 -->
-            <div class="cell" data-box="4"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">4</div>Experto Desarr.</div><span class="cell-chip-count" id="cnt4">0</span></div><div class="cell-items-list" id="box4"></div></div>
-            <div class="cell" data-box="5"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">5</div>Sólido Desarr.</div><span class="cell-chip-count" id="cnt5">0</span></div><div class="cell-items-list" id="box5"></div></div>
-            <div class="cell" data-box="6"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">6</div>Alto Pot. Desarr.</div><span class="cell-chip-count" id="cnt6">0</span></div><div class="cell-items-list" id="box6"></div></div>
-            
-            <!-- Fila 3: 1, 2, 3 -->
-            <div class="cell" data-box="1"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">1</div>En Riesgo</div><span class="cell-chip-count" id="cnt1">0</span></div><div class="cell-items-list" id="box1"></div></div>
-            <div class="cell" data-box="2"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">2</div>En Revisión</div><span class="cell-chip-count" id="cnt2">0</span></div><div class="cell-items-list" id="box2"></div></div>
-            <div class="cell" data-box="3"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">3</div>A Gestionar</div><span class="cell-chip-count" id="cnt3">0</span></div><div class="cell-items-list" id="box3"></div></div>
+          
+          <div class="cell" data-box="8">
+            <div class="cell-top-row">
+              <div class="cell-meta-info">
+                <div class="cellname">Sólido</div>
+                <div class="count-row">
+                  <span class="count" id="cnt8">0</span>
+                  <span class="count-lbl">personas</span>
+                </div>
+              </div>
+              <div class="badge">8</div>
+            </div>
+            <div class="cell-items-list" id="box8"></div>
+          </div>
+          
+          <div class="cell" data-box="9">
+            <div class="cell-top-row">
+              <div class="cell-meta-info">
+                <div class="cellname">Alto potencial</div>
+                <div class="count-row">
+                  <span class="count" id="cnt9">0</span>
+                  <span class="count-lbl">personas</span>
+                </div>
+              </div>
+              <div class="badge">9</div>
+            </div>
+            <div class="cell-items-list" id="box9"></div>
+          </div>
+          
+          <!-- Fila 2 (Desempeño Consistente): Cajas 4, 5, 6 -->
+          <div class="cell" data-box="4">
+            <div class="cell-top-row">
+              <div class="cell-meta-info">
+                <div class="cellname">Experto en desarrollo</div>
+                <div class="count-row">
+                  <span class="count" id="cnt4">0</span>
+                  <span class="count-lbl">personas</span>
+                </div>
+              </div>
+              <div class="badge">4</div>
+            </div>
+            <div class="cell-items-list" id="box4"></div>
+          </div>
+          
+          <div class="cell" data-box="5">
+            <div class="cell-top-row">
+              <div class="cell-meta-info">
+                <div class="cellname">Sólido en desarrollo</div>
+                <div class="count-row">
+                  <span class="count" id="cnt5">0</span>
+                  <span class="count-lbl">personas</span>
+                </div>
+              </div>
+              <div class="badge">5</div>
+            </div>
+            <div class="cell-items-list" id="box5"></div>
+          </div>
+          
+          <div class="cell" data-box="6">
+            <div class="cell-top-row">
+              <div class="cell-meta-info">
+                <div class="cellname">Alto pot. en desarrollo</div>
+                <div class="count-row">
+                  <span class="count" id="cnt6">0</span>
+                  <span class="count-lbl">personas</span>
+                </div>
+              </div>
+              <div class="badge">6</div>
+            </div>
+            <div class="cell-items-list" id="box6"></div>
+          </div>
+          
+          <!-- Fila 3 (Bajo Desempeño): Cajas 1, 2, 3 -->
+          <div class="cell" data-box="1">
+            <div class="cell-top-row">
+              <div class="cell-meta-info">
+                <div class="cellname">En riesgo</div>
+                <div class="count-row">
+                  <span class="count" id="cnt1">0</span>
+                  <span class="count-lbl">personas</span>
+                </div>
+              </div>
+              <div class="badge">1</div>
+            </div>
+            <div class="cell-items-list" id="box1"></div>
+          </div>
+          
+          <div class="cell" data-box="2">
+            <div class="cell-top-row">
+              <div class="cell-meta-info">
+                <div class="cellname">En revisión</div>
+                <div class="count-row">
+                  <span class="count" id="cnt2">0</span>
+                  <span class="count-lbl">personas</span>
+                </div>
+              </div>
+              <div class="badge">2</div>
+            </div>
+            <div class="cell-items-list" id="box2"></div>
+          </div>
+          
+          <div class="cell" data-box="3">
+            <div class="cell-top-row">
+              <div class="cell-meta-info">
+                <div class="cellname">A gestionar</div>
+                <div class="count-row">
+                  <span class="count" id="cnt3">0</span>
+                  <span class="count-lbl">personas</span>
+                </div>
+              </div>
+              <div class="badge">3</div>
+            </div>
+            <div class="cell-items-list" id="box3"></div>
           </div>
         </div>
       </div>
@@ -677,6 +858,18 @@ const COMPS = [
   "Comunicación de Impacto", "Potencial"
 ];
 
+const BOX_META = {
+  9:{ name:'Alto potencial',              short:'Alto potencial',        color:'var(--c9)' },
+  8:{ name:'Sólido',                      short:'Sólido',                 color:'var(--c8)' },
+  7:{ name:'Experto',                     short:'Experto',                color:'var(--c7)' },
+  6:{ name:'Alto potencial en desarrollo',short:'Alto pot. en desarrollo',color:'var(--c6)' },
+  5:{ name:'Sólido en desarrollo',        short:'Sólido en desarrollo',   color:'var(--c5)' },
+  4:{ name:'Experto en desarrollo',       short:'Experto en desarrollo',  color:'var(--c4)' },
+  3:{ name:'A gestionar',                 short:'A gestionar',            color:'var(--c3)' },
+  2:{ name:'En revisión',                 short:'En revisión',            color:'var(--c2)' },
+  1:{ name:'En riesgo',                   short:'En riesgo',              color:'var(--c1)' }
+};
+
 const BOX_NAMES = {
   9: 'Alto Potencial', 8: 'Sólido', 7: 'Experto',
   6: 'Alto Pot. Desarr.', 5: 'Sólido Desarr.', 4: 'Experto Desarr.',
@@ -746,10 +939,10 @@ function init(){
   if(saved){
     foundUser = findUserByInput(saved);
   }
-
   if(!foundUser && LEADERS.length > 0){
     foundUser = LEADERS[0];
   }
+
   if(foundUser){
     setSession(foundUser);
   } else {
@@ -962,7 +1155,7 @@ function setupFilters(){
   const wrap = document.getElementById('wrapDir');
   const fDir = document.getElementById('fDir');
 
-  if(CUR.rol === 'admin'){
+  if(CUR && CUR.rol === 'admin'){
     wrap.style.display = 'flex';
     const dirs = [...new Set(ALL.map(r => r.direccion).filter(Boolean))].sort();
     fDir.innerHTML = '<option value="">Todas las Direcciones</option>';
@@ -1060,6 +1253,7 @@ function resetFilters(){
 /* ── RENDER ────────────────────────────────────────────────────────── */
 function renderAll(){
   renderStats();
+  renderExecSummary();
   renderNinebox();
   renderHogan();
   renderTable();
@@ -1079,6 +1273,60 @@ function renderStats(){
   document.getElementById('chipHG').textContent = hEv.length;
   document.getElementById('kpiSuc').textContent = suc;
   document.getElementById('kpiSucPct').textContent = n > 0 ? ` (${Math.round(suc/n*100)}%)` : ' (0%)';
+}
+
+function renderExecSummary(){
+  const total = FILTERED.filter(d => getCajaNum(d.caja) > 0).length;
+  const grid = document.getElementById('execGrid');
+  if(!grid) return;
+  if(!total){
+    grid.innerHTML = '<div style="grid-column:1/-1;color:var(--text-dim);font-size:13px;text-align:center;padding:12px">Sin colaboradores con caja asignada en este filtro.</div>';
+    return;
+  }
+
+  // Cajas: col0=Experto(7,4,1), col1=Sólido(8,5,2), col2=Versátil(9,6,3)
+  const profundidad = FILTERED.filter(d => [7, 4, 1].includes(getCajaNum(d.caja))).length;
+  const versMedia = FILTERED.filter(d => [8, 5, 2].includes(getCajaNum(d.caja))).length;
+  const altaVers = FILTERED.filter(d => [9, 6, 3].includes(getCajaNum(d.caja))).length;
+
+  const pctProf = Math.round(profundidad / total * 100);
+  const pctVersM = Math.round(versMedia / total * 100);
+  const pctAltaV = Math.round(altaVers / total * 100);
+
+  const items = [
+    {
+      label: 'EXPERTO',
+      value: pctProf + '%',
+      sub: `${profundidad} persona${profundidad === 1 ? '' : 's'} — especialistas con conocimiento profundo`,
+      bar: pctProf,
+      color: 'var(--c7)'
+    },
+    {
+      label: 'SÓLIDO',
+      value: pctVersM + '%',
+      sub: `${versMedia} persona${versMedia === 1 ? '' : 's'} — equilibrio entre especialización y versatilidad`,
+      bar: pctVersM,
+      color: 'var(--c5)'
+    },
+    {
+      label: 'VERSÁTIL',
+      value: pctAltaV + '%',
+      sub: `${altaVers} persona${altaVers === 1 ? '' : 's'} — alta capacidad de adaptación y cruzar funciones`,
+      bar: pctAltaV,
+      color: 'var(--c9)'
+    }
+  ];
+
+  grid.innerHTML = items.map(it => `
+    <div class="exec-card">
+      <div class="ec-label">${it.label}</div>
+      <div class="ec-value">${it.value}</div>
+      <div class="ec-sub">${it.sub}</div>
+      <div class="ec-bar">
+        <div class="ec-bar-fill" style="background:${it.color};width:${it.bar}%"></div>
+      </div>
+    </div>
+  `).join('');
 }
 
 function renderNinebox(){
