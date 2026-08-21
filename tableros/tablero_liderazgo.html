@@ -29,7 +29,7 @@
   --blue: #2563eb;
   --green: #10B981;
 
-  /* Cajas Ninebox colores exactos */
+  /* Cajas Ninebox colores exactos de ninebox.html */
   --c1: #47505c; --c1-soft: rgba(71,80,92,.18);
   --c2: #58626f; --c2-soft: rgba(88,98,111,.18);
   --c3: #69737f; --c3-soft: rgba(105,115,127,.18);
@@ -323,19 +323,23 @@ header.dash-hdr{
 }
 .matrix-cells{
   display:grid;grid-template-columns:repeat(3,1fr);
-  grid-template-rows:repeat(3,minmax(200px, auto));
+  grid-template-rows:repeat(3,minmax(140px, auto));
   gap:10px;
 }
 
 .cell{
-  position:relative;border-radius:14px;padding:16px;
-  display:flex;flex-direction:column;justify-content:flex-start;
-  min-height:200px;border:1px solid rgba(255,255,255,.08);
+  position:relative;border-radius:14px;padding:18px 20px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  min-height:140px;border:1px solid rgba(255,255,255,.08);
+  cursor:pointer;
   transition:transform .25s var(--ease),box-shadow .25s var(--ease),filter .25s var(--ease);
-  overflow:visible;
 }
 .cell:hover{
-  transform:translateY(-3px);box-shadow:0 16px 36px rgba(0,0,0,.4);filter:brightness(1.06);
+  transform:translateY(-3px) scale(1.01);box-shadow:0 16px 36px rgba(0,0,0,.4);filter:brightness(1.08);
+}
+.cell.selected{
+  box-shadow: 0 0 0 2px #fff, 0 20px 40px rgba(0,0,0,.5);
+  transform: translateY(-3px) scale(1.01);
 }
 
 /* Colores de fondo de celdas exactos de ninebox.html */
@@ -351,54 +355,22 @@ header.dash-hdr{
 .cell[data-box="2"]{background:linear-gradient(150deg, var(--c2), #2c323b); border-color:rgba(88,98,111,.4)}
 .cell[data-box="3"]{background:linear-gradient(150deg, var(--c3), #323944); border-color:rgba(105,115,127,.4)}
 
-.cell-top-row{
-  display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;
-}
-.cell-meta-info{display:flex;flex-direction:column;gap:2px}
-.cell .cellname{
-  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:#fff;
-  text-shadow:0 1px 4px rgba(0,0,0,.3);
-}
-.cell .count-row{display:flex;align-items:baseline;gap:6px;margin-top:2px}
-.cell .count{
-  font-family:'JetBrains Mono',monospace;font-weight:800;font-size:30px;color:#fff;
-  letter-spacing:-0.02em;line-height:1;
-}
-.cell .count-lbl{font-size:12.5px;color:rgba(255,255,255,.75);font-weight:500}
 .cell .badge{
   font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
   background:rgba(0,0,0,.32);color:#fff;width:26px;height:26px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
   border:1px solid rgba(255,255,255,.1);
 }
-
-.cell-items-list{
-  display:flex;flex-direction:column;gap:6px;margin-top:10px;
-  overflow-y:auto;max-height:220px;padding-right:2px;
+.cell .cellname{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;color:#fff;
+  text-shadow:0 1px 4px rgba(0,0,0,.3);
 }
-
-/* ── CARD ITEM DENTRO DE MATRIZ ────────────────────────────────────── */
-.card-item{
-  background:rgba(18,8,10,.85);border:1px solid rgba(255,255,255,.1);
-  border-radius:8px;padding:8px 10px;cursor:pointer;
-  transition:all .15s var(--ease);backdrop-filter:blur(4px);
+.cell .count-row{display:flex;align-items:baseline;gap:8px;margin-top:6px}
+.cell .count{
+  font-family:'JetBrains Mono',monospace;font-weight:800;font-size:38px;color:#fff;
+  letter-spacing:-0.02em;line-height:1;
 }
-.card-item:hover{
-  border-color:var(--text);transform:translateX(2px);
-  background:rgba(30,18,21,.95);box-shadow:0 4px 12px rgba(0,0,0,.4);
-}
-.ci-name{font-size:.78rem;font-weight:700;color:var(--text);line-height:1.2}
-.ci-sub{font-size:.68rem;color:var(--text-dim);margin:2px 0 4px;line-height:1.2}
-.ci-tags{display:flex;gap:4px;flex-wrap:wrap}
-.mini-badge{
-  font-size:.62rem;padding:2px 5px;border-radius:4px;font-weight:700;
-  display:inline-flex;align-items:center;gap:3px;
-}
-.mb-alta{background:var(--alta-bg);color:var(--alta-txt)}
-.mb-media{background:var(--media-bg);color:var(--media-txt)}
-.mb-prof{background:var(--prof-bg);color:var(--prof-txt)}
-.mb-pot{background:rgba(216,173,100,.18);color:var(--gold)}
-.mb-suc{background:rgba(16,185,129,.18);color:var(--green)}
+.cell .count-lbl{font-size:14px;color:rgba(255,255,255,.75);font-weight:500}
 
 /* ── HOGAN VIEW COMPONENTS ─────────────────────────────────────────── */
 .hogan-team-card{
@@ -631,132 +603,105 @@ header.dash-hdr{
         </div>
         <div class="matrix-cells">
           <!-- Fila 1 (Alto Desempeño): Cajas 7, 8, 9 -->
-          <div class="cell" data-box="7">
-            <div class="cell-top-row">
-              <div class="cell-meta-info">
-                <div class="cellname">Experto</div>
-                <div class="count-row">
-                  <span class="count" id="cnt7">0</span>
-                  <span class="count-lbl">personas</span>
-                </div>
-              </div>
+          <div class="cell" data-box="7" onclick="clickBox(7)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">Experto</div>
               <div class="badge">7</div>
             </div>
-            <div class="cell-items-list" id="box7"></div>
+            <div class="count-row">
+              <span class="count" id="cnt7">0</span>
+              <span class="count-lbl">personas</span>
+            </div>
           </div>
           
-          <div class="cell" data-box="8">
-            <div class="cell-top-row">
-              <div class="cell-meta-info">
-                <div class="cellname">Sólido</div>
-                <div class="count-row">
-                  <span class="count" id="cnt8">0</span>
-                  <span class="count-lbl">personas</span>
-                </div>
-              </div>
+          <div class="cell" data-box="8" onclick="clickBox(8)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">Sólido</div>
               <div class="badge">8</div>
             </div>
-            <div class="cell-items-list" id="box8"></div>
+            <div class="count-row">
+              <span class="count" id="cnt8">0</span>
+              <span class="count-lbl">personas</span>
+            </div>
           </div>
           
-          <div class="cell" data-box="9">
-            <div class="cell-top-row">
-              <div class="cell-meta-info">
-                <div class="cellname">Alto potencial</div>
-                <div class="count-row">
-                  <span class="count" id="cnt9">0</span>
-                  <span class="count-lbl">personas</span>
-                </div>
-              </div>
+          <div class="cell" data-box="9" onclick="clickBox(9)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">Alto potencial</div>
               <div class="badge">9</div>
             </div>
-            <div class="cell-items-list" id="box9"></div>
+            <div class="count-row">
+              <span class="count" id="cnt9">0</span>
+              <span class="count-lbl">personas</span>
+            </div>
           </div>
           
           <!-- Fila 2 (Desempeño Consistente): Cajas 4, 5, 6 -->
-          <div class="cell" data-box="4">
-            <div class="cell-top-row">
-              <div class="cell-meta-info">
-                <div class="cellname">Experto en desarrollo</div>
-                <div class="count-row">
-                  <span class="count" id="cnt4">0</span>
-                  <span class="count-lbl">personas</span>
-                </div>
-              </div>
+          <div class="cell" data-box="4" onclick="clickBox(4)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">Experto en desarrollo</div>
               <div class="badge">4</div>
             </div>
-            <div class="cell-items-list" id="box4"></div>
+            <div class="count-row">
+              <span class="count" id="cnt4">0</span>
+              <span class="count-lbl">personas</span>
+            </div>
           </div>
           
-          <div class="cell" data-box="5">
-            <div class="cell-top-row">
-              <div class="cell-meta-info">
-                <div class="cellname">Sólido en desarrollo</div>
-                <div class="count-row">
-                  <span class="count" id="cnt5">0</span>
-                  <span class="count-lbl">personas</span>
-                </div>
-              </div>
+          <div class="cell" data-box="5" onclick="clickBox(5)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">Sólido en desarrollo</div>
               <div class="badge">5</div>
             </div>
-            <div class="cell-items-list" id="box5"></div>
+            <div class="count-row">
+              <span class="count" id="cnt5">0</span>
+              <span class="count-lbl">personas</span>
+            </div>
           </div>
           
-          <div class="cell" data-box="6">
-            <div class="cell-top-row">
-              <div class="cell-meta-info">
-                <div class="cellname">Alto pot. en desarrollo</div>
-                <div class="count-row">
-                  <span class="count" id="cnt6">0</span>
-                  <span class="count-lbl">personas</span>
-                </div>
-              </div>
+          <div class="cell" data-box="6" onclick="clickBox(6)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">Alto pot. en desarrollo</div>
               <div class="badge">6</div>
             </div>
-            <div class="cell-items-list" id="box6"></div>
+            <div class="count-row">
+              <span class="count" id="cnt6">0</span>
+              <span class="count-lbl">personas</span>
+            </div>
           </div>
           
           <!-- Fila 3 (Bajo Desempeño): Cajas 1, 2, 3 -->
-          <div class="cell" data-box="1">
-            <div class="cell-top-row">
-              <div class="cell-meta-info">
-                <div class="cellname">En riesgo</div>
-                <div class="count-row">
-                  <span class="count" id="cnt1">0</span>
-                  <span class="count-lbl">personas</span>
-                </div>
-              </div>
+          <div class="cell" data-box="1" onclick="clickBox(1)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">En riesgo</div>
               <div class="badge">1</div>
             </div>
-            <div class="cell-items-list" id="box1"></div>
+            <div class="count-row">
+              <span class="count" id="cnt1">0</span>
+              <span class="count-lbl">personas</span>
+            </div>
           </div>
           
-          <div class="cell" data-box="2">
-            <div class="cell-top-row">
-              <div class="cell-meta-info">
-                <div class="cellname">En revisión</div>
-                <div class="count-row">
-                  <span class="count" id="cnt2">0</span>
-                  <span class="count-lbl">personas</span>
-                </div>
-              </div>
+          <div class="cell" data-box="2" onclick="clickBox(2)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">En revisión</div>
               <div class="badge">2</div>
             </div>
-            <div class="cell-items-list" id="box2"></div>
+            <div class="count-row">
+              <span class="count" id="cnt2">0</span>
+              <span class="count-lbl">personas</span>
+            </div>
           </div>
           
-          <div class="cell" data-box="3">
-            <div class="cell-top-row">
-              <div class="cell-meta-info">
-                <div class="cellname">A gestionar</div>
-                <div class="count-row">
-                  <span class="count" id="cnt3">0</span>
-                  <span class="count-lbl">personas</span>
-                </div>
-              </div>
+          <div class="cell" data-box="3" onclick="clickBox(3)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">A gestionar</div>
               <div class="badge">3</div>
             </div>
-            <div class="cell-items-list" id="box3"></div>
+            <div class="count-row">
+              <span class="count" id="cnt3">0</span>
+              <span class="count-lbl">personas</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1212,6 +1157,16 @@ function onDirChange(){
   applyFilters();
 }
 
+function clickBox(b){
+  const sel = document.getElementById('fCaja');
+  if(sel.value === String(b)){
+    sel.value = '';
+  } else {
+    sel.value = String(b);
+  }
+  applyFilters();
+}
+
 function applyFilters(){
   if(!CUR) return;
   const search = (document.getElementById('fSearch').value || '').toLowerCase().trim();
@@ -1219,6 +1174,18 @@ function applyFilters(){
   const selGer = document.getElementById('fGer').value;
   const selJefe = document.getElementById('fJefe').value;
   const selCaja = document.getElementById('fCaja').value;
+
+  // Highlight selected box in UI
+  for(let b = 1; b <= 9; b++){
+    const cell = document.querySelector(`.cell[data-box="${b}"]`);
+    if(cell){
+      if(selCaja === String(b)){
+        cell.classList.add('selected');
+      } else {
+        cell.classList.remove('selected');
+      }
+    }
+  }
 
   let data = getScopedData();
 
@@ -1333,29 +1300,7 @@ function renderNinebox(){
   for (let b = 1; b <= 9; b++) {
     const items = FILTERED.filter(r => getCajaNum(r.caja) === b);
     const cntEl = document.getElementById('cnt' + b);
-    const boxEl = document.getElementById('box' + b);
-    
     if (cntEl) cntEl.textContent = items.length;
-    if (boxEl) {
-      boxEl.innerHTML = '';
-      items.forEach(p => {
-        const vc = p.hogan_versatilidad === 'Alta Versatilidad' ? 'mb-alta' : 
-                   p.hogan_versatilidad === 'Media Versatilidad' ? 'mb-media' : 
-                   p.hogan_versatilidad ? 'mb-prof' : '';
-        const el = document.createElement('div');
-        el.className = 'card-item';
-        el.onclick = () => openModal(p);
-        el.innerHTML = `
-          <div class="ci-name">${p.nombre}</div>
-          <div class="ci-sub">${p.cargo || '-'}</div>
-          <div class="ci-tags">
-            ${vc ? `<span class="mini-badge ${vc}">${p.hogan_versatilidad}</span>` : ''}
-            ${p.hogan_potencial !== null && p.hogan_potencial !== undefined ? `<span class="mini-badge mb-pot">Hogan ${p.hogan_potencial}</span>` : ''}
-            ${isSuc(p.sucesor) ? '<span class="mini-badge mb-suc">Sucesor</span>' : ''}
-          </div>`;
-        boxEl.appendChild(el);
-      });
-    }
   }
 }
 
@@ -1589,7 +1534,11 @@ function exportExcel(){
   XLSX.writeFile(wb, `Liderazgo_${CUR ? CUR.nombre.replace(/\s+/g, '_') : 'Consolidado'}_${new Date().toISOString().slice(0,10)}.xlsx`);
 }
 
-window.addEventListener('DOMContentLoaded', init);
+if(document.readyState === 'loading'){
+  window.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
 </script>
 </body>
 </html>
