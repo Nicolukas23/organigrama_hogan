@@ -586,6 +586,7 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
         <b id="lblUserName">NICOLAS SANTOS</b>
         <a href="javascript:void(0)" onclick="showLoginOverlay()" style="color:var(--text-dim);font-size:11px;margin-left:4px;text-decoration:none">· cambiar</a>
       </div>
+      <button class="btn-icon" id="btnScopeToggle" style="display:none; border-color:var(--gold); color:var(--gold);" onclick="showScopeOverlay()">🔄 Cambiar Alcance</button>
       <button class="btn-icon" onclick="exportExcel()">📥 Descargar Excel</button>
       <button class="btn-icon" onclick="toggleTheme()">🌓</button>
     </div>
@@ -1271,6 +1272,11 @@ function selectScope(scope) {
   document.getElementById('scopeOverlay').style.display = 'none';
   if(window.tempUserForScope) {
     setSession(window.tempUserForScope);
+    window.tempUserForScope = null; // Clear it so subsequent clicks don't re-init the whole session
+  } else {
+    // If they were already logged in, just re-filter
+    setupFilters();
+    applyFilters();
   }
 }
 
@@ -1293,9 +1299,19 @@ function loginByDemoSelect(){
   }
 }
 
+function showScopeOverlay() {
+  document.getElementById('scopeOverlay').style.display = 'flex';
+}
+
 function setSession(user){
   CUR = user;
   localStorage.setItem('lider_email', user.email);
+
+  if(user.email === 'walter.borda@claro.com.co'){
+    document.getElementById('btnScopeToggle').style.display = 'inline-block';
+  } else {
+    document.getElementById('btnScopeToggle').style.display = 'none';
+  }
 
   document.getElementById('lblUserName').textContent = user.nombre;
   document.getElementById('lblScope').textContent =
