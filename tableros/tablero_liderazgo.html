@@ -826,58 +826,15 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
     <div class="table-section">
       <div class="table-wrap">
         <div style="overflow-x:auto">
-          <table class="nb-table">
+          <table class="nb-table" style="width:100%;border-collapse:separate;border-spacing:0;background:var(--panel)">
             <thead>
-              <tr id="nbTableHead">
-                <th data-key="nombre" onclick="handleSort('nombre')">NOMBRE <span class="arrow" id="arr_nombre">▲</span></th>
-                <th data-key="cargo" onclick="handleSort('cargo')">CARGO <span class="arrow" id="arr_cargo">▲</span></th>
-                <th data-key="caja" onclick="handleSort('caja')">UBICACIÓN <span class="arrow" id="arr_caja">▲</span></th>
-                <th data-key="sucesor" onclick="handleSort('sucesor')">POSIBLE SUCESOR <span class="arrow" id="arr_sucesor">▲</span></th>
-                <th data-key="tiempo" onclick="handleSort('tiempo')">TIEMPO <span class="arrow" id="arr_tiempo">▲</span></th>
-                <th>FICHA</th>
-              </tr>
-            </thead>
-            <tbody id="nbTableBody"></tbody>
-          </table>
-        </div>
-        <div class="table-foot">
-          <span id="nbPageInfo">Página 1 de 1</span>
-          <div class="pager" id="nbPager"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOGAN VIEW -->
-  <section id="viewHG" style="display:none">
-    <div class="hogan-team-card">
-      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:15px">Promedio Equipo — 11 Competencias Hogan</h3>
-      <p style="font-size:12.5px;color:var(--text-dim);margin:4px 0">Consolidado de evaluados en tu estructura jerárquica.</p>
-      <div class="team-comp-grid" id="teamCompGrid"></div>
-    </div>
-    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;margin:24px 0 12px">Evaluaciones Individuales</h3>
-    <div class="hogan-grid" id="hoganGrid"></div>
-  </section>
-
-  <!-- TABLE VIEW -->
-  <section id="viewTB" style="display:none">
-    <div class="table-section" style="margin-top:0">
-      <div class="table-wrap">
-        <div style="overflow-x:auto">
-          <table class="nb-table">
-            <thead>
-              <tr>
-                <th data-key="nombre" onclick="handleSort('nombre')">NOMBRE <span class="arrow">▲</span></th>
-                <th>CÉDULA / EXP</th>
-                <th data-key="cargo" onclick="handleSort('cargo')">CARGO <span class="arrow">▲</span></th>
-                <th>DIRECCIÓN</th>
-                <th>GERENCIA</th>
-                <th>JEFE DIRECTO</th>
-                <th data-key="caja" onclick="handleSort('caja')">UBICACIÓN <span class="arrow">▲</span></th>
-                <th>POTENCIAL HOGAN</th>
-                <th>VERSATILIDAD</th>
-                <th data-key="sucesor" onclick="handleSort('sucesor')">SUCESOR <span class="arrow">▲</span></th>
-                <th>ACCIÓN</th>
+              <tr style="background:#261f22">
+                <th style="padding:16px;text-align:left;font-size:11px;color:var(--text-dim);text-transform:uppercase;border-bottom:1px solid #3f3136;border-top-left-radius:12px;width:30%">NOMBRE ▲</th>
+                <th style="padding:16px;text-align:left;font-size:11px;color:var(--text-dim);text-transform:uppercase;border-bottom:1px solid #3f3136;width:25%">CARGO ▲</th>
+                <th style="padding:16px;text-align:left;font-size:11px;color:var(--text-dim);text-transform:uppercase;border-bottom:1px solid #3f3136">UBICACIÓN ▲</th>
+                <th style="padding:16px;text-align:left;font-size:11px;color:var(--text-dim);text-transform:uppercase;border-bottom:1px solid #3f3136">POSIBLE SUCESOR ▲</th>
+                <th style="padding:16px;text-align:left;font-size:11px;color:var(--text-dim);text-transform:uppercase;border-bottom:1px solid #3f3136">TIEMPO ▲</th>
+                <th style="padding:16px;text-align:center;font-size:11px;color:var(--text-dim);text-transform:uppercase;border-bottom:1px solid #3f3136;border-top-right-radius:12px">FICHA</th>
               </tr>
             </thead>
             <tbody id="tableBody"></tbody>
@@ -889,16 +846,58 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
 </div>
 
 <!-- MODAL PERFIL -->
-<div class="modal-overlay" id="profileModal" onclick="if(event.target===this) closeModal()">
-  <div class="modal-card">
-    <div style="display:flex;gap:14px;align-items:center;margin-bottom:18px">
-      <div class="m-avatar" id="mAv">U</div>
-      <div style="min-width:0;flex:1">
-        <h2 style="font-size:1.15rem;font-weight:800;font-family:'Space Grotesk',sans-serif" id="mNombre">Nombre</h2>
-        <div style="font-size:.82rem;color:var(--text-dim);margin-top:2px" id="mCargo">Cargo</div>
-        <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:6px" id="mBadges"></div>
+<div class="modal-overlay" id="profileModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;justify-content:center;align-items:center;backdrop-filter:blur(4px)" onclick="if(event.target===this) closeModal()">
+  <div class="modal-card" style="background:var(--bg-1);border-radius:12px;width:95%;max-width:900px;max-height:90vh;overflow-y:auto;overflow-x:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);display:flex;flex-direction:column;position:relative">
+    
+    <!-- HEADER HOGAN (Purple) -->
+    <div id="mHoganHeader" style="background:linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);padding:24px 32px;color:white;position:relative">
+      
+      <!-- Top buttons -->
+      <div style="display:flex;gap:10px;margin-bottom:16px">
+        <button onclick="closeModal()" style="background:rgba(255,255,255,0.2);border:none;border-radius:6px;width:32px;height:32px;color:white;cursor:pointer;display:flex;align-items:center;justify-content:center">←</button>
+        <button onclick="closeModal()" style="background:rgba(255,255,255,0.2);border:none;border-radius:6px;width:32px;height:32px;color:white;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+        <button style="background:rgba(255,255,255,0.2);border:none;border-radius:6px;padding:0 12px;height:32px;color:white;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:12px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Descargar PDF</button>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div style="display:flex;gap:16px;align-items:center">
+          <div id="mAv" style="width:56px;height:56px;background:#1e3a8a;border-radius:28px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:white;box-shadow:0 4px 10px rgba(0,0,0,0.2)">U</div>
+          <div>
+            <h2 id="mNombre" style="margin:0;font-size:24px;font-weight:900;letter-spacing:-0.02em;text-transform:uppercase">NOMBRE</h2>
+            <div id="mCargo" style="font-size:13px;opacity:0.9;margin-top:2px">Cargo</div>
+            <div id="mJefe" style="font-size:12px;opacity:0.7;margin-top:2px">Jefe: -</div>
+            
+            <div style="display:flex;gap:12px;margin-top:12px" id="mHoganBadges">
+              <div style="background:rgba(255,255,255,0.15);padding:6px 12px;border-radius:8px;display:flex;flex-direction:column;min-width:100px">
+                <span id="mHVers" style="font-size:15px;font-weight:800;color:#34d399">Alta Versatilidad</span>
+                <span style="font-size:10px;opacity:0.7;text-transform:uppercase;letter-spacing:1px;margin-top:2px">Versatilidad</span>
+              </div>
+              <div style="background:rgba(255,255,255,0.15);padding:6px 12px;border-radius:8px;display:flex;flex-direction:column;min-width:80px">
+                <span id="mHPot" style="font-size:18px;font-weight:800;color:#fff">80</span>
+                <span style="font-size:10px;opacity:0.7;text-transform:uppercase;letter-spacing:1px;margin-top:2px">Potencial</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Radar Icon mock -->
+        <div style="width:120px;height:120px;opacity:0.3;margin-top:-20px">
+          <svg viewBox="0 0 100 100" width="100%" height="100%">
+            <polygon points="50,5 90,25 90,75 50,95 10,75 10,25" fill="none" stroke="white" stroke-width="1"></polygon>
+            <polygon points="50,20 75,35 75,65 50,80 25,65 25,35" fill="none" stroke="white" stroke-width="1"></polygon>
+            <polygon points="50,40 60,45 60,55 50,60 40,55 40,45" fill="white"></polygon>
+          </svg>
+        </div>
       </div>
     </div>
+
+    <!-- BODY HOGAN -->
+    <div id="mHoganBody" style="padding:24px 32px;background:var(--bg-1);display:flex;flex-direction:column;gap:10px">
+      <!-- Competencies will go here -->
+    </div>
+
+  </div>
+</div>
     
     <div class="tabs-bar" style="margin-bottom:14px">
       <button class="tab-btn active" id="btnMFicha" onclick="switchModalTab('ficha')">Ficha de Talento</button>
@@ -938,12 +937,25 @@ const ADMINS = [
   'laura.amado@claro.com.co'
 ];
 
-const STATIC_FICHA_IDS = ["1001053538", "1001777877", "1010189106", "1010190662", "1010198378", "1013667889", "1014182084", "1014197289", "1014246406", "1014251701", "1014269093", "1015415329", "1015415518", "1015417124", "1015425926", "1015442451", "1015993219", "1016014093", "1016030752", "1016053644", "1017183953", "1018414804", "1018417641", "1018433732", "1018444099", "1018464374", "1018470744", "1019003803", "1019011410", "1019024565", "1020721308", "1020751309", "1020773730", "1024519211", "1024531733", "1026593032", "1030523953", "1030551017", "1030561376", "1031122523", "1032365189", "1032383448", "1032396133", "1032404330", "1032409209", "1032438728", "1032464118", "1032470261", "1032483844", "1033684993", "1036648287", "1048221620", "1057515055", "1064996705", "1069713595", "1069765749", "1072643036", "1072662479", "1085273858", "1085910589", "1095796684", "1098651674", "1098687767", "1098704994", "1110468886", "11188389", "11223493", "11257516", "1128466768", "1129515915", "1129543149", "1138186", "1144029706", "1144033575", "12193497", "1233695609", "13276383", "13870556", "13871736", "13874910", "16071612", "16536601", "16767270", "19420900", "28489014", "28566367", "29284580", "2968977", "302784", "30333370", "30335904", "30402310", "31577454", "3216158", "32228053", "32758818", "32781111", "32842621", "33066693", "34327674", "34571175", "35536544", "36306108", "37334180", "37620782", "37844085", "37844585", "37861236", "37893805", "37947760", "38600645", "39582818", "39689452", "39780292", "39781813", "39783211", "40079874", "42118566", "43109835", "43220478", "43684915", "43840388", "43869457", "43983175", "4517372", "4520642", "4617732", "46670410", "50898660", "51782020", "51976159", "51976888", "51986597", "52009391", "52009864", "52047965", "52053945", "52085624", "52093668", "52105775", "52110121", "52144444", "52153221", "52185300", "52195354", "52196323", "52236050", "52252627", "52327945", "52382880", "52392875", "52413825", "52423800", "52433846", "52486844", "52492548", "52526001", "52534703", "52557971", "52560948", "52704630", "52706228", "52709691", "52718962", "52733930", "52750890", "52804512", "52807479", "52809026", "52818441", "52824581", "52827755", "52879980", "52882931", "52897880", "52908559", "52912096", "52960631", "52964258", "52982623", "52991038", "52991488", "52997400", "53003157", "53007738", "53015362", "53030970", "53073416", "53082823", "53099571", "53106007", "53120673", "53128730", "53905205", "543364", "55180918", "55230423", "5827888", "60333937", "63493658", "63514458", "63532006", "65775238", "66881732", "66952849", "71384327", "72182013", "72229277", "72256037", "72257140", "72273597", "72285538", "7317314", "73569561", "74359373", "75071067", "75071414", "75145916", "7603469", "76320829", "76333059", "78747249", "79056828", "79135111", "79277334", "79297860", "79313587", "79340617", "79385806", "79418021", "79432588", "79455718", "79495740", "79506436", "79516122", "79532521", "79539397", "79553598", "79556029", "79567712", "79574339", "79576371", "79577126", "79577896", "79618973", "79620994", "79621141", "79623178", "79623776", "79628903", "79641074", "79641078", "79672107", "79684854", "79686033", "79686499", "79687541", "79687677", "79694810", "79695754", "79707735", "79722577", "79753323", "79792570", "79793002", "79795948", "79801067", "79803893", "79805697", "79837724", "79843010", "79846335", "79850668", "79851025", "79851535", "79853344", "79858283", "79858384", "79861675", "79862003", "79873277", "79874988", "79879314", "79883150", "79897183", "79900456", "79904332", "79906022", "79908025", "79939609", "79940951", "79943837", "79946666", "79946971", "79947402", "79952714", "79955163", "79963185", "79965710", "79976291", "79982848", "79988248", "79996518", "79999930", "80004393", "80013914", "80021548", "80029877", "80031219", "80055143", "80055832", "80057534", "80058898", "80060767", "80065277", "80070878", "80070923", "80076187", "80084586", "80096673", "80096815", "80097553", "80098521", "80099040", "80108672", "80109732", "80111618", "80120803", "80123219", "80133229", "80150353", "80153086", "80157725", "80173612", "80188592", "80206381", "80228885", "80229765", "80418091", "80425417", "80471459", "80501488", "80504800", "80512772", "80527831", "80720654", "80747350", "80755651", "80801701", "80815078", "80815917", "80820898", "80844584", "80870574", "80895159", "8126425", "8358192", "8533055", "85467103", "86074466", "88002967", "88227648", "89009161", "91278583", "91474368", "91478865", "91506857", "91508488", "91532637", "93235739", "93368761", "93403812", "9396968", "9397971", "94317564", "94378000", "94429618", "94452642", "94527210", "98385917", "98393973", "98556716"];
+const STATIC_FICHA_IDS = ["1001777877", "1010198378", "1013667889", "1014246406", "1014251701", "1015415329", "1015417124", "1015425926", "1016014093", "1016030752", "1016053644", "1018414804", "1018464374", "1019003803", "1020721308", "1020751309", "1024519211", "1024531733", "1026593032", "1032365189", "1032409209", "1032438728", "1032470261", "1032483844", "1036648287", "1057515055", "1072643036", "1072662479", "1085273858", "1095796684", "1098651674", "1098687767", "1110468886", "11188389", "11223493", "1128466768", "1129515915", "1129543149", "1138186", "1144029706", "1144033575", "1233695609", "13870556", "16071612", "16767270", "28489014", "29284580", "30335904", "3216158", "32228053", "32781111", "34327674", "36306108", "37334180", "37620782", "38600645", "39582818", "39780292", "40079874", "42118566", "43109835", "43869457", "43983175", "4517372", "4617732", "51782020", "51986597", "52009391", "52009864", "52085624", "52144444", "52153221", "52185300", "52236050", "52423800", "52486844", "52492548", "52560948", "52704630", "52706228", "52709691", "52718962", "52733930", "52804512", "52807479", "52879980", "52897880", "52991488", "52997400", "53007738", "53030970", "53120673", "53128730", "60333937", "63514458", "63532006", "65775238", "71384327", "72229277", "72257140", "72273597", "7317314", "75071414", "75145916", "7603469", "76333059", "79135111", "79297860", "79313587", "79340617", "79495740", "79516122", "79553598", "79577126", "79577896", "79628903", "79686499", "79687541", "79695754", "79707735", "79792570", "79805697", "79851535", "79874988", "79897183", "79904332", "79906022", "79939609", "79943837", "79947402", "79965710", "80021548", "80055143", "80058898", "80070878", "80070923", "80084586", "80096673", "80098521", "80099040", "80150353", "80153086", "80157725", "80173612", "80188592", "80206381", "80425417", "80527831", "80755651", "80815917", "80820898", "80844584", "80895159", "8126425", "85467103", "88002967", "88227648", "91474368", "91506857", "93235739", "93403812", "94527210", "98385917", "98393973"];
 const FICHA_IDS = new Set(STATIC_FICHA_IDS);
 if (window.DATA && window.DATA.informacion) {
   Object.keys(window.DATA.informacion).forEach(id => FICHA_IDS.add(String(id).trim()));
 }
 
+const COMP_DESC = {
+  "Liderar a otros": "Demuestra una capacidad consistente para movilizar, orientar y generar compromiso en las personas hacia los objetivos organizacionales.",
+  "Responsabilidad": "Asume con compromiso sus obligaciones, mantiene consistencia en el cumplimiento de acuerdos y responde por los resultados obtenidos.",
+  "Escuchar a Otros": "Demuestra una alta disposición para comprender perspectivas diversas, fomentando espacios de diálogo y participación.",
+  "Impulsar el Cambio": "Promueve activamente nuevas iniciativas y busca oportunidades para transformar procesos, prácticas y formas de trabajo.",
+  "Toma de Decisiones": "Toma decisiones de manera estructurada y bien fundamentada, evaluando riesgos, alternativas e impactos de forma rapida.",
+  "Desarrollo de Otros": "Apoya el desarrollo de otros cuando identifica oportunidades o necesidades especificas dentro del equipo.",
+  "Influenciar a otros": "Logra generar adhesión y compromiso en otros, comunicando sus ideas de manera persuasiva y movilizando acciones.",
+  "Impulsar la Estrategia": "Mantiene una visión amplia del negocio, anticipando escenarios futuros y alineando sus acciones con objetivos de largo plazo.",
+  "Impulsar la Innovación": "Busca constantemente nuevas ideas y enfoques, promoviendo soluciones creativas para generar mejoras y valor.",
+  "Comunicación de Impacto": "Se comunica efectivamente en la mayoría de situaciones, adaptando su mensaje según el contexto y los interlocutores.",
+  "Potencial": "Disposición para adquirir nuevas habilidades, asumir mayores niveles de responsabilidad y adaptarse a entornos cambiantes."
+};
 const COMPS = [
   "Toma de Decisiones", "Liderar a otros", "Impulsar el Cambio",
   "Impulsar la Estrategia", "Desarrollo de Otros", "Impulsar la Innovación",
@@ -1877,49 +1889,52 @@ function renderTable(){
   if(!tb) return;
   tb.innerHTML = '';
   if(!FILTERED.length){
-    tb.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:28px;color:var(--text-dim)">Sin resultados para los filtros actuales.</td></tr>';
+    tb.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:28px;color:var(--text-dim)">Sin resultados para los filtros actuales.</td></tr>';
     return;
   }
   FILTERED.forEach(p => {
-    const vc = p.hogan_versatilidad === 'Alta Versatilidad' ? 'mb-alta' : 
-               p.hogan_versatilidad === 'Media Versatilidad' ? 'mb-media' : 
-               p.hogan_versatilidad ? 'mb-prof' : '';
     const cNum = getCajaNum(p.caja);
     const hasFicha = hasFichaData(p);
     const tr = document.createElement('tr');
     
+    // Pill badge for Nine Box
+    let cajaBadge = '-';
+    if(cNum){
+      const meta = BOX_META[cNum];
+      cajaBadge = `<span style="background:${meta ? meta.color : '#6b7280'};color:#fff;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:700;display:inline-block">${cNum} - ${meta ? meta.short : ''}</span>`;
+    }
+    
+    // Pill badge for Sucesor
+    let sucBadge = isSuc(p.sucesor) ? '<span style="background:#059669;color:#fff;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:700;display:inline-block">Sí</span>' : '<span style="color:var(--text-faint)">No</span>';
+    
     tr.innerHTML = `
-      <td><b>${p.nombre}</b></td>
-      <td><code style="font-size:11px;background:var(--bg-1);padding:2px 5px;border-radius:4px">${p.expediente || '-'}</code></td>
-      <td>${p.cargo || '-'}</td>
-      <td style="font-size:12px">${p.direccion || '-'}</td>
-      <td style="font-size:12px">${p.gerencia || '-'}</td>
-      <td style="font-size:12px">${p.jefe || '-'}</td>
-      <td>${cNum ? `<span class="mini-badge" style="background:${BOX_COLORS[cNum] || '#6b7280'};color:#fff">Caja ${cNum}</span>` : '-'}</td>
-      <td style="font-weight:700;font-family:'JetBrains Mono'">${p.hogan_potencial !== null && p.hogan_potencial !== undefined ? p.hogan_potencial + ' pts' : '<span style="color:var(--text-faint)">-</span>'}</td>
-      <td>${vc ? `<span class="mini-badge ${vc}">${p.hogan_versatilidad}</span>` : '-'}</td>
-      <td>${isSuc(p.sucesor) ? '<span style="color:var(--green);font-weight:700">✔</span>' : '<span style="color:var(--text-faint)">No</span>'}</td>
-      <td></td>`;
+      <td style="padding:16px;border-bottom:1px solid #3f3136;font-weight:700;font-size:13px;letter-spacing:.02em;color:#f3f4f6">${p.nombre}</td>
+      <td style="padding:16px;border-bottom:1px solid #3f3136;color:var(--text-dim);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:250px" title="${p.cargo || ''}">${p.cargo || '-'}</td>
+      <td style="padding:16px;border-bottom:1px solid #3f3136">${cajaBadge}</td>
+      <td style="padding:16px;border-bottom:1px solid #3f3136">${sucBadge}</td>
+      <td style="padding:16px;border-bottom:1px solid #3f3136;font-size:12px;color:var(--text-dim)">${p.tiempo || '—'}</td>
+      <td style="padding:16px;border-bottom:1px solid #3f3136;text-align:center"></td>`;
       
     if(hasFicha) {
       const btn = document.createElement('button');
-      btn.className = 'btn-outline';
-      btn.style.padding = '3px 8px';
-      btn.style.fontSize = '11px';
-      btn.style.borderColor = 'var(--crimson)';
-      btn.style.color = 'var(--crimson)';
+      btn.style.padding = '6px 14px';
+      btn.style.fontSize = '12px';
+      btn.style.fontWeight = '700';
+      btn.style.background = '#e11d48';
+      btn.style.color = '#fff';
+      btn.style.border = 'none';
+      btn.style.borderRadius = '6px';
+      btn.style.cursor = 'pointer';
       btn.textContent = 'Ver Ficha';
       btn.onclick = () => openModal(p);
-      tr.children[10].appendChild(btn);
+      tr.children[5].appendChild(btn);
     } else {
-      tr.children[10].innerHTML = '<span style="color:var(--text-faint)">-</span>';
+      tr.children[5].innerHTML = '<span style="color:var(--text-faint)">—</span>';
     }
     
     tb.appendChild(tr);
   });
 }
-
-/* ── VIEW SWITCH ───────────────────────────────────────────────────── */
 function switchView(v){
   VIEW = v;
   const map = { 'ninebox': 'NB', 'hogan': 'HG', 'table': 'TB' };
