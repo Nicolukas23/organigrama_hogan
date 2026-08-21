@@ -669,7 +669,7 @@ let VIEW = 'ninebox';
 
 function getCajaNum(c){
   if(c === null || c === undefined || c === '') return null;
-  const n = parseInt(c, 10);
+  const n = parseInt(String(c).replace(/[^0-9-]/g, ''), 10);
   return isNaN(n) ? null : n;
 }
 
