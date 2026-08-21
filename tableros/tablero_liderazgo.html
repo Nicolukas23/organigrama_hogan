@@ -372,6 +372,64 @@ header.dash-hdr{
 }
 .cell .count-lbl{font-size:14px;color:rgba(255,255,255,.75);font-weight:500}
 
+/* ── TABLE SECTION EXACT TO NINEBOX.HTML ───────────────────────────── */
+.table-section{
+  margin-top:28px;
+}
+.table-wrap{
+  border:1px solid var(--border); border-radius: var(--radius); overflow:hidden;
+  background: var(--panel);
+}
+table.nb-table{ width:100%; border-collapse:collapse; font-size:14px; }
+table.nb-table thead th{
+  text-align:left; padding:12px 16px; background: var(--panel-2);
+  color: var(--text-faint); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:.06em;
+  border-bottom:1px solid var(--border);
+  cursor:pointer; user-select:none; white-space:nowrap;
+  position:sticky; top:0;
+}
+table.nb-table thead th:hover{ color: var(--text); }
+table.nb-table thead th .arrow{ opacity:.4; margin-left:4px; font-size:10px; }
+table.nb-table thead th.sorted .arrow{ opacity:1; color: var(--gold); }
+table.nb-table tbody tr{ border-bottom:1px solid var(--border-soft); cursor:pointer; transition: background .15s; }
+table.nb-table tbody tr:hover{ background: rgba(255,255,255,.03); }
+table.nb-table tbody tr:last-child{ border-bottom:none; }
+table.nb-table tbody td{ padding:11px 16px; color: var(--text-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:260px; font-size:13.5px; }
+table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
+
+.chip-caja{
+  display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:100px;
+  font-size:12px; font-weight:700; color:#fff;
+}
+.chip-sucesor{
+  display:inline-flex; align-items:center; justify-content:center; padding:3px 12px; border-radius:100px;
+  font-size:12px; font-weight:700; min-width:44px;
+}
+.chip-sucesor.si{ background: #059669; color:#fff; }
+.chip-sucesor.no{ background: transparent; color: #9ca3af; border: 1px solid #374151; }
+
+.btn-ficha{
+  background: var(--crimson); color: #fff; padding: 4px 12px; border-radius: 6px;
+  text-decoration: none; font-size: 12px; font-weight: 700; display: inline-block;
+  transition: transform .15s, opacity .15s;
+}
+.btn-ficha:hover{ opacity: .9; transform: translateY(-1px); }
+
+.table-foot{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 18px; border-top:1px solid var(--border);
+  font-size:13px; color: var(--text-faint);
+}
+.pager{ display:flex; gap:6px; }
+.pager button{
+  background: var(--bg-1); border:1px solid var(--border); color: var(--text-dim);
+  width:32px; height:32px; border-radius:8px; cursor:pointer; font-size:13px;
+  font-weight:600; transition: all .15s; display:flex; align-items:center; justify-content:center;
+}
+.pager button:hover:not(:disabled){ border-color: var(--crimson); color:#fff; }
+.pager button:disabled{ opacity:.3; cursor:default; }
+.pager button.active{ background: var(--crimson); border-color:var(--crimson); color:#fff; }
+
 /* ── HOGAN VIEW COMPONENTS ─────────────────────────────────────────── */
 .hogan-team-card{
   background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
@@ -406,20 +464,6 @@ header.dash-hdr{
 .hs-fill{height:100%;border-radius:4px}
 .hs-val{width:26px;text-align:right;font-family:'JetBrains Mono';font-weight:700}
 
-/* ── TABLE VIEW ────────────────────────────────────────────────────── */
-.table-panel{
-  background:var(--panel);border:1px solid var(--border);
-  border-radius:var(--radius);overflow:hidden;
-}
-.custom-tbl{width:100%;border-collapse:collapse;font-size:.82rem}
-.custom-tbl th{
-  background:var(--panel-2);color:var(--text-dim);text-align:left;
-  padding:12px 14px;font-size:.72rem;font-weight:700;text-transform:uppercase;
-  letter-spacing:.05em;border-bottom:1px solid var(--border);
-}
-.custom-tbl td{padding:11px 14px;border-bottom:1px solid var(--border-soft)}
-.custom-tbl tr:hover td{background:rgba(255,255,255,.02)}
-
 /* ── MODAL ─────────────────────────────────────────────────────────── */
 .modal-overlay{
   position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
@@ -441,6 +485,16 @@ header.dash-hdr{
   transition:all .15s;
 }
 .btn-outline:hover{border-color:var(--text);background:var(--bg-1)}
+
+.mini-badge{
+  font-size:.62rem;padding:2px 5px;border-radius:4px;font-weight:700;
+  display:inline-flex;align-items:center;gap:3px;
+}
+.mb-alta{background:var(--alta-bg);color:var(--alta-txt)}
+.mb-media{background:var(--media-bg);color:var(--media-txt)}
+.mb-prof{background:var(--prof-bg);color:var(--prof-txt)}
+.mb-pot{background:rgba(216,173,100,.18);color:var(--gold)}
+.mb-suc{background:rgba(16,185,129,.18);color:var(--green)}
 
 @media (max-width: 980px){
   .matrix-wrap{grid-template-columns:90px 1fr}
@@ -706,6 +760,31 @@ header.dash-hdr{
         </div>
       </div>
     </div>
+
+    <!-- TABLA DE DETALLE EXACTA A NINEBOX.HTML -->
+    <div class="table-section">
+      <div class="table-wrap">
+        <div style="overflow-x:auto">
+          <table class="nb-table">
+            <thead>
+              <tr id="nbTableHead">
+                <th data-key="nombre" onclick="handleSort('nombre')">NOMBRE <span class="arrow" id="arr_nombre">▲</span></th>
+                <th data-key="cargo" onclick="handleSort('cargo')">CARGO <span class="arrow" id="arr_cargo">▲</span></th>
+                <th data-key="caja" onclick="handleSort('caja')">UBICACIÓN <span class="arrow" id="arr_caja">▲</span></th>
+                <th data-key="sucesor" onclick="handleSort('sucesor')">POSIBLE SUCESOR <span class="arrow" id="arr_sucesor">▲</span></th>
+                <th data-key="tiempo" onclick="handleSort('tiempo')">TIEMPO <span class="arrow" id="arr_tiempo">▲</span></th>
+                <th>FICHA</th>
+              </tr>
+            </thead>
+            <tbody id="nbTableBody"></tbody>
+          </table>
+        </div>
+        <div class="table-foot">
+          <span id="nbPageInfo">Página 1 de 1</span>
+          <div class="pager" id="nbPager"></div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- HOGAN VIEW -->
@@ -721,26 +800,28 @@ header.dash-hdr{
 
   <!-- TABLE VIEW -->
   <section id="viewTB" style="display:none">
-    <div class="table-panel">
-      <div style="overflow-x:auto">
-        <table class="custom-tbl">
-          <thead>
-            <tr>
-              <th>Colaborador</th>
-              <th>Cédula / Exp</th>
-              <th>Cargo</th>
-              <th>Dirección</th>
-              <th>Gerencia</th>
-              <th>Jefe Directo</th>
-              <th>Caja 9-Box</th>
-              <th>Potencial Hogan</th>
-              <th>Versatilidad</th>
-              <th>Sucesor</th>
-              <th>Acción</th>
-            </tr>
-          </thead>
-          <tbody id="tableBody"></tbody>
-        </table>
+    <div class="table-section" style="margin-top:0">
+      <div class="table-wrap">
+        <div style="overflow-x:auto">
+          <table class="nb-table">
+            <thead>
+              <tr>
+                <th data-key="nombre" onclick="handleSort('nombre')">NOMBRE <span class="arrow">▲</span></th>
+                <th>CÉDULA / EXP</th>
+                <th data-key="cargo" onclick="handleSort('cargo')">CARGO <span class="arrow">▲</span></th>
+                <th>DIRECCIÓN</th>
+                <th>GERENCIA</th>
+                <th>JEFE DIRECTO</th>
+                <th data-key="caja" onclick="handleSort('caja')">UBICACIÓN <span class="arrow">▲</span></th>
+                <th>POTENCIAL HOGAN</th>
+                <th>VERSATILIDAD</th>
+                <th data-key="sucesor" onclick="handleSort('sucesor')">SUCESOR <span class="arrow">▲</span></th>
+                <th>ACCIÓN</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </section>
@@ -816,9 +897,9 @@ const BOX_META = {
 };
 
 const BOX_NAMES = {
-  9: 'Alto Potencial', 8: 'Sólido', 7: 'Experto',
-  6: 'Alto Pot. Desarr.', 5: 'Sólido Desarr.', 4: 'Experto Desarr.',
-  3: 'A Gestionar', 2: 'En Revisión', 1: 'En Riesgo'
+  9: 'Alto potencial', 8: 'Sólido', 7: 'Experto',
+  6: 'Alto pot. en desarrollo', 5: 'Sólido en desarrollo', 4: 'Experto en desarrollo',
+  3: 'A gestionar', 2: 'En revisión', 1: 'En riesgo'
 };
 
 const BOX_COLORS = {
@@ -832,6 +913,13 @@ let LEADERS = [];
 let CUR = null;
 let FILTERED = [];
 let VIEW = 'ninebox';
+
+let tableState = {
+  page: 1,
+  pageSize: 12,
+  sortKey: 'default',
+  sortDir: 1
+};
 
 function getCajaNum(c){
   if(c === null || c === undefined || c === '') return null;
@@ -1060,6 +1148,7 @@ function setSession(user){
   // Explicitly reset filter inputs for new session
   document.getElementById('fSearch').value = '';
   document.getElementById('fCaja').value = '';
+  tableState.page = 1;
 
   hideLoginOverlay();
   setupFilters();
@@ -1154,6 +1243,7 @@ function onDirChange(){
   const selDir = document.getElementById('fDir').value;
   const base = selDir ? ALL.filter(r => r.direccion === selDir) : ALL;
   populateSecondaryFilters(base, true);
+  tableState.page = 1;
   applyFilters();
 }
 
@@ -1164,6 +1254,7 @@ function clickBox(b){
   } else {
     sel.value = String(b);
   }
+  tableState.page = 1;
   applyFilters();
 }
 
@@ -1213,6 +1304,7 @@ function resetFilters(){
   if(!CUR || CUR.rol === 'admin') document.getElementById('fDir').value = '';
   if(!CUR || CUR.rol !== 'gerente') document.getElementById('fGer').value = '';
   document.getElementById('fJefe').value = '';
+  tableState.page = 1;
   populateSecondaryFilters(getScopedData(), true);
   applyFilters();
 }
@@ -1222,6 +1314,7 @@ function renderAll(){
   renderStats();
   renderExecSummary();
   renderNinebox();
+  renderNineboxTable();
   renderHogan();
   renderTable();
 }
@@ -1302,6 +1395,142 @@ function renderNinebox(){
     const cntEl = document.getElementById('cnt' + b);
     if (cntEl) cntEl.textContent = items.length;
   }
+}
+
+/* ── TABLA NINEBOX EXACTA A NINEBOX.HTML ────────────────────────────── */
+function handleSort(key){
+  if(tableState.sortKey === key){
+    tableState.sortDir *= -1;
+  } else {
+    tableState.sortKey = key;
+    tableState.sortDir = 1;
+  }
+  tableState.page = 1;
+  renderNineboxTable();
+}
+
+function renderNineboxTable(){
+  const tbody = document.getElementById('nbTableBody');
+  if(!tbody) return;
+
+  const BOX_SORT = { 9:0, 8:1, 7:2, 6:3, 5:4, 4:5, 3:6, 2:7, 1:8 };
+
+  let data = [...FILTERED].sort((a,b) => {
+    if(tableState.sortKey === 'nombre'){
+      return (a.nombre || '').localeCompare(b.nombre || '', 'es') * tableState.sortDir;
+    } else if(tableState.sortKey === 'cargo'){
+      return (a.cargo || '').localeCompare(b.cargo || '', 'es') * tableState.sortDir;
+    } else if(tableState.sortKey === 'caja'){
+      const ca = getCajaNum(a.caja) || 0;
+      const cb = getCajaNum(b.caja) || 0;
+      return (ca - cb) * tableState.sortDir;
+    } else if(tableState.sortKey === 'sucesor'){
+      const sa = isSuc(a.sucesor) ? 1 : 0;
+      const sb = isSuc(b.sucesor) ? 1 : 0;
+      return (sb - sa) * tableState.sortDir;
+    } else if(tableState.sortKey === 'tiempo'){
+      return (a.tiempo || '').localeCompare(b.tiempo || '', 'es') * tableState.sortDir;
+    } else {
+      // Default sort exact to ninebox.html:
+      // 1. Sucesores first
+      const sa = isSuc(a.sucesor) ? 0 : 1;
+      const sb = isSuc(b.sucesor) ? 0 : 1;
+      if(sa !== sb) return sa - sb;
+      // 2. Box number (9 -> 1)
+      const oa = BOX_SORT[getCajaNum(a.caja)] ?? 9;
+      const ob = BOX_SORT[getCajaNum(b.caja)] ?? 9;
+      if(oa !== ob) return oa - ob;
+      // 3. Name
+      return (a.nombre || '').localeCompare(b.nombre || '', 'es');
+    }
+  });
+
+  const totalPages = Math.max(1, Math.ceil(data.length / tableState.pageSize));
+  if(tableState.page > totalPages) tableState.page = totalPages;
+  const start = (tableState.page - 1) * tableState.pageSize;
+  const pageData = data.slice(start, start + tableState.pageSize);
+
+  // Update sort arrows
+  ['nombre', 'cargo', 'caja', 'sucesor', 'tiempo'].forEach(k => {
+    const el = document.getElementById('arr_' + k);
+    if(el){
+      if(tableState.sortKey === k){
+        el.textContent = tableState.sortDir === 1 ? '▲' : '▼';
+        el.style.opacity = '1';
+        el.style.color = 'var(--gold)';
+      } else {
+        el.textContent = '▲';
+        el.style.opacity = '.4';
+        el.style.color = '';
+      }
+    }
+  });
+
+  if(!pageData.length){
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:48px 14px;color:var(--text-faint)">No se encontraron colaboradores con estos filtros.</td></tr>';
+  } else {
+    tbody.innerHTML = '';
+    pageData.forEach(p => {
+      const cNum = getCajaNum(p.caja);
+      const boxColor = BOX_COLORS[cNum] || '#47505c';
+      const boxName = cNum ? `${cNum} · ${BOX_NAMES[cNum] || ''}` : '0 · Sin ubicación';
+      const isS = isSuc(p.sucesor);
+
+      const tr = document.createElement('tr');
+      tr.onclick = () => openModal(p);
+      tr.innerHTML = `
+        <td class="name">${p.nombre}</td>
+        <td>${p.cargo || '—'}</td>
+        <td>
+          <span class="chip-caja" style="background:${boxColor}">
+            ${boxName}
+          </span>
+        </td>
+        <td>
+          <span class="chip-sucesor ${isS ? 'si' : 'no'}">
+            ${isS ? 'Sí' : 'No'}
+          </span>
+        </td>
+        <td style="font-size:13px">
+          ${p.tiempo && p.tiempo !== 'N/A' ? p.tiempo : '—'}
+        </td>
+        <td>
+          <a href="ficha_talento.html?expediente=${p.expediente}" target="_blank" onclick="event.stopPropagation()" class="btn-ficha">
+            Ver Ficha
+          </a>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  document.getElementById('nbPageInfo').textContent = data.length ? `Página ${tableState.page} de ${totalPages}` : '';
+  renderPager('nbPager', totalPages);
+}
+
+function renderPager(containerId, totalPages){
+  const pager = document.getElementById(containerId);
+  if(!pager) return;
+  let html = `<button ${tableState.page === 1 ? 'disabled' : ''} id="nbPrev">‹</button>`;
+  const pages = [];
+  for(let i = 1; i <= totalPages; i++){
+    if(i === 1 || i === totalPages || Math.abs(i - tableState.page) <= 1) pages.push(i);
+    else if(pages[pages.length - 1] !== '…') pages.push('…');
+  }
+  pages.forEach(p => {
+    if(p === '…') html += `<button disabled>…</button>`;
+    else html += `<button class="${p === tableState.page ? 'active' : ''}" data-p="${p}">${p}</button>`;
+  });
+  html += `<button ${tableState.page === totalPages ? 'disabled' : ''} id="nbNext">›</button>`;
+  pager.innerHTML = html;
+
+  const prev = document.getElementById('nbPrev');
+  if(prev) prev.onclick = () => { tableState.page--; renderNineboxTable(); };
+  const next = document.getElementById('nbNext');
+  if(next) next.onclick = () => { tableState.page++; renderNineboxTable(); };
+  pager.querySelectorAll('button[data-p]').forEach(b => {
+    b.onclick = () => { tableState.page = +b.dataset.p; renderNineboxTable(); };
+  });
 }
 
 function renderHogan(){
