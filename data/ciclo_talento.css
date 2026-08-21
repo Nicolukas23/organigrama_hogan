@@ -1,6 +1,7 @@
 /**
- * ciclo_talento.css — Estilos extraídos de ciclo_talento.html
+ * ciclo_talento.css — Componentes específicos del tablero
  */
+
 
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}

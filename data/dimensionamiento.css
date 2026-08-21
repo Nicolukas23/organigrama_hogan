@@ -1,8 +1,9 @@
 /**
- * dimensionamiento.css — Estilos extraídos de dimensionamiento.html
+ * dimensionamiento.css — Componentes específicos del tablero
  */
 
-:root{--bg:#f8f9fa;--surface:#fff;--surface2:#f1f3f5;--border:#e2e6eb;--text:#1e293b;--text2:#475569;--text3:#94a3b8;--crimson:#8b1a2b;--crimson-light:#c53030;--blue:#1e3a5f;--blue2:#334155;--green:#059669;--green-bg:#d1fae5;--orange:#d97706;--orange-bg:#ffedd5;--red:#dc2626;--red-bg:#fee2e2;--gold:#d8ad64;--shadow:0 1px 3px rgba(0,0,0,.08);--shadow-lg:0 4px 12px rgba(0,0,0,.1)}
+
+
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 .topbar{background:var(--blue);color:#fff;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}

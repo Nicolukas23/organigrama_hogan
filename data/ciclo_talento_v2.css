@@ -1,11 +1,9 @@
 /**
- * ciclo_talento_v2.css — Estilos extraídos de ciclo_talento (2).html
+ * ciclo_talento_v2.css — Componentes específicos del tablero
  */
 
-:root{
-  --bg:#F3F5F8; --text:#0F172A; --text2:#334155; --text3:#64748B; --text4:#94A3B8;
-  --card-bg:#FFFFFF; --border:#E2E8F0; --hover:#F8FAFC; --surface:#F9FAFB; --surface2:#F1F5F9;
-}
+
+
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 .wrap{max-width:1440px;margin:0 auto;padding:24px}

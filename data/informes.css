@@ -1,22 +1,10 @@
 /**
- * informes.css — Estilos extraídos de informes.html
+ * informes.css — Componentes específicos del tablero
  */
 
-:root{
-  --bg:#12080a;--bg-1:#1a0e10;--panel:#1e1215;--panel-2:#26181b;
-  --border:rgba(255,255,255,.08);--border-soft:rgba(255,255,255,.05);
-  --text:#F4F1EA;--text-dim:#98A2B3;--text-faint:#59626f;
-  --crimson:#E8283F;--crimson-soft:rgba(232,40,63,.14);--gold:#D8AD64;
-  --blue:#0033A0;--green:#059669;--amber:#D97706;
-  --radius:14px;--ease:cubic-bezier(.22,1,.36,1);
-}
-:root.light{
-  --bg:#f5f3f0;--bg-1:#eae7e3;--panel:#ffffff;--panel-2:#f9f7f5;
-  --border:rgba(0,0,0,.08);--border-soft:rgba(0,0,0,.05);
-  --text:#1a1a1a;--text-dim:#6b7280;--text-faint:#9ca3af;
-  --crimson:#dc2626;--crimson-soft:rgba(220,38,38,.1);--gold:#92600a;
-  --blue:#0033A0;--green:#059669;--amber:#D97706;
-}
+
+
+
 *{margin:0;padding:0;box-sizing:border-box}
 body{
   font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);

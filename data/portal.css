@@ -1,16 +1,13 @@
 /**
- * portal.css — Estilos extraídos de index.html
+ * portal.css — Componentes específicos del tablero
  */
+
 
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;min-height:100vh;transition:background .3s,color .3s}
 
 /* ── THEME VARS ─────────────────────────────────────────────────────── */
-:root{
-  --bg:#EEF1F8;--card-bg:#fff;--text:#111827;--text2:#374151;--text3:#6B7280;--text4:#9CA3AF;
-  --border:#E2E6EF;--surface:#F9FAFB;--surface2:#F3F4F6;--hover:#F8FAFF;
-  --crimson:#7C1D24;--crimson-light:#9F1239;--blue:#0033A0;--green:#059669;--orange:#EA580C;
-}
+
 body.dark{
   --bg:#0B1121;--card-bg:#1E293B;--text:#F1F5F9;--text2:#CBD5E1;--text3:#94A3B8;--text4:#64748B;
   --border:#334155;--surface:#1E293B;--surface2:#334155;--hover:#1E293B;

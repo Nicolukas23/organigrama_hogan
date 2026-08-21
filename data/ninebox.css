@@ -1,63 +1,12 @@
 /**
- * ninebox.css — Estilos extraídos de ninebox.html
+ * ninebox.css — Componentes específicos del tablero
  */
 
-:root{
-  --bg: #12080a;
-  --bg-1: #1a0e10;
-  --panel: #1e1215;
-  --panel-2: #26181b;
-  --border: rgba(255,255,255,.08);
-  --border-soft: rgba(255,255,255,.05);
-  --text: #F4F1EA;
-  --text-dim: #98A2B3;
-  --text-faint: #59626f;
-  --crimson: #E8283F;
-  --crimson-soft: rgba(232,40,63,.14);
-  --gold: #D8AD64;
 
-  /* fila desempeño bajo — neutro, gris frío */
-  --c1: #47505c; --c1-soft: rgba(71,80,92,.18);
-  --c2: #58626f; --c2-soft: rgba(88,98,111,.18);
-  --c3: #69737f; --c3-soft: rgba(105,115,127,.18);
-  /* fila desempeño consistente — ámbar, calentando */
-  --c4: #9c6a2e; --c4-soft: rgba(156,106,46,.18);
-  --c5: #c99a46; --c5-soft: rgba(201,154,70,.18);
-  --c6: #7fa65e; --c6-soft: rgba(127,166,94,.18);
-  /* fila alto desempeño — teal a esmeralda, en su punto */
-  --c7: #1d6e8c; --c7-soft: rgba(29,110,140,.20);
-  --c8: #2f9271; --c8-soft: rgba(47,146,113,.20);
-  --c9: #1e7a4e; --c9-soft: rgba(30,122,78,.22);
 
-  --radius: 14px;
-  --ease: cubic-bezier(.22,1,.36,1);
-}
 
 /* Light mode */
-:root.light{
-  --bg: #f5f3f0;
-  --bg-1: #eae7e3;
-  --panel: #ffffff;
-  --panel-2: #f9f7f5;
-  --border: rgba(0,0,0,.08);
-  --border-soft: rgba(0,0,0,.05);
-  --text: #1a1a1a;
-  --text-dim: #6b7280;
-  --text-faint: #9ca3af;
-  --crimson: #dc2626;
-  --crimson-soft: rgba(220,38,38,.1);
-  --gold: #b45309;
 
-  --c1: #6b7280; --c1-soft: rgba(107,114,128,.12);
-  --c2: #9ca3af; --c2-soft: rgba(156,163,175,.12);
-  --c3: #d1d5db; --c3-soft: rgba(209,213,219,.12);
-  --c4: #d97706; --c4-soft: rgba(217,119,6,.12);
-  --c5: #eab308; --c5-soft: rgba(234,179,8,.12);
-  --c6: #65a30d; --c6-soft: rgba(101,163,13,.12);
-  --c7: #0891b2; --c7-soft: rgba(8,145,178,.12);
-  --c8: #059669; --c8-soft: rgba(5,150,105,.12);
-  --c9: #16a34a; --c9-soft: rgba(22,163,74,.12);
-}
 
 /* Light mode overrides */
 :root.light .field input,

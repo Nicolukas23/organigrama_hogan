@@ -1,6 +1,7 @@
 /**
- * organigrama.css — Estilos extraídos de organigrama_hogan_claro.html
+ * organigrama.css — Componentes específicos del tablero
  */
+
 
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
@@ -19,11 +20,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
 .login-overlay.hidden{display:none}
 
 /* ── THEME ────────────────────────────────────────────────────── */
-:root{--alta:#059669;--alta-bg:#D1FAE5;--media:#EA580C;--media-bg:#FFEDD5;--prof:#0033A0;--prof-bg:#DBEAFE;
-  --bg:#EEF1F8;--bg2:#E2E6EF;--card-bg:#fff;--text:#111827;--text2:#374151;--text3:#6B7280;--text4:#9CA3AF;
-  --border:#E2E6EF;--border2:#E5E7EB;--border3:#F3F4F6;--surface:#F9FAFB;--surface2:#F3F4F6;--modal-bg:#fff;
-  --input-bg:#F9FAFB;--tab-bg:#fff;--hover:#F8FAFF;--lgtxt:rgba(0,0,0,.55);--lgtxt2:rgba(255,255,255,.5);
-  --shadow:rgba(0,51,160,.13);--mback:rgba(0,0,0,.65);}
+
 body.dark{--bg:#0B1121;--bg2:#1E293B;--card-bg:#1E293B;--text:#F1F5F9;--text2:#CBD5E1;--text3:#94A3B8;--text4:#64748B;
   --border:#334155;--border2:#334155;--border3:#1E293B;--surface:#1E293B;--surface2:#334155;--modal-bg:#1E293B;
   --input-bg:#334155;--tab-bg:#1E293B;--hover:#1E293B;--lgtxt:rgba(255,255,255,.55);--lgtxt2:rgba(0,0,0,.5);

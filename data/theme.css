@@ -1,87 +1,94 @@
 /**
- * theme.css — Sistema de Diseño y Tokens Institucionales Claro
- * Paletas de colores, variables globales (Dark/Light), Ninebox y Hogan.
+ * theme.css — Sistema de Diseño Ejecutivo Claro (Dark & Light)
+ * Tokens de color, degradados ambientales, tipografías y efectos Glassmorphism.
  */
 
 :root {
-  /* Paleta Base Oscura (Ejecutiva) */
-  --bg: #12080a;
-  --bg-1: #1a0e10;
-  --panel: #1e1215;
-  --panel-2: #26181b;
-  --border: rgba(255, 255, 255, .08);
-  --border-soft: rgba(255, 255, 255, .05);
+  /* Paleta Base Oscura Ejecutiva (Midnight Luxury) */
+  --bg: #0b0f19;
+  --bg-1: #111827;
+  --panel: #151c2e;
+  --panel-2: #1e293b;
+  --panel-hover: #222f46;
   
-  /* Textos */
-  --text: #F4F1EA;
-  --text-dim: #98A2B3;
-  --text-faint: #59626f;
+  /* Bordes de Cristal */
+  --border: rgba(255, 255, 255, 0.09);
+  --border-soft: rgba(255, 255, 255, 0.05);
+  --border-glow: rgba(225, 29, 72, 0.35);
   
-  /* Identidad Claro y Acentos */
-  --crimson: #E8283F;
-  --crimson-hover: #DA291C;
-  --crimson-soft: rgba(232, 40, 63, .14);
-  --gold: #D8AD64;
-  --gold-soft: rgba(216, 173, 100, .14);
-  --blue: #2563eb;
+  /* Textos de Alta Legibilidad */
+  --text: #F9FAFB;
+  --text-dim: #94A3B8;
+  --text-faint: #64748B;
+  
+  /* Identidad Claro y Acentos de Alto Impacto */
+  --crimson: #E11D48;
+  --crimson-hover: #BE123C;
+  --crimson-soft: rgba(225, 29, 72, 0.16);
+  --crimson-glow: 0 8px 25px -4px rgba(225, 29, 72, 0.45);
+  
+  --gold: #F59E0B;
+  --gold-soft: rgba(245, 158, 11, 0.15);
+  --blue: #3B82F6;
+  --blue-soft: rgba(59, 130, 246, 0.15);
   --green: #10B981;
-  --amber: #D97706;
+  --green-soft: rgba(16, 185, 129, 0.18);
+  --purple: #8B5CF6;
+  --purple-soft: rgba(139, 92, 246, 0.18);
 
-  /* Cajas Nine Box (Modo Oscuro) */
-  --c1: #47505c; --c1-soft: rgba(71, 80, 92, .18);
-  --c2: #58626f; --c2-soft: rgba(88, 98, 111, .18);
-  --c3: #69737f; --c3-soft: rgba(105, 115, 127, .18);
-  --c4: #9c6a2e; --c4-soft: rgba(156, 106, 46, .18);
-  --c5: #c99a46; --c5-soft: rgba(201, 154, 70, .18);
-  --c6: #7fa65e; --c6-soft: rgba(127, 166, 94, .18);
-  --c7: #1d6e8c; --c7-soft: rgba(29, 110, 140, .20);
-  --c8: #2f9271; --c8-soft: rgba(47, 146, 113, .20);
-  --c9: #1e7a4e; --c9-soft: rgba(30, 122, 78, .22);
+  /* Cajas Nine Box (Modo Oscuro con Alto Contraste y Brillo Suave) */
+  --c1: #64748b; --c1-soft: rgba(100, 116, 139, 0.18);
+  --c2: #94a3b8; --c2-soft: rgba(148, 163, 184, 0.18);
+  --c3: #cbd5e1; --c3-soft: rgba(203, 213, 225, 0.18);
+  
+  --c4: #d97706; --c4-soft: rgba(217, 119, 6, 0.20);
+  --c5: #eab308; --c5-soft: rgba(234, 179, 8, 0.20);
+  --c6: #84cc16; --c6-soft: rgba(132, 204, 22, 0.20);
+  
+  --c7: #06b6d4; --c7-soft: rgba(6, 182, 212, 0.22);
+  --c8: #059669; --c8-soft: rgba(5, 150, 105, 0.22);
+  --c9: #10b981; --c9-soft: rgba(16, 185, 129, 0.25);
 
-  /* Versatilidad Hogan (Modo Oscuro) */
-  --alta-bg: rgba(16, 185, 129, .18); --alta-txt: #34d399;
-  --media-bg: rgba(216, 173, 100, .18); --media-txt: #facc15;
-  --prof-bg: rgba(37, 99, 235, .18); --prof-txt: #60a5fa;
+  /* Versatilidad Hogan */
+  --alta-bg: rgba(16, 185, 129, 0.20); --alta-txt: #34d399;
+  --media-bg: rgba(245, 158, 11, 0.20); --media-txt: #fbbf24;
+  --prof-bg: rgba(59, 130, 246, 0.20); --prof-txt: #60a5fa;
 
-  /* Medidas y Animaciones */
-  --radius: 14px;
+  /* Medidas y Curvaturas */
+  --radius: 16px;
   --radius-sm: 8px;
-  --radius-lg: 20px;
-  --ease: cubic-bezier(.22, 1, .36, 1);
+  --radius-lg: 24px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --font-main: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Space Grotesk', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
 
-/* Modo Claro Institucional */
+/* Modo Claro */
 :root.light {
-  --bg: #f5f3f0;
-  --bg-1: #eae7e3;
+  --bg: #f8fafc;
+  --bg-1: #f1f5f9;
   --panel: #ffffff;
-  --panel-2: #f9f7f5;
-  --border: rgba(0, 0, 0, .08);
-  --border-soft: rgba(0, 0, 0, .05);
+  --panel-2: #f8fafc;
+  --panel-hover: #e2e8f0;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-soft: rgba(0, 0, 0, 0.04);
   
-  --text: #1a1a1a;
-  --text-dim: #6b7280;
-  --text-faint: #9ca3af;
+  --text: #0f172a;
+  --text-dim: #64748b;
+  --text-faint: #94a3b8;
   
-  --crimson: #dc2626;
-  --crimson-hover: #b91c1c;
-  --crimson-soft: rgba(220, 38, 38, .1);
-  --gold: #b45309;
-  --gold-soft: rgba(180, 83, 9, .12);
-  --green: #059669;
-
-  /* Cajas Nine Box (Modo Claro) */
-  --c1: #6b7280; --c2: #9ca3af; --c3: #d1d5db;
+  --crimson: #e11d48;
+  --crimson-hover: #be123c;
+  --crimson-soft: rgba(225, 29, 72, 0.10);
+  
+  --c1: #64748b; --c2: #94a3b8; --c3: #cbd5e1;
   --c4: #d97706; --c5: #eab308; --c6: #65a30d;
   --c7: #0891b2; --c8: #059669; --c9: #16a34a;
 
-  /* Versatilidad Hogan (Modo Claro) */
-  --alta-bg: #D1FAE5; --alta-txt: #065F46;
-  --media-bg: #FEF3C7; --media-txt: #92400E;
-  --prof-bg: #DBEAFE; --prof-txt: #1E40AF;
+  --alta-bg: #dcfce7; --alta-txt: #15803d;
+  --media-bg: #fef3c7; --media-txt: #b45309;
+  --prof-bg: #dbeafe; --prof-txt: #1d4ed8;
 }
 
 /* Reset Global */
@@ -98,19 +105,20 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  transition: background .3s, color .3s;
+  transition: background .3s var(--ease), color .3s var(--ease);
   -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.01em;
 }
 
-/* Fondo con destellos ambientales institucionales */
+/* Fondo con Iluminación Ambiental Sofisticada */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   background-image:
-    radial-gradient(circle at 15% 8%, rgba(139, 34, 82, .12), transparent 40%),
-    radial-gradient(circle at 88% 18%, rgba(160, 40, 72, .08), transparent 42%),
-    radial-gradient(circle at 50% 95%, rgba(216, 173, 100, .06), transparent 45%);
+    radial-gradient(circle at 10% 5%, rgba(225, 29, 72, 0.14), transparent 45%),
+    radial-gradient(circle at 90% 15%, rgba(99, 102, 241, 0.12), transparent 45%),
+    radial-gradient(circle at 50% 95%, rgba(245, 158, 11, 0.08), transparent 50%);
   pointer-events: none;
   z-index: 0;
 }
@@ -120,35 +128,34 @@ body::after {
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px);
-  background-size: 42px 42px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent 70%);
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, black 20%, transparent 80%);
   pointer-events: none;
   z-index: 0;
 }
 
-/* Contenedor Principal */
 .wrap {
   position: relative;
   z-index: 1;
-  max-width: 1380px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 24px 40px;
+  padding: 0 28px 48px;
 }
 
-/* Scrollbars personalizados */
+/* Scrollbars Modernos */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-1);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #374151;
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #4b5563;
+  background: rgba(255, 255, 255, 0.28);
 }
