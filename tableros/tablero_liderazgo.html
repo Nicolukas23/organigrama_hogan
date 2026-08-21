@@ -1014,6 +1014,7 @@ function applyFilters(){
   }
 
   FILTERED = data;
+  console.log("[FILTER] FILTERED set to", data.length, "items. Sample caja:", data.length > 0 ? data[0].caja : "N/A", "type:", data.length > 0 ? typeof data[0].caja : "N/A");
   document.getElementById('resultCount').innerHTML = `Mostrando <strong>${FILTERED.length}</strong> colaboradores`;
   renderAll();
 }
@@ -1030,6 +1031,7 @@ function resetFilters(){
 
 /* ── RENDER ────────────────────────────────────────────────────────── */
 function renderAll(){
+  console.log("[RENDER] renderAll called. FILTERED:", FILTERED.length, "ALL:", ALL.length);
   renderStats();
   renderNinebox();
   renderHogan();
@@ -1053,39 +1055,74 @@ function renderStats(){
 }
 
 function renderNinebox(){
-  let totalItems = 0;
-  for(let b = 1; b <= 9; b++){
-    const items = FILTERED.filter(r => getCajaNum(r.caja) === b);
-    totalItems += items.length;
-    const cntEl = document.getElementById(`cnt${b}`);
-    const boxEl = document.getElementById(`box${b}`);
-    if(cntEl) cntEl.textContent = items.length;
-    if(boxEl){
-      boxEl.innerHTML = '';
-      items.forEach(p => {
-        const vc = p.hogan_versatilidad === 'Alta Versatilidad' ? 'mb-alta' : 
-                   p.hogan_versatilidad === 'Media Versatilidad' ? 'mb-media' : 
-                   p.hogan_versatilidad ? 'mb-prof' : '';
-        const el = document.createElement('div');
-        el.className = 'card-item';
-        el.onclick = () => openModal(p);
-        el.innerHTML = `
-          <div class="ci-name">${p.nombre}</div>
-          <div class="ci-sub">${p.cargo || '-'}</div>
-          <div class="ci-tags">
-            ${vc ? `<span class="mini-badge ${vc}">${p.hogan_versatilidad}</span>` : ''}
-            ${p.hogan_potencial !== null && p.hogan_potencial !== undefined ? `<span class="mini-badge mb-pot">Hogan ${p.hogan_potencial}</span>` : ''}
-            ${isSuc(p.sucesor) ? '<span class="mini-badge mb-suc">Sucesor</span>' : ''}
-          </div>`;
-        boxEl.appendChild(el);
-      });
+  try {
+    console.log('[NINEBOX] Start. FILTERED:', FILTERED ? FILTERED.length : 'undefined');
+    
+    // Build a map of box -> items using simple integer comparison
+    const boxMap = {1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[]};
+    
+    FILTERED.forEach(function(r) {
+      // Get box number - try multiple approaches
+      let box = null;
+      const raw = r.caja;
+      
+      if (typeof raw === 'number' && raw >= 1 && raw <= 9) {
+        box = raw;
+      } else if (typeof raw === 'string') {
+        const parsed = parseInt(raw.replace(/[^0-9]/g, ''), 10);
+        if (!isNaN(parsed) && parsed >= 1 && parsed <= 9) box = parsed;
+      }
+      
+      if (box !== null && boxMap[box]) {
+        boxMap[box].push(r);
+      }
+    });
+    
+    let totalItems = 0;
+    for (let b = 1; b <= 9; b++) {
+      const items = boxMap[b];
+      totalItems += items.length;
+      
+      const cntEl = document.getElementById('cnt' + b);
+      const boxEl = document.getElementById('box' + b);
+      
+      if (cntEl) cntEl.textContent = items.length;
+      if (boxEl) {
+        boxEl.innerHTML = '';
+        items.forEach(function(p) {
+          const vc = p.hogan_versatilidad === 'Alta Versatilidad' ? 'mb-alta' : 
+                     p.hogan_versatilidad === 'Media Versatilidad' ? 'mb-media' : 
+                     p.hogan_versatilidad ? 'mb-prof' : '';
+          const el = document.createElement('div');
+          el.className = 'card-item';
+          el.setAttribute('onclick', "openModal(" + JSON.stringify(p).replace(/</g, '\u003c').replace(/'/g, "\'") + ")");
+          el.innerHTML = '<div class="ci-name">' + (p.nombre || '') + '</div>' +
+            '<div class="ci-sub">' + (p.cargo || '-') + '</div>' +
+            '<div class="ci-tags">' +
+            (vc ? '<span class="mini-badge ' + vc + '">' + (p.hogan_versatilidad || '') + '</span>' : '') +
+            (p.hogan_potencial !== null && p.hogan_potencial !== undefined ? '<span class="mini-badge mb-pot">Hogan ' + p.hogan_potencial + '</span>' : '') +
+            (isSuc(p.sucesor) ? '<span class="mini-badge mb-suc">Sucesor</span>' : '') +
+            '</div>';
+          boxEl.appendChild(el);
+        });
+      }
     }
-  }
-
-  if (totalItems === 0 && FILTERED.length > 0) {
-    const fallback = document.querySelector('.matrix-cells');
-    if (fallback) {
-      fallback.innerHTML = `<div style="grid-column: 1 / -1; padding: 20px; background: rgba(255,0,0,0.1); color: var(--crimson); text-align: center; border-radius: 8px;"><b>Depuración:</b> ${FILTERED.length} colaboradores aquí, pero la matriz está vacía. Ejemplo: ${FILTERED[0].nombre}, Caja: ${FILTERED[0].caja}, Parseada: ${getCajaNum(FILTERED[0].caja)}</div>`;
+    
+    console.log('[NINEBOX] Done. Total items placed:', totalItems);
+    
+    if (totalItems === 0 && FILTERED.length > 0) {
+      console.error('[NINEBOX] BUG: FILTERED has', FILTERED.length, 'items but no box matches!');
+      console.error('[NINEBOX] Sample:', FILTERED[0].nombre, 'caja:', FILTERED[0].caja, 'type:', typeof FILTERED[0].caja);
+      const mc = document.querySelector('.matrix-cells');
+      if (mc) {
+        mc.innerHTML = '<div style="grid-column: 1 / -1; padding: 20px; background: rgba(255,0,0,0.1); color: #ff6b6b; text-align: center; border-radius: 8px;"><b>Error:</b> ' + FILTERED.length + ' colaboradores encontrados pero ninguno tiene caja valida (1-9). Ejemplo: ' + (FILTERED[0].nombre || '') + ', Caja: ' + String(FILTERED[0].caja) + ' (tipo: ' + typeof FILTERED[0].caja + ')</div>';
+      }
+    }
+  } catch(err) {
+    console.error('[NINEBOX] CRASH:', err);
+    const mc = document.querySelector('.matrix-cells');
+    if (mc) {
+      mc.innerHTML = '<div style="grid-column: 1 / -1; padding: 20px; background: rgba(255,0,0,0.1); color: #ff6b6b; text-align: center; border-radius: 8px;"><b>Error en renderNinebox:</b> ' + err.message + '</div>';
     }
   }
 }
@@ -1363,7 +1400,7 @@ async function refreshFromSupabase(){
       return c;
     });
 
-    console.log('Actualización Supabase en background completada:', ALL.length, 'registros.');
+    console.log('[SUPABASE] Refresh completado:', ALL.length, 'registros. Sample caja:', ALL.length > 0 ? ALL[0].caja : 'N/A', 'type:', ALL.length > 0 ? typeof ALL[0].caja : 'N/A');
     buildLeaders();
     if(CUR){
       const fresh = LEADERS.find(u => u.email === CUR.email);
