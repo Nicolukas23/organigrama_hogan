@@ -682,7 +682,7 @@ function normWords(s){
 }
 
 function isSuc(v){
-  return ['si','sí'].includes((v || '').toLowerCase().trim());
+  return ['si','sí'].includes(String(v || '').toLowerCase().trim());
 }
 
 function toggleTheme(){
@@ -725,7 +725,7 @@ function init(){
     showLoginOverlay();
   }
 
-  refreshFromSupabase();
+  refreshFromSupabase(); // Kept, but let's debug below
 }
 
 function buildLeaders(){
@@ -1053,8 +1053,10 @@ function renderStats(){
 }
 
 function renderNinebox(){
+  let totalItems = 0;
   for(let b = 1; b <= 9; b++){
     const items = FILTERED.filter(r => getCajaNum(r.caja) === b);
+    totalItems += items.length;
     const cntEl = document.getElementById(`cnt${b}`);
     const boxEl = document.getElementById(`box${b}`);
     if(cntEl) cntEl.textContent = items.length;
@@ -1079,9 +1081,17 @@ function renderNinebox(){
       });
     }
   }
+
+  if (totalItems === 0 && FILTERED.length > 0) {
+    const fallback = document.querySelector('.matrix-cells');
+    if (fallback) {
+      fallback.innerHTML = `<div style="grid-column: 1 / -1; padding: 20px; background: rgba(255,0,0,0.1); color: var(--crimson); text-align: center; border-radius: 8px;"><b>Depuración:</b> ${FILTERED.length} colaboradores aquí, pero la matriz está vacía. Ejemplo: ${FILTERED[0].nombre}, Caja: ${FILTERED[0].caja}, Parseada: ${getCajaNum(FILTERED[0].caja)}</div>`;
+    }
+  }
 }
 
 function renderHogan(){
+
   const hev = FILTERED.filter(r => r.hogan_potencial !== null && r.hogan_potencial !== undefined);
   const tg = document.getElementById('teamCompGrid');
   if(tg){
