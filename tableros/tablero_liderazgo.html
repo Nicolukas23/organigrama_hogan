@@ -133,371 +133,374 @@ body::after{
 }
 .login-field input, .login-field select{
   width:100%;padding:11px 14px;background:var(--bg-1);
-  border:1px solid var(--border);border-radius:10px;
-  color:var(--text);font-size:.9rem;outline:none;
-  transition:border-color .2s,box-shadow .2s;
+  border:1px solid var(--border);border-radius:10px;color:var(--text);
+  font-size:.88rem;outline:none;transition:border-color .2s,box-shadow .2s;
+  font-family:inherit;
 }
 .login-field input:focus, .login-field select:focus{
   border-color:var(--crimson);box-shadow:0 0 0 3px var(--crimson-soft);
 }
 .btn-login{
-  width:100%;padding:13px;border:none;border-radius:10px;
-  background:linear-gradient(135deg,#DA291C,#9F1239);
-  color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;
-  font-family:'Space Grotesk',sans-serif;transition:all .2s;
-  box-shadow:0 4px 14px rgba(218,41,28,.3);margin-top:4px;
+  width:100%;padding:12px;background:linear-gradient(135deg,#DA291C,#A51D24);
+  color:#fff;border:none;border-radius:10px;font-size:.9rem;font-weight:700;
+  cursor:pointer;transition:transform .15s,box-shadow .15s;margin-top:8px;
 }
-.btn-login:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(218,41,28,.45)}
-.login-err{
-  color:#f87171;font-size:.8rem;text-align:center;margin-top:12px;
-  padding:10px;background:rgba(220,38,38,.12);border-radius:8px;
-  border:1px solid rgba(220,38,38,.25);display:none;line-height:1.4;
-}
+.btn-login:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(218,41,28,.35)}
 .login-divider{
   display:flex;align-items:center;gap:12px;margin:20px 0;
-  color:var(--text-faint);font-size:.74rem;font-weight:600;
-  text-transform:uppercase;letter-spacing:.08em;
+  color:var(--text-faint);font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;
 }
-.login-divider::before, .login-divider::after{content:"";flex:1;height:1px;background:var(--border)}
+.login-divider::before, .login-divider::after{
+  content:"";flex:1;height:1px;background:var(--border-soft);
+}
+.login-err{
+  background:rgba(220,38,38,.12);border:1px solid rgba(220,38,38,.3);
+  color:#f87171;padding:10px 14px;border-radius:8px;font-size:.82rem;
+  margin-bottom:14px;display:none;
+}
 
-/* ── HERO ──────────────────────────────────────────────────────────── */
-header.hero{padding:20px 0 14px;display:flex;flex-direction:column;gap:12px}
-.hero-top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.eyebrow{
-  display:inline-flex;align-items:center;gap:10px;
-  font-family:'JetBrains Mono',monospace;font-size:11.5px;
-  letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
+/* ── HEADER ────────────────────────────────────────────────────────── */
+header.dash-hdr{
+  padding:28px 0 20px;display:flex;align-items:center;
+  justify-content:space-between;flex-wrap:wrap;gap:16px;
+  border-bottom:1px solid var(--border-soft);margin-bottom:24px;
 }
-.eyebrow::before{
-  content:"";width:7px;height:7px;border-radius:50%;
-  background:var(--crimson);box-shadow:0 0 0 4px var(--crimson-soft);
+.hdr-left{display:flex;align-items:center;gap:16px}
+.hdr-icon{
+  width:44px;height:44px;background:linear-gradient(135deg,var(--crimson),#8B2252);
+  border-radius:12px;display:grid;place-items:center;font-size:20px;
+  box-shadow:0 6px 18px rgba(232,40,63,.25);
 }
-h1.title{
-  font-family:'Space Grotesk',sans-serif;font-weight:700;
-  font-size:clamp(22px,3.5vw,34px);line-height:1.1;letter-spacing:-.01em;
+.hdr-titles h1{
+  font-size:1.35rem;font-weight:800;letter-spacing:-.02em;
+  font-family:'Space Grotesk',sans-serif;
 }
-h1.title span{color:var(--text-dim);font-weight:500;font-size:.85em}
+.hdr-titles h1 span{color:var(--text-dim);font-weight:500}
+.hdr-meta{
+  display:flex;gap:14px;font-size:.78rem;color:var(--text-dim);
+  margin-top:3px;align-items:center;
+}
+.hdr-meta b{color:var(--text)}
+.hdr-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 
-.leader-pill{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:7px 14px;border-radius:100px;background:var(--panel);
-  border:1px solid var(--border);font-size:12.5px;font-weight:600;
-  cursor:pointer;transition:all .2s;
+.user-badge{
+  display:flex;align-items:center;gap:8px;padding:6px 12px;
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:20px;font-size:.78rem;
 }
-.leader-pill:hover{border-color:var(--crimson);background:var(--crimson-soft)}
-.role-tag{
-  padding:2px 8px;border-radius:12px;font-size:10px;font-weight:800;
-  letter-spacing:.04em;text-transform:uppercase;
+.user-badge .role-tag{
+  font-size:.65rem;font-weight:800;padding:2px 7px;border-radius:10px;
+  text-transform:uppercase;letter-spacing:.05em;
 }
-.role-admin{background:rgba(16,185,129,.2);color:#34d399;border:1px solid rgba(16,185,129,.3)}
-.role-director{background:rgba(218,41,28,.2);color:#ff6b6b;border:1px solid rgba(218,41,28,.3)}
-.role-gerente{background:rgba(37,99,235,.2);color:#60a5fa;border:1px solid rgba(37,99,235,.3)}
+.role-admin{background:var(--crimson-soft);color:var(--crimson)}
+.role-director{background:var(--gold-soft);color:var(--gold)}
+.role-gerente{background:rgba(37,99,235,.18);color:#60a5fa}
+
+.btn-icon{
+  background:var(--panel);border:1px solid var(--border);color:var(--text);
+  padding:8px 14px;border-radius:10px;cursor:pointer;font-size:.78rem;
+  font-weight:600;display:inline-flex;align-items:center;gap:6px;
+  transition:all .2s var(--ease);text-decoration:none;
+}
+.btn-icon:hover{border-color:var(--text-dim);transform:translateY(-1px)}
 
 /* ── STATS ROW ─────────────────────────────────────────────────────── */
-.stats-row{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:1px;background:var(--border);border:1px solid var(--border);
-  border-radius:var(--radius);overflow:hidden;margin-top:6px;
+.stats-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;margin-bottom:24px;
 }
-.stat{
-  background:var(--panel);padding:16px 18px;display:flex;flex-direction:column;
-  gap:4px;transition:background .2s;
+.stat-card{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:var(--radius);padding:16px 18px;position:relative;
+  overflow:hidden;transition:transform .2s var(--ease),border-color .2s;
 }
-.stat:hover{background:var(--panel-2)}
-.stat .num{
-  font-family:'JetBrains Mono',monospace;font-size:30px;
-  font-weight:700;color:var(--text);letter-spacing:-.02em;
+.stat-card:hover{transform:translateY(-2px);border-color:var(--border-soft)}
+.stat-lbl{
+  font-size:.72rem;color:var(--text-dim);text-transform:uppercase;
+  letter-spacing:.06em;font-weight:700;margin-bottom:6px;
 }
-.stat .num em{font-style:normal;color:var(--gold);font-size:13px;margin-left:4px}
-.stat .lbl{font-size:11.5px;color:var(--text-faint);letter-spacing:.02em}
+.stat-val{
+  font-size:1.65rem;font-weight:800;font-family:'Space Grotesk',sans-serif;
+  letter-spacing:-.03em;
+}
+.stat-sub{font-size:.75rem;color:var(--text-faint);margin-top:4px}
+.stat-sub b{color:var(--text)}
 
-/* ── SUBTABS ───────────────────────────────────────────────────────── */
+/* ── TABS ──────────────────────────────────────────────────────────── */
 .tabs-bar{
-  display:flex;gap:4px;background:var(--panel);border:1px solid var(--border);
-  border-radius:var(--radius);padding:4px;margin-top:14px;overflow-x:auto;
+  display:flex;gap:8px;border-bottom:1px solid var(--border-soft);
+  margin-bottom:20px;padding-bottom:2px;overflow-x:auto;
 }
 .tab-btn{
-  flex:1;padding:10px 16px;border:none;background:transparent;
-  color:var(--text-dim);border-radius:10px;font-family:'Space Grotesk',sans-serif;
-  font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;
-  align-items:center;justify-content:center;gap:8px;white-space:nowrap;
-  transition:all .2s;
+  background:transparent;border:none;color:var(--text-dim);
+  padding:10px 16px;font-size:.85rem;font-weight:700;cursor:pointer;
+  border-bottom:2px solid transparent;transition:all .2s;
+  display:inline-flex;align-items:center;gap:8px;white-space:nowrap;
+  font-family:inherit;
 }
-.tab-btn:hover{color:var(--text);background:var(--bg-1)}
-.tab-btn.active{
-  background:var(--bg-1);color:var(--text);border:1px solid var(--border);
-  box-shadow:0 4px 12px rgba(0,0,0,.2);
-}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--crimson);border-bottom-color:var(--crimson)}
 .tab-chip{
-  background:var(--panel-2);padding:2px 7px;border-radius:10px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
-  border:1px solid var(--border);
+  background:var(--panel-2);border:1px solid var(--border);
+  padding:2px 7px;border-radius:10px;font-size:.7rem;color:var(--text-dim);
 }
 
-/* ── FILTERS ───────────────────────────────────────────────────────── */
-.panel{
+/* ── FILTERS BAR ───────────────────────────────────────────────────── */
+.filters-bar{
   background:var(--panel);border:1px solid var(--border);
-  border-radius:var(--radius);padding:14px 16px;margin-top:14px;
+  border-radius:var(--radius);padding:14px 18px;margin-bottom:24px;
+  display:flex;gap:12px;align-items:center;flex-wrap:wrap;
 }
-.filters-head{
-  display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;
+.f-group{display:flex;flex-direction:column;gap:4px;min-width:160px;flex:1}
+.f-group label{
+  font-size:.68rem;font-weight:700;color:var(--text-dim);
+  text-transform:uppercase;letter-spacing:.05em;
 }
-.filters-head h3{
-  font-family:'Space Grotesk',sans-serif;font-size:14px;margin:0;
-  display:flex;align-items:center;gap:8px;color:var(--text);
+.f-group select, .f-group input{
+  background:var(--bg-1);border:1px solid var(--border);
+  color:var(--text);padding:8px 12px;border-radius:8px;
+  font-size:.82rem;font-family:inherit;outline:none;
 }
-#resultCount{
-  font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);
-}
-#resultCount strong{color:var(--gold);font-weight:700}
-.filters-grid{
-  display:grid;grid-template-columns:1.4fr 1.1fr 1.1fr 1fr 1fr auto;
-  gap:10px;align-items:flex-end;
-}
-.field{display:flex;flex-direction:column;gap:5px}
-.field label{
-  font-size:11px;text-transform:uppercase;letter-spacing:.08em;
-  color:var(--text-faint);font-weight:600;
-}
-.field input, .field select{
-  background:var(--bg-1);border:1px solid var(--border);color:var(--text);
-  border-radius:9px;padding:8px 12px;font-size:13px;outline:none;width:100%;
-  transition:border-color .2s;
-}
-.field select{
-  appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2398A2B3'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 12px center;
-  padding-right:28px;cursor:pointer;
-}
-.field input:focus, .field select:focus{
-  border-color:var(--crimson);box-shadow:0 0 0 3px var(--crimson-soft);
-}
-.btn-reset{
-  background:transparent;border:1px solid var(--border);color:var(--text-dim);
-  border-radius:9px;padding:8px 12px;font-size:13px;font-weight:600;
-  cursor:pointer;white-space:nowrap;transition:all .2s;height:36px;
-}
-.btn-reset:hover{border-color:var(--crimson);color:#fff;background:var(--crimson-soft)}
+.f-group select:focus, .f-group input:focus{border-color:var(--crimson)}
 
-/* ── NINE BOX MATRIX ───────────────────────────────────────────────── */
-.grid-section{margin-top:20px}
-.matrix-wrap{display:grid;grid-template-columns:110px 1fr;gap:8px}
-.matrix-yaxis{display:grid;grid-template-rows:26px repeat(3,1fr);gap:8px}
+/* ── MATRIX VIEW ───────────────────────────────────────────────────── */
+.matrix-wrap{position:relative;margin-top:10px}
+.matrix-grid{
+  display:grid;grid-template-columns:50px 1fr;gap:8px;
+}
+.matrix-yaxis{
+  display:flex;flex-direction:column;justify-content:space-around;
+  padding:20px 0;text-align:center;
+}
 .ylabel{
-  display:flex;align-items:center;justify-content:center;text-align:center;
-  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12px;
-  color:var(--text-dim);letter-spacing:.04em;
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  font-size:.72rem;font-weight:800;color:var(--text-dim);
+  letter-spacing:.1em;text-transform:uppercase;
 }
-.matrix-main{display:flex;flex-direction:column;gap:8px}
-.matrix-xaxis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;height:26px}
+.matrix-content{display:flex;flex-direction:column;gap:8px}
+.matrix-cells{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(3,minmax(210px, auto));
+  gap:10px;
+}
+.matrix-xaxis{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:10px;text-align:center;padding:8px 0;
+}
 .xlabel{
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12px;
-  color:var(--text-dim);letter-spacing:.04em;
+  font-size:.72rem;font-weight:800;color:var(--text-dim);
+  letter-spacing:.08em;text-transform:uppercase;
 }
-.matrix-cells{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,auto);gap:8px}
+
 .cell{
-  position:relative;border-radius:12px;padding:12px;display:flex;flex-direction:column;
-  min-height:170px;border:1px solid rgba(255,255,255,.06);
-  transition:transform .25s var(--ease),box-shadow .25s var(--ease);
+  border-radius:12px;border:1px solid rgba(255,255,255,.08);
+  padding:12px;display:flex;flex-direction:column;min-height:210px;
+  position:relative;background:rgba(0,0,0,.2);backdrop-filter:blur(4px);
 }
-.cell:nth-child(1){background:linear-gradient(150deg,var(--c7),#123c4d)}
-.cell:nth-child(2){background:linear-gradient(150deg,var(--c8),#114430)}
-.cell:nth-child(3){background:linear-gradient(150deg,var(--c9),#0e3f28)}
-.cell:nth-child(4){background:linear-gradient(150deg,var(--c4),#4d3316)}
-.cell:nth-child(5){background:linear-gradient(150deg,var(--c5),#6b5321)}
-.cell:nth-child(6){background:linear-gradient(150deg,var(--c6),#3f5730)}
-.cell:nth-child(7){background:linear-gradient(150deg,var(--c1),#262b32)}
-.cell:nth-child(8){background:linear-gradient(150deg,var(--c2),#2c323b)}
-.cell:nth-child(9){background:linear-gradient(150deg,var(--c3),#323944)}
-.cell-top-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.cell[data-box="7"]{background:linear-gradient(135deg, rgba(29,110,140,.25), rgba(29,110,140,.1)); border-color:rgba(29,110,140,.4)}
+.cell[data-box="8"]{background:linear-gradient(135deg, rgba(47,146,113,.25), rgba(47,146,113,.1)); border-color:rgba(47,146,113,.4)}
+.cell[data-box="9"]{background:linear-gradient(135deg, rgba(30,122,78,.35), rgba(30,122,78,.15)); border-color:rgba(30,122,78,.6)}
+
+.cell[data-box="4"]{background:linear-gradient(135deg, rgba(156,106,46,.25), rgba(156,106,46,.1)); border-color:rgba(156,106,46,.4)}
+.cell[data-box="5"]{background:linear-gradient(135deg, rgba(201,154,70,.25), rgba(201,154,70,.1)); border-color:rgba(201,154,70,.4)}
+.cell[data-box="6"]{background:linear-gradient(135deg, rgba(127,166,94,.25), rgba(127,166,94,.1)); border-color:rgba(127,166,94,.4)}
+
+.cell[data-box="1"]{background:linear-gradient(135deg, rgba(71,80,92,.25), rgba(71,80,92,.1)); border-color:rgba(71,80,92,.4)}
+.cell[data-box="2"]{background:linear-gradient(135deg, rgba(88,98,111,.25), rgba(88,98,111,.1)); border-color:rgba(88,98,111,.4)}
+.cell[data-box="3"]{background:linear-gradient(135deg, rgba(105,115,127,.25), rgba(105,115,127,.1)); border-color:rgba(105,115,127,.4)}
+
+.cell-top-meta{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.06);
+}
 .cell-tag{
-  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12px;
-  color:#fff;display:flex;align-items:center;gap:6px;
+  font-size:.75rem;font-weight:800;color:var(--text);
+  display:flex;align-items:center;gap:6px;
 }
 .cell-num-badge{
-  width:20px;height:20px;border-radius:6px;background:rgba(255,255,255,.2);
-  display:grid;place-items:center;font-size:11px;font-weight:800;
+  width:18px;height:18px;border-radius:4px;background:rgba(255,255,255,.15);
+  display:grid;place-items:center;font-size:10px;font-weight:800;
 }
 .cell-chip-count{
   background:rgba(0,0,0,.25);padding:2px 7px;border-radius:10px;
   font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#fff;
 }
-.cell-items-list{display:flex;flex-direction:column;gap:5px;overflow-y:auto;max-height:220px}
-.cell-items-list::-webkit-scrollbar{width:3px}
-.cell-items-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:4px}
+.cell-items-list{display:flex;flex-direction:column;gap:6px;flex:1;overflow-y:auto;max-height:260px}
+
+/* ── CARD ITEM ─────────────────────────────────────────────────────── */
 .card-item{
-  background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.08);
-  border-radius:9px;padding:7px 9px;cursor:pointer;transition:all .15s;
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:8px;padding:8px 10px;cursor:pointer;
+  transition:all .15s var(--ease);
 }
-.card-item:hover{background:rgba(0,0,0,.5);border-color:#fff;transform:translateY(-1px)}
-.ci-name{font-size:11.5px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ci-sub{font-size:10px;color:rgba(255,255,255,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
-.ci-tags{display:flex;gap:3px;flex-wrap:wrap;margin-top:3px}
-.mini-badge{font-size:9.5px;font-weight:700;padding:1px 5px;border-radius:5px;white-space:nowrap}
+.card-item:hover{
+  border-color:var(--text-dim);transform:translateX(2px);
+  box-shadow:0 4px 12px rgba(0,0,0,.3);
+}
+.ci-name{font-size:.8rem;font-weight:700;color:var(--text);line-height:1.2}
+.ci-sub{font-size:.7rem;color:var(--text-dim);margin:2px 0 5px;line-height:1.2}
+.ci-tags{display:flex;gap:4px;flex-wrap:wrap}
+.mini-badge{
+  font-size:.65rem;padding:2px 6px;border-radius:4px;font-weight:700;
+  display:inline-flex;align-items:center;gap:3px;
+}
 .mb-alta{background:var(--alta-bg);color:var(--alta-txt)}
 .mb-media{background:var(--media-bg);color:var(--media-txt)}
 .mb-prof{background:var(--prof-bg);color:var(--prof-txt)}
-.mb-pot{background:rgba(255,255,255,.15);color:#fff}
-.mb-suc{background:rgba(16,185,129,.2);color:#34d399}
+.mb-pot{background:rgba(216,173,100,.15);color:var(--gold)}
+.mb-suc{background:rgba(16,185,129,.15);color:var(--green)}
 
-/* ── HOGAN VIEW ────────────────────────────────────────────────────── */
+/* ── HOGAN VIEW COMPONENTS ─────────────────────────────────────────── */
 .hogan-team-card{
-  background:var(--panel);border:1px solid var(--border);
-  border-radius:var(--radius);padding:20px;margin-top:20px;
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;margin-bottom:24px;
 }
-.team-comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-top:14px}
-.comp-metric-box{background:var(--bg-1);border:1px solid var(--border-soft);border-radius:10px;padding:10px 12px}
+.team-comp-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:14px;
+}
+.comp-metric-box{
+  background:var(--bg-1);border:1px solid var(--border-soft);border-radius:10px;padding:10px 12px;
+}
 .comp-head{display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px}
 .comp-track{height:6px;background:var(--panel);border-radius:10px;overflow:hidden}
-.comp-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#DA291C,#F59E0B)}
-.hogan-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:16px}
+.comp-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--gold),#10B981)}
+
+.hogan-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px;
+}
 .hcard{
-  background:var(--panel);border:1px solid var(--border);border-radius:14px;
-  padding:16px;cursor:pointer;transition:all .18s var(--ease);
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px;cursor:pointer;transition:all .2s;
 }
-.hcard:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 12px 30px rgba(0,0,0,.3)}
+.hcard:hover{border-color:var(--text-dim);transform:translateY(-2px)}
 .hcard-av{
-  width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#DA291C,#9F1239);
-  display:grid;place-items:center;color:#fff;font-weight:800;font-size:14px;
+  width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--crimson),#9F1239);
+  color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px;
 }
-.hcard-scores{display:flex;flex-direction:column;gap:5px;margin-top:8px}
-.hs-row{display:flex;align-items:center;gap:8px;font-size:11.5px}
-.hs-lbl{width:130px;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hs-bar{flex:1;height:5px;background:var(--bg-1);border-radius:10px;overflow:hidden}
-.hs-fill{height:100%;border-radius:10px;background:var(--crimson)}
-.hs-val{width:24px;text-align:right;font-weight:700;font-family:'JetBrains Mono',monospace;font-size:11px}
+.hcard-scores{display:flex;flex-direction:column;gap:5px;margin-top:10px}
+.hs-row{display:flex;align-items:center;gap:8px;font-size:11px}
+.hs-lbl{width:140px;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hs-bar{flex:1;height:4px;background:var(--bg-1);border-radius:4px;overflow:hidden}
+.hs-fill{height:100%;border-radius:4px}
+.hs-val{width:26px;text-align:right;font-family:'JetBrains Mono';font-weight:700}
 
 /* ── TABLE VIEW ────────────────────────────────────────────────────── */
 .table-panel{
   background:var(--panel);border:1px solid var(--border);
-  border-radius:var(--radius);overflow:hidden;margin-top:20px;
+  border-radius:var(--radius);overflow:hidden;
 }
-.custom-tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.custom-tbl{width:100%;border-collapse:collapse;font-size:.82rem}
 .custom-tbl th{
-  background:var(--bg-1);padding:11px 13px;text-align:left;font-weight:700;
-  color:var(--text-dim);border-bottom:1px solid var(--border);
-  font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;
+  background:var(--panel-2);color:var(--text-dim);text-align:left;
+  padding:12px 14px;font-size:.72rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.05em;border-bottom:1px solid var(--border);
 }
-.custom-tbl td{padding:10px 13px;border-bottom:1px solid var(--border-soft);color:var(--text)}
-.custom-tbl tr:hover td{background:var(--panel-2)}
+.custom-tbl td{padding:11px 14px;border-bottom:1px solid var(--border-soft)}
+.custom-tbl tr:hover td{background:rgba(255,255,255,.02)}
 
 /* ── MODAL ─────────────────────────────────────────────────────────── */
-.moverlay{
-  display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);
-  z-index:9000;backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:16px;
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
+  z-index:99999;display:none;align-items:center;justify-content:center;padding:16px;
 }
-.moverlay.open{display:flex}
-.modal{
-  background:var(--panel);border:1px solid var(--border);border-radius:18px;
-  width:780px;max-width:96vw;max-height:90vh;overflow-y:auto;
-  box-shadow:0 24px 60px rgba(0,0,0,.5);padding:24px;position:relative;
+.modal-overlay.open{display:flex}
+.modal-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:20px;
+  width:640px;max-width:96vw;max-height:90vh;overflow-y:auto;padding:26px;
+  box-shadow:0 24px 60px rgba(0,0,0,.7);position:relative;
 }
-.mclose{
-  position:absolute;top:16px;right:16px;background:none;border:none;
-  color:var(--text-dim);font-size:22px;cursor:pointer;line-height:1;
+.m-avatar{
+  width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--crimson),#9F1239);
+  color:#fff;display:grid;place-items:center;font-weight:800;font-size:20px;
 }
-
-/* ── BTNS ──────────────────────────────────────────────────────────── */
 .btn-outline{
   background:transparent;border:1px solid var(--border);color:var(--text);
-  border-radius:8px;padding:7px 13px;font-size:12.5px;font-weight:600;
-  cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;
-  font-family:'Inter',sans-serif;
+  padding:6px 12px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;
+  transition:all .15s;
 }
-.btn-outline:hover{border-color:var(--crimson);color:var(--crimson)}
-
-@media(max-width:1024px){
-  .stats-row{grid-template-columns:1fr 1fr}
-  .filters-grid{grid-template-columns:1fr}
-  .matrix-wrap{grid-template-columns:1fr}
-  .matrix-yaxis{display:none}
-}
+.btn-outline:hover{border-color:var(--text);background:var(--bg-1)}
 </style>
 </head>
 <body>
 
-<!-- APP NAV -->
-<nav class="app-nav">
-  <div class="app-nav-inner">
-    <div class="app-nav-brand">
-      <div class="app-nav-logo">C</div>
-      <div class="app-nav-title">Claro · Portal de Talento</div>
-    </div>
-    <div class="app-nav-links">
-      <a href="index.html" class="app-nav-link">Inicio</a>
-      <a href="tablero_liderazgo.html" class="app-nav-link active">Tablero Liderazgo</a>
-      <a href="ninebox.html" class="app-nav-link">Nine Box</a>
-      <a href="ficha_talento.html" class="app-nav-link">Ficha de Talento</a>
-      <a href="hogan.html" class="app-nav-link">Hogan</a>
-      <a href="organigrama_hogan_claro.html" class="app-nav-link">Organigrama</a>
-    </div>
-    <div class="app-nav-actions">
-      <button class="theme-toggle" onclick="toggleTheme()" title="Cambiar tema">
-        <span class="icon-sun">☀</span><span class="icon-moon">☾</span>
-      </button>
-      <button class="btn-outline" onclick="showLoginOverlay()" style="font-size:12px">👤 Cambiar Líder</button>
-    </div>
-  </div>
-</nav>
-
 <!-- LOGIN OVERLAY -->
-<div class="login-overlay" id="loginOverlay">
+<div class="login-overlay" id="loginOverlay" style="display:none">
   <div class="login-card">
     <div class="login-logo">👔</div>
     <h2>Tablero de Liderazgo</h2>
     <p>Acceso para Directores y Gerentes de Claro.<br>Ingresa con tu correo corporativo o cédula.</p>
-
+    
+    <div class="login-err" id="loginErr">No encontramos un líder registrado con esos datos. Por favor verifica.</div>
+    
     <div class="login-field">
-      <label>Correo corporativo o Cédula</label>
-      <input type="text" id="txtEmail" placeholder="ej: nicolas.santos@claro.com.co" autocomplete="off"
-        onkeydown="if(event.key==='Enter') loginByEmail()">
+      <label>Correo Corporativo o Cédula</label>
+      <input type="text" id="txtEmail" placeholder="ej: nicolas.santos@claro.com.co" onkeydown="if(event.key==='Enter') loginByEmail()">
     </div>
     <button class="btn-login" onclick="loginByEmail()">Ingresar al Tablero →</button>
-    <div class="login-err" id="loginErr">No encontramos un líder con este dato. Puedes usar el selector inferior.</div>
-
-    <div class="login-divider">O SELECCIONA TU PERFIL EN LA LISTA</div>
-
+    
+    <div class="login-divider">O selecciona tu perfil en la lista</div>
+    
     <div class="login-field">
       <label>Seleccionar Director o Gerente</label>
       <select id="selDemoUser" onchange="loginByDemoSelect()">
-        <option value="">-- Seleccionar de la lista --</option>
+        <option value="">-- Cargando líderes... --</option>
       </select>
     </div>
   </div>
 </div>
 
-<div class="wrap" id="mainContent" style="display:none">
-
-  <!-- HERO -->
-  <header class="hero">
-    <div class="hero-top">
-      <div class="eyebrow">PLANIFICACIÓN DE TALENTO &amp; LIDERAZGO EJECUTIVO</div>
-      <div class="leader-pill" onclick="showLoginOverlay()" title="Clic para cambiar de líder">
-        <span id="lblRoleBadge" class="role-tag role-admin">ADMIN</span>
-        <span id="lblUserName">NICOLAS SANTOS</span>
-        <span style="color:var(--gold);font-size:10px">▾ cambiar</span>
+<div class="wrap" id="mainContent">
+  <!-- HEADER -->
+  <header class="dash-hdr">
+    <div class="hdr-left">
+      <div class="hdr-icon">📊</div>
+      <div class="hdr-titles">
+        <div style="font-size:10px;font-weight:800;color:var(--crimson);letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:6px">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--crimson);display:inline-block"></span>
+          Planificación de Talento &amp; Liderazgo Ejecutivo
+        </div>
+        <h1>Tablero Ejecutivo de Liderazgo <span>· Nine Box &amp; Hogan</span></h1>
+        <div class="hdr-meta">
+          <span>📍 Estructura activa: <b id="lblScope">Todas las Direcciones</b></span>
+        </div>
       </div>
     </div>
-    <h1 class="title">Tablero Ejecutivo de Liderazgo <span>· Nine Box &amp; Hogan</span></h1>
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
-      <div style="font-size:13px;color:var(--text-dim)">📍 Estructura activa: <b id="lblScope" style="color:var(--text)">Todas las Direcciones</b></div>
-      <button class="btn-outline" onclick="exportExcel()">
-        <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-        Descargar Excel
-      </button>
-    </div>
-
-    <div class="stats-row">
-      <div class="stat"><div class="lbl">Colaboradores en Estructura</div><div class="num" id="kpiTotal">0</div></div>
-      <div class="stat"><div class="lbl">Talento Crítico (Cajas 7, 8, 9)</div><div class="num" id="kpiTop">0<em id="kpiTopPct"> (0%)</em></div></div>
-      <div class="stat"><div class="lbl">Promedio Potencial Hogan</div><div class="num" id="kpiHogan">0<em style="font-size:13px"> pts</em></div></div>
-      <div class="stat"><div class="lbl">Sucesores Identificados</div><div class="num" id="kpiSuc">0<em id="kpiSucPct"> (0%)</em></div></div>
+    <div class="hdr-right">
+      <div class="user-badge">
+        <span class="role-tag role-admin" id="lblRoleBadge">ADMIN</span>
+        <b id="lblUserName">NICOLAS SANTOS</b>
+        <a href="javascript:void(0)" onclick="showLoginOverlay()" style="color:var(--text-dim);font-size:11px;margin-left:4px;text-decoration:none">· cambiar</a>
+      </div>
+      <button class="btn-icon" onclick="exportExcel()">📥 Descargar Excel</button>
+      <button class="btn-icon" onclick="toggleTheme()">🌓</button>
     </div>
   </header>
 
-  <!-- SUBTABS -->
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-lbl">Colaboradores en Estructura</div>
+      <div class="stat-val" id="kpiTotal">0</div>
+      <div class="stat-sub">Registros activos evaluados</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-lbl">Talento Crítico (Cajas 7, 8, 9)</div>
+      <div class="stat-val" style="color:var(--green)" id="kpiTop">0</div>
+      <div class="stat-sub"><b id="kpiTopPct">0%</b> del total evaluado</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-lbl">Promedio Potencial Hogan</div>
+      <div class="stat-val" style="color:var(--gold)"><span id="kpiHogan">0</span> <span style="font-size:14px;font-weight:500;color:var(--text-dim)">pts</span></div>
+      <div class="stat-sub">Evaluados en Hogan</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-lbl">Sucesores Identificados</div>
+      <div class="stat-val" style="color:#60a5fa" id="kpiSuc">0</div>
+      <div class="stat-sub"><b id="kpiSucPct">0%</b> listos para sucesión</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
   <div class="tabs-bar">
     <button class="tab-btn active" id="tabNB" onclick="switchView('ninebox')">📊 Matriz 9-Box &amp; Talento</button>
     <button class="tab-btn" id="tabHG" onclick="switchView('hogan')">🎯 Evaluación Hogan <span class="tab-chip" id="chipHG">0</span></button>
@@ -505,62 +508,75 @@ h1.title span{color:var(--text-dim);font-weight:500;font-size:.85em}
   </div>
 
   <!-- FILTERS -->
-  <section class="panel">
-    <div class="filters-head">
-      <h3>🔍 Filtros de Jerarquía</h3>
-      <div id="resultCount">Mostrando <strong>0</strong> colaboradores</div>
+  <section class="filters-bar">
+    <div class="f-group" style="flex:2;min-width:200px">
+      <label>🔍 Búsqueda</label>
+      <input type="text" id="fSearch" placeholder="Nombre, cargo, cédula..." oninput="applyFilters()">
     </div>
-    <div class="filters-grid">
-      <div class="field"><label>Búsqueda</label><input type="text" id="fSearch" placeholder="Nombre, cargo, cédula..." oninput="applyFilters()"></div>
-      <div class="field" id="wrapDir" style="display:none"><label>Dirección</label><select id="fDir" onchange="onDirChange()"><option value="">Todas las Direcciones</option></select></div>
-      <div class="field"><label>Gerencia</label><select id="fGer" onchange="applyFilters()"><option value="">Todas las Gerencias</option></select></div>
-      <div class="field"><label>Jefe Directo</label><select id="fJefe" onchange="applyFilters()"><option value="">Todos los Jefes</option></select></div>
-      <div class="field"><label>Caja 9-Box</label>
-        <select id="fCaja" onchange="applyFilters()">
-          <option value="">Todas las Cajas</option>
-          <option value="9">9 · Alto Potencial</option>
-          <option value="8">8 · Sólido</option>
-          <option value="7">7 · Experto</option>
-          <option value="6">6 · Alto Pot. en Desarr.</option>
-          <option value="5">5 · Sólido en Desarr.</option>
-          <option value="4">4 · Experto en Desarr.</option>
-          <option value="3">3 · A Gestionar</option>
-          <option value="2">2 · En Revisión</option>
-          <option value="1">1 · En Riesgo</option>
-        </select>
-      </div>
-      <button class="btn-reset" onclick="resetFilters()">↺ Limpiar</button>
+    <div class="f-group" id="wrapDir">
+      <label>Dirección</label>
+      <select id="fDir" onchange="onDirChange()"></select>
     </div>
+    <div class="f-group">
+      <label>Gerencia</label>
+      <select id="fGer" onchange="applyFilters()"></select>
+    </div>
+    <div class="f-group">
+      <label>Jefe Directo</label>
+      <select id="fJefe" onchange="applyFilters()"></select>
+    </div>
+    <div class="f-group" style="max-width:140px">
+      <label>Caja 9-Box</label>
+      <select id="fCaja" onchange="applyFilters()">
+        <option value="">Todas las Cajas</option>
+        <option value="9">Caja 9 · Alto Potencial</option>
+        <option value="8">Caja 8 · Sólido</option>
+        <option value="7">Caja 7 · Experto</option>
+        <option value="6">Caja 6 · Alto Pot. Desarr.</option>
+        <option value="5">Caja 5 · Sólido Desarr.</option>
+        <option value="4">Caja 4 · Experto Desarr.</option>
+        <option value="3">Caja 3 · A Gestionar</option>
+        <option value="2">Caja 2 · En Revisión</option>
+        <option value="1">Caja 1 · En Riesgo</option>
+      </select>
+    </div>
+    <div style="display:flex;align-items:flex-end">
+      <button class="btn-outline" style="padding:8px 12px" onclick="resetFilters()">↺ Limpiar</button>
+    </div>
+    <div style="width:100%;font-size:11px;color:var(--text-faint);text-align:right" id="resultCount"></div>
   </section>
 
   <!-- NINEBOX VIEW -->
-  <section id="viewNB" class="grid-section">
+  <section id="viewNB">
     <div class="matrix-wrap">
-      <div class="matrix-yaxis">
-        <div></div>
-        <div class="ylabel">ALTO<br><small style="font-weight:400;opacity:.6">POTENCIAL</small></div>
-        <div class="ylabel">MEDIO<br><small style="font-weight:400;opacity:.6">POTENCIAL</small></div>
-        <div class="ylabel">BAJO<br><small style="font-weight:400;opacity:.6">POTENCIAL</small></div>
-      </div>
-      <div class="matrix-main">
-        <div class="matrix-xaxis">
-          <div class="xlabel">DESEMPEÑO BAJO</div>
-          <div class="xlabel">DESEMPEÑO MEDIO</div>
-          <div class="xlabel">DESEMPEÑO ALTO</div>
+      <div class="matrix-grid">
+        <div class="matrix-yaxis">
+          <div class="ylabel">Alto Potencial</div>
+          <div class="ylabel">Medio Potencial</div>
+          <div class="ylabel">Bajo Potencial</div>
         </div>
-        <div class="matrix-cells">
-          <!-- Row 1: boxes 7,8,9 -->
-          <div class="cell" data-box="7"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">7</div>Experto</div><span class="cell-chip-count" id="cnt7">0</span></div><div class="cell-items-list" id="box7"></div></div>
-          <div class="cell" data-box="8"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">8</div>Sólido</div><span class="cell-chip-count" id="cnt8">0</span></div><div class="cell-items-list" id="box8"></div></div>
-          <div class="cell" data-box="9"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">9</div>Alto Potencial</div><span class="cell-chip-count" id="cnt9">0</span></div><div class="cell-items-list" id="box9"></div></div>
-          <!-- Row 2: boxes 4,5,6 -->
-          <div class="cell" data-box="4"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">4</div>Experto Desarr.</div><span class="cell-chip-count" id="cnt4">0</span></div><div class="cell-items-list" id="box4"></div></div>
-          <div class="cell" data-box="5"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">5</div>Sólido Desarr.</div><span class="cell-chip-count" id="cnt5">0</span></div><div class="cell-items-list" id="box5"></div></div>
-          <div class="cell" data-box="6"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">6</div>Alto Pot. Desarr.</div><span class="cell-chip-count" id="cnt6">0</span></div><div class="cell-items-list" id="box6"></div></div>
-          <!-- Row 3: boxes 1,2,3 -->
-          <div class="cell" data-box="1"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">1</div>En Riesgo</div><span class="cell-chip-count" id="cnt1">0</span></div><div class="cell-items-list" id="box1"></div></div>
-          <div class="cell" data-box="2"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">2</div>En Revisión</div><span class="cell-chip-count" id="cnt2">0</span></div><div class="cell-items-list" id="box2"></div></div>
-          <div class="cell" data-box="3"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">3</div>A Gestionar</div><span class="cell-chip-count" id="cnt3">0</span></div><div class="cell-items-list" id="box3"></div></div>
+        <div class="matrix-content">
+          <div class="matrix-xaxis">
+            <div class="xlabel">Desempeño Bajo</div>
+            <div class="xlabel">Desempeño Medio</div>
+            <div class="xlabel">Desempeño Alto</div>
+          </div>
+          <div class="matrix-cells">
+            <!-- Fila 1: 7, 8, 9 -->
+            <div class="cell" data-box="7"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">7</div>Experto</div><span class="cell-chip-count" id="cnt7">0</span></div><div class="cell-items-list" id="box7"></div></div>
+            <div class="cell" data-box="8"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">8</div>Sólido</div><span class="cell-chip-count" id="cnt8">0</span></div><div class="cell-items-list" id="box8"></div></div>
+            <div class="cell" data-box="9"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">9</div>Alto Potencial</div><span class="cell-chip-count" id="cnt9">0</span></div><div class="cell-items-list" id="box9"></div></div>
+            
+            <!-- Fila 2: 4, 5, 6 -->
+            <div class="cell" data-box="4"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">4</div>Experto Desarr.</div><span class="cell-chip-count" id="cnt4">0</span></div><div class="cell-items-list" id="box4"></div></div>
+            <div class="cell" data-box="5"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">5</div>Sólido Desarr.</div><span class="cell-chip-count" id="cnt5">0</span></div><div class="cell-items-list" id="box5"></div></div>
+            <div class="cell" data-box="6"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">6</div>Alto Pot. Desarr.</div><span class="cell-chip-count" id="cnt6">0</span></div><div class="cell-items-list" id="box6"></div></div>
+            
+            <!-- Fila 3: 1, 2, 3 -->
+            <div class="cell" data-box="1"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">1</div>En Riesgo</div><span class="cell-chip-count" id="cnt1">0</span></div><div class="cell-items-list" id="box1"></div></div>
+            <div class="cell" data-box="2"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">2</div>En Revisión</div><span class="cell-chip-count" id="cnt2">0</span></div><div class="cell-items-list" id="box2"></div></div>
+            <div class="cell" data-box="3"><div class="cell-top-meta"><div class="cell-tag"><div class="cell-num-badge">3</div>A Gestionar</div><span class="cell-chip-count" id="cnt3">0</span></div><div class="cell-items-list" id="box3"></div></div>
+          </div>
         </div>
       </div>
     </div>
@@ -582,11 +598,21 @@ h1.title span{color:var(--text-dim);font-weight:500;font-size:.85em}
     <div class="table-panel">
       <div style="overflow-x:auto">
         <table class="custom-tbl">
-          <thead><tr>
-            <th>Colaborador</th><th>Expediente</th><th>Cargo</th>
-            <th>Dirección</th><th>Gerencia</th><th>Jefe</th>
-            <th>Caja</th><th>Hogan Pot.</th><th>Versatilidad</th><th>Sucesor</th><th>Ver</th>
-          </tr></thead>
+          <thead>
+            <tr>
+              <th>Colaborador</th>
+              <th>Cédula / Exp</th>
+              <th>Cargo</th>
+              <th>Dirección</th>
+              <th>Gerencia</th>
+              <th>Jefe Directo</th>
+              <th>Caja 9-Box</th>
+              <th>Potencial Hogan</th>
+              <th>Versatilidad</th>
+              <th>Sucesor</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
           <tbody id="tableBody"></tbody>
         </table>
       </div>
@@ -594,30 +620,32 @@ h1.title span{color:var(--text-dim);font-weight:500;font-size:.85em}
   </section>
 </div>
 
-<!-- PROFILE MODAL -->
-<div class="moverlay" id="profileModal">
-  <div class="modal">
-    <button class="mclose" onclick="closeModal()">&times;</button>
-    <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border)">
-      <div class="hcard-av" id="mAv" style="width:48px;height:48px;font-size:18px;border-radius:12px">C</div>
-      <div style="flex:1">
-        <h3 id="mNombre" style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700">-</h3>
-        <p id="mCargo" style="font-size:12.5px;color:var(--text-dim);margin-top:2px">-</p>
-        <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap" id="mBadges"></div>
+<!-- MODAL PERFIL -->
+<div class="modal-overlay" id="profileModal" onclick="if(event.target===this) closeModal()">
+  <div class="modal-card">
+    <div style="display:flex;gap:14px;align-items:center;margin-bottom:18px">
+      <div class="m-avatar" id="mAv">U</div>
+      <div style="min-width:0;flex:1">
+        <h2 style="font-size:1.15rem;font-weight:800;font-family:'Space Grotesk',sans-serif" id="mNombre">Nombre</h2>
+        <div style="font-size:.82rem;color:var(--text-dim);margin-top:2px" id="mCargo">Cargo</div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:6px" id="mBadges"></div>
       </div>
     </div>
-    <div style="display:flex;gap:6px;margin-bottom:14px">
-      <button class="tab-btn active" id="btnMFicha" onclick="switchModalTab('ficha')" style="padding:6px 12px;font-size:12px;flex:0">📌 Ficha & 9-Box</button>
-      <button class="tab-btn" id="btnMHogan" onclick="switchModalTab('hogan')" style="padding:6px 12px;font-size:12px;flex:0">🎯 11 Competencias Hogan</button>
+    
+    <div class="tabs-bar" style="margin-bottom:14px">
+      <button class="tab-btn active" id="btnMFicha" onclick="switchModalTab('ficha')">Ficha de Talento</button>
+      <button class="tab-btn" id="btnMHogan" onclick="switchModalTab('hogan')">Resultados Hogan</button>
     </div>
+    
     <div id="mFicha">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px" id="mFichaGrid"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" id="mFichaGrid"></div>
     </div>
+    
     <div id="mHogan" style="display:none">
-      <div id="mHoganEmpty" style="padding:24px;text-align:center;color:var(--text-dim)">Sin evaluación Hogan registrada.</div>
+      <div id="mHoganEmpty" style="padding:20px;text-align:center;color:var(--text-dim);font-size:13px">Sin evaluación Hogan registrada.</div>
       <div id="mHoganBody" style="display:none">
-        <div style="display:flex;justify-content:space-between;margin-bottom:14px;background:var(--bg-1);padding:10px 14px;border-radius:10px;gap:12px">
-          <div><span style="font-size:10px;color:var(--text-faint);text-transform:uppercase">Potencial</span><div style="font-size:22px;font-weight:800;color:var(--green);font-family:'JetBrains Mono'" id="mHPot">-</div></div>
+        <div style="display:flex;gap:12px;background:var(--bg-1);padding:12px;border-radius:10px;margin-bottom:14px">
+          <div><span style="font-size:10px;color:var(--text-faint);text-transform:uppercase">Potencial</span><div style="font-weight:800;font-size:16px;color:var(--gold)" id="mHPot">-</div></div>
           <div><span style="font-size:10px;color:var(--text-faint);text-transform:uppercase">Versatilidad</span><div style="font-weight:700;font-size:13px;margin-top:2px" id="mHVers">-</div></div>
           <div><span style="font-size:10px;color:var(--text-faint);text-transform:uppercase">Clasificación</span><div style="font-weight:700;font-size:13px;margin-top:2px" id="mHClas">-</div></div>
         </div>
@@ -719,13 +747,14 @@ function init(){
     foundUser = findUserByInput(saved);
   }
 
+  if(!foundUser && LEADERS.length > 0){
+    foundUser = LEADERS[0];
+  }
   if(foundUser){
     setSession(foundUser);
   } else {
     showLoginOverlay();
   }
-
-  refreshFromSupabase(); // Kept, but let's debug below
 }
 
 function buildLeaders(){
@@ -966,7 +995,7 @@ function populateSecondaryFilters(data, isReset = false){
   });
   fGer.value = (gSel && gers.includes(gSel)) ? gSel : '';
 
-  if(CUR.rol === 'gerente'){
+  if(CUR && CUR.rol === 'gerente'){
     fGer.value = CUR.scope_ger || '';
     fGer.disabled = true;
   } else {
@@ -1014,7 +1043,6 @@ function applyFilters(){
   }
 
   FILTERED = data;
-  console.log("[FILTER] FILTERED set to", data.length, "items. Sample caja:", data.length > 0 ? data[0].caja : "N/A", "type:", data.length > 0 ? typeof data[0].caja : "N/A");
   document.getElementById('resultCount').innerHTML = `Mostrando <strong>${FILTERED.length}</strong> colaboradores`;
   renderAll();
 }
@@ -1022,8 +1050,8 @@ function applyFilters(){
 function resetFilters(){
   document.getElementById('fSearch').value = '';
   document.getElementById('fCaja').value = '';
-  if(CUR.rol === 'admin') document.getElementById('fDir').value = '';
-  if(CUR.rol !== 'gerente') document.getElementById('fGer').value = '';
+  if(!CUR || CUR.rol === 'admin') document.getElementById('fDir').value = '';
+  if(!CUR || CUR.rol !== 'gerente') document.getElementById('fGer').value = '';
   document.getElementById('fJefe').value = '';
   populateSecondaryFilters(getScopedData(), true);
   applyFilters();
@@ -1031,7 +1059,6 @@ function resetFilters(){
 
 /* ── RENDER ────────────────────────────────────────────────────────── */
 function renderAll(){
-  console.log("[RENDER] renderAll called. FILTERED:", FILTERED.length, "ALL:", ALL.length);
   renderStats();
   renderNinebox();
   renderHogan();
@@ -1055,80 +1082,36 @@ function renderStats(){
 }
 
 function renderNinebox(){
-  try {
-    console.log('[NINEBOX] Start. FILTERED:', FILTERED ? FILTERED.length : 'undefined');
+  for (let b = 1; b <= 9; b++) {
+    const items = FILTERED.filter(r => getCajaNum(r.caja) === b);
+    const cntEl = document.getElementById('cnt' + b);
+    const boxEl = document.getElementById('box' + b);
     
-    // Build a map of box -> items using simple integer comparison
-    const boxMap = {1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[]};
-    
-    FILTERED.forEach(function(r) {
-      // Get box number - try multiple approaches
-      let box = null;
-      const raw = r.caja;
-      
-      if (typeof raw === 'number' && raw >= 1 && raw <= 9) {
-        box = raw;
-      } else if (typeof raw === 'string') {
-        const parsed = parseInt(raw.replace(/[^0-9]/g, ''), 10);
-        if (!isNaN(parsed) && parsed >= 1 && parsed <= 9) box = parsed;
-      }
-      
-      if (box !== null && boxMap[box]) {
-        boxMap[box].push(r);
-      }
-    });
-    
-    let totalItems = 0;
-    for (let b = 1; b <= 9; b++) {
-      const items = boxMap[b];
-      totalItems += items.length;
-      
-      const cntEl = document.getElementById('cnt' + b);
-      const boxEl = document.getElementById('box' + b);
-      
-      if (cntEl) cntEl.textContent = items.length;
-      if (boxEl) {
-        boxEl.innerHTML = '';
-        items.forEach(function(p) {
-          const vc = p.hogan_versatilidad === 'Alta Versatilidad' ? 'mb-alta' : 
-                     p.hogan_versatilidad === 'Media Versatilidad' ? 'mb-media' : 
-                     p.hogan_versatilidad ? 'mb-prof' : '';
-          const el = document.createElement('div');
-          el.className = 'card-item';
-          el.setAttribute('onclick', "openModal(" + JSON.stringify(p).replace(/</g, '\u003c').replace(/'/g, "\'") + ")");
-          el.innerHTML = '<div class="ci-name">' + (p.nombre || '') + '</div>' +
-            '<div class="ci-sub">' + (p.cargo || '-') + '</div>' +
-            '<div class="ci-tags">' +
-            (vc ? '<span class="mini-badge ' + vc + '">' + (p.hogan_versatilidad || '') + '</span>' : '') +
-            (p.hogan_potencial !== null && p.hogan_potencial !== undefined ? '<span class="mini-badge mb-pot">Hogan ' + p.hogan_potencial + '</span>' : '') +
-            (isSuc(p.sucesor) ? '<span class="mini-badge mb-suc">Sucesor</span>' : '') +
-            '</div>';
-          boxEl.appendChild(el);
-        });
-      }
-    }
-    
-    console.log('[NINEBOX] Done. Total items placed:', totalItems);
-    
-    if (totalItems === 0 && FILTERED.length > 0) {
-      console.error('[NINEBOX] BUG: FILTERED has', FILTERED.length, 'items but no box matches!');
-      console.error('[NINEBOX] Sample:', FILTERED[0].nombre, 'caja:', FILTERED[0].caja, 'type:', typeof FILTERED[0].caja);
-      const mc = document.querySelector('.matrix-cells');
-      if (mc) {
-        mc.innerHTML = '<div style="grid-column: 1 / -1; padding: 20px; background: rgba(255,0,0,0.1); color: #ff6b6b; text-align: center; border-radius: 8px;"><b>Error:</b> ' + FILTERED.length + ' colaboradores encontrados pero ninguno tiene caja valida (1-9). Ejemplo: ' + (FILTERED[0].nombre || '') + ', Caja: ' + String(FILTERED[0].caja) + ' (tipo: ' + typeof FILTERED[0].caja + ')</div>';
-      }
-    }
-  } catch(err) {
-    console.error('[NINEBOX] CRASH:', err);
-    const mc = document.querySelector('.matrix-cells');
-    if (mc) {
-      mc.innerHTML = '<div style="grid-column: 1 / -1; padding: 20px; background: rgba(255,0,0,0.1); color: #ff6b6b; text-align: center; border-radius: 8px;"><b>Error en renderNinebox:</b> ' + err.message + '</div>';
+    if (cntEl) cntEl.textContent = items.length;
+    if (boxEl) {
+      boxEl.innerHTML = '';
+      items.forEach(p => {
+        const vc = p.hogan_versatilidad === 'Alta Versatilidad' ? 'mb-alta' : 
+                   p.hogan_versatilidad === 'Media Versatilidad' ? 'mb-media' : 
+                   p.hogan_versatilidad ? 'mb-prof' : '';
+        const el = document.createElement('div');
+        el.className = 'card-item';
+        el.onclick = () => openModal(p);
+        el.innerHTML = `
+          <div class="ci-name">${p.nombre}</div>
+          <div class="ci-sub">${p.cargo || '-'}</div>
+          <div class="ci-tags">
+            ${vc ? `<span class="mini-badge ${vc}">${p.hogan_versatilidad}</span>` : ''}
+            ${p.hogan_potencial !== null && p.hogan_potencial !== undefined ? `<span class="mini-badge mb-pot">Hogan ${p.hogan_potencial}</span>` : ''}
+            ${isSuc(p.sucesor) ? '<span class="mini-badge mb-suc">Sucesor</span>' : ''}
+          </div>`;
+        boxEl.appendChild(el);
+      });
     }
   }
 }
 
 function renderHogan(){
-
   const hev = FILTERED.filter(r => r.hogan_potencial !== null && r.hogan_potencial !== undefined);
   const tg = document.getElementById('teamCompGrid');
   if(tg){
@@ -1213,6 +1196,7 @@ function renderTable(){
                p.hogan_versatilidad ? 'mb-prof' : '';
     const cNum = getCajaNum(p.caja);
     const tr = document.createElement('tr');
+    
     tr.innerHTML = `
       <td><b>${p.nombre}</b></td>
       <td><code style="font-size:11px;background:var(--bg-1);padding:2px 5px;border-radius:4px">${p.expediente || '-'}</code></td>
@@ -1224,7 +1208,16 @@ function renderTable(){
       <td style="font-weight:700;font-family:'JetBrains Mono'">${p.hogan_potencial !== null && p.hogan_potencial !== undefined ? p.hogan_potencial + ' pts' : '<span style="color:var(--text-faint)">-</span>'}</td>
       <td>${vc ? `<span class="mini-badge ${vc}">${p.hogan_versatilidad}</span>` : '-'}</td>
       <td>${isSuc(p.sucesor) ? '<span style="color:var(--green);font-weight:700">✔</span>' : '<span style="color:var(--text-faint)">No</span>'}</td>
-      <td><button class="btn-outline" style="padding:3px 8px;font-size:11px" onclick='openModal(${JSON.stringify(p).replace(/'/g, "&#39;")})'>Ver</button></td>`;
+      <td></td>`;
+      
+    const btn = document.createElement('button');
+    btn.className = 'btn-outline';
+    btn.style.padding = '3px 8px';
+    btn.style.fontSize = '11px';
+    btn.textContent = 'Ver';
+    btn.onclick = () => openModal(p);
+    tr.children[10].appendChild(btn);
+    
     tb.appendChild(tr);
   });
 }
@@ -1346,69 +1339,6 @@ function exportExcel(){
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'Talento');
   XLSX.writeFile(wb, `Liderazgo_${CUR ? CUR.nombre.replace(/\s+/g, '_') : 'Consolidado'}_${new Date().toISOString().slice(0,10)}.xlsx`);
-}
-
-/* ── SUPABASE REFRESH ──────────────────────────────────────────────── */
-async function refreshFromSupabase(){
-  const URL = 'https://yxxpjttdmwruyeqiuxzu.supabase.co';
-  const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4eHBqdHRkbXdydXllcWl1eHp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4MTQyNzUsImV4cCI6MjEwMjM5MDI3NX0.fxQc7o6Qv8Rvd8-PHJF_R-OEME-hbhbPPDnktjiNi9U';
-  try{
-    const h = { headers: { apikey: KEY, Authorization: 'Bearer ' + KEY } };
-    const [nb, hg] = await Promise.all([
-      fetch(URL + '/rest/v1/ninebox?select=*', h).then(r => r.json()),
-      fetch(URL + '/rest/v1/tableros_json?clave=eq.hogan', h).then(r => r.json())
-    ]);
-
-    if(!Array.isArray(nb) || !nb.length) return;
-
-    const hoganData = (hg && hg[0] && hg[0].data) ? hg[0].data : { est: [] };
-    const hMap = new Map();
-    (hoganData.est || []).forEach(e => {
-      (e.team || []).forEach(m => {
-        const k = normWords(m.name);
-        if(k) hMap.set(k, m);
-      });
-    });
-
-    const valid = nb.filter(r => {
-      const d = (r.direccion || '').toLowerCase();
-      return !d.includes('comit') && !d.includes('gestion humana') && !d.includes('humana');
-    });
-
-    ALL = valid.map(r => {
-      const c = {
-        ...r,
-        caja: getCajaNum(r.caja),
-        nivel_reporte: r.nivel_reporte !== null && r.nivel_reporte !== undefined ? parseInt(r.nivel_reporte, 10) : null
-      };
-      const hgItem = hMap.get(normWords(c.nombre));
-      if(hgItem){
-        c.hogan = hgItem;
-        c.hogan_scores = hgItem.scores || {};
-        c.hogan_versatilidad = hgItem.versatilidad || '';
-        c.hogan_clasificacion = hgItem.clasificacion || '';
-        c.hogan_potencial = (hgItem.scores && hgItem.scores['Potencial']) ? +hgItem.scores['Potencial'] : null;
-        c.hogan_status = hgItem.status || 'Contestó';
-      } else {
-        c.hogan = null;
-        c.hogan_scores = {};
-        c.hogan_versatilidad = '';
-        c.hogan_clasificacion = '';
-        c.hogan_potencial = null;
-        c.hogan_status = 'Sin registro';
-      }
-      return c;
-    });
-
-    console.log('[SUPABASE] Refresh completado:', ALL.length, 'registros. Sample caja:', ALL.length > 0 ? ALL[0].caja : 'N/A', 'type:', ALL.length > 0 ? typeof ALL[0].caja : 'N/A');
-    buildLeaders();
-    if(CUR){
-      const fresh = LEADERS.find(u => u.email === CUR.email);
-      if(fresh) setSession(fresh);
-    }
-  }catch(e){
-    console.warn('Supabase refresh omitido, manteniendo dataStore local:', e.message);
-  }
 }
 
 window.addEventListener('DOMContentLoaded', init);
