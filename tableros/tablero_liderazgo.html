@@ -559,8 +559,8 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
     <h2 style="margin:0 0 12px 0;font-size:24px;font-weight:600">Seleccionar Alcance</h2>
     <p style="color:var(--text-dim);font-size:14px;margin:0 0 32px 0">Por favor seleccione la profundidad de talento que desea visualizar en el tablero.</p>
     
-    <button class="btn-login" onclick="selectScope('FULL')" style="margin-bottom:12px;background:var(--gold);">Dirección Completa <span style="font-size:12px;opacity:0.8;display:block;font-weight:400;margin-top:2px">Mi equipo directo + sus respectivos equipos</span></button>
-    <button class="btn-login" onclick="selectScope('DIRECT')" style="background:var(--bg-2);color:var(--text);border:1px solid var(--border);">Reportes Directos <span style="font-size:12px;opacity:0.6;display:block;font-weight:400;margin-top:2px">Únicamente mis 5 directores a cargo</span></button>
+    <button class="btn-login" onclick="selectScope('FULL')" style="margin-bottom:12px;background:var(--gold);">Estructura Completa <span style="font-size:12px;opacity:0.8;display:block;font-weight:400;margin-top:2px">Mi equipo directo + sus respectivos equipos</span></button>
+    <button class="btn-login" onclick="selectScope('DIRECT')" style="background:var(--bg-2);color:var(--text);border:1px solid var(--border);">Reportes Directos <span style="font-size:12px;opacity:0.6;display:block;font-weight:400;margin-top:2px">Únicamente mis colaboradores a cargo directo</span></button>
   </div>
 </div>
 
@@ -1256,13 +1256,13 @@ function loginByEmail(){
 
   document.getElementById('loginErr').style.display = 'none';
   
-  if(user.email === 'walter.borda@claro.com.co') {
+  if(user.rol !== 'admin') {
     document.getElementById('loginOverlay').style.display = 'none';
     document.getElementById('scopeOverlay').style.display = 'flex';
-    // store user temporarily to be used in selectScope
     window.tempUserForScope = user;
   } else {
     window.activeScope = 'FULL';
+    document.getElementById('loginOverlay').style.display = 'none';
     setSession(user);
   }
 }
@@ -1288,12 +1288,13 @@ function loginByDemoSelect(){
     document.getElementById('txtEmail').value = user.email;
     document.getElementById('txtPassword').value = user.password || 'Claro2026*';
     
-    if(user.email === 'walter.borda@claro.com.co') {
+    if(user.rol !== 'admin') {
       document.getElementById('loginOverlay').style.display = 'none';
       document.getElementById('scopeOverlay').style.display = 'flex';
       window.tempUserForScope = user;
     } else {
       window.activeScope = 'FULL';
+      document.getElementById('loginOverlay').style.display = 'none';
       setSession(user);
     }
   }
@@ -1307,10 +1308,10 @@ function setSession(user){
   CUR = user;
   localStorage.setItem('lider_email', user.email);
 
-  if(user.email === 'walter.borda@claro.com.co'){
-    document.getElementById('btnScopeToggle').style.display = 'inline-block';
-  } else {
+  if(user.rol === 'admin'){
     document.getElementById('btnScopeToggle').style.display = 'none';
+  } else {
+    document.getElementById('btnScopeToggle').style.display = 'inline-block';
   }
 
   document.getElementById('lblUserName').textContent = user.nombre;
@@ -1340,24 +1341,34 @@ function getScopedData(){
 
   const curNameNorm = normWords(CUR.nombre);
 
-  // Special case: Direct reports only (e.g. Walter Javier Borda Ferro)
-  if(CUR.is_direct_reports_only || curNameNorm.includes('BORDA') || CUR.email === 'walter.borda@claro.com.co'){
-    const w = normWords('BORDA FERRO WALTER JAVIER');
-    const directos = ALL.filter(r => normWords(r.jefe) === w || normWords(r.jefe).includes('BORDA'));
-    
-    if (window.activeScope === 'FULL') {
-      const nombresDirectos = directos.map(r => normWords(r.nombre));
-      return ALL.filter(r => {
-        const j = normWords(r.jefe);
-        return j === w || j.includes('BORDA') || nombresDirectos.includes(j);
-      });
-    } else {
-      return directos;
-    }
+  // Walter Borda is a special case since he is a VP, not a director with a named "Direccion" field in data, but he has 5 direct reports.
+  // Actually, wait, we can just use the generic logic for everyone!
+  const w = curNameNorm.includes('BORDA') ? normWords('BORDA FERRO WALTER JAVIER') : curNameNorm;
+  const isWalter = w.includes('BORDA');
+  
+  // 1. Direct reports
+  const directos = ALL.filter(r => {
+    const j = normWords(r.jefe);
+    return j === w || (isWalter && j.includes('BORDA')); 
+  });
+  
+  if (window.activeScope === 'DIRECT') {
+    return directos;
   }
-
+  
+  // 2. Full Hierarchy
   const subTree = getSubordinates(CUR.nombre, ALL);
   const subSet = new Set(subTree);
+
+  // If Walter, add the reports of his direct reports manually (because getSubordinates might fail if Walter isn't properly linked in the tree)
+  if(isWalter){
+    const nombresDirectos = directos.map(r => normWords(r.nombre));
+    ALL.forEach(r => {
+      const j = normWords(r.jefe);
+      if(j === w || j.includes('BORDA') || nombresDirectos.includes(j)) subSet.add(r);
+    });
+    return Array.from(subSet);
+  }
 
   // For Directors: union of recursive subordinates + all employees in their Dirección (excluding themselves)
   if(CUR.rol === 'director' && CUR.scope_dir){
@@ -1379,12 +1390,8 @@ function getScopedData(){
     });
   }
 
-  // Fallback: direct reports
-  ALL.forEach(r => {
-    if(normWords(r.jefe) === curNameNorm){
-      subSet.add(r);
-    }
-  });
+  // Add all direct reports just in case
+  directos.forEach(d => subSet.add(d));
 
   return Array.from(subSet);
 }
@@ -1894,13 +1901,19 @@ function renderTable(){
       <td>${isSuc(p.sucesor) ? '<span style="color:var(--green);font-weight:700">✔</span>' : '<span style="color:var(--text-faint)">No</span>'}</td>
       <td></td>`;
       
-    const btn = document.createElement('button');
-    btn.className = 'btn-outline';
-    btn.style.padding = '3px 8px';
-    btn.style.fontSize = '11px';
-    btn.textContent = hasFicha ? 'Ver Ficha' : 'Ver';
-    btn.onclick = () => openModal(p);
-    tr.children[10].appendChild(btn);
+    if(hasFicha) {
+      const btn = document.createElement('button');
+      btn.className = 'btn-outline';
+      btn.style.padding = '3px 8px';
+      btn.style.fontSize = '11px';
+      btn.style.borderColor = 'var(--crimson)';
+      btn.style.color = 'var(--crimson)';
+      btn.textContent = 'Ver Ficha';
+      btn.onclick = () => openModal(p);
+      tr.children[10].appendChild(btn);
+    } else {
+      tr.children[10].innerHTML = '<span style="color:var(--text-faint)">-</span>';
+    }
     
     tb.appendChild(tr);
   });
