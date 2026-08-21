@@ -826,6 +826,44 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
     <div class="table-section">
       <div class="table-wrap">
         <div style="overflow-x:auto">
+          <table class="nb-table">
+            <thead>
+              <tr id="nbTableHead">
+                <th data-key="nombre" onclick="handleSort('nombre')">NOMBRE <span class="arrow" id="arr_nombre">▲</span></th>
+                <th data-key="cargo" onclick="handleSort('cargo')">CARGO <span class="arrow" id="arr_cargo">▲</span></th>
+                <th data-key="caja" onclick="handleSort('caja')">UBICACIÓN <span class="arrow" id="arr_caja">▲</span></th>
+                <th data-key="sucesor" onclick="handleSort('sucesor')">POSIBLE SUCESOR <span class="arrow" id="arr_sucesor">▲</span></th>
+                <th data-key="tiempo" onclick="handleSort('tiempo')">TIEMPO <span class="arrow" id="arr_tiempo">▲</span></th>
+                <th>FICHA</th>
+              </tr>
+            </thead>
+            <tbody id="nbTableBody"></tbody>
+          </table>
+        </div>
+        <div class="table-foot">
+          <span id="nbPageInfo">Página 1 de 1</span>
+          <div class="pager" id="nbPager"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOGAN VIEW -->
+  <section id="viewHG" style="display:none">
+    <div class="hogan-team-card">
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:15px">Promedio Equipo — 11 Competencias Hogan</h3>
+      <p style="font-size:12.5px;color:var(--text-dim);margin:4px 0">Consolidado de evaluados en tu estructura jerárquica.</p>
+      <div class="team-comp-grid" id="teamCompGrid"></div>
+    </div>
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;margin:24px 0 12px">Evaluaciones Individuales</h3>
+    <div class="hogan-grid" id="hoganGrid"></div>
+  </section>
+
+  <!-- TABLE VIEW -->
+  <section id="viewTB" style="display:none">
+    <div class="table-section" style="margin-top:0">
+      <div class="table-wrap">
+        <div style="overflow-x:auto">
           <table class="nb-table" style="width:100%;border-collapse:separate;border-spacing:0;background:var(--panel)">
             <thead>
               <tr style="background:#261f22">
@@ -850,7 +888,7 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
   <div class="modal-card" style="background:var(--bg-1);border-radius:12px;width:95%;max-width:900px;max-height:90vh;overflow-y:auto;overflow-x:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);display:flex;flex-direction:column;position:relative">
     
     <!-- HEADER HOGAN (Purple) -->
-    <div id="mHoganHeader" style="background:linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);padding:24px 32px;color:white;position:relative">
+    <div id="mHoganHeader" style="background:linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);padding:24px 32px;color:white;position:relative;flex-shrink:0">
       
       <!-- Top buttons -->
       <div style="display:flex;gap:10px;margin-bottom:16px">
@@ -896,34 +934,6 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
       <!-- Competencies will go here -->
     </div>
 
-  </div>
-</div>
-    
-    <div class="tabs-bar" style="margin-bottom:14px">
-      <button class="tab-btn active" id="btnMFicha" onclick="switchModalTab('ficha')">Ficha de Talento</button>
-      <button class="tab-btn" id="btnMHogan" onclick="switchModalTab('hogan')">Resultados Hogan</button>
-    </div>
-    
-    <div id="mFicha">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" id="mFichaGrid"></div>
-    </div>
-    
-    <div id="mHogan" style="display:none">
-      <div id="mHoganEmpty" style="padding:20px;text-align:center;color:var(--text-dim);font-size:13px">Sin evaluación Hogan registrada.</div>
-      <div id="mHoganBody" style="display:none">
-        <div style="display:flex;gap:12px;background:var(--bg-1);padding:12px;border-radius:10px;margin-bottom:14px">
-          <div><span style="font-size:10px;color:var(--text-faint);text-transform:uppercase">Potencial</span><div style="font-weight:800;font-size:16px;color:var(--gold)" id="mHPot">-</div></div>
-          <div><span style="font-size:10px;color:var(--text-faint);text-transform:uppercase">Versatilidad</span><div style="font-weight:700;font-size:13px;margin-top:2px" id="mHVers">-</div></div>
-          <div><span style="font-size:10px;color:var(--text-faint);text-transform:uppercase">Clasificación</span><div style="font-weight:700;font-size:13px;margin-top:2px" id="mHClas">-</div></div>
-        </div>
-        <div style="font-size:12px;font-weight:700;margin-bottom:8px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.04em">11 Competencias:</div>
-        <div class="hcard-scores" id="mScores"></div>
-      </div>
-    </div>
-    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:18px;border-top:1px solid var(--border);padding-top:14px">
-      <button class="btn-outline" onclick="closeModal()">Cerrar</button>
-      <a id="btnFichaLink" href="#" target="_blank" class="btn-outline" style="background:var(--crimson);color:#fff;border-color:var(--crimson);text-decoration:none">Ver Ficha Completa ↗</a>
-    </div>
   </div>
 </div>
 
@@ -1947,75 +1957,49 @@ function switchView(v){
 }
 
 /* ── MODAL ─────────────────────────────────────────────────────────── */
-function openModal(p, tab = 'ficha'){
+function openModal(p){
   document.getElementById('mAv').textContent = p.nombre.charAt(0);
   document.getElementById('mNombre').textContent = p.nombre;
   document.getElementById('mCargo').textContent = p.cargo || '-';
-
-  const vc = p.hogan_versatilidad === 'Alta Versatilidad' ? 'mb-alta' : 
-             p.hogan_versatilidad === 'Media Versatilidad' ? 'mb-media' : 
-             p.hogan_versatilidad ? 'mb-prof' : '';
-  const cNum = getCajaNum(p.caja);
-
-  document.getElementById('mBadges').innerHTML = `
-    ${cNum ? `<span class="mini-badge" style="background:${BOX_COLORS[cNum] || '#6b7280'};color:#fff">Caja ${cNum} · ${BOX_NAMES[cNum] || ''}</span>` : ''}
-    ${vc ? `<span class="mini-badge ${vc}">${p.hogan_versatilidad}</span>` : ''}
-    ${isSuc(p.sucesor) ? '<span class="mini-badge mb-suc">Sucesor</span>' : ''}`;
-
-  const grid = document.getElementById('mFichaGrid');
-  const fields = [
-    ['Expediente', p.expediente],
-    ['Dirección', p.direccion],
-    ['Gerencia', p.gerencia],
-    ['Jefe Directo', p.jefe],
-    ['Desempeño', p.desempeno],
-    ['Potencial 9-Box', p.potencial],
-    ['Sucesor', isSuc(p.sucesor) ? 'Sí (' + (p.tiempo || '') + ')' : 'No'],
-    ['Ciudad', p.ciudad]
-  ];
-  grid.innerHTML = fields.map(([l, v]) => `
-    <div class="comp-metric-box">
-      <span style="font-size:10px;color:var(--text-faint);text-transform:uppercase">${l}</span>
-      <div style="font-weight:700;font-size:13px;margin-top:3px">${v || '-'}</div>
-    </div>`).join('');
+  document.getElementById('mJefe').textContent = 'Jefe: ' + (p.jefe || '-');
 
   if(p.hogan_potencial !== null && p.hogan_potencial !== undefined){
-    document.getElementById('mHoganEmpty').style.display = 'none';
-    document.getElementById('mHoganBody').style.display = 'block';
-    document.getElementById('mHPot').textContent = p.hogan_potencial + ' pts';
+    document.getElementById('mHPot').textContent = p.hogan_potencial;
+    const vc = p.hogan_versatilidad === 'Alta Versatilidad' ? '#34d399' : p.hogan_versatilidad === 'Media Versatilidad' ? '#fbbf24' : '#fff';
     document.getElementById('mHVers').textContent = p.hogan_versatilidad || '-';
-    document.getElementById('mHClas').textContent = p.hogan_clasificacion || '-';
-    const sc = document.getElementById('mScores');
-    sc.innerHTML = '';
+    document.getElementById('mHVers').style.color = vc;
+    
+    const body = document.getElementById('mHoganBody');
+    body.innerHTML = '';
     COMPS.forEach(c => {
-      const v = (p.hogan_scores && p.hogan_scores[c] !== undefined) ? p.hogan_scores[c] : '-';
-      const pct = typeof v === 'number' ? v : 0;
-      const color = pct >= 75 ? 'var(--green)' : pct >= 50 ? 'var(--gold)' : 'var(--crimson)';
-      sc.innerHTML += `
-        <div class="hs-row">
-          <span class="hs-lbl" style="width:175px">${c}</span>
-          <div class="hs-bar"><div class="hs-fill" style="width:${pct}%;background:${color}"></div></div>
-          <span class="hs-val" style="width:32px">${v}</span>
+      const v = (p.hogan_scores && p.hogan_scores[c] !== undefined) ? p.hogan_scores[c] : null;
+      if(v === null) return;
+      const bg = v >= 70 ? 'rgba(52, 211, 153, 0.15)' : 'rgba(251, 191, 36, 0.15)';
+      const color = v >= 70 ? '#10b981' : '#f59e0b';
+      const desc = COMP_DESC[c] || '';
+      
+      body.innerHTML += `
+        <div style="background:${bg};border-radius:6px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center">
+          <div style="flex:1;padding-right:20px">
+            <div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:4px">${c}</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.4">${desc}</div>
+          </div>
+          <div style="font-size:16px;font-weight:800;color:${color};min-width:30px;text-align:right">${v}</div>
         </div>`;
     });
   } else {
-    document.getElementById('mHoganEmpty').style.display = 'block';
-    document.getElementById('mHoganBody').style.display = 'none';
+    document.getElementById('mHPot').textContent = '-';
+    document.getElementById('mHVers').textContent = '-';
+    document.getElementById('mHVers').style.color = '#fff';
+    document.getElementById('mHoganBody').innerHTML = '<div style="padding:40px;text-align:center;color:var(--text-dim)">Este usuario no tiene datos de Hogan.</div>';
   }
 
-  const hasFicha = hasFichaData(p);
-  const btnFicha = document.getElementById('btnFichaLink');
-  if(btnFicha){
-    if(hasFicha){
-      btnFicha.style.display = 'inline-flex';
-      btnFicha.href = `ficha_talento.html?expediente=${p.expediente}`;
-    } else {
-      btnFicha.style.display = 'none';
-    }
-  }
+  const mod = document.getElementById('profileModal');
+  mod.style.display = 'flex';
+}
 
-  switchModalTab(tab);
-  document.getElementById('profileModal').classList.add('open');
+function closeModal(){
+  document.getElementById('profileModal').style.display = 'none';
 }
 
 function switchModalTab(t){
