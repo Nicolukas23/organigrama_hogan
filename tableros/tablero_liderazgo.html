@@ -328,7 +328,7 @@ header.dash-hdr{
 }
 
 .cell{
-  position:relative;border-radius:14px;padding:18px 20px;
+  position:relative;border-radius:14px;padding:16px 18px;
   display:flex;flex-direction:column;justify-content:space-between;
   min-height:140px;border:1px solid rgba(255,255,255,.08);
   cursor:pointer;
@@ -365,12 +365,24 @@ header.dash-hdr{
   font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;color:#fff;
   text-shadow:0 1px 4px rgba(0,0,0,.3);
 }
-.cell .count-row{display:flex;align-items:baseline;gap:8px;margin-top:6px}
+.cell .count-row{display:flex;align-items:baseline;gap:8px;margin-top:4px}
 .cell .count{
   font-family:'JetBrains Mono',monospace;font-weight:800;font-size:38px;color:#fff;
   letter-spacing:-0.02em;line-height:1;
 }
 .cell .count-lbl{font-size:14px;color:rgba(255,255,255,.75);font-weight:500}
+
+/* NOMBRES DENTRO DE LA CASILLA (CUANDO HAY HASTA 10 PERSONAS) */
+.cell .cell-names{
+  display:flex; flex-wrap:wrap; gap:4px; margin-top:8px;
+  max-height:160px; overflow-y:auto;
+  position:relative; z-index:1;
+}
+.cell .cell-name{
+  font-size:11px; color: rgba(255,255,255,.88);
+  background: rgba(0,0,0,.28); padding:2px 7px; border-radius:4px;
+  white-space:nowrap; border:1px solid rgba(255,255,255,.08);
+}
 
 /* ── TABLE SECTION EXACT TO NINEBOX.HTML ───────────────────────────── */
 .table-section{
@@ -601,10 +613,10 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
     </div>
     <div class="f-group">
       <label>Gerencia</label>
-      <select id="fGer" onchange="applyFilters()"></select>
+      <select id="fGer" onchange="onGerChange()"></select>
     </div>
     <div class="f-group">
-      <label>Jefe Directo</label>
+      <label>Jefe Directo (Subordinados)</label>
       <select id="fJefe" onchange="applyFilters()"></select>
     </div>
     <div class="f-group" style="max-width:140px">
@@ -662,9 +674,12 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
               <div class="cellname">Experto</div>
               <div class="badge">7</div>
             </div>
-            <div class="count-row">
-              <span class="count" id="cnt7">0</span>
-              <span class="count-lbl">personas</span>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt7">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names7"></div>
             </div>
           </div>
           
@@ -673,9 +688,12 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
               <div class="cellname">Sólido</div>
               <div class="badge">8</div>
             </div>
-            <div class="count-row">
-              <span class="count" id="cnt8">0</span>
-              <span class="count-lbl">personas</span>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt8">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names8"></div>
             </div>
           </div>
           
@@ -684,9 +702,12 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
               <div class="cellname">Alto potencial</div>
               <div class="badge">9</div>
             </div>
-            <div class="count-row">
-              <span class="count" id="cnt9">0</span>
-              <span class="count-lbl">personas</span>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt9">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names9"></div>
             </div>
           </div>
           
@@ -696,9 +717,12 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
               <div class="cellname">Experto en desarrollo</div>
               <div class="badge">4</div>
             </div>
-            <div class="count-row">
-              <span class="count" id="cnt4">0</span>
-              <span class="count-lbl">personas</span>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt4">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names4"></div>
             </div>
           </div>
           
@@ -707,9 +731,12 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
               <div class="cellname">Sólido en desarrollo</div>
               <div class="badge">5</div>
             </div>
-            <div class="count-row">
-              <span class="count" id="cnt5">0</span>
-              <span class="count-lbl">personas</span>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt5">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names5"></div>
             </div>
           </div>
           
@@ -718,9 +745,12 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
               <div class="cellname">Alto pot. en desarrollo</div>
               <div class="badge">6</div>
             </div>
-            <div class="count-row">
-              <span class="count" id="cnt6">0</span>
-              <span class="count-lbl">personas</span>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt6">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names6"></div>
             </div>
           </div>
           
@@ -730,9 +760,12 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
               <div class="cellname">En riesgo</div>
               <div class="badge">1</div>
             </div>
-            <div class="count-row">
-              <span class="count" id="cnt1">0</span>
-              <span class="count-lbl">personas</span>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt1">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names1"></div>
             </div>
           </div>
           
@@ -741,9 +774,12 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
               <div class="cellname">En revisión</div>
               <div class="badge">2</div>
             </div>
-            <div class="count-row">
-              <span class="count" id="cnt2">0</span>
-              <span class="count-lbl">personas</span>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt2">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names2"></div>
             </div>
           </div>
           
@@ -752,9 +788,12 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
               <div class="cellname">A gestionar</div>
               <div class="badge">3</div>
             </div>
-            <div class="count-row">
-              <span class="count" id="cnt3">0</span>
-              <span class="count-lbl">personas</span>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt3">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names3"></div>
             </div>
           </div>
         </div>
@@ -945,6 +984,34 @@ function toggleTheme(){
 }
 if(localStorage.getItem('theme') === 'light'){
   document.documentElement.classList.add('light');
+}
+
+/* ── RECURSIVE SUBORDINATES FINDER ─────────────────────────────────── */
+function getSubordinates(leaderName, dataset = ALL){
+  const leaderNorm = normWords(leaderName);
+  if(!leaderNorm) return [];
+
+  const result = new Set();
+  const queue = [leaderNorm];
+  const processed = new Set();
+
+  while(queue.length > 0){
+    const currentJefeNorm = queue.shift();
+    if(processed.has(currentJefeNorm)) continue;
+    processed.add(currentJefeNorm);
+
+    dataset.forEach(r => {
+      if(normWords(r.jefe) === currentJefeNorm){
+        result.add(r);
+        const reportNameNorm = normWords(r.nombre);
+        if(reportNameNorm && !processed.has(reportNameNorm)){
+          queue.push(reportNameNorm);
+        }
+      }
+    });
+  }
+
+  return Array.from(result);
 }
 
 /* ── INIT ──────────────────────────────────────────────────────────── */
@@ -1155,34 +1222,43 @@ function setSession(user){
   applyFilters();
 }
 
-/* ── FILTERS ───────────────────────────────────────────────────────── */
+/* ── SCOPE & FILTERS ───────────────────────────────────────────────── */
 function getScopedData(){
   if(!CUR) return ALL;
   if(CUR.rol === 'admin') return ALL;
 
   const curNameNorm = normWords(CUR.nombre);
-  const curDirNorm = (CUR.scope_dir || '').trim().toLowerCase();
-  const curGerNorm = (CUR.scope_ger || '').trim().toLowerCase();
+  const subTree = getSubordinates(CUR.nombre, ALL);
+  const subSet = new Set(subTree);
 
-  return ALL.filter(r => {
-    // 1. Reportes directos por nombre del jefe
-    if(curNameNorm && normWords(r.jefe) === curNameNorm) return true;
-    
-    // 2. Jerarquía por dirección (Directores ven toda su dirección)
-    if(CUR.rol === 'director' && curDirNorm && (r.direccion || '').trim().toLowerCase() === curDirNorm) {
-      return true;
+  // For Directors: union of recursive subordinates + all employees in their Dirección (excluding themselves)
+  if(CUR.rol === 'director' && CUR.scope_dir){
+    const dirNorm = CUR.scope_dir.trim().toLowerCase();
+    ALL.forEach(r => {
+      if((r.direccion || '').trim().toLowerCase() === dirNorm && normWords(r.nombre) !== curNameNorm){
+        subSet.add(r);
+      }
+    });
+  }
+
+  // For Gerentes: union of recursive subordinates + all employees in their Gerencia (excluding themselves)
+  if(CUR.rol === 'gerente' && CUR.scope_ger){
+    const gerNorm = CUR.scope_ger.trim().toLowerCase();
+    ALL.forEach(r => {
+      if((r.gerencia || '').trim().toLowerCase() === gerNorm && normWords(r.nombre) !== curNameNorm){
+        subSet.add(r);
+      }
+    });
+  }
+
+  // Fallback: direct reports
+  ALL.forEach(r => {
+    if(normWords(r.jefe) === curNameNorm){
+      subSet.add(r);
     }
-
-    // 3. Jerarquía por gerencia (Gerentes ven toda su gerencia)
-    if(CUR.rol === 'gerente' && curGerNorm && (r.gerencia || '').trim().toLowerCase() === curGerNorm) {
-      return true;
-    }
-
-    // 4. Registro propio
-    if(normWords(r.nombre) === curNameNorm) return true;
-
-    return false;
   });
+
+  return Array.from(subSet);
 }
 
 function setupFilters(){
@@ -1191,7 +1267,7 @@ function setupFilters(){
 
   if(CUR && CUR.rol === 'admin'){
     wrap.style.display = 'flex';
-    const dirs = [...new Set(ALL.map(r => r.direccion).filter(Boolean))].sort();
+    const dirs = [...new Set(ALL.map(r => r.direccion).filter(Boolean))].sort((a,b) => a.localeCompare(b, 'es'));
     fDir.innerHTML = '<option value="">Todas las Direcciones</option>';
     dirs.forEach(d => {
       const o = document.createElement('option');
@@ -1213,7 +1289,7 @@ function populateSecondaryFilters(data, isReset = false){
   const gSel = isReset ? '' : fGer.value;
   const jSel = isReset ? '' : fJefe.value;
 
-  const gers = [...new Set(data.map(r => r.gerencia).filter(Boolean))].sort();
+  const gers = [...new Set(data.map(r => r.gerencia).filter(Boolean))].sort((a,b) => a.localeCompare(b, 'es'));
   fGer.innerHTML = '<option value="">Todas las Gerencias</option>';
   gers.forEach(g => {
     const o = document.createElement('option');
@@ -1222,18 +1298,27 @@ function populateSecondaryFilters(data, isReset = false){
   });
   fGer.value = (gSel && gers.includes(gSel)) ? gSel : '';
 
-  if(CUR && CUR.rol === 'gerente'){
-    fGer.value = CUR.scope_ger || '';
+  if(CUR && CUR.rol === 'gerente' && gers.length <= 1){
     fGer.disabled = true;
   } else {
     fGer.disabled = false;
   }
 
-  const jefes = [...new Set(data.map(r => r.jefe).filter(Boolean))].sort();
+  // Count subordinate reports per jefe within this scoped data
+  const jefesCounts = new Map();
+  data.forEach(r => {
+    if(r.jefe){
+      jefesCounts.set(r.jefe, (jefesCounts.get(r.jefe) || 0) + 1);
+    }
+  });
+
+  const jefes = Array.from(jefesCounts.keys()).sort((a,b) => a.localeCompare(b, 'es'));
   fJefe.innerHTML = '<option value="">Todos los Jefes</option>';
   jefes.forEach(j => {
+    const count = jefesCounts.get(j);
     const o = document.createElement('option');
-    o.value = j; o.textContent = j;
+    o.value = j;
+    o.textContent = `${j} (${count} reporte${count === 1 ? '' : 's'})`;
     fJefe.appendChild(o);
   });
   fJefe.value = (jSel && jefes.includes(jSel)) ? jSel : '';
@@ -1243,6 +1328,35 @@ function onDirChange(){
   const selDir = document.getElementById('fDir').value;
   const base = selDir ? ALL.filter(r => r.direccion === selDir) : ALL;
   populateSecondaryFilters(base, true);
+  tableState.page = 1;
+  applyFilters();
+}
+
+function onGerChange(){
+  const selDir = document.getElementById('fDir').value;
+  const selGer = document.getElementById('fGer').value;
+  let base = getScopedData();
+  if(selDir && CUR.rol === 'admin') base = base.filter(r => r.direccion === selDir);
+  if(selGer) base = base.filter(r => r.gerencia === selGer);
+
+  // Update jefes dropdown for this selected gerencia
+  const fJefe = document.getElementById('fJefe');
+  const jSel = fJefe.value;
+  const jefesCounts = new Map();
+  base.forEach(r => {
+    if(r.jefe) jefesCounts.set(r.jefe, (jefesCounts.get(r.jefe) || 0) + 1);
+  });
+  const jefes = Array.from(jefesCounts.keys()).sort((a,b) => a.localeCompare(b, 'es'));
+  fJefe.innerHTML = '<option value="">Todos los Jefes</option>';
+  jefes.forEach(j => {
+    const count = jefesCounts.get(j);
+    const o = document.createElement('option');
+    o.value = j;
+    o.textContent = `${j} (${count} reporte${count === 1 ? '' : 's'})`;
+    fJefe.appendChild(o);
+  });
+  fJefe.value = (jSel && jefes.includes(jSel)) ? jSel : '';
+
   tableState.page = 1;
   applyFilters();
 }
@@ -1393,7 +1507,20 @@ function renderNinebox(){
   for (let b = 1; b <= 9; b++) {
     const items = FILTERED.filter(r => getCajaNum(r.caja) === b);
     const cntEl = document.getElementById('cnt' + b);
+    const namesEl = document.getElementById('names' + b);
+    
     if (cntEl) cntEl.textContent = items.length;
+
+    // Render names when count is manageable (<= 10 persons)
+    if (namesEl) {
+      if (items.length > 0 && items.length <= 10) {
+        namesEl.innerHTML = items.map(p => `<span class="cell-name">${p.nombre}</span>`).join('');
+        namesEl.style.display = 'flex';
+      } else {
+        namesEl.innerHTML = '';
+        namesEl.style.display = 'none';
+      }
+    }
   }
 }
 
