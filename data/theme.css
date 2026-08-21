@@ -1,0 +1,154 @@
+/**
+ * theme.css — Sistema de Diseño y Tokens Institucionales Claro
+ * Paletas de colores, variables globales (Dark/Light), Ninebox y Hogan.
+ */
+
+:root {
+  /* Paleta Base Oscura (Ejecutiva) */
+  --bg: #12080a;
+  --bg-1: #1a0e10;
+  --panel: #1e1215;
+  --panel-2: #26181b;
+  --border: rgba(255, 255, 255, .08);
+  --border-soft: rgba(255, 255, 255, .05);
+  
+  /* Textos */
+  --text: #F4F1EA;
+  --text-dim: #98A2B3;
+  --text-faint: #59626f;
+  
+  /* Identidad Claro y Acentos */
+  --crimson: #E8283F;
+  --crimson-hover: #DA291C;
+  --crimson-soft: rgba(232, 40, 63, .14);
+  --gold: #D8AD64;
+  --gold-soft: rgba(216, 173, 100, .14);
+  --blue: #2563eb;
+  --green: #10B981;
+  --amber: #D97706;
+
+  /* Cajas Nine Box (Modo Oscuro) */
+  --c1: #47505c; --c1-soft: rgba(71, 80, 92, .18);
+  --c2: #58626f; --c2-soft: rgba(88, 98, 111, .18);
+  --c3: #69737f; --c3-soft: rgba(105, 115, 127, .18);
+  --c4: #9c6a2e; --c4-soft: rgba(156, 106, 46, .18);
+  --c5: #c99a46; --c5-soft: rgba(201, 154, 70, .18);
+  --c6: #7fa65e; --c6-soft: rgba(127, 166, 94, .18);
+  --c7: #1d6e8c; --c7-soft: rgba(29, 110, 140, .20);
+  --c8: #2f9271; --c8-soft: rgba(47, 146, 113, .20);
+  --c9: #1e7a4e; --c9-soft: rgba(30, 122, 78, .22);
+
+  /* Versatilidad Hogan (Modo Oscuro) */
+  --alta-bg: rgba(16, 185, 129, .18); --alta-txt: #34d399;
+  --media-bg: rgba(216, 173, 100, .18); --media-txt: #facc15;
+  --prof-bg: rgba(37, 99, 235, .18); --prof-txt: #60a5fa;
+
+  /* Medidas y Animaciones */
+  --radius: 14px;
+  --radius-sm: 8px;
+  --radius-lg: 20px;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Modo Claro Institucional */
+:root.light {
+  --bg: #f5f3f0;
+  --bg-1: #eae7e3;
+  --panel: #ffffff;
+  --panel-2: #f9f7f5;
+  --border: rgba(0, 0, 0, .08);
+  --border-soft: rgba(0, 0, 0, .05);
+  
+  --text: #1a1a1a;
+  --text-dim: #6b7280;
+  --text-faint: #9ca3af;
+  
+  --crimson: #dc2626;
+  --crimson-hover: #b91c1c;
+  --crimson-soft: rgba(220, 38, 38, .1);
+  --gold: #b45309;
+  --gold-soft: rgba(180, 83, 9, .12);
+  --green: #059669;
+
+  /* Cajas Nine Box (Modo Claro) */
+  --c1: #6b7280; --c2: #9ca3af; --c3: #d1d5db;
+  --c4: #d97706; --c5: #eab308; --c6: #65a30d;
+  --c7: #0891b2; --c8: #059669; --c9: #16a34a;
+
+  /* Versatilidad Hogan (Modo Claro) */
+  --alta-bg: #D1FAE5; --alta-txt: #065F46;
+  --media-bg: #FEF3C7; --media-txt: #92400E;
+  --prof-bg: #DBEAFE; --prof-txt: #1E40AF;
+}
+
+/* Reset Global */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  transition: background .3s, color .3s;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Fondo con destellos ambientales institucionales */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 8%, rgba(139, 34, 82, .12), transparent 40%),
+    radial-gradient(circle at 88% 18%, rgba(160, 40, 72, .08), transparent 42%),
+    radial-gradient(circle at 50% 95%, rgba(216, 173, 100, .06), transparent 45%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Contenedor Principal */
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+}
+
+/* Scrollbars personalizados */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-1);
+}
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
