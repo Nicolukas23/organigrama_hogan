@@ -513,6 +513,8 @@ function hideLoginOverlay(){
 
 function loginByEmail(){
   const email = (document.getElementById('txtEmail').value||'').trim().toLowerCase();
+  console.log('Login attempt:', email, 'LEADERS count:', LEADERS.length);
+  console.log('LEADERS emails:', LEADERS.map(u=>u.email));
   const user = LEADERS.find(u=>u.email===email);
   if(user){
     document.getElementById('loginErr').style.display='none';
@@ -520,6 +522,7 @@ function loginByEmail(){
     hideLoginOverlay();
   } else {
     document.getElementById('loginErr').style.display='block';
+    console.error('User not found in LEADERS:', email);
   }
 }
 
