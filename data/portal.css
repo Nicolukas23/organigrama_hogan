@@ -1,0 +1,115 @@
+/**
+ * portal.css — Estilos extraídos de index.html
+ */
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;min-height:100vh;transition:background .3s,color .3s}
+
+/* ── THEME VARS ─────────────────────────────────────────────────────── */
+:root{
+  --bg:#EEF1F8;--card-bg:#fff;--text:#111827;--text2:#374151;--text3:#6B7280;--text4:#9CA3AF;
+  --border:#E2E6EF;--surface:#F9FAFB;--surface2:#F3F4F6;--hover:#F8FAFF;
+  --crimson:#7C1D24;--crimson-light:#9F1239;--blue:#0033A0;--green:#059669;--orange:#EA580C;
+}
+body.dark{
+  --bg:#0B1121;--card-bg:#1E293B;--text:#F1F5F9;--text2:#CBD5E1;--text3:#94A3B8;--text4:#64748B;
+  --border:#334155;--surface:#1E293B;--surface2:#334155;--hover:#1E293B;
+}
+body{background:var(--bg);color:var(--text)}
+
+/* ── LOGIN ──────────────────────────────────────────────────────────── */
+.login-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#0B1121 0%,#1E3A5F 50%,#0B1121 100%);display:flex;align-items:center;justify-content:center;z-index:9999}
+.login-card{background:#fff;border-radius:16px;padding:40px 36px;width:380px;max-width:92vw;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.login-card h2{font-size:1.15rem;font-weight:700;color:#111827;margin-bottom:4px;text-align:center}
+.login-card p{font-size:.78rem;color:#6B7280;text-align:center;margin-bottom:24px}
+.login-card label{display:block;font-size:.75rem;font-weight:600;color:#374151;margin-bottom:5px}
+.login-card input{width:100%;padding:10px 12px;border:1.5px solid #D1D5DB;border-radius:8px;font-size:.85rem;margin-bottom:16px;outline:none;transition:border .15s}
+.login-card input:focus{border-color:#0033A0}
+.login-card .login-btn{width:100%;padding:11px;border:none;border-radius:8px;background:linear-gradient(135deg,#0033A0,#1E3A5F);color:#fff;font-size:.9rem;font-weight:600;cursor:pointer;transition:opacity .15s}
+.login-card .login-btn:hover{opacity:.9}
+.login-card .login-err{color:#DC2626;font-size:.75rem;text-align:center;margin-top:10px;display:none}
+.login-overlay.hidden{display:none}
+
+/* ── HEADER ─────────────────────────────────────────────────────────── */
+.portal-header{
+  background:linear-gradient(135deg,var(--crimson) 0%,var(--crimson-light) 100%);
+  padding:48px 24px 40px;text-align:center;color:#fff;
+}
+.portal-header h1{font-size:1.6rem;font-weight:800;margin-bottom:6px}
+.portal-header p{font-size:.88rem;color:rgba(255,255,255,.75);max-width:500px;margin:0 auto}
+.portal-header-actions{margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.portal-header-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;border-radius:8px;font-size:.8rem;font-weight:600;
+  text-decoration:none;transition:transform .15s,box-shadow .15s;
+}
+.portal-header-btn.primary{background:#fff;color:var(--crimson)}
+.portal-header-btn.secondary{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3)}
+.portal-header-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.2)}
+
+/* ── DASHBOARD GRID ─────────────────────────────────────────────────── */
+.portal-grid{
+  max-width:1200px;margin:-24px auto 40px;padding:0 24px;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
+}
+.portal-card{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:16px;
+  padding:24px;cursor:pointer;text-decoration:none;color:inherit;
+  transition:transform .2s,box-shadow .2s,border-color .2s;
+  position:relative;overflow:hidden;
+}
+.portal-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.12);border-color:var(--text3)}
+.portal-card-icon{
+  width:48px;height:48px;border-radius:14px;display:grid;place-items:center;
+  margin-bottom:14px;
+}
+.portal-card-icon svg{width:24px;height:24px;color:#fff}
+.portal-card h3{font-size:1rem;font-weight:700;margin-bottom:4px}
+.portal-card p{font-size:.78rem;color:var(--text3);line-height:1.4}
+.portal-card-badge{
+  position:absolute;top:16px;right:16px;padding:3px 8px;border-radius:12px;
+  font-size:.65rem;font-weight:700;
+}
+.portal-card-badge.live{background:#D1FAE5;color:#065F46}
+.portal-card-badge.static{background:#F3F4F6;color:#6B7280}
+
+/* Card colors */
+.portal-card[data-color="crimson"] .portal-card-icon{background:linear-gradient(135deg,#7C1D24,#9F1239)}
+.portal-card[data-color="blue"] .portal-card-icon{background:linear-gradient(135deg,#1E3A5F,#2563EB)}
+.portal-card[data-color="green"] .portal-card-icon{background:linear-gradient(135deg,#064E3B,#059669)}
+.portal-card[data-color="orange"] .portal-card-icon{background:linear-gradient(135deg,#7C2D12,#EA580C)}
+.portal-card[data-color="purple"] .portal-card-icon{background:linear-gradient(135deg,#4C1D95,#7C3AED)}
+.portal-card[data-color="teal"] .portal-card-icon{background:linear-gradient(135deg,#0C4A6E,#0891B2)}
+.portal-card[data-color="indigo"] .portal-card-icon{background:linear-gradient(135deg,#312E81,#4F46E5)}
+.portal-card[data-color="pink"] .portal-card-icon{background:linear-gradient(135deg,#831843,#DB2777)}
+
+/* ── QUICK STATS ────────────────────────────────────────────────────── */
+.portal-stats{
+  max-width:1200px;margin:0 auto 32px;padding:0 24px;
+  display:flex;gap:12px;flex-wrap:wrap;
+}
+.portal-stat{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:12px;
+  padding:14px 20px;flex:1;min-width:160px;display:flex;align-items:center;gap:12px;
+}
+.portal-stat-icon{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;font-size:1.1rem}
+.portal-stat-val{font-size:1.3rem;font-weight:800;color:var(--text)}
+.portal-stat-label{font-size:.7rem;color:var(--text4);text-transform:uppercase;letter-spacing:.04em}
+
+/* ── THEME BTN ──────────────────────────────────────────────────────── */
+.theme-float{
+  position:fixed;bottom:20px;right:20px;z-index:400;
+  width:44px;height:44px;border-radius:50%;border:none;
+  background:var(--crimson);color:#fff;font-size:1.2rem;
+  cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);
+  display:grid;place-items:center;transition:transform .15s;
+}
+.theme-float:hover{transform:scale(1.1)}
+
+/* ── RESPONSIVE ─────────────────────────────────────────────────────── */
+@media(max-width:768px){
+  .portal-header{padding:32px 16px 28px}
+  .portal-header h1{font-size:1.3rem}
+  .portal-grid{grid-template-columns:1fr;padding:0 16px;margin-top:-16px}
+  .portal-stats{flex-direction:column;padding:0 16px}
+}
