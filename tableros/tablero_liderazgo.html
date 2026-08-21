@@ -550,6 +550,20 @@ table.nb-table tbody td.name{ color:var(--text); font-weight:600; }
   </div>
 </div>
 
+<!-- SCOPE OVERLAY -->
+<div class="login-overlay" id="scopeOverlay" style="display:none;z-index:9999;">
+  <div class="login-card" style="text-align:center">
+    <div style="width:56px;height:56px;background:var(--bg-2);border-radius:28px;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--gold)"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+    </div>
+    <h2 style="margin:0 0 12px 0;font-size:24px;font-weight:600">Seleccionar Alcance</h2>
+    <p style="color:var(--text-dim);font-size:14px;margin:0 0 32px 0">Por favor seleccione la profundidad de talento que desea visualizar en el tablero.</p>
+    
+    <button class="btn-login" onclick="selectScope('FULL')" style="margin-bottom:12px;background:var(--gold);">Dirección Completa <span style="font-size:12px;opacity:0.8;display:block;font-weight:400;margin-top:2px">Mi equipo directo + sus respectivos equipos</span></button>
+    <button class="btn-login" onclick="selectScope('DIRECT')" style="background:var(--bg-2);color:var(--text);border:1px solid var(--border);">Reportes Directos <span style="font-size:12px;opacity:0.6;display:block;font-weight:400;margin-top:2px">Únicamente mis 5 directores a cargo</span></button>
+  </div>
+</div>
+
 <div class="wrap" id="mainContent">
   <!-- HEADER -->
   <header class="dash-hdr">
@@ -1240,7 +1254,24 @@ function loginByEmail(){
   }
 
   document.getElementById('loginErr').style.display = 'none';
-  setSession(user);
+  
+  if(user.email === 'walter.borda@claro.com.co') {
+    document.getElementById('loginOverlay').style.display = 'none';
+    document.getElementById('scopeOverlay').style.display = 'flex';
+    // store user temporarily to be used in selectScope
+    window.tempUserForScope = user;
+  } else {
+    window.activeScope = 'FULL';
+    setSession(user);
+  }
+}
+
+function selectScope(scope) {
+  window.activeScope = scope;
+  document.getElementById('scopeOverlay').style.display = 'none';
+  if(window.tempUserForScope) {
+    setSession(window.tempUserForScope);
+  }
 }
 
 function loginByDemoSelect(){
@@ -1250,7 +1281,15 @@ function loginByDemoSelect(){
   if(user){
     document.getElementById('txtEmail').value = user.email;
     document.getElementById('txtPassword').value = user.password || 'Claro2026*';
-    setSession(user);
+    
+    if(user.email === 'walter.borda@claro.com.co') {
+      document.getElementById('loginOverlay').style.display = 'none';
+      document.getElementById('scopeOverlay').style.display = 'flex';
+      window.tempUserForScope = user;
+    } else {
+      window.activeScope = 'FULL';
+      setSession(user);
+    }
   }
 }
 
@@ -1287,7 +1326,18 @@ function getScopedData(){
 
   // Special case: Direct reports only (e.g. Walter Javier Borda Ferro)
   if(CUR.is_direct_reports_only || curNameNorm.includes('BORDA') || CUR.email === 'walter.borda@claro.com.co'){
-    return ALL.filter(r => normWords(r.jefe) === normWords('BORDA FERRO WALTER JAVIER') || normWords(r.jefe).includes('BORDA'));
+    const w = normWords('BORDA FERRO WALTER JAVIER');
+    const directos = ALL.filter(r => normWords(r.jefe) === w || normWords(r.jefe).includes('BORDA'));
+    
+    if (window.activeScope === 'FULL') {
+      const nombresDirectos = directos.map(r => normWords(r.nombre));
+      return ALL.filter(r => {
+        const j = normWords(r.jefe);
+        return j === w || j.includes('BORDA') || nombresDirectos.includes(j);
+      });
+    } else {
+      return directos;
+    }
   }
 
   const subTree = getSubordinates(CUR.nombre, ALL);
