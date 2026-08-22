@@ -28,6 +28,7 @@ from sync_engine import (
     extract_360,
     extract_clima,
     extract_sucesores,
+    extract_ninebox,
     get_client,
     fetch_current,
     fetch_current_flat,
@@ -243,6 +244,7 @@ def main_app():
             tres60_new = extract_360(ficha2_path)
             clima_new = extract_clima(ficha2_path)
             sucesores_new = extract_sucesores(ninebox_path)
+            ninebox_new = {r["expediente"]: r for r in extract_ninebox(ninebox_path)}
 
             # Fetch actual de Supabase y comparar
             diffs: list[DiffResult] = []
@@ -254,6 +256,7 @@ def main_app():
                 ("talentos", talentos_new),
                 ("objetivos", objetivos_new),
                 ("sucesores", sucesores_new),
+                ("ninebox", ninebox_new),
             ]
             for table, new_data in tables_keyed:
                 old = fetch_current(client, table)
@@ -329,6 +332,7 @@ def main_app():
                 ("talentos", talentos_new, False),
                 ("objetivos", objetivos_new, False),
                 ("sucesores", sucesores_new, False),
+                ("ninebox", ninebox_new, False),
             ]
 
             for i, (table, data, replace_all) in enumerate(all_tables):

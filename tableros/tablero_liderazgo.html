@@ -605,6 +605,71 @@ function getSubordinates(leaderName, dataset = ALL){
   return Array.from(result);
 }
 
+
+/* ── CARGADOR SUPABASE EN VIVO ─────────────────────────────────────── */
+const SUPABASE_URL = 'https://yxxpjttdmwruyeqiuxzu.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4eHBqdHRkbXdydXllcWl1eHp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4MTQyNzUsImV4cCI6MjEwMjM5MDI3NX0.fxQc7o6Qv8Rvd8-PHJF_R-OEME-hbhbPPDnktjiNi9U';
+
+async function loadSupabaseData(){
+  try{
+    const hdr = { headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY } };
+    
+    // 1. Fetch Ninebox live data
+    const nbPromise = fetch(SUPABASE_URL + '/rest/v1/ninebox?select=*', hdr).then(r => r.json());
+    // 2. Fetch Hogan live data
+    const hgPromise = fetch(SUPABASE_URL + '/rest/v1/tableros_json?clave=eq.hogan&select=data', hdr).then(r => r.json());
+    // 3. Fetch Leaders RBAC if updated
+    const rbacPromise = fetch(SUPABASE_URL + '/rest/v1/tableros_json?clave=eq.lideres_rbac&select=data', hdr).then(r => r.json());
+
+    const [nbRows, hgRows, rbacRows] = await Promise.all([nbPromise, hgPromise, rbacPromise]);
+
+    if(!Array.isArray(nbRows) || !nbRows.length) return;
+
+    // Process Hogan Map
+    const hgMap = {};
+    if(Array.isArray(hgRows) && hgRows.length && hgRows[0].data){
+      const hData = hgRows[0].data;
+      const allHogan = [...(hData.est || []), ...(hData.op || [])];
+      allHogan.forEach(group => {
+        (group.team || []).forEach(member => {
+          const k = normWords(member.name);
+          hgMap[k] = member;
+        });
+      });
+    }
+
+    // Merge live data into ALL
+    ALL = nbRows.map(r => {
+      const copy = { ...r };
+      copy.caja = getCajaNum(copy.caja);
+      copy.nivel_reporte = copy.nivel_reporte != null ? parseInt(copy.nivel_reporte, 10) : null;
+      
+      const hMember = hgMap[normWords(copy.nombre)];
+      if(hMember){
+        copy.hogan_potencial = (hMember.scores && hMember.scores.Potencial !== undefined) ? hMember.scores.Potencial : null;
+        copy.hogan_versatilidad = hMember.versatilidad || null;
+        copy.hogan_clasificacion = hMember.clasificacion || null;
+        copy.hogan_scores = hMember.scores || {};
+      } else {
+        if(!copy.hogan_scores) copy.hogan_scores = {};
+      }
+      return copy;
+    });
+
+    if(Array.isArray(rbacRows) && rbacRows.length && rbacRows[0].data){
+      LIDERES_DATA = rbacRows[0].data;
+    }
+
+    buildLeaders();
+    if(currentUser){
+      applyFilters();
+    }
+    console.log('Supabase: Tablero de Liderazgo actualizado en vivo con', ALL.length, 'registros.');
+  }catch(err){
+    console.warn('Supabase no disponible, usando data estática embebida', err);
+  }
+}
+
 /* ── INIT ──────────────────────────────────────────────────────────── */
 function init(){
   try{
@@ -639,6 +704,7 @@ function init(){
   } else {
     showLoginOverlay();
   }
+  loadSupabaseData();
 }
 
 function buildLeaders(){
