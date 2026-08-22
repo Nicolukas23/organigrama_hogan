@@ -48,7 +48,6 @@ def migrate_hogan():
 
         if rows_to_insert:
             print(f"📦 Insertando {len(rows_to_insert)} registros en 'evaluaciones_hogan'...")
-            # Insert in chunks of 100
             for i in range(0, len(rows_to_insert), 100):
                 chunk = rows_to_insert[i:i+100]
                 client.table("evaluaciones_hogan").upsert(chunk).execute()
@@ -59,13 +58,52 @@ def migrate_hogan():
 def migrate_ninebox():
     print("📡 Migrando evaluaciones_ninebox desde ninebox...")
     try:
-        res = client.table("ninebox").select("*").execute()
-        if not res.data:
+        # 1. Fetch all existing personas to ensure FK integrity
+        all_p = []
+        offset = 0
+        while True:
+            res = client.table("personas").select("expediente").range(offset, offset + 999).execute()
+            if not res.data:
+                break
+            all_p.extend(res.data)
+            if len(res.data) < 1000:
+                break
+            offset += 1000
+        p_set = set(str(r["expediente"]).strip() for r in all_p)
+
+        # 2. Fetch ninebox rows
+        nb_res = client.table("ninebox").select("*").execute()
+        if not nb_res.data:
             print("⚠️ No hay registros en 'ninebox'.")
             return
 
+        # 3. Ensure any missing persona is registered
+        missing_personas = []
+        for r in nb_res.data:
+            exp = str(r.get("expediente", "")).strip()
+            if exp and exp not in p_set:
+                missing_personas.append({
+                    "expediente": exp,
+                    "nombre": r.get("nombre", ""),
+                    "cargo": r.get("cargo", ""),
+                    "jefe": r.get("jefe", ""),
+                    "direccion_comite": r.get("direccion", ""),
+                    "gerencia": r.get("gerencia", ""),
+                    "region": r.get("region", ""),
+                    "ciudades": r.get("ciudad", ""),
+                    "estado": "ACTIVO"
+                })
+                p_set.add(exp)
+
+        if missing_personas:
+            print(f"👤 Registrando {len(missing_personas)} colaboradores de Ninebox en 'personas'...")
+            for i in range(0, len(missing_personas), 50):
+                chunk = missing_personas[i:i+50]
+                client.table("personas").upsert(chunk).execute()
+
+        # 4. Insert into evaluaciones_ninebox
         rows_to_insert = []
-        for r in res.data:
+        for r in nb_res.data:
             rows_to_insert.append({
                 "expediente": str(r.get("expediente", "")).strip(),
                 "periodo": "2026-H1",
