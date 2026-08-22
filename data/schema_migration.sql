@@ -1,9 +1,8 @@
 -- ==============================================================================
--- SCHEMA MIGRATION: MODELO RELACIONAL CLARO TALENTO (SUPABASE / POSTGRESQL)
--- Ejecuta este script en el "SQL Editor" de tu panel de Supabase
+-- SCHEMA MIGRATION: MODELO RELACIONAL CLARO TALENTO ENTERPRISE (SUPABASE)
 -- ==============================================================================
 
--- 1. Tabla de Evaluaciones Nine Box (Si deseas separar histórico de cajas)
+-- 1. Tabla de Evaluaciones Nine Box
 CREATE TABLE IF NOT EXISTS public.evaluaciones_ninebox (
     id BIGSERIAL PRIMARY KEY,
     expediente VARCHAR(50) NOT NULL,
@@ -20,7 +19,7 @@ CREATE TABLE IF NOT EXISTS public.evaluaciones_ninebox (
         REFERENCES public.personas(expediente) ON DELETE CASCADE
 );
 
--- 2. Tabla de Evaluaciones Hogan (Estructurada relacionalmente)
+-- 2. Tabla de Evaluaciones Hogan
 CREATE TABLE IF NOT EXISTS public.evaluaciones_hogan (
     id BIGSERIAL PRIMARY KEY,
     expediente VARCHAR(50),
@@ -29,7 +28,7 @@ CREATE TABLE IF NOT EXISTS public.evaluaciones_hogan (
     cargo VARCHAR(200),
     dir_area VARCHAR(150),
     gerencia VARCHAR(150),
-    tipo_area VARCHAR(50) DEFAULT 'est', -- 'est' o 'op'
+    tipo_area VARCHAR(50) DEFAULT 'est',
     potencial INTEGER,
     versatilidad VARCHAR(50),
     clasificacion VARCHAR(50),
@@ -37,7 +36,22 @@ CREATE TABLE IF NOT EXISTS public.evaluaciones_hogan (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 3. Tabla de Logs de Sincronización
+-- 3. Tabla de Histórico de Movimientos y Trayectoria de Cajas
+CREATE TABLE IF NOT EXISTS public.historial_cajas_ninebox (
+    id BIGSERIAL PRIMARY KEY,
+    expediente VARCHAR(50) NOT NULL,
+    periodo VARCHAR(20) NOT NULL, -- ej. '2024', '2025', '2026-H1'
+    caja INTEGER NOT NULL,
+    desempeno VARCHAR(50),
+    potencial VARCHAR(50),
+    motivo_cambio VARCHAR(255) DEFAULT 'Evaluación Anual',
+    registrado_por VARCHAR(100) DEFAULT 'sistema',
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    CONSTRAINT fk_hist_persona FOREIGN KEY (expediente) 
+        REFERENCES public.personas(expediente) ON DELETE CASCADE
+);
+
+-- 4. Tabla de Logs de Auditoría de Sincronización
 CREATE TABLE IF NOT EXISTS public.sync_log (
     id BIGSERIAL PRIMARY KEY,
     fecha TIMESTAMPTZ DEFAULT NOW(),
@@ -48,7 +62,7 @@ CREATE TABLE IF NOT EXISTS public.sync_log (
     usuario VARCHAR(100) DEFAULT 'sistema'
 );
 
--- 4. VISTA CONSOLIDADA: Cruce automático de Personas + Sucesores + Desempeño
+-- 5. VISTA CONSOLIDADA EJECUTIVA
 CREATE OR REPLACE VIEW public.v_tablero_consolidado AS
 SELECT 
     p.expediente,
@@ -74,7 +88,31 @@ LEFT JOIN public.sucesores s ON p.expediente = s.expediente
 LEFT JOIN public.desempeno d ON p.expediente = d.expediente
 LEFT JOIN public.talentos t ON p.expediente = t.expediente;
 
--- Habilitar permisos de lectura pública/anónima en las nuevas tablas y vistas
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO anon, authenticated, service_role;
+-- 6. POLÍTICAS DE SEGURIDAD ROW LEVEL SECURITY (RLS)
+-- Habilitar RLS en tablas sensibles
+ALTER TABLE public.personas ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.evaluaciones_ninebox ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.evaluaciones_hogan ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.sucesores ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.historial_cajas_ninebox ENABLE ROW LEVEL SECURITY;
+
+-- Política de lectura para usuarios anónimos/autenticados de los tableros
+DROP POLICY IF EXISTS "Lectura de Tableros" ON public.personas;
+CREATE POLICY "Lectura de Tableros" ON public.personas FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Lectura de Ninebox" ON public.evaluaciones_ninebox;
+CREATE POLICY "Lectura de Ninebox" ON public.evaluaciones_ninebox FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Lectura de Hogan" ON public.evaluaciones_hogan;
+CREATE POLICY "Lectura de Hogan" ON public.evaluaciones_hogan FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Lectura de Sucesores" ON public.sucesores;
+CREATE POLICY "Lectura de Sucesores" ON public.sucesores FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Lectura de Historial" ON public.historial_cajas_ninebox;
+CREATE POLICY "Lectura de Historial" ON public.historial_cajas_ninebox FOR SELECT TO anon, authenticated USING (true);
+
+-- Permisos completos para el motor de sincronización (service_role)
 GRANT ALL ON ALL TABLES IN SCHEMA public TO service_role;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO anon, authenticated;
 

@@ -1,0 +1,213 @@
+/**
+ * print_onepager.css — Estilos de Impresión y Exportación a PDF One-Pager
+ * Formato ejecutivo Claro de alta resolución para comités de talento.
+ */
+
+@media print {
+  /* Configuración de página */
+  @page {
+    size: A4 landscape;
+    margin: 12mm 10mm 12mm 10mm;
+  }
+
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 11pt !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  body::before, body::after {
+    display: none !important;
+  }
+
+  .wrap {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Ocultar elementos interactivos no imprimibles */
+  .login-overlay,
+  .filters-bar,
+  .tabs-bar,
+  .btn-icon,
+  .btn-outline,
+  .btn-ficha,
+  .badge-ficha-btn,
+  .pager,
+  .table-foot,
+  .gs-overlay,
+  #navHeader,
+  .hdr-right,
+  .theme-toggle,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Encabezado Ejecutivo para Impresión */
+  header.dash-hdr {
+    padding: 0 0 12px 0 !important;
+    margin-bottom: 14px !important;
+    border-bottom: 2px solid #e11d48 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+
+  .hdr-titles h1 {
+    font-size: 16pt !important;
+    color: #0f172a !important;
+    font-weight: 800 !important;
+  }
+
+  .hdr-meta {
+    font-size: 9pt !important;
+    color: #475569 !important;
+  }
+
+  /* Barra de Indicadores Superior */
+  .stats-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 8px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .stat-card {
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 10px 12px !important;
+  }
+
+  .stat-lbl {
+    font-size: 7.5pt !important;
+    color: #64748b !important;
+  }
+
+  .stat-val {
+    font-size: 15pt !important;
+    color: #0f172a !important;
+  }
+
+  .stat-sub {
+    font-size: 7.5pt !important;
+    color: #64748b !important;
+  }
+
+  /* Resumen Ejecutivo */
+  .exec-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .exec-card {
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 10px 12px !important;
+  }
+
+  .ec-label {
+    font-size: 8pt !important;
+    color: #475569 !important;
+  }
+
+  .ec-value {
+    font-size: 15pt !important;
+    color: #0f172a !important;
+  }
+
+  .ec-sub {
+    font-size: 7.5pt !important;
+    color: #64748b !important;
+    min-height: auto !important;
+    margin: 4px 0 6px !important;
+  }
+
+  /* Matriz Nine Box 3x3 en Impresión */
+  .matrix-wrap {
+    display: grid !important;
+    grid-template-columns: 100px 1fr !important;
+    gap: 6px !important;
+    page-break-inside: avoid !important;
+  }
+
+  .matrix-yaxis .ylabel,
+  .matrix-xaxis .xlabel {
+    font-size: 8.5pt !important;
+    color: #334155 !important;
+    font-weight: 700 !important;
+  }
+
+  .matrix-cells {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-rows: repeat(3, 95px) !important;
+    gap: 6px !important;
+  }
+
+  .cell {
+    border-radius: 8px !important;
+    padding: 8px 10px !important;
+    min-height: 95px !important;
+    border: 1px solid #cbd5e1 !important;
+    background: #f8fafc !important;
+  }
+
+  .cell .cellname {
+    font-size: 9.5pt !important;
+    color: #0f172a !important;
+    font-weight: 700 !important;
+  }
+
+  .cell .badge {
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 8pt !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+  }
+
+  .cell .count {
+    font-size: 18pt !important;
+    color: #0f172a !important;
+  }
+
+  .cell .cell-names {
+    max-height: 48px !important;
+    gap: 3px !important;
+  }
+
+  .cell .cell-name {
+    font-size: 7pt !important;
+    padding: 1px 4px !important;
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+  }
+
+  /* Pie de reporte con timestamp de confidencialidad Claro */
+  .matrix-wrap::after {
+    content: "Documento Confidencial · Dirección Corporativa de Talento Humano Claro · " attr(data-date);
+    display: block;
+    grid-column: 1 / -1;
+    text-align: right;
+    font-size: 7.5pt;
+    color: #94a3b8;
+    margin-top: 10px;
+  }
+}
