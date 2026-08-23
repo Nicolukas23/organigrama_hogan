@@ -995,27 +995,11 @@ function getScopedData(){
     return Array.from(subSet);
   }
 
-  // For Directors: union of recursive subordinates + all employees in their Dirección (excluding themselves)
-  if(CUR.rol === 'director' && CUR.scope_dir){
-    const dirNorm = CUR.scope_dir.trim().toLowerCase();
-    ALL.forEach(r => {
-      if((r.direccion || '').trim().toLowerCase() === dirNorm && normWords(r.nombre) !== curNameNorm){
-        subSet.add(r);
-      }
-    });
-  }
+  // For Directors and Gerentes: strict recursive subordinates only.
+  // We removed the scope_dir and scope_ger fallback because it caused data inconsistencies 
+  // (employees showing up under the wrong leader just because they share the same department string).
 
-  // For Gerentes: union of recursive subordinates + all employees in their Gerencia (excluding themselves)
-  if(CUR.rol === 'gerente' && CUR.scope_ger){
-    const gerNorm = CUR.scope_ger.trim().toLowerCase();
-    ALL.forEach(r => {
-      if((r.gerencia || '').trim().toLowerCase() === gerNorm && normWords(r.nombre) !== curNameNorm){
-        subSet.add(r);
-      }
-    });
-  }
-
-  // Add all direct reports just in case
+  // Add all direct reports just in case (already handled by getSubordinates, but kept for Walter's manual case)
   directos.forEach(d => subSet.add(d));
 
   return Array.from(subSet);
