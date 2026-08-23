@@ -40,15 +40,6 @@
     </div>
 
     <button class="btn-login" onclick="loginByEmail()">Ingresar al Tablero →</button>
-    
-    <div class="login-divider">O selecciona tu perfil de piloto en la lista</div>
-    
-    <div class="login-field">
-      <label>Acceso Rápido Piloto</label>
-      <select id="selDemoUser" onchange="loginByDemoSelect()">
-        <option value="">-- Seleccionar de la lista --</option>
-      </select>
-    </div>
   </div>
 </div>
 
@@ -774,33 +765,8 @@ function buildLeaders(){
       });
     }
   });
-
+  
   LEADERS = Array.from(map.values());
-
-  // Poblar select demo
-  const sel = document.getElementById('selDemoUser');
-  if(!sel) return;
-  sel.innerHTML = '<option value="">-- Seleccionar de la lista --</option>';
-
-  const pilGrp = document.createElement('optgroup'); pilGrp.label = '── USUARIO PILOTO ──';
-  const admGrp = document.createElement('optgroup'); admGrp.label = '── ADMINISTRADORES ──';
-  const dirGrp = document.createElement('optgroup'); dirGrp.label = '── DIRECTORES CORPORATIVOS ──';
-  const gerGrp = document.createElement('optgroup'); gerGrp.label = '── GERENTES DE ÁREA ──';
-
-  LEADERS.forEach(u => {
-    const opt = document.createElement('option');
-    opt.value = u.email;
-    opt.textContent = `${u.nombre} (${u.rol === 'admin' ? 'Acceso Total' : u.cargo})`;
-    if(u.email === 'walter.borda@claro.com.co') pilGrp.appendChild(opt);
-    else if(u.rol === 'admin') admGrp.appendChild(opt);
-    else if(u.rol === 'director') dirGrp.appendChild(opt);
-    else gerGrp.appendChild(opt);
-  });
-
-  if(pilGrp.children.length) sel.appendChild(pilGrp);
-  if(admGrp.children.length) sel.appendChild(admGrp);
-  if(dirGrp.children.length) sel.appendChild(dirGrp);
-  if(gerGrp.children.length) sel.appendChild(gerGrp);
 }
 
 /* ── AUTH ──────────────────────────────────────────────────────────── */
@@ -909,29 +875,7 @@ function selectScope(scope) {
   }
 }
 
-function loginByDemoSelect(){
-  const email = document.getElementById('selDemoUser').value;
-  if(!email) return;
-  const user = LEADERS.find(u => u.email === email);
-  if(user){
-    document.getElementById('txtEmail').value = user.email;
-    document.getElementById('txtPassword').value = user.password || 'Claro2026*';
-    
-    if (user.rol === 'admin') {
-      window.activeScope = 'FULL';
-      document.getElementById('loginOverlay').style.display = 'none';
-      setSession(user);
-    } else if (user.rol === 'gerente') {
-      window.activeScope = 'DIRECT';
-      document.getElementById('loginOverlay').style.display = 'none';
-      setSession(user);
-    } else {
-      document.getElementById('loginOverlay').style.display = 'none';
-      document.getElementById('scopeOverlay').style.display = 'flex';
-      window.tempUserForScope = user;
-    }
-  }
-}
+
 
 function showScopeOverlay() {
   document.getElementById('scopeOverlay').style.display = 'flex';
