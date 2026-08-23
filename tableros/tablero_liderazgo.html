@@ -881,14 +881,18 @@ function loginByEmail(){
 
   document.getElementById('loginErr').style.display = 'none';
   
-  if(user.rol !== 'admin') {
-    document.getElementById('loginOverlay').style.display = 'none';
-    document.getElementById('scopeOverlay').style.display = 'flex';
-    window.tempUserForScope = user;
-  } else {
+  if (user.rol === 'admin') {
     window.activeScope = 'FULL';
     document.getElementById('loginOverlay').style.display = 'none';
     setSession(user);
+  } else if (user.rol === 'gerente') {
+    window.activeScope = 'DIRECT';
+    document.getElementById('loginOverlay').style.display = 'none';
+    setSession(user);
+  } else {
+    document.getElementById('loginOverlay').style.display = 'none';
+    document.getElementById('scopeOverlay').style.display = 'flex';
+    window.tempUserForScope = user;
   }
 }
 
@@ -913,14 +917,18 @@ function loginByDemoSelect(){
     document.getElementById('txtEmail').value = user.email;
     document.getElementById('txtPassword').value = user.password || 'Claro2026*';
     
-    if(user.rol !== 'admin') {
-      document.getElementById('loginOverlay').style.display = 'none';
-      document.getElementById('scopeOverlay').style.display = 'flex';
-      window.tempUserForScope = user;
-    } else {
+    if (user.rol === 'admin') {
       window.activeScope = 'FULL';
       document.getElementById('loginOverlay').style.display = 'none';
       setSession(user);
+    } else if (user.rol === 'gerente') {
+      window.activeScope = 'DIRECT';
+      document.getElementById('loginOverlay').style.display = 'none';
+      setSession(user);
+    } else {
+      document.getElementById('loginOverlay').style.display = 'none';
+      document.getElementById('scopeOverlay').style.display = 'flex';
+      window.tempUserForScope = user;
     }
   }
 }
@@ -933,7 +941,7 @@ function setSession(user){
   CUR = user;
   localStorage.setItem('lider_email', user.email);
 
-  if(user.rol === 'admin'){
+  if(user.rol === 'admin' || user.rol === 'gerente'){
     document.getElementById('btnScopeToggle').style.display = 'none';
   } else {
     document.getElementById('btnScopeToggle').style.display = 'inline-block';
