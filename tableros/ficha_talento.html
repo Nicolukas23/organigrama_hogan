@@ -151,6 +151,7 @@
 </footer>
 
 <script src="../data/ficha_data.js?v=202607302100"></script>
+<script src="../data/comite_hogan.js"></script>
 <script>
 // ── CARGADOR SUPABASE ────────────────────────────────────────────
 // Intenta cargar la data viva desde Supabase. Si falla, usa ficha_data.js estático.
@@ -182,6 +183,20 @@ async function loadSupabaseData(){
       informacion,formacion,desempeno:d3,talentos:t3,objetivos:o3,tres60:e3,clima:c3,sucesores:s3,
       comite:{},hogan:{},observaciones:{}
     };
+    if (window.COMITE_HOGAN) {
+      Object.keys(window.COMITE_HOGAN).forEach(name => {
+        const removeAccents = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const exp = Object.keys(informacion).find(k => {
+           const infoName = removeAccents(informacion[k].nombre ? informacion[k].nombre.toUpperCase() : '');
+           let searchName = removeAccents(name.trim().toUpperCase());
+           if(searchName === 'WALTER BORDA FERRO') searchName = 'WALTER BORDA'; // Database might omit Ferro
+           if(searchName === 'FREDDY VARGAS') searchName = 'FREDY VARGAS'; // Minor spelling differences
+           const parts = searchName.split(' ');
+           return parts.every(p => infoName.includes(p));
+        });
+        if (exp) window.DATA.hogan[exp] = window.COMITE_HOGAN[name];
+      });
+    }
     window.SUCESORES=hijos.map(exp=>({exp,nombre:informacion[exp].nombre}));
     if(SUCESORES.length===0)SUCESORES.push(...hijos.map(exp=>({exp,nombre:informacion[exp].nombre})));
     // Re-poblar el datalist de búsqueda con la data viva
