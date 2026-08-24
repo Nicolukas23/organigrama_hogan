@@ -348,7 +348,7 @@
     <div class="hogan-team-card">
       <div style="display:flex;align-items:center;gap:12px"><h3 style="font-family:'Space Grotesk',sans-serif;font-size:15px;margin:0">Promedio Equipo — Competencias Hogan</h3><div id="hgTeamSummary" style="display:flex;gap:8px"></div></div>
       <p style="font-size:12.5px;color:var(--text-dim);margin:4px 0">Consolidado de evaluados en tu estructura jerárquica.</p>
-      <div class="team-comp-grid" id="teamCompGrid"></div>
+      <div  id="teamCompGrid"></div>
     </div>
     <h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;margin:24px 0 12px">Evaluaciones Individuales</h3>
     <div class="hogan-grid" id="hoganGrid"></div>
@@ -1406,27 +1406,69 @@ function renderHogan(){
         }
       });
       
-      Object.keys(teamComps).sort().forEach(c => {
+      // Draw a full chart just like Image 2
+      tg.style.display = 'block';
+      tg.style.marginTop = '16px';
+      
+      let chartHtml = `
+      <div style="border:1px solid #ddd; border-radius:6px; overflow:hidden; background:#fff;">
+        <div style="background:#333; color:#fff; padding:8px 16px; font-size:13px; font-weight:700; font-family:'Space Grotesk',sans-serif;">
+          PERFIL DE COMPETENCIAS (HOGAN) — ESCALA 0 A 100
+        </div>
+        <div style="padding:16px 20px 24px 16px;">
+          <div style="display:flex; flex-direction:column; gap:10px;">
+      `;
+      
+      // Calculate total for summary first
+      const sortedComps = Object.keys(teamComps).sort();
+      sortedComps.forEach(c => {
         const avg = Math.round(teamComps[c].sum / teamComps[c].count);
         totalCompScore += avg;
         totalCompCount++;
-        
-        let cHex = '#d1d5db';
-        if (avg >= 70) cHex = '#10b981';
-        else if (avg >= 40) cHex = '#f59e0b';
-        else cHex = '#ef4444';
-
-        const d = document.createElement('div');
-        d.style.cssText = 'display:flex;align-items:center;gap:12px;padding:6px 0;border-bottom:1px solid rgba(0,0,0,0.04)';
-        d.innerHTML = `
-          <div style="flex:1;font-size:12.5px;font-weight:600;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${c}">${c}</div>
-          <div style="flex:1.5;height:5px;background:rgba(0,0,0,0.06);border-radius:10px;overflow:hidden">
-            <div style="height:100%;width:${Math.min(100, avg)}%;background:${cHex};border-radius:10px"></div>
-          </div>
-          <div style="width:35px;font-size:12.5px;font-weight:800;color:${cHex};text-align:right;font-family:'JetBrains Mono'">${avg}</div>
-        `;
-        tg.appendChild(d);
       });
+      
+      // Draw each bar
+      sortedComps.forEach(c => {
+        const avg = Math.round(teamComps[c].sum / teamComps[c].count);
+        chartHtml += `
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div style="width:160px; text-align:right; font-size:11.5px; font-weight:500; color:#333; flex-shrink:0;">${c}</div>
+              <div style="flex:1; position:relative; height:20px; border-left:1px solid #ddd; border-right:1px solid #ddd;">
+        `;
+        // Grid lines
+        for(let g=0; g<=100; g+=10){
+          chartHtml += `<div style="position:absolute; left:${g}%; top:-5px; bottom:-5px; width:1px; background:#f0f0f0; z-index:1;"></div>`;
+        }
+        // Bar (red like Image 2)
+        chartHtml += `
+                <div style="position:absolute; left:0; top:2px; bottom:2px; width:${Math.min(100, avg)}%; background:#c0392b; z-index:2;"></div>
+              </div>
+            </div>
+        `;
+      });
+      
+      // Draw X-axis
+      chartHtml += `
+            <div style="display:flex; align-items:center; gap:12px; margin-top:4px;">
+              <div style="width:160px; flex-shrink:0;"></div>
+              <div style="flex:1; position:relative; height:15px;">
+      `;
+      for(let g=0; g<=100; g+=10){
+        let align = g === 0 ? 'left' : (g === 100 ? 'right' : 'center');
+        let transform = g === 0 ? '' : (g === 100 ? 'transform:translateX(50%);' : 'transform:translateX(-50%);');
+        if (g === 100) transform = '';
+        let leftAdjust = g === 100 ? 'right:0;' : `left:${g}%;`;
+        chartHtml += `<div style="position:absolute; ${leftAdjust} top:0; font-size:10px; color:#666; ${transform}">${g}</div>`;
+      }
+      chartHtml += `
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      `;
+      
+      tg.innerHTML = chartHtml;
       
       if(hgSummary && totalCompCount > 0){
         const overallAvg = Math.round(totalCompScore / totalCompCount);
