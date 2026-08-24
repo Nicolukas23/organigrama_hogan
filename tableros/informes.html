@@ -622,7 +622,7 @@ function fichaReportHTML(p,photoUrl){
   const cliAvg=cliEntries.length?Math.round(cliEntries.reduce((s,e)=>s+e[1],0)/cliEntries.length*100):null;
   const getClimaColor=v=>{if(v>=70)return '#16a34a';if(v>=40)return '#e97b1a';return '#e21836';};
   const shortNames={'Objetivos Y Procesos Organizacionales':'Obj. Procesos','Desarrollo Profesional Y Capacitacion':'Des. Profesional','Orientación Al Servicio':'Orient. Servicio','Satisfaccion Y Compromiso Organizacional':'Satisfacción','Orientación A Resultados Y Logro De Objetivos':'Orient. Resultados','Trabajo En Equipo':'Trabajo Equipo','Cultura, Equidad Y Código De Ética':'Cultura Y Ética','Comunicación Organizacional':'Comunicación','Administración De Recursos':'Adm. Recursos'};
-  const climaHtml=cliEntries.length?'<div class="section-title blue">Clima organizacional</div>'+
+  const climaHtml=cliEntries.length?'<div class="section-title blue">Clima Organizacional 2025</div>'+
     '<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;"><span style="font-size:13px;font-weight:700;color:#1a1d23;">Resultado general:</span><span style="font-family:Space Grotesk,sans-serif;font-size:22px;font-weight:800;color:'+getClimaColor(cliAvg)+';">'+cliAvg+'%</span></div>'+
     '<div class="chart-card"><div class="bar-chart" style="height:260px;flex-wrap:wrap;">'+cliEntries.map(e=>{
       const h=Math.round(e[1]*170);
