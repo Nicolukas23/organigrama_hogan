@@ -1,48 +1,4 @@
-
-<main style="padding:20px; max-width:1200px; margin:0 auto; padding-top:60px;">
-  <!-- Header -->
-  <div id="fichaHeaderContainer"></div>
-
-  <div style="margin-top:24px;">
-    <h3 style="font-family:"Space Grotesk",sans-serif;font-size:16px;color:var(--text);margin-bottom:12px;">Fortalezas y Oportunidades</h3>
-    <div id="hoganTextSection" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-      <div id="hoganFortalezas" style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;">
-        <div style="font-size:12px;font-weight:700;color:#a16207;background:#fef9c3;padding:6px 12px;border-radius:6px;margin-bottom:12px;text-align:center;">FORTALEZAS</div>
-        <div id="fortText" style="font-size:11.5px;color:var(--text);line-height:1.6;white-space:pre-line;">Sin datos</div>
-      </div>
-      <div id="hoganOportunidades" style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;">
-        <div style="font-size:12px;font-weight:700;color:#b91c1c;background:#fee2e2;padding:6px 12px;border-radius:6px;margin-bottom:12px;text-align:center;">OPORTUNIDADES DE DESARROLLO / DESCARRILADORES</div>
-        <div id="oportText" style="font-size:11.5px;color:var(--text);line-height:1.6;white-space:pre-line;">Sin datos</div>
-      </div>
-    </div>
-  </div>
-
-  <div style="display:grid; grid-template-columns:300px 1fr; gap:24px; margin-top:24px; align-items:start;">
-    <!-- Left: Ninebox -->
-    <div id="nineboxContainer" style="background:#fff; border:1px solid var(--border); border-radius:10px; padding:16px;">
-      <h3 style="font-family:"Space Grotesk",sans-serif;font-size:14px;color:var(--text);text-align:center;margin-bottom:16px;">NINEBOX</h3>
-      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; max-width:250px; margin:0 auto; aspect-ratio:1;">
-        <!-- Row 1 (Alto Desempeño) -->
-        <div id="nb7" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">7</div>
-        <div id="nb8" style="background:#34d399; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">8</div>
-        <div id="nb9" style="background:#10b981; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">9</div>
-        <!-- Row 2 (Medio Desempeño) -->
-        <div id="nb4" style="background:#f59e0b; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">4</div>
-        <div id="nb5" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">5</div>
-        <div id="nb6" style="background:#34d399; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">6</div>
-        <!-- Row 3 (Bajo Desempeño) -->
-        <div id="nb1" style="background:#ef4444; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">1</div>
-        <div id="nb2" style="background:#f59e0b; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">2</div>
-        <div id="nb3" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">3</div>
-      </div>
-      <div id="nbText" style="text-align:center; font-size:12px; font-weight:600; margin-top:12px; color:var(--text);">Caja: -</div>
-    </div>
-
-    <!-- Right: Hogan Chart -->
-    <div id="hoganChartContainer"></div>
-  </div>
-</main>
-YPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -61,7 +17,6 @@ YPE html>
 
 <link rel="stylesheet" href="../data/ficha_talento.css">
   <link rel="manifest" href="../manifest.json">
-  <script src="../data/comite_hogan.js"></script>
   <script src="../data/global_search.js" defer></script>
 </head>
 <body>
@@ -75,70 +30,81 @@ YPE html>
     <button onclick="downloadPDF()" style="background:#fff;color:var(--crimson);border:2px solid #fff;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:14px;">Descargar PDF</button>
   </div>
 </div>
-
-<div class="main" id="fichaContent" style="max-width:1200px; margin: 0 auto; padding: 20px;">
-  <!-- HEADER -->
-  <div class="info-header" style="margin-bottom:24px;">
-    <div class="ih-photo" id="ihPhoto" style="background:var(--primary); color:#fff; font-size:40px; font-weight:bold; display:flex; align-items:center; justify-content:center;">
-      <svg viewBox="0 0 24 24" fill="currentColor" style="width:50%; height:50%;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+<div class="main" id="fichaContent">
+  <div class="info-header">
+    <div class="ih-photo" id="ihPhoto">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
     </div>
     <div class="ih-text">
-      <span class="ih-name" id="iNombre" style="font-size:24px;">—</span>
-      <div class="ih-meta" style="margin-top:8px;">
+      <span class="ih-name" id="iNombre">—</span>
+      <div class="ih-meta">
+        <span><strong>Edad:</strong> <span id="iEdad">—</span></span>
+        <span class="ih-sep">|</span>
         <span><strong>Cargo:</strong> <span id="iCargo">—</span></span>
+        <span class="ih-sep">|</span>
+        <span><strong>Dir. Comité:</strong> <span id="iDirComite">—</span></span>
         <span class="ih-sep">|</span>
         <span><strong>Gerencia:</strong> <span id="iGerencia">—</span></span>
         <span class="ih-sep">|</span>
         <span><strong>Jefe:</strong> <span id="iJefe">—</span></span>
+        <span class="ih-sep">|</span>
+        <span><strong>Antigüedad:</strong> <span id="iAntiguedad">—</span></span>
+        <span class="ih-sep">|</span>
+        <span id="personasACargoWrap" style="display:none;"><strong>Personas a cargo:</strong> <span id="iCargoEquipo">—</span></span>
       </div>
     </div>
   </div>
+
 
   <!-- FORTALEZAS Y OPORTUNIDADES -->
-  <h3 style="font-family:"Space Grotesk",sans-serif; color:#fff; font-size:16px; margin-bottom:12px;">Fortalezas y Oportunidades</h3>
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px;">
-    <div style="background:#fff; border-radius:8px; overflow:hidden;">
-      <div style="background:#fef08a; color:#854d0e; font-weight:700; font-size:12px; text-align:center; padding:8px; font-family:"Space Grotesk",sans-serif;">FORTALEZAS</div>
-      <div id="fortText" style="padding:16px; font-size:13px; color:#333; line-height:1.6; min-height:80px;">Sin datos</div>
-    </div>
-    <div style="background:#fff; border-radius:8px; overflow:hidden;">
-      <div style="background:#fecdd3; color:#9f1239; font-weight:700; font-size:12px; text-align:center; padding:8px; font-family:"Space Grotesk",sans-serif;">OPORTUNIDADES DE DESARROLLO / DESCARRILADORES</div>
-      <div id="oportText" style="padding:16px; font-size:13px; color:#333; line-height:1.6; min-height:80px;">Sin datos</div>
-    </div>
-  </div>
-
-  <!-- NINEBOX AND COMPETENCIES -->
-  <div style="display:flex; gap:20px; align-items:flex-start;">
-    
-    <!-- NINEBOX -->
-    <div style="width:300px; flex-shrink:0;">
-      <div id="nineboxContainer" style="background:#fff; border:1px solid var(--border); border-radius:10px; padding:16px; display:flex; flex-direction:column; align-items:center;">
-        <h3 style="font-family:"Space Grotesk",sans-serif;font-size:14px;color:var(--text);text-align:center;margin-bottom:16px;color:#333;">NINEBOX</h3>
-        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; width:220px; height:220px; margin:0 auto;">
-          <div id="nb7" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:16px;">7</div>
-          <div id="nb8" style="background:#34d399; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:16px;">8</div>
-          <div id="nb9" style="background:#10b981; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:16px;">9</div>
-          
-          <div id="nb4" style="background:#f59e0b; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:16px;">4</div>
-          <div id="nb5" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:16px;">5</div>
-          <div id="nb6" style="background:#34d399; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:16px;">6</div>
-          
-          <div id="nb1" style="background:#ef4444; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:16px;">1</div>
-          <div id="nb2" style="background:#f59e0b; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:16px;">2</div>
-          <div id="nb3" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:16px;">3</div>
-        </div>
-        <div id="nbText" style="margin-top:12px; font-weight:bold; color:#333; font-size:14px; text-align:center;">—</div>
+  <div style="margin-top:24px;">
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;color:var(--text);margin-bottom:12px;font-weight:bold;">Fortalezas y Oportunidades</h3>
+    <div id="hoganTextSection" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div id="hoganFortalezas" style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;">
+        <div style="font-size:12px;font-weight:700;color:#a16207;background:#fef9c3;padding:6px 12px;border-radius:6px;margin-bottom:12px;text-align:center;font-family:'Space Grotesk',sans-serif;">FORTALEZAS</div>
+        <div id="fortText" style="font-size:11.5px;color:var(--text);line-height:1.6;white-space:pre-line;">Sin datos</div>
+      </div>
+      <div id="hoganOportunidades" style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;">
+        <div style="font-size:12px;font-weight:700;color:#9f1239;background:#fecdd3;padding:6px 12px;border-radius:6px;margin-bottom:12px;text-align:center;font-family:'Space Grotesk',sans-serif;">OPORTUNIDADES DE DESARROLLO / DESCARRILADORES</div>
+        <div id="oportText" style="font-size:11.5px;color:var(--text);line-height:1.6;white-space:pre-line;">Sin datos</div>
       </div>
     </div>
+  </div>
 
-    <!-- COMPETENCIES -->
-    <div id="hoganChartContainer" style="flex:1;">
-       <div style="padding:20px; text-align:center; color:#aaa; background:#fff; border-radius:8px;">Cargando gráfica...</div>
+  <!-- NINEBOX Y COMPETENCIAS -->
+  <div style="display:grid; grid-template-columns:300px 1fr; gap:24px; margin-top:24px; align-items:start;">
+    <!-- Left: Ninebox -->
+    <div id="nineboxContainer" style="background:#fff; border:1px solid var(--border); border-radius:10px; padding:16px;">
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:14px;color:var(--text);text-align:center;margin-bottom:16px;font-weight:bold;">NINEBOX</h3>
+      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; max-width:250px; margin:0 auto; aspect-ratio:1;">
+        <!-- Row 1 (Alto Desempeño) -->
+        <div id="nb7" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">7</div>
+        <div id="nb8" style="background:#34d399; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">8</div>
+        <div id="nb9" style="background:#10b981; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">9</div>
+        <!-- Row 2 (Medio Desempeño) -->
+        <div id="nb4" style="background:#f59e0b; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">4</div>
+        <div id="nb5" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">5</div>
+        <div id="nb6" style="background:#34d399; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">6</div>
+        <!-- Row 3 (Bajo Desempeño) -->
+        <div id="nb1" style="background:#ef4444; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">1</div>
+        <div id="nb2" style="background:#f59e0b; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">2</div>
+        <div id="nb3" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">3</div>
+      </div>
+      <div id="nbText" style="text-align:center; font-size:12px; font-weight:600; margin-top:12px; color:var(--text);">Caja: -</div>
     </div>
-
+    <!-- Right: Competencias -->
+    <div id="hoganChartContainer" style="background:#fff; border-radius:10px;">
+      <div style="padding:20px; text-align:center; color:#666;">Cargando gráfica...</div>
+    </div>
   </div>
 </div>
+</div>
+<footer style="margin-top:32px;padding:16px 32px;border-top:1px solid var(--border);text-align:center;color:var(--text-dim);font-size:12px;font-family:'Inter',sans-serif;">
+  <span>Planeación de Talento · Ficha de Talento — Claro Colombia 2026</span>
+</footer>
 
+<script src="../data/ficha_data.js?v=202607302100"></script>
+<script src="../data/comite_hogan.js"></script>
 <script>
 // ── CARGADOR SUPABASE ────────────────────────────────────────────
 // Intenta cargar la data viva desde Supabase. Si falla, usa ficha_data.js estático.
@@ -204,7 +170,6 @@ loadSupabaseData();
 </script>
 <script>
 
-loadSupabaseData().then(() => {
 // Populate datalist
 const dl=document.getElementById('cedulas');
 SUCESORES.forEach(p=>{
@@ -222,103 +187,141 @@ function searchPerson(){
   loadFicha(p);
 }
 
-
 function loadFicha(p){
-    // Poblar Header
-    document.getElementById('iNombre').textContent = p.nombre || '—';
-    document.getElementById('iCargo').textContent = p.cargo || '—';
-    document.getElementById('iGerencia').textContent = p.gerencia || p.direccion_area || '—';
-    document.getElementById('iJefe').textContent = p.jefe || '—';
-    const initials = p.nombre ? p.nombre.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase() : '';
-    document.getElementById('ihPhoto').innerHTML = '<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;">' + initials + '</div>';
+  document.getElementById('iNombre').textContent=p.nombre;
 
-    // Poblar Fortalezas y Oportunidades
-    const exp = p.exp || p.expediente || Object.keys(DATA.informacion).find(k => DATA.informacion[k].nombre === p.nombre);
-    const h = window.DATA.hogan[exp] || {};
-    const extra = (window.HOGAN_EXTRAS && window.HOGAN_EXTRAS[exp]) || {};
-    
-    // Merge fortalezas/oportunidades
-    const fort = extra.fortalezas || h.fortalezas || '';
-    const oport = extra.oportunidades || h.descarriladores || h.oportunidades || '';
+  // Header: fetch information from DATA.informacion
+  const info=window.DATA.informacion[p.exp] || {};
+  document.getElementById('iCargo').textContent=info.cargo?info.cargo:'—';
+  document.getElementById('iDirComite').textContent=info.direccion_comite?info.direccion_comite:'—';
+  document.getElementById('iGerencia').textContent=info.gerencia?info.gerencia:'—';
+  document.getElementById('iJefe').textContent=info.jefe?info.jefe:'—';
+  
+  if(info.fecha_nacimiento){
+    const fnac=new Date(info.fecha_nacimiento);
+    const hoy=new Date();
+    let edad=hoy.getFullYear()-fnac.getFullYear();
+    const m=hoy.getMonth()-fnac.getMonth();
+    if(m<0||(m===0&&hoy.getDate()<fnac.getDate()))edad--;
+    document.getElementById('iEdad').textContent=edad+' años';
+  } else {
+    document.getElementById('iEdad').textContent='—';
+  }
+  if(info.fecha_ingreso){
+    const fing=new Date(info.fecha_ingreso);
+    const hoy=new Date();
+    let ant=hoy.getFullYear()-fing.getFullYear();
+    const m=hoy.getMonth()-fing.getMonth();
+    if(m<0||(m===0&&hoy.getDate()<fing.getDate()))ant--;
+    document.getElementById('iAntiguedad').textContent=ant+' años';
+  } else {
+    document.getElementById('iAntiguedad').textContent='—';
+  }
 
-    const formatBullets = (txt) => {
-      if(!txt || txt === 'nan') return 'Sin datos';
-      return String(txt).replace(/•/g, '<br><span style="color:var(--primary);font-weight:bold;">•</span>');
-    };
-    
-    document.getElementById('fortText').innerHTML = fort ? formatBullets(fort) : 'Sin datos';
-    document.getElementById('oportText').innerHTML = oport ? formatBullets(oport) : 'Sin datos';
-
-    // Ninebox (Izquierda)
-    for(let i=1; i<=9; i++) {
-       const box = document.getElementById('nb'+i);
-       if(box) {
-         box.style.border = 'none';
-         box.style.opacity = '0.3'; // Dim non-active boxes
-         box.innerHTML = '';
-       }
+  // Handle Photo
+  const ihPhoto=document.getElementById('ihPhoto');
+  const exts=['.jpeg','.jpg','.png'];
+  const tryPhoto=function(idx){
+    if(idx>=exts.length){
+      const initials = p.nombre ? p.nombre.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase() : '';
+      ihPhoto.innerHTML = '<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:var(--primary); color:#fff; font-size:40px; font-weight:bold;">' + initials + '</div>';
+      return;
     }
-    const cNum = getCajaNum(p.caja);
-    if(cNum && document.getElementById('nb'+cNum)) {
-       const actBox = document.getElementById('nb'+cNum);
-       actBox.style.border = '3px solid #111827';
-       actBox.style.opacity = '1';
-       actBox.innerHTML = '<span style="color:#111827;">' + cNum + '</span>';
-       document.getElementById('nbText').textContent = 'Caja ' + cNum;
-    } else {
-       document.getElementById('nbText').textContent = 'Sin evaluación Ninebox';
-    }
-
-    let comps = [];
-    if (extra && extra.competencias) comps = extra.competencias; else if (h && h.competencias) comps = h.competencias;
-    else if (p.hogan_scores) {
-      Object.entries(p.hogan_scores).forEach(([k,v]) => {
-        if(k !== 'Potencial' && k !== 'Potential') comps.push({nombre: k, puntaje: v});
-      });
-    }
-
-    if (comps.length > 0) {
-      const sorted = [...comps].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
-      let chartHtml = '<div style="border:1px solid #ddd; border-radius:6px; overflow:hidden; background:#fff;">';
-      chartHtml += '<div style="background:#333; color:#fff; padding:8px 16px; font-size:13px; font-weight:700; font-family:"Space Grotesk",sans-serif; display:flex; justify-content:space-between; align-items:center;">';
-      chartHtml += '<span>PERFIL DE COMPETENCIAS (HOGAN) — ESCALA 0 A 100</span><span style="font-size:10px;font-weight:500;opacity:0.8;">(Puntaje)</span></div>';
-      chartHtml += '<div style="padding:16px 20px 24px 16px;"><div style="display:flex; flex-direction:column; gap:10px;">';
-      
-      sorted.forEach(c=>{
-        chartHtml+='<div style="display:flex; align-items:center; gap:12px;">';
-        chartHtml+='<div style="width:180px; text-align:right; font-size:11.5px; font-weight:500; color:#333; flex-shrink:0;">'+c.nombre+'</div>';
-        chartHtml+='<div style="flex:1; position:relative; height:20px; border-left:1px solid #ddd; border-right:1px solid #ddd;">';
-        for(let g=0;g<=100;g+=10){
-          chartHtml+='<div style="position:absolute; left:'+g+'%; top:-5px; bottom:-5px; width:1px; background:#f0f0f0; z-index:1;"></div>';
-        }
-        chartHtml+='<div style="position:absolute; left:0; top:2px; bottom:2px; width:'+Math.min(100, c.puntaje)+'%; background:#c0392b; z-index:2;"></div>';
-        chartHtml+='</div>';
-        chartHtml+='</div>';
-      });
-
-      chartHtml += '<div style="display:flex; align-items:center; gap:12px; margin-top:4px;">';
-      chartHtml += '<div style="width:180px; flex-shrink:0;"></div>';
-      chartHtml += '<div style="flex:1; position:relative; height:15px;">';
-      for(let g=0; g<=100; g+=10){
-        let align = g === 0 ? 'left' : (g === 100 ? 'right' : 'center');
-        let transform = g === 0 ? '' : (g === 100 ? 'transform:translateX(50%);' : 'transform:translateX(-50%);');
-        if (g === 100) transform = '';
-        let leftAdjust = g === 100 ? 'right:0;' : 'left:'+g+'%;';
-        chartHtml += '<div style="position:absolute; '+leftAdjust+' top:0; font-size:10px; color:#666; '+transform+'">'+g+'</div>';
+    fetch('../data/FOTOS/'+p.exp+exts[idx], {method:'HEAD'}).then(function(r){
+      if(r.ok){
+        ihPhoto.innerHTML='';
+        var img=new Image();
+        img.alt=p.nombre;
+        img.src='../data/FOTOS/'+p.exp+exts[idx];
+        ihPhoto.appendChild(img);
+      }else{
+        tryPhoto(idx+1);
       }
-      chartHtml += '</div></div>';
-      chartHtml += '</div></div></div>';
-      
-      document.getElementById('hoganChartContainer').innerHTML = chartHtml;
-    } else {
-      document.getElementById('hoganChartContainer').innerHTML = '<div style="padding:20px; text-align:center; color:#666;">Sin datos de competencias Hogan</div>';
-    }
-    
-    document.title = p.nombre + " - Hogan";
-    const headerTitle = document.querySelector('.app-header h1');
-    if (headerTitle) headerTitle.innerText = "Ficha Preliminar Hogan";
-}
+    }).catch(function(){tryPhoto(idx+1);});
+  };
+  tryPhoto(0);
 
+  // Fortalezas y Oportunidades
+  const h = window.DATA.hogan[p.exp] || {};
+  const extra = (window.HOGAN_EXTRAS && window.HOGAN_EXTRAS[p.exp]) || {};
+  
+  const fort = extra.fortalezas || h.fortalezas || '';
+  const oport = extra.oportunidades || h.descarriladores || h.oportunidades || '';
+
+  const formatBullets = (txt) => {
+    if(!txt || txt === 'nan') return 'Sin datos';
+    return String(txt).replace(/•/g, '<br><span style="color:var(--primary);font-weight:bold;">•</span>');
+  };
+  
+  document.getElementById('fortText').innerHTML = fort ? formatBullets(fort) : 'Sin datos';
+  document.getElementById('oportText').innerHTML = oport ? formatBullets(oport) : 'Sin datos';
+
+  // Ninebox
+  for(let i=1; i<=9; i++) {
+     const box = document.getElementById('nb'+i);
+     if(box) {
+       box.style.border = 'none';
+       box.style.opacity = '0.3';
+       box.innerHTML = '';
+     }
+  }
+  const cNum = getCajaNum(info.caja || p.caja);
+  if(cNum && document.getElementById('nb'+cNum)) {
+     const actBox = document.getElementById('nb'+cNum);
+     actBox.style.border = '3px solid #111827';
+     actBox.style.opacity = '1';
+     actBox.innerHTML = '<span style="color:#111827;">' + cNum + '</span>';
+     document.getElementById('nbText').textContent = 'Caja ' + cNum;
+  } else {
+     document.getElementById('nbText').textContent = 'Sin evaluación Ninebox';
+  }
+
+  // Competencias Hogan
+  let comps = [];
+  if (extra && extra.competencias) comps = extra.competencias;
+  else if (h && h.competencias) comps = h.competencias;
+
+  if (comps.length > 0) {
+    const sorted = [...comps].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
+    let chartHtml = '<div style="border:1px solid #ddd; border-radius:6px; overflow:hidden; background:#fff;">';
+    chartHtml += '<div style="background:#333; color:#fff; padding:8px 16px; font-size:13px; font-weight:700; font-family:\"Space Grotesk\",sans-serif; display:flex; justify-content:space-between; align-items:center;">';
+    chartHtml += '<span>PERFIL DE COMPETENCIAS (HOGAN) — ESCALA 0 A 100</span><span style="font-size:10px;font-weight:500;opacity:0.8;">(Puntaje)</span></div>';
+    chartHtml += '<div style="padding:16px 20px 24px 16px;"><div style="display:flex; flex-direction:column; gap:10px;">';
+    
+    sorted.forEach(c=>{
+      chartHtml+='<div style="display:flex; align-items:center; gap:12px;">';
+      chartHtml+='<div style="width:180px; text-align:right; font-size:11.5px; font-weight:500; color:#333; flex-shrink:0;">'+c.nombre+'</div>';
+      chartHtml+='<div style="flex:1; position:relative; height:20px; border-left:1px solid #ddd; border-right:1px solid #ddd;">';
+      for(let g=0;g<=100;g+=10){
+        let leftAdjust = g === 100 ? 'right:-10px;' : (g === 0 ? 'left:-5px;' : 'left:calc('+g+'% - 8px);');
+        let transform = g === 100 ? '' : (g === 0 ? '' : 'transform:translateX(-50%);');
+        chartHtml+='<div style="position:absolute; left:'+g+'%; top:-5px; bottom:-5px; width:1px; background:#f0f0f0; z-index:1;"></div>';
+      }
+      chartHtml+='<div style="position:absolute; left:0; top:2px; bottom:2px; width:'+Math.min(100, c.puntaje)+'%; background:#c0392b; z-index:2;"></div>';
+      chartHtml+='</div>';
+      chartHtml+='</div>';
+    });
+
+    chartHtml += '<div style="display:flex; align-items:center; gap:12px; margin-top:5px;">';
+    chartHtml += '<div style="width:180px; flex-shrink:0;"></div>';
+    chartHtml += '<div style="flex:1; position:relative; height:15px;">';
+    for(let g=0;g<=100;g+=10){
+      let leftAdjust = g === 100 ? 'right:-10px;' : (g === 0 ? 'left:-5px;' : 'left:calc('+g+'% - 8px);');
+      let transform = g === 100 ? '' : (g === 0 ? '' : 'transform:translateX(-50%);');
+      chartHtml += '<div style="position:absolute; '+leftAdjust+' top:0; font-size:10px; color:#666; '+transform+'">'+g+'</div>';
+    }
+    chartHtml += '</div></div>';
+    chartHtml += '</div></div></div>';
+    
+    document.getElementById('hoganChartContainer').innerHTML = chartHtml;
+  } else {
+    document.getElementById('hoganChartContainer').innerHTML = '<div style="padding:20px; text-align:center; color:#666;">Sin datos de competencias Hogan</div>';
+  }
+  
+  document.title = p.nombre + " - Hogan";
+  const headerTitle = document.querySelector('.app-header h1');
+  if (headerTitle) headerTitle.innerText = "Ficha Preliminar Hogan";
+}
 
 function getCajaNum(c){
   if(!c) return 0;
@@ -332,43 +335,27 @@ function getCajaNum(c){
   if(s==='7'||s==='7. Alto Potencial') return 7;
   if(s==='8'||s==='8. Estrella Ascendente') return 8;
   if(s==='9'||s==='9. Futuro Líder') return 9;
+
   return 0;
 }
 
+// Initial Load
+setTimeout(() => {
+  const urlParams=new URLSearchParams(window.location.search);
+  const nombreParam=urlParams.get('nombre');
+  const expParam=urlParams.get('exp') || urlParams.get('expediente');
 
-const urlParams=new URLSearchParams(window.location.search);
-const nombreParam=urlParams.get('nombre');
-const expParam=urlParams.get('exp');
-if(expParam){
-  const match=SUCESORES.find(x=>x.exp===expParam);
-  if(match){
-    document.getElementById('cedulaInput').value=match.nombre;
-    loadFicha(match);
+  if(expParam){
+    const p=SUCESORES.find(x=>x.exp===expParam);
+    if(p)loadFicha(p);
+  }else if(nombreParam){
+    const p=SUCESORES.find(x=>x.nombre===nombreParam);
+    if(p)loadFicha(p);
   }else{
-    loadFicha(SUCESORES[0]);
+    if(SUCESORES.length>0)loadFicha(SUCESORES[0]);
   }
-}else if(nombreParam){
-  const match=SUCESORES.find(x=>x.nombre.toUpperCase()===nombreParam.toUpperCase());
-  if(match){
-    document.getElementById('cedulaInput').value=nombreParam;
-    loadFicha(match);
-  }else{
-    loadFicha(SUCESORES[0]);
-  }
-}else{
-  loadFicha(SUCESORES[0]);
-}
-document.getElementById('cedulaInput').addEventListener('change',function(){if(this.value)searchPerson();});
+}, 500); // Give Supabase time to load since loadSupabaseData doesn't block DOM parsing
 
-});
-
-function toggleTheme(){
-  document.documentElement.classList.toggle('light');
-  localStorage.setItem('theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
-}
-if(localStorage.getItem('theme') === 'light'){
-  document.documentElement.classList.add('light');
-}
 
 </script>
 <script src="../data/nav.js"></script>
