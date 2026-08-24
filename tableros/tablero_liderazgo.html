@@ -1391,8 +1391,23 @@ function renderHogan(){
       let domVers = ''; let domMax = 0;
       Object.entries(versCounts).forEach(([v, cnt]) => { if(cnt > domMax){ domMax = cnt; domVers = v; } });
       
-      COMPS.forEach(c => {
-        const avg = Math.round(hev.reduce((a, r) => a + (r.hogan_scores && r.hogan_scores[c] ? +r.hogan_scores[c] : 0), 0) / hev.length);
+      // Collect all unique competencies across the team
+      const teamComps = {};
+      hev.forEach(r => {
+        if(r.hogan_scores) {
+          Object.entries(r.hogan_scores).forEach(([comp, score]) => {
+            if(comp === 'Potencial' || comp === 'Potential') return;
+            if(typeof score === 'number') {
+              if(!teamComps[comp]) teamComps[comp] = { sum: 0, count: 0 };
+              teamComps[comp].sum += score;
+              teamComps[comp].count++;
+            }
+          });
+        }
+      });
+      
+      Object.keys(teamComps).sort().forEach(c => {
+        const avg = Math.round(teamComps[c].sum / teamComps[c].count);
         totalCompScore += avg;
         totalCompCount++;
         
@@ -1405,7 +1420,7 @@ function renderHogan(){
         d.className = 'comp-metric-box';
         d.innerHTML = `
           <div class="comp-head">
-            <span>${c}</span>
+            <span title="${c}" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c}</span>
             <span style="color:${cHex};font-family:'JetBrains Mono'">${avg} pts</span>
           </div>
           <div class="comp-track">
@@ -1441,10 +1456,11 @@ function renderHogan(){
     hev.forEach(p => {
       const vc = p.hogan_versatilidad === 'Alta Versatilidad' ? 'mb-alta' : 
                  p.hogan_versatilidad === 'Media Versatilidad' ? 'mb-media' : 'mb-prof';
-      const kc = ['Toma de Decisiones', 'Liderar a otros', 'Impulsar el Cambio', 'Impulsar la Innovación'];
+      const myComps = Object.keys(p.hogan_scores || {}).filter(k => k !== 'Potencial' && k !== 'Potential');
+      const kc = myComps.slice(0, 4);
       let sc = '';
       kc.forEach(c => {
-        const v = (p.hogan_scores && p.hogan_scores[c] !== undefined) ? p.hogan_scores[c] : '-';
+        const v = p.hogan_scores[c];
         const pct = typeof v === 'number' ? v : 0;
         let cHex = '#d1d5db';
         if (typeof v === 'number') {
@@ -1636,15 +1652,20 @@ function openHoganModal(p){
     
     const body = document.getElementById('mHoganBody');
     body.innerHTML = '';
-    COMPS.forEach(c => {
-      const v = (p.hogan_scores && p.hogan_scores[c] !== undefined) ? p.hogan_scores[c] : null;
-      if(v === null) return;
-      const bg = v >= 70 ? 'rgba(52, 211, 153, 0.15)' : 'rgba(251, 191, 36, 0.15)';
-      const color = v >= 70 ? '#10b981' : '#f59e0b';
+    const myComps = Object.keys(p.hogan_scores || {}).filter(k => k !== 'Potencial' && k !== 'Potential');
+    myComps.forEach(c => {
+      const v = p.hogan_scores[c];
+      if(typeof v !== 'number') return;
+      
+      let bg = 'rgba(239, 68, 68, 0.15)';
+      let color = '#ef4444';
+      if (v >= 70) { bg = 'rgba(52, 211, 153, 0.15)'; color = '#10b981'; }
+      else if (v >= 40) { bg = 'rgba(251, 191, 36, 0.15)'; color = '#f59e0b'; }
+      
       const desc = COMP_DESC[c] || '';
       
       body.innerHTML += `
-        <div style="background:${bg};border-radius:6px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center">
+        <div style="background:${bg};border-radius:6px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
           <div style="flex:1;padding-right:20px">
             <div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:4px">${c}</div>
             <div style="font-size:11px;color:var(--text-dim);line-height:1.4">${desc}</div>
