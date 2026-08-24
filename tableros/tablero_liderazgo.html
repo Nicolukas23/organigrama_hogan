@@ -346,7 +346,7 @@
   <!-- HOGAN VIEW -->
   <section id="viewHG" style="display:none">
     <div class="hogan-team-card">
-      <div style="display:flex;align-items:center;gap:12px"><h3 style="font-family:'Space Grotesk',sans-serif;font-size:15px;margin:0">Promedio Equipo — 10 Competencias Hogan</h3><div id="hgTeamSummary" style="display:flex;gap:8px"></div></div>
+      <div style="display:flex;align-items:center;gap:12px"><h3 style="font-family:'Space Grotesk',sans-serif;font-size:15px;margin:0">Promedio Equipo — Competencias Hogan</h3><div id="hgTeamSummary" style="display:flex;gap:8px"></div></div>
       <p style="font-size:12.5px;color:var(--text-dim);margin:4px 0">Consolidado de evaluados en tu estructura jerárquica.</p>
       <div class="team-comp-grid" id="teamCompGrid"></div>
     </div>
@@ -1417,15 +1417,14 @@ function renderHogan(){
         else cHex = '#ef4444';
 
         const d = document.createElement('div');
-        d.className = 'comp-metric-box';
+        d.style.cssText = 'display:flex;align-items:center;gap:12px;padding:6px 0;border-bottom:1px solid rgba(0,0,0,0.04)';
         d.innerHTML = `
-          <div class="comp-head">
-            <span title="${c}" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c}</span>
-            <span style="color:${cHex};font-family:'JetBrains Mono'">${avg} pts</span>
+          <div style="flex:1;font-size:12.5px;font-weight:600;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${c}">${c}</div>
+          <div style="flex:1.5;height:5px;background:rgba(0,0,0,0.06);border-radius:10px;overflow:hidden">
+            <div style="height:100%;width:${Math.min(100, avg)}%;background:${cHex};border-radius:10px"></div>
           </div>
-          <div class="comp-track">
-            <div class="comp-fill" style="width:${Math.min(100, avg)}%;background:${cHex}"></div>
-          </div>`;
+          <div style="width:35px;font-size:12.5px;font-weight:800;color:${cHex};text-align:right;font-family:'JetBrains Mono'">${avg}</div>
+        `;
         tg.appendChild(d);
       });
       
@@ -1469,31 +1468,41 @@ function renderHogan(){
           else cHex = '#ef4444';
         }
         sc += `
-          <div class="hs-row">
-            <span class="hs-lbl">${c}</span>
-            <div class="hs-bar"><div class="hs-fill" style="width:${pct}%;background:${cHex}"></div></div>
-            <span class="hs-val" style="font-weight:700;color:${cHex}">${v}</span>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+            <span style="flex:1;font-size:10.5px;font-weight:600;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${c}">${c}</span>
+            <div style="width:40px;height:4px;background:rgba(0,0,0,0.06);border-radius:10px;overflow:hidden">
+              <div style="height:100%;width:${pct}%;background:${cHex};border-radius:10px"></div>
+            </div>
+            <span style="width:20px;font-size:10.5px;font-weight:800;color:${cHex};text-align:right">${v}</span>
           </div>`;
       });
       const cNum = getCajaNum(p.caja);
       const card = document.createElement('div');
       card.className = 'hcard';
+      card.style.cssText = 'cursor:pointer;transition:all 0.2s;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 8px rgba(0,0,0,0.02);padding:14px;background:#fff;border-radius:12px;display:flex;flex-direction:column';
+      card.onmouseover = () => { card.style.transform = 'translateY(-2px)'; card.style.boxShadow = '0 6px 16px rgba(0,0,0,0.06)'; card.style.borderColor = 'var(--primary)'; };
+      card.onmouseout = () => { card.style.transform = 'none'; card.style.boxShadow = '0 2px 8px rgba(0,0,0,0.02)'; card.style.borderColor = 'rgba(0,0,0,0.06)'; };
       card.onclick = () => openHoganModal(p);
       card.innerHTML = `
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-          <div class="hcard-av">${p.nombre.charAt(0)}</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div class="hcard-av" style="width:32px;height:32px;font-size:12px">${p.nombre.charAt(0)}</div>
           <div style="min-width:0;flex:1">
-            <div style="font-size:13px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.nombre}</div>
-            <div style="font-size:11px;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.cargo || '-'}</div>
+            <div style="font-size:12px;font-weight:700;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.nombre}</div>
+            <div style="font-size:10px;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.cargo || '-'}</div>
           </div>
         </div>
-        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px">
-          <span class="mini-badge ${vc}">${p.hogan_versatilidad || 'N/A'}</span>
-          <span class="mini-badge mb-pot">Potencial: ${p.hogan_potencial} pts</span>
-          ${cNum ? `<span class="mini-badge" style="background:${BOX_COLORS[cNum] || '#6b7280'};color:#fff">Caja ${cNum}</span>` : ''}
+        
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px">
+          ${cNum ? `<span style="font-size:9.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${BOX_COLORS[cNum] || '#6b7280'};color:#fff">Caja ${cNum}</span>` : ''}
+          <span style="font-size:9.5px;font-weight:600;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,0.04);color:var(--text2)">Potencial: <b style="color:var(--text)">${p.hogan_potencial || '-'}</b></span>
+          <span style="font-size:9.5px;font-weight:600;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,0.04);color:var(--text2)">${p.hogan_versatilidad ? p.hogan_versatilidad.replace(' Versatilidad','') : 'N/A'}</span>
         </div>
-        <div class="hcard-scores">${sc}</div>
-        <div style="margin-top:8px;text-align:right;font-size:11px;font-weight:700;color:var(--crimson)">Ver 10 competencias →</div>`;
+        
+        <div style="flex:1;border-top:1px dashed rgba(0,0,0,0.08);padding-top:12px;margin-bottom:8px">
+          ${sc}
+        </div>
+        
+        <div style="text-align:center;font-size:10.5px;font-weight:700;color:var(--primary);margin-top:auto">Ver detalles →</div>`;
       hg.appendChild(card);
     });
   }
