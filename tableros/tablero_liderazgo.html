@@ -1620,8 +1620,6 @@ function renderTable(){
       btn.textContent = 'Preliminar';
       btn.onclick = (e) => { e.stopPropagation(); window.open(`ficha_hogan.html?exp=${p.expediente}`, '_blank'); };
       tr.children[7].appendChild(btn);
-    } else {
-      tr.children[7].innerHTML = '<span class="badge-suc-no">—</span>';
     }
     
     tb.appendChild(tr);
