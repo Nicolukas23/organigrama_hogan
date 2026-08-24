@@ -346,7 +346,7 @@
   <!-- HOGAN VIEW -->
   <section id="viewHG" style="display:none">
     <div class="hogan-team-card">
-      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:15px">Promedio Equipo — 11 Competencias Hogan</h3>
+      <div style="display:flex;align-items:center;gap:12px"><h3 style="font-family:'Space Grotesk',sans-serif;font-size:15px;margin:0">Promedio Equipo — 10 Competencias Hogan</h3><div id="hgTeamSummary" style="display:flex;gap:8px"></div></div>
       <p style="font-size:12.5px;color:var(--text-dim);margin:4px 0">Consolidado de evaluados en tu estructura jerárquica.</p>
       <div class="team-comp-grid" id="teamCompGrid"></div>
     </div>
@@ -498,7 +498,7 @@ const COMPS = [
   "Toma de Decisiones", "Liderar a otros", "Impulsar el Cambio",
   "Impulsar la Estrategia", "Desarrollo de Otros", "Impulsar la Innovación",
   "Escuchar a Otros", "Influenciar a otros", "Responsabilidad",
-  "Comunicación de Impacto", "Potencial"
+  "Comunicación de Impacto"
 ];
 
 const BOX_META = {
@@ -1372,27 +1372,62 @@ function renderPager(containerId, totalPages){
 }
 
 function renderHogan(){
-  const hev = FILTERED.filter(r => r.hogan_potencial !== null && r.hogan_potencial !== undefined);
+  const hev = FILTERED.filter(r => r.hogan_versatilidad);
   const tg = document.getElementById('teamCompGrid');
+  const hgSummary = document.getElementById('hgTeamSummary');
   if(tg){
     tg.innerHTML = '';
+    if(hgSummary) hgSummary.innerHTML = '';
+    
     if(hev.length === 0){
       tg.innerHTML = '<div style="grid-column:1/-1;padding:16px;text-align:center;color:var(--text-dim)">Sin evaluaciones Hogan en este filtro.</div>';
     } else {
+      let totalCompScore = 0;
+      let totalCompCount = 0;
+      const versCounts = {};
+      hev.forEach(r => {
+        if(r.hogan_versatilidad) versCounts[r.hogan_versatilidad] = (versCounts[r.hogan_versatilidad]||0) + 1;
+      });
+      let domVers = ''; let domMax = 0;
+      Object.entries(versCounts).forEach(([v, cnt]) => { if(cnt > domMax){ domMax = cnt; domVers = v; } });
+      
       COMPS.forEach(c => {
         const avg = Math.round(hev.reduce((a, r) => a + (r.hogan_scores && r.hogan_scores[c] ? +r.hogan_scores[c] : 0), 0) / hev.length);
+        totalCompScore += avg;
+        totalCompCount++;
+        
+        let cHex = '#d1d5db';
+        if (avg >= 70) cHex = '#10b981';
+        else if (avg >= 40) cHex = '#f59e0b';
+        else cHex = '#ef4444';
+
         const d = document.createElement('div');
         d.className = 'comp-metric-box';
         d.innerHTML = `
           <div class="comp-head">
             <span>${c}</span>
-            <span style="color:var(--gold);font-family:'JetBrains Mono'">${avg} pts</span>
+            <span style="color:${cHex};font-family:'JetBrains Mono'">${avg} pts</span>
           </div>
           <div class="comp-track">
-            <div class="comp-fill" style="width:${Math.min(100, avg)}%"></div>
+            <div class="comp-fill" style="width:${Math.min(100, avg)}%;background:${cHex}"></div>
           </div>`;
         tg.appendChild(d);
       });
+      
+      if(hgSummary && totalCompCount > 0){
+        const overallAvg = Math.round(totalCompScore / totalCompCount);
+        let cHex = '#d1d5db';
+        if (overallAvg >= 70) cHex = '#10b981';
+        else if (overallAvg >= 40) cHex = '#f59e0b';
+        else cHex = '#ef4444';
+        
+        const vc = domVers === 'Alta Versatilidad' ? 'mb-alta' : (domVers === 'Media Versatilidad' ? 'mb-media' : 'mb-prof');
+        
+        hgSummary.innerHTML = `
+          <span class="mini-badge" style="background:transparent;border:1px solid ${cHex};color:${cHex}">Promedio: ${overallAvg} pts</span>
+          <span class="mini-badge ${vc}">${domVers || 'N/A'}</span>
+        `;
+      }
     }
   }
 
