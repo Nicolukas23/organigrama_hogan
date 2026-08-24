@@ -1524,9 +1524,17 @@ function renderHogan(){
       card.style.cssText = 'cursor:pointer;transition:all 0.2s;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 8px rgba(0,0,0,0.02);padding:14px;background:#fff;border-radius:12px;display:flex;flex-direction:column';
       card.onmouseover = () => { card.style.transform = 'translateY(-2px)'; card.style.boxShadow = '0 6px 16px rgba(0,0,0,0.06)'; card.style.borderColor = 'var(--primary)'; };
       card.onmouseout = () => { card.style.transform = 'none'; card.style.boxShadow = '0 2px 8px rgba(0,0,0,0.02)'; card.style.borderColor = 'rgba(0,0,0,0.06)'; };
-      card.onclick = () => openHoganModal(p);
       card.innerHTML = `
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="hcard-av" style="width:32px;height:32px;font-size:12px">${p.nombre.charAt(0)}</div>
+            <div style="min-width:0;flex:1">
+              <div style="font-size:12px;font-weight:700;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.nombre}</div>
+              <div style="font-size:10px;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.cargo || '-'}</div>
+            </div>
+          </div>
+          <button onclick="window.open('ficha_hogan.html?exp=${p.expediente}', '_blank')" style="background:var(--primary);color:#fff;border:none;border-radius:4px;padding:4px 8px;font-size:10px;font-weight:600;cursor:pointer;white-space:nowrap;">Ver ficha</button>
+        </div>
           <div class="hcard-av" style="width:32px;height:32px;font-size:12px">${p.nombre.charAt(0)}</div>
           <div style="min-width:0;flex:1">
             <div style="font-size:12px;font-weight:700;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.nombre}</div>

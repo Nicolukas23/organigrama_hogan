@@ -1,0 +1,1037 @@
+
+<main style="padding:20px; max-width:1200px; margin:0 auto; padding-top:60px;">
+  <!-- Header -->
+  <div id="fichaHeaderContainer"></div>
+
+  <div style="margin-top:24px;">
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;color:var(--text);margin-bottom:12px;">Fortalezas y Oportunidades</h3>
+    <div id="hoganTextSection" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div id="hoganFortalezas" style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;">
+        <div style="font-size:12px;font-weight:700;color:#a16207;background:#fef9c3;padding:6px 12px;border-radius:6px;margin-bottom:12px;text-align:center;">FORTALEZAS</div>
+        <div id="fortText" style="font-size:11.5px;color:var(--text);line-height:1.6;white-space:pre-line;">Sin datos</div>
+      </div>
+      <div id="hoganOportunidades" style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;">
+        <div style="font-size:12px;font-weight:700;color:#b91c1c;background:#fee2e2;padding:6px 12px;border-radius:6px;margin-bottom:12px;text-align:center;">OPORTUNIDADES DE DESARROLLO / DESCARRILADORES</div>
+        <div id="oportText" style="font-size:11.5px;color:var(--text);line-height:1.6;white-space:pre-line;">Sin datos</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:300px 1fr; gap:24px; margin-top:24px; align-items:start;">
+    <!-- Left: Ninebox -->
+    <div id="nineboxContainer" style="background:#fff; border:1px solid var(--border); border-radius:10px; padding:16px;">
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:14px;color:var(--text);text-align:center;margin-bottom:16px;">NINEBOX</h3>
+      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; max-width:250px; margin:0 auto; aspect-ratio:1;">
+        <!-- Row 1 (Alto Desempeño) -->
+        <div id="nb7" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">7</div>
+        <div id="nb8" style="background:#34d399; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">8</div>
+        <div id="nb9" style="background:#10b981; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">9</div>
+        <!-- Row 2 (Medio Desempeño) -->
+        <div id="nb4" style="background:#f59e0b; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">4</div>
+        <div id="nb5" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">5</div>
+        <div id="nb6" style="background:#34d399; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">6</div>
+        <!-- Row 3 (Bajo Desempeño) -->
+        <div id="nb1" style="background:#ef4444; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">1</div>
+        <div id="nb2" style="background:#f59e0b; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">2</div>
+        <div id="nb3" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">3</div>
+      </div>
+      <div id="nbText" style="text-align:center; font-size:12px; font-weight:600; margin-top:12px; color:var(--text);">Caja: -</div>
+    </div>
+
+    <!-- Right: Hogan Chart -->
+    <div id="hoganChartContainer"></div>
+  </div>
+</main>
+YPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planeación de Talento · Ficha de Talento — Claro Colombia</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>"><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../data/theme.css">
+<link rel="stylesheet" href="../data/tableros.css">
+<link rel="stylesheet" href="../data/nav.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<link rel="stylesheet" href="../data/ficha_talento.css">
+  <link rel="manifest" href="../manifest.json">
+  <script src="../data/global_search.js" defer></script>
+</head>
+<body>
+<div class="header">
+  <h1>Planeación de Talento · Ficha de Talento</h1>
+  <div class="header-search">
+    <input type="text" id="cedulaInput" placeholder="Cédula o nombre..." autocomplete="off" list="cedulas">
+    <datalist id="cedulas"></datalist>
+    <button onclick="searchPerson()">Buscar</button>
+    <button class="btn-icon" onclick="toggleTheme()" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.3);padding:10px;border-radius:8px;font-size:16px;cursor:pointer;margin-right:8px;">🌓</button>
+    <button onclick="downloadPDF()" style="background:#fff;color:var(--crimson);border:2px solid #fff;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:14px;">Descargar PDF</button>
+  </div>
+</div>
+<div class="main" id="fichaContent">
+  <div class="info-header">
+    <div class="ih-photo" id="ihPhoto">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    </div>
+    <div class="ih-text">
+      <span class="ih-name" id="iNombre">—</span>
+      <div class="ih-meta">
+        <span><strong>Edad:</strong> <span id="iEdad">—</span></span>
+        <span class="ih-sep">|</span>
+        <span><strong>Cargo:</strong> <span id="iCargo">—</span></span>
+        <span class="ih-sep">|</span>
+        <span><strong>Dir. Comité:</strong> <span id="iDirComite">—</span></span>
+        <span class="ih-sep">|</span>
+        <span><strong>Gerencia:</strong> <span id="iGerencia">—</span></span>
+        <span class="ih-sep">|</span>
+        <span><strong>Jefe:</strong> <span id="iJefe">—</span></span>
+        <span class="ih-sep">|</span>
+        <span><strong>Antigüedad:</strong> <span id="iAntiguedad">—</span></span>
+        <span class="ih-sep">|</span>
+        <span id="personasACargoWrap" style="display:none;"><strong>Personas a cargo:</strong> <span id="iCargoEquipo">—</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div id="sectionExperiencia">
+  <div class="section-title orange">Experiencia laboral y educación</div>
+  <div class="grid-2">
+    <div><div class="sub-title">Experiencia interna</div><table class="data-table"><thead><tr><th>Historial de cargos</th></tr></thead><tbody id="tInterna"><tr><td class="empty-msg">Sin datos</td></tr></tbody></table></div>
+    <div><div class="sub-title">Experiencia externa</div><table class="data-table"><thead><tr><th>Historial de cargos</th></tr></thead><tbody id="tExterna"><tr><td class="empty-msg">Sin datos</td></tr></tbody></table></div>
+  </div>
+  </div>
+
+  <div id="sectionFormacion">
+  <div class="section-title blue">Formación</div>
+  <div class="formation-grid" style="grid-template-columns:repeat(2,1fr);">
+    <div class="formation-card"><div class="fc-title" style="background:#1e40af;">Formación profesional</div><div class="fc-content" id="fProfesional">Sin datos</div></div>
+    <div class="formation-card"><div class="fc-title" style="background:var(--gold);">Formación complementaria</div><div class="fc-content" id="fMedida">Sin datos</div></div>
+  </div>
+  </div>
+
+  <div id="sectionValoraciones">
+  <div class="section-title">Valoraciones</div>
+  <div class="grid-3">
+    <div class="chart-card" id="cardDesempeno"><div class="chart-title">Resultados de desempeño</div><div class="bar-chart" id="barDesempeno"></div></div>
+    <div class="chart-card" id="cardComportamientos" style="display:flex;flex-direction:column;"><div class="chart-title">Valoración de comportamientos 2026</div><div id="barComportamientos" style="flex:1;display:flex;flex-direction:column;justify-content:center;"></div></div>
+    <div class="chart-card" id="cardObjetivos"><div class="chart-title">Objetivos de desarrollo 2026</div><div id="objDesarrollo"><div class="empty-msg">Sin datos</div></div></div>
+  </div>
+  </div>
+
+  <div id="sectionDesempenoDesarrollo" style="display:none;">
+  <div class="section-title orange">Desempeño de Desarrollo 1Q</div>
+  <div class="grid-2" style="margin-bottom:12px;">
+    <div class="chart-card"><div class="chart-title">Resultados de Productividad</div><div id="cdProductividad" style="font-size:20px;font-weight:bold;text-align:center;padding:10px;">—</div></div>
+    <div class="chart-card"><div class="chart-title">Resultado de Desempeño 1Q</div><div id="cdDesempeno1q" style="font-size:20px;font-weight:bold;text-align:center;padding:10px;">—</div></div>
+  </div>
+  <div class="chart-card"><div class="chart-title">Objetivo PDI</div><div id="cdObjetivoPdi" style="font-size:12px;line-height:1.6;padding:10px;white-space:pre-wrap;">—</div></div>
+  </div>
+
+  <div id="section360">
+  <div class="section-title blue">Valoración 360°</div>
+  <div class="scores-row">
+    <div class="score-pill total"><div class="sp-label">Resultado 360°</div><div class="sp-value" id="v360total">—</div></div>
+    <div class="score-pill auto"><div class="sp-label">Autoevaluación</div><div class="sp-value" id="v360auto">—</div></div>
+    <div class="score-pill lider"><div class="sp-label">Líder</div><div class="sp-value" id="v360lider">—</div></div>
+    <div class="score-pill equipo"><div class="sp-label">Equipo</div><div class="sp-value" id="v360equipo">—</div></div>
+    <div class="score-pill pares"><div class="sp-label">Pares</div><div class="sp-value" id="v360pares">—</div></div>
+  </div>
+  <div class="chart-card"><canvas id="radar360" width="700" height="500"></canvas></div>
+  </div>
+
+  <div id="climaSection">
+  <div class="section-title blue">Clima Organizacional 2025</div>
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;"><span style="font-size:13px;font-weight:700;color:var(--text);">Resultado general:</span><span style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;color:var(--text);" id="climaGeneral">—</span></div>
+  <div class="chart-card"><div class="bar-chart" id="barClima" style="height:260px;flex-wrap:wrap;"></div></div>
+  </div>
+
+  <div id="hoganGrid" style="margin-top:12px;">
+    <div id="hoganBarsSection"></div>
+    <div id="hoganTextSection" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:12px;">
+      <div class="chart-card" id="hoganFortalezas" style="text-align:left;"></div>
+      <div class="chart-card" id="hoganMejora" style="text-align:left;"></div>
+      <div class="chart-card" id="hoganMotivadores" style="text-align:left;"></div>
+    </div>
+    <div class="chart-card" id="hoganFoco" style="margin-top:12px;display:none;"></div>
+  </div>
+
+  <!-- Resultados Hogan -->
+  <div id="competenciasSection" style="display:none;">
+    <div class="section-title" style="background:#1a1a2e;">Resultados Hogan</div>
+    <div class="chart-card">
+      <div class="chart-title">Perfil de Competencias — Escala 0 a 100</div>
+      <div id="competenciasChart"></div>
+    </div>
+    <div class="grid-2" style="margin-top:12px;">
+      <div id="compFortalezasSection" style="display:none;">
+        <div class="chart-card" style="text-align:left;">
+          <div class="chart-title" style="color:var(--green);font-weight:700;">Fortalezas</div>
+          <div id="compFortalezas"></div>
+        </div>
+      </div>
+      <div id="compOportunidadesSection" style="display:none;">
+        <div class="chart-card" style="text-align:left;">
+          <div class="chart-title" style="color:var(--crimson);font-weight:700;">Oportunidades</div>
+          <div id="compOportunidades"></div>
+        </div>
+      </div>
+    </div>
+    <div id="compDesarrolloSection" style="display:none;margin-top:12px;">
+      <div class="chart-card" style="text-align:left;">
+        <div class="chart-title" style="font-weight:700;">Sugerencias de Desarrollo para ser Sucesor</div>
+        <div id="compDesarrollo"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer style="margin-top:32px;padding:16px 32px;border-top:1px solid var(--border);text-align:center;color:var(--text-dim);font-size:12px;font-family:'Inter',sans-serif;">
+  <span>Planeación de Talento · Ficha de Talento — Claro Colombia 2026</span>
+</footer>
+
+<script src="../data/ficha_data.js?v=202607302100"></script>
+<script src="../data/comite_hogan.js"></script>
+<script>
+// ── CARGADOR SUPABASE ────────────────────────────────────────────
+// Intenta cargar la data viva desde Supabase. Si falla, usa ficha_data.js estático.
+const SUPABASE_URL='https://yxxpjttdmwruyeqiuxzu.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4eHBqdHRkbXdydXllcWl1eHp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4MTQyNzUsImV4cCI6MjEwMjM5MDI3NX0.fxQc7o6Qv8Rvd8-PHJF_R-OEME-hbhbPPDnktjiNi9U';
+
+async function loadSupabaseData(){
+  try{
+    const hdr={headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY}};
+    const [personas,desempeno,talentos,objetivos,tres60,clima,sucesores]=await Promise.all([
+      fetch(SUPABASE_URL+'/rest/v1/personas?select=*',hdr).then(r=>r.json()),
+      fetch(SUPABASE_URL+'/rest/v1/desempeno?select=*',hdr).then(r=>r.json()),
+      fetch(SUPABASE_URL+'/rest/v1/talentos?select=*',hdr).then(r=>r.json()),
+      fetch(SUPABASE_URL+'/rest/v1/objetivos?select=*',hdr).then(r=>r.json()),
+      fetch(SUPABASE_URL+'/rest/v1/evaluacion_360?select=*',hdr).then(r=>r.json()),
+      fetch(SUPABASE_URL+'/rest/v1/clima?select=*',hdr).then(r=>r.json()),
+      fetch(SUPABASE_URL+'/rest/v1/sucesores?select=*',hdr).then(r=>r.json()),
+    ]);
+    const informacion={},formacion={};
+    personas.forEach(p=>{informacion[p.expediente]=p;});
+    const d3={}; desempeno.forEach(x=>{d3[x.expediente]={y2024:x.y2024,y2025:x.y2025,y2026:x.y2026};});
+    const t3={}; talentos.forEach(x=>{t3[x.expediente]={expediente:x.expediente,talento:x.talento,soy_dueno:x.soy_dueno,soy_lider:x.soy_lider,soy_digital:x.soy_digital};});
+    const o3={}; objetivos.forEach(x=>{o3[x.expediente]={expediente:x.expediente,obj:x.obj,talento:x.talento};});
+    const e3={}; tres60.forEach(x=>{if(!e3[x.expediente])e3[x.expediente]=[];e3[x.expediente].push({dim:x.competencia,lider:x.lider,propio:x.propio,reporte:x.reporte,par:x.par});});
+    const c3={}; clima.forEach(x=>{if(!c3[x.expediente])c3[x.expediente]=[];c3[x.expediente].push({dim:x.dimension,pct:x.pct});});
+    const s3={}; sucesores.forEach(x=>{s3[x.expediente]={sucesor:x.sucesor,tiempo:x.tiempo};});
+    const hijos=Object.keys(informacion).filter(exp=>informacion[exp].nombre&&informacion[exp].jefe);
+    window.DATA={
+      informacion,formacion,desempeno:d3,talentos:t3,objetivos:o3,tres60:e3,clima:c3,sucesores:s3,
+      comite:{},hogan:{},observaciones:{}
+    };
+    if (window.COMITE_HOGAN) {
+      Object.keys(window.COMITE_HOGAN).forEach(name => {
+        const removeAccents = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const exp = Object.keys(informacion).find(k => {
+           const infoName = removeAccents(informacion[k].nombre ? informacion[k].nombre.toUpperCase() : '');
+           let searchName = removeAccents(name.trim().toUpperCase());
+           if(searchName === 'WALTER BORDA FERRO') searchName = 'WALTER BORDA'; // Database might omit Ferro
+           if(searchName === 'FREDDY VARGAS') searchName = 'FREDY VARGAS'; // Minor spelling differences
+           const parts = searchName.split(' ');
+           return parts.every(p => infoName.includes(p));
+        });
+        if (exp) window.DATA.hogan[exp] = window.COMITE_HOGAN[name];
+      });
+    }
+    window.SUCESORES=hijos.map(exp=>({exp,nombre:informacion[exp].nombre}));
+    if(SUCESORES.length===0)SUCESORES.push(...hijos.map(exp=>({exp,nombre:informacion[exp].nombre})));
+    // Re-poblar el datalist de búsqueda con la data viva
+    const dl2=document.getElementById('cedulas');
+    dl2.innerHTML='';
+    SUCESORES.forEach(p=>{
+      const o=document.createElement('option');
+      o.value=p.exp;
+      o.textContent=p.nombre+' ('+p.exp+')';
+      dl2.appendChild(o);
+    });
+    console.log('Supabase: data viva cargada,',SUCESORES.length,'personas');
+  }catch(err){
+    console.warn('Supabase no disponible, usando ficha_data.js estático',err);
+  }
+}
+loadSupabaseData();
+</script>
+<script>
+
+// Populate datalist
+const dl=document.getElementById('cedulas');
+SUCESORES.forEach(p=>{
+  const o=document.createElement('option');
+  o.value=p.exp;
+  o.textContent=p.nombre+' ('+p.exp+')';
+  dl.appendChild(o);
+});
+
+function searchPerson(){
+  const q=document.getElementById('cedulaInput').value.trim();
+  if(!q)return;
+  const p=SUCESORES.find(x=>x.exp===q||x.nombre.toUpperCase().includes(q.toUpperCase()));
+  if(!p){alert('No se encontró');return;}
+  loadFicha(p);
+}
+
+function loadFicha(p){
+  document.getElementById('iNombre').textContent=p.nombre;
+  const isCDName=['52185300','79947402','80425417','1128466768','85467103','32781111','79516122','80150353','1138186','79577126','79695754','1020751309'].includes(p.exp);
+  const nameEl=document.getElementById('iNombre');
+  nameEl.style.borderBottom=isCDName?'3px solid #dc2626':'none';
+  nameEl.style.paddingBottom=isCDName?'6px':'0';
+  nameEl.style.display=isCDName?'inline-block':'';
+
+  // Header: black background for CD
+  const headerEl=document.querySelector('.header');
+  if(isCDName){headerEl.style.background='#111';}else{headerEl.style.background='';}
+
+  // Meta icons for CD
+  const metaEl=document.querySelector('.ih-meta');
+  if(isCDName){
+    metaEl.style.gap='12px 24px';
+    metaEl.style.marginTop='10px';
+    metaEl.style.fontSize='13px';
+    metaEl.querySelectorAll('.ih-sep').forEach(s=>s.style.display='none');
+    metaEl.innerHTML=
+      '<span><svg viewBox="0 0 24 24" fill="#dc2626" style="width:14px;height:14px;flex-shrink:0;"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg><strong>Edad:</strong> <span id="iEdad">—</span></span>'+
+      '<span class="ih-sep">|</span>'+
+      '<span><svg viewBox="0 0 24 24" fill="#dc2626" style="width:14px;height:14px;flex-shrink:0;"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg><strong>Cargo:</strong> <span id="iCargo">—</span></span>'+
+      '<span class="ih-sep">|</span>'+
+      '<span><svg viewBox="0 0 24 24" fill="#dc2626" style="width:14px;height:14px;flex-shrink:0;"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/></svg><strong>Dir. Comité:</strong> <span id="iDirComite">—</span></span>'+
+      '<span class="ih-sep">|</span>'+
+      '<span><svg viewBox="0 0 24 24" fill="#dc2626" style="width:14px;height:14px;flex-shrink:0;"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10z"/></svg><strong>Gerencia:</strong> <span id="iGerencia">—</span></span>'+
+      '<span class="ih-sep">|</span>'+
+      '<span><svg viewBox="0 0 24 24" fill="#dc2626" style="width:14px;height:14px;flex-shrink:0;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg><strong>Jefe:</strong> <span id="iJefe">—</span></span>'+
+      '<span class="ih-sep">|</span>'+
+      '<span><svg viewBox="0 0 24 24" fill="#dc2626" style="width:14px;height:14px;flex-shrink:0;"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><strong>Antigüedad:</strong> <span id="iAntiguedad">—</span></span>'+
+      '<span class="ih-sep">|</span>'+
+      '<span id="personasACargoWrapCD" style="display:none;"><svg viewBox="0 0 24 24" fill="#dc2626" style="width:14px;height:14px;flex-shrink:0;"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg><strong>Personas a cargo:</strong> <span id="iCargoEquipo">—</span></span>';
+  }
+
+  // Photo
+  const ihPhoto=document.getElementById('ihPhoto');
+  const avatarSvg='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
+  ihPhoto.innerHTML=avatarSvg;
+  const tryPhoto=function(idx){
+    if(idx>=3){return;}
+    const exts=['.png','.jpg','.jpeg'];
+    fetch('../data/FOTOS/'+p.exp+exts[idx],{method:'HEAD'}).then(function(r){
+      if(r.ok){
+        ihPhoto.innerHTML='';
+        var i=new Image();
+        i.alt=p.nombre;
+        i.src='../data/FOTOS/'+p.exp+exts[idx];
+        ihPhoto.appendChild(i);
+      }else{
+        tryPhoto(idx+1);
+      }
+    }).catch(function(){tryPhoto(idx+1);});
+  };
+  tryPhoto(0);
+
+  // Get info from INFORMACION
+  const info=DATA.informacion[p.exp];
+  console.log('DEBUG ficha:', p.exp, 'info found:', !!info, info);
+  document.getElementById('iCargo').textContent=info&&info.cargo?info.cargo:'—';
+  document.getElementById('iDirComite').textContent=info?info.direccion_comite:'—';
+  document.getElementById('iGerencia').textContent=info?info.gerencia:p.direccion;
+  
+  // Jefe
+  document.getElementById('iJefe').textContent=info&&info.jefe?info.jefe:'—';
+  
+  // Edad from fecha_nacimiento
+  if(info&&info.fecha_nacimiento){
+    const fnac=new Date(info.fecha_nacimiento);
+    const hoy=new Date();
+    let edad=hoy.getFullYear()-fnac.getFullYear();
+    const m=hoy.getMonth()-fnac.getMonth();
+    if(m<0||(m===0&&hoy.getDate()<fnac.getDate()))edad--;
+    document.getElementById('iEdad').textContent=edad+' años';
+  }else{
+    document.getElementById('iEdad').textContent='—';
+  }
+  
+  const rawAntig=info?info.antiguedad:'—';
+  const matchAntig=typeof rawAntig==='string'?rawAntig.match(/(\d+)/):null;
+  document.getElementById('iAntiguedad').textContent=matchAntig?matchAntig[1]+' años':typeof rawAntig==='number'?Math.floor(rawAntig)+' años':rawAntig;
+
+  // Personas a cargo (Planta de Personal Mayo 2026 - columna AB)
+  const CARGO_Equipo={"4520642":5,"4617732":4,"7317314":7,"8358192":6,"9396968":3,"13276383":7,"16071612":3,"36306108":5,"37334180":6,"39783211":4,"40079874":1,"43109835":9,"43684915":6,"52093668":6,"52110121":9,"52185300":13,"52236050":3,"52433846":3,"52492548":2,"52560948":3,"52750890":11,"52807479":3,"52809026":9,"52824581":5,"52879980":3,"52882931":5,"52912096":5,"52960631":5,"52997400":8,"55230423":6,"60333937":8,"74359373":8,"75145916":5,"76333059":2,"79432588":7,"79539397":6,"79618973":4,"79621141":3,"79686033":7,"79687541":5,"79687677":4,"79792570":4,"79795948":9,"79861675":14,"79955163":7,"79963185":4,"80021548":8,"80065277":5,"80070878":6,"80070923":6,"80153086":4,"80418091":11,"80512772":2,"80844584":5,"86074466":8,"91478865":6,"93368761":7,"94317564":3,"98385917":5,"1013667889":2,"1014246406":1,"1015415329":2,"1018417641":9,"1020721308":2,"1024531733":2,"1026593032":2,"1032464118":5,"1032483844":11,"1069713595":4,"1069765749":2,"1072643036":4,"1098687767":3,"1110468886":4,"1233695609":1};
+  const cargoEq=CARGO_Equipo[p.exp];
+  const wrapEq=document.getElementById('personasACargoWrap');
+  const wrapEqCD=document.getElementById('personasACargoWrapCD');
+  if(cargoEq!==undefined){
+    document.getElementById('iCargoEquipo').textContent=cargoEq;
+    if(wrapEq) wrapEq.style.display='';
+    if(wrapEqCD) wrapEqCD.style.display='';
+  } else {
+    if(wrapEq) wrapEq.style.display='none';
+    if(wrapEqCD) wrapEqCD.style.display='none';
+  }
+
+  // Desempeño
+  const d=DATA.desempeno[p.exp];
+  renderDesempeno(d);
+
+  // Talentos/Comportamientos
+  const t=DATA.talentos[p.exp]||[];
+  if(t.length){
+    renderComportamientos(t);
+  } else {
+    document.getElementById('cardComportamientos').style.display='none';
+  }
+
+  // Objetivos
+  const o=DATA.objetivos[p.exp]||[];
+  renderObjetivos(o);
+
+  // Center valoraciones grid when only 1 card visible
+  const grid3=document.querySelector('.grid-3');
+  if(grid3){
+    const visibleCards=[...grid3.children].filter(c=>c.style.display!=='none');
+    if(visibleCards.length<=1){
+      grid3.style.display='flex';
+      grid3.style.justifyContent='center';
+      grid3.style.gap='12px';
+      visibleCards.forEach(c=>{c.style.flex='0 0 420px';c.style.maxWidth='100%';});
+    } else {
+      grid3.style.display='';
+      grid3.style.justifyContent='';
+      grid3.style.gap='';
+      visibleCards.forEach(c=>{c.style.flex='';c.style.maxWidth='';});
+    }
+  }
+
+  // 360
+  const t360=DATA.tres60[p.exp]||[];
+  render360(t360);
+
+  // Formación & Experiencia
+  renderFormacion(p);
+
+  // Clima
+  const c=DATA.clima[p.exp]||[];
+  renderClima(c);
+
+  // Comité Directivo: ocultar Experiencia, Formación y Valoraciones
+  const isCD=['52185300','79947402','80425417','1128466768','85467103','32781111','79516122','80150353','1138186'].includes(p.exp);
+  const isPresidencia=['79577126','79695754','1020751309'].includes(p.exp);
+  document.getElementById('sectionExperiencia').style.display='';
+  document.getElementById('sectionFormacion').style.display='';
+  document.getElementById('sectionValoraciones').style.display='';
+
+  // Comité Directivo: Desempeño de Desarrollo
+  const comiteSection = document.getElementById('sectionDesempenoDesarrollo');
+  if(isCD){
+    comiteSection.style.display='';
+    const cd = DATA.comite && DATA.comite[p.exp];
+    if(cd){
+      document.getElementById('cdProductividad').textContent = cd.productividad || '—';
+      document.getElementById('cdDesempeno1q').textContent = cd.desempeno_1q || '—';
+      document.getElementById('cdObjetivoPdi').textContent = cd.objetivo_pdi || '—';
+    }
+  } else {
+    comiteSection.style.display='none';
+  }
+
+  // HOGAN — only for CD members and their direct reports
+  const allCDExps=['52185300','79947402','80425417','1128466768','85467103','32781111','79516122','80150353','1138186','79577126','79695754','1020751309'];
+  const isCDOwn=allCDExps.includes(p.exp);
+  let reportsToCD=false;
+  if(!isCDOwn && p.jefe){
+    const jefeNorm=p.jefe.toUpperCase().trim();
+    for(const cdExp of allCDExps){
+      const cdInfo=DATA.informacion[cdExp];
+      if(cdInfo&&cdInfo.nombre&&cdInfo.nombre.toUpperCase().trim()===jefeNorm){reportsToCD=true;break;}
+    }
+  }
+  const showHogan=isCDOwn||reportsToCD;
+  const h=DATA.hogan[p.exp];
+  if(!showHogan){
+    document.getElementById('hoganGrid').style.display='none';
+    document.getElementById('competenciasSection').style.display='none';
+  } else {
+    renderHogan(h, p.exp);
+  }
+}
+
+function renderDesempeno(d){
+  const el=document.getElementById('barDesempeno');
+  const card=document.getElementById('cardDesempeno');
+  if(!d||(!d.y2024&&!d.y2025&&!d.y2026)){card.style.display='none';return;}
+  card.style.display='';
+  const allVals=[
+    {v:d.y2024,label:'2024',color:'var(--crimson)'},
+    {v:d.y2025,label:'2025',color:'var(--green)'},
+    {v:d.y2026,label:'2026',color:'var(--gold)'}
+  ].filter(x=>x.v!=null);
+  if(!allVals.length){card.style.display='none';return;}
+  const max=Math.max(...allVals.map(x=>x.v),1);
+  el.innerHTML=allVals.map(x=>{
+    const h=Math.round((x.v/max)*130);
+    return '<div class="bar-col"><span class="bar-value">'+Math.round(x.v)+'</span><div class="bar" style="height:'+h+'px;background:'+x.color+';"></div><span class="bar-label">'+x.label+'</span></div>';
+  }).join('');
+}
+
+function renderComportamientos(t){
+  const el=document.getElementById('barComportamientos');
+  const card=document.getElementById('cardComportamientos');
+  if(!t||!t.length){card.style.display='none';return;}
+  card.style.display='';
+  const groups={};
+  t.forEach(x=>{
+    const name=x.talento||'Sin nombre';
+    if(!groups[name])groups[name]=[];
+    groups[name].push(x.score);
+  });
+  let html='';
+  Object.entries(groups).forEach(([name,scores])=>{
+    const avg=(scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1);
+    const pct=Math.min(100,Math.round((avg/110)*100));
+    const color=avg>=103?'var(--green)':avg>=100?'var(--blue)':'var(--gold)';
+    html+='<div class="score-bar-row"><span class="score-bar-label">'+name+'</span><div class="score-bar-track"><div class="score-bar-fill" style="width:'+pct+'%;background:'+color+';"></div></div><span class="score-bar-val">'+avg+'</span></div>';
+  });
+  el.innerHTML=html;
+}
+
+function renderObjetivos(objs){
+  const el=document.getElementById('objDesarrollo');
+  const card=document.getElementById('cardObjetivos');
+  if(!objs||!objs.length){card.style.display='none';return;}
+  card.style.display='';
+  el.style.display='flex';el.style.flexDirection='column';el.style.alignItems='center';
+  const items=objs.slice(0,4);
+  el.innerHTML=items.map(o=>'<div class="talent-obj" style="width:100%;max-width:500px;'+(items.length===1?'margin-left:auto;margin-right:auto;':'')+'"><div class="to-talent">'+(o.talento||'—')+'</div><div class="to-obj" style="text-align:center;">'+(o.obj||'—')+'</div></div>').join('');
+}
+
+function render360(data){
+  const section=document.getElementById('section360');
+  if(!data.length){
+    section.style.display='none';
+    return;
+  }
+  section.style.display='';
+  const toNum=(v)=>{const n=parseFloat(v);return isNaN(n)?null:n;};
+  const avg=(arr)=>{const v=arr.map(toNum).filter(x=>x!==null);return v.length?(v.reduce((a,b)=>a+b,0)/v.length).toFixed(2):null;};
+  const leaders=data.map(d=>toNum(d.lider)).filter(x=>x!==null);
+  const selves=data.map(d=>toNum(d.propio)).filter(x=>x!==null);
+  const reports=data.map(d=>toNum(d.reporte)).filter(x=>x!==null);
+  const pars=data.map(d=>toNum(d.par)).filter(x=>x!==null);
+  const all=[...leaders,...selves,...reports,...pars];
+
+  const totalVal=all.length?(all.reduce((a,b)=>a+b,0)/all.length).toFixed(2):null;
+  const autoVal=avg(data.map(d=>d.propio));
+  const liderVal=avg(data.map(d=>d.lider));
+  const equipoVal=avg(data.map(d=>d.reporte));
+  const paresVal=avg(data.map(d=>d.par));
+
+  const pillTotal=document.querySelector('.score-pill.total');
+  const pillAuto=document.querySelector('.score-pill.auto');
+  const pillLider=document.querySelector('.score-pill.lider');
+  const pillEquipo=document.querySelector('.score-pill.equipo');
+  const pillPares=document.querySelector('.score-pill.pares');
+
+  const allHaveData=autoVal!==null&&liderVal!==null&&equipoVal!==null&&paresVal!==null;
+
+  document.getElementById('v360total').textContent=totalVal||'—';
+  document.getElementById('v360auto').textContent=autoVal||'—';
+  document.getElementById('v360lider').textContent=liderVal||'—';
+  document.getElementById('v360equipo').textContent=equipoVal||'—';
+  document.getElementById('v360pares').textContent=paresVal||'—';
+
+  if(allHaveData){
+    pillTotal.style.display='';
+    pillAuto.style.display='';
+    pillLider.style.display='';
+    pillEquipo.style.display='';
+    pillPares.style.display='';
+    const row=document.querySelector('.scores-row');
+    row.style.display='grid';
+    row.style.gridTemplateColumns='repeat(5, 1fr)';
+    row.style.justifyContent='';
+    row.style.gap='8px';
+    row.style.flexWrap='';
+    [pillTotal,pillAuto,pillLider,pillEquipo,pillPares].forEach(p=>{p.style.flex='';});
+  } else {
+    pillTotal.style.display=totalVal?'':'none';
+    pillAuto.style.display='none';
+    pillLider.style.display='none';
+    pillEquipo.style.display='none';
+    pillPares.style.display='none';
+    const row=document.querySelector('.scores-row');
+    row.style.display='flex';
+    row.style.justifyContent='center';
+    row.style.gap='8px';
+    row.style.flexWrap='wrap';
+    pillTotal.style.flex='0 0 260px';
+  }
+
+  drawRadar360(data);
+}
+
+function drawRadar360(data){
+  const canvas=document.getElementById('radar360');
+  const ctx=canvas.getContext('2d');
+  canvas.width=700;
+  canvas.height=500;
+  const W=canvas.width,H=canvas.height;
+  const cx=W/2,cy=H/2,R=130;
+
+  // Get unique values by number
+  const vals={};
+  data.forEach(d=>{if(d.num)vals[d.num]={val:d,lbl:d.valor};});
+  const keys=Object.keys(vals).sort((a,b)=>Number(a)-Number(b));
+  const n=keys.length;
+  if(n===0)return;
+
+  ctx.clearRect(0,0,W,H);
+
+  // Grid
+  for(let ring=1;ring<=5;ring++){
+    const r=R*ring/5;
+    ctx.beginPath();
+    for(let i=0;i<=n;i++){
+      const angle=(Math.PI*2/n)*i-Math.PI/2;
+      const x=cx+r*Math.cos(angle),y=cy+r*Math.sin(angle);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.closePath();ctx.strokeStyle='rgba(148,163,184,0.3)';ctx.stroke();
+  }
+
+  // Axes
+  ctx.font='9px Inter';ctx.fillStyle='#94a3b8';
+  keys.forEach((k,i)=>{
+    const angle=(Math.PI*2/n)*i-Math.PI/2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+R*Math.cos(angle),cy+R*Math.sin(angle));ctx.strokeStyle='rgba(148,163,184,0.2)';ctx.stroke();
+    const lx=cx+(R+25)*Math.cos(angle),ly=cy+(R+25)*Math.sin(angle);
+    ctx.textAlign=Math.cos(angle)>0.1?'left':Math.cos(angle)<-0.1?'right':'center';
+    ctx.textBaseline=Math.sin(angle)>0.1?'top':Math.sin(angle)<-0.1?'bottom':'middle';
+    const txt=vals[k].lbl;
+    ctx.fillText(txt,lx,ly);
+  });
+
+  // Draw datasets
+  function drawSet(color,getVal,alpha){
+    ctx.beginPath();
+    for(let i=0;i<=n;i++){
+      const idx=i%n;
+      const angle=(Math.PI*2/n)*idx-Math.PI/2;
+      const v=getVal(vals[keys[idx]].val);
+      const r=R*(v||0)/5;
+      const x=cx+r*Math.cos(angle),y=cy+r*Math.sin(angle);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.closePath();ctx.fillStyle=color.replace('1)',alpha+')');ctx.fill();ctx.strokeStyle=color;ctx.lineWidth=2;ctx.stroke();
+    for(let i=0;i<n;i++){
+      const angle=(Math.PI*2/n)*i-Math.PI/2;
+      const v=getVal(vals[keys[i]].val);
+      const r=R*(v||0)/5;
+      ctx.beginPath();ctx.arc(cx+r*Math.cos(angle),cy+r*Math.sin(angle),3,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();
+    }
+  }
+
+  drawSet('rgba(233,123,26,1)',d=>d.lider,.06);
+  drawSet('rgba(37,99,235,1)',d=>d.propio,.06);
+  drawSet('rgba(226,24,54,1)',d=>d.reporte,.06);
+  drawSet('rgba(8,145,178,1)',d=>d.par,.06);
+}
+
+function renderFormacion(p){
+  const f=DATA.formacion[p.exp]||null;
+  if(!f){['tInterna','tExterna','fProfesional','fMedida'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML='';});return;}
+  // Experiencia interna
+  const ti=document.getElementById('tInterna');
+  if(f.cargos_int&&f.cargos_int.length)ti.innerHTML=f.cargos_int.map(c=>'<tr><td>'+c+'</td></tr>').join('');
+  else ti.innerHTML='';
+  // Experiencia externa
+  const te=document.getElementById('tExterna');
+  if(f.cargos_ext&&f.cargos_ext.length)te.innerHTML=f.cargos_ext.map(c=>'<tr><td>'+c+'</td></tr>').join('');
+  else te.innerHTML='';
+  // Títulos (formación profesional)
+  const fp=document.getElementById('fProfesional');
+  if(f.titulos&&f.titulos.length){
+    const filtered=f.titulos.filter(t=>!(/^\d+$/.test(String(t).trim())));
+    if(filtered.length) fp.innerHTML=filtered.map(t=>'<div style="margin:4px 0;padding:6px 10px;background:var(--blue-soft);color:var(--text);border-radius:6px;font-size:12px;">'+t+'</div>').join('');
+    else fp.textContent='';
+  } else fp.textContent='';
+  // Formaciones (a la medida)
+  const fm=document.getElementById('fMedida');
+  if(f.formaciones&&f.formaciones.length){
+    const filtered=f.formaciones.filter(t=>!(/^\d+$/.test(String(t).trim())));
+    if(filtered.length) fm.innerHTML=filtered.map(t=>'<div style="margin:4px 0;padding:6px 10px;background:var(--gold-soft);color:var(--text);border-radius:6px;font-size:12px;">'+t+'</div>').join('');
+    else fm.textContent='';
+  } else fm.textContent='';
+}
+
+function renderClima(c){
+  const valid=c.filter(x=>x.dim&&x.pct!=null&&x.pct>0);
+  if(!valid.length){document.getElementById('climaSection').style.display='none';return;}
+  document.getElementById('climaSection').style.display='';
+  const dims={};
+  valid.forEach(x=>{dims[x.dim]=x.pct;});
+  const entries=Object.entries(dims).sort((a,b)=>b[1]-a[1]);
+  const avg=(entries.reduce((s,e)=>s+e[1],0)/entries.length*100).toFixed(0);
+  document.getElementById('climaGeneral').textContent=avg+'%';
+  const getClimaColor=(v)=>{
+    if(v>=70)return 'var(--green)';
+    if(v>=40)return 'var(--gold)';
+    return 'var(--crimson)';
+  };
+  document.getElementById('climaGeneral').style.color=getClimaColor(avg);
+  const shortNames={'Objetivos Y Procesos Organizacionales':'Obj. Procesos','Desarrollo Profesional Y Capacitacion':'Des. Profesional','Orientación Al Servicio':'Orient. Servicio','Satisfaccion Y Compromiso Organizacional':'Satisfacción','Orientación A Resultados Y Logro De Objetivos':'Orient. Resultados','Trabajo En Equipo':'Trabajo Equipo','Cultura, Equidad Y Código De Ética':'Cultura Y Ética','Comunicación Organizacional':'Comunicación','Administración De Recursos':'Adm. Recursos'};
+  document.getElementById('barClima').innerHTML=entries.map((e,i)=>{
+    const h=Math.round(e[1]*170);
+    const pct=Math.round(e[1]*100);
+    const color=getClimaColor(pct);
+    const short=shortNames[e[0]]||e[0];
+    return '<div class="bar-col"><span class="bar-value">'+pct+'%</span><div class="bar" style="height:'+h+'px;background:'+color+';width:36px;"></div><span class="bar-label" style="font-size:10px;text-align:center;max-width:80px;word-wrap:break-word;">'+short+'</span></div>';
+  }).join('');
+}
+
+function renderHogan(h, exp){
+  const grid=document.getElementById('hoganGrid');
+  const barsSection=document.getElementById('hoganBarsSection');
+  const textSection=document.getElementById('hoganTextSection');
+  const fortEl=document.getElementById('hoganFortalezas');
+  const mejEl=document.getElementById('hoganMejora');
+  const movEl=document.getElementById('hoganMotivadores');
+  const focoEl=document.getElementById('hoganFoco');
+
+  grid.style.display='none';
+  barsSection.innerHTML='';
+  textSection.style.display='none';
+  textSection.style.gridTemplateColumns='1fr 1fr 1fr';
+  fortEl.innerHTML='';fortEl.style.display='';
+  mejEl.innerHTML='';mejEl.style.display='';
+  movEl.innerHTML='';movEl.style.display='';
+  focoEl.style.display='none';
+
+  // New format: HPI/HDS/MVPI bar charts + text cards (or competency-only)
+  const hasHpi=h&&h.hpi&&Object.keys(h.hpi).length;
+  const hasHds=h&&h.hds&&Object.keys(h.hds).length;
+  const hasMvpi=h&&h.mvpi&&Object.keys(h.mvpi).length;
+  if(hasHpi||hasHds||hasMvpi){
+    grid.style.display='';
+    textSection.style.display='grid';
+    textSection.style.marginTop='12px';
+    focoEl.style.display=(h.foco&&h.foco.trim())?'block':'none';
+
+    const barSections=[];
+    if(hasHpi) barSections.push({title:'COMPETENCIAS / FORTALEZAS & ESTILO',data:h.hpi,type:'hpi'});
+    if(hasHds) barSections.push({title:'HDS – RIESGOS BAJO PRESIÓN',data:h.hds,type:'hds'});
+    if(hasMvpi) barSections.push({title:'MVPI – MOTIVADORES & VALORES',data:h.mvpi,type:'mvpi'});
+
+    barsSection.style.display='grid';
+    barsSection.style.gridTemplateColumns=barSections.length===1?'1fr':barSections.length===2?'1fr 1fr':'1fr 1fr 1fr';
+    barsSection.style.gap='12px';
+
+    function barColor(type){
+      if(type==='hpi') return '#eab308';
+      if(type==='hds') return '#dc2626';
+      return '#2563eb';
+    }
+    function titleBg(type){
+      if(type==='hpi') return '#fef9c3';
+      if(type==='hds') return '#fee2e2';
+      return '#dbeafe';
+    }
+    function titleColor(type){
+      if(type==='hpi') return '#a16207';
+      if(type==='hds') return '#b91c1c';
+      return '#1d4ed8';
+    }
+    function renderBarSection(title, data, type){
+      const items=Object.entries(data);
+      const icons={hpi:'<svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>',
+        hds:'<svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>',
+        mvpi:'<svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2z"/></svg>'};
+      const iconBg={hpi:'background:#fef9c3;color:#a16207;',hds:'background:#fee2e2;color:#b91c1c;',mvpi:'background:#dbeafe;color:#1d4ed8;'};
+      let html='<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:16px 20px;">';
+      html+='<div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;">';
+      html+='<div style="width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;'+iconBg[type]+'">'+icons[type]+'</div>';
+      html+='<div style="font-family:\'Space Grotesk\',sans-serif;font-size:13px;font-weight:700;color:'+titleColor(type)+';text-align:center;">'+title+'</div>';
+      html+='</div>';
+      items.forEach(([name,val])=>{
+        const pct=val;
+        const color=barColor(type);
+        html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">';
+        html+='<div style="width:140px;text-align:right;font-size:11px;color:var(--text-dim);flex-shrink:0;">'+name+'</div>';
+        html+='<div style="flex:1;height:14px;background:var(--border);border-radius:4px;overflow:hidden;">';
+        html+='<div style="width:'+pct+'%;height:100%;background:'+color+';border-radius:4px;transition:width 0.6s;"></div>';
+        html+='</div>';
+        html+='<div style="width:28px;font-size:12px;font-weight:700;color:var(--text);text-align:right;">'+val+'</div>';
+        html+='</div>';
+      });
+      html+='</div>';
+      return html;
+    }
+    barsSection.innerHTML=
+      '<div style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:10px;font-family:\'Space Grotesk\',sans-serif;font-size:16px;font-weight:700;color:#fff;background:#dc2626;padding:10px 0;border-radius:8px;">Valoración de Comportamientos Hogan'+(h.tipo?'<span style="padding:2px 12px;border-radius:100px;font-size:11px;font-weight:700;color:#fff;background:'+({'Alta Versatilidad':'#059669','Sólido':'#2563eb','Experto':'#e97b1a','Alto potencial':'#7c3aed'}[h.tipo]||'rgba(255,255,255,0.25)')+';">'+h.tipo+'</span>':'')+'</div>'+
+      barSections.map(s=>renderBarSection(s.title,s.data,s.type)).join('');
+
+    function formatBullets(text){
+      if(!text) return '';
+      let t=text.replace(/\n+/g,' ').replace(/•\s*/g,'•').trim();
+      let parts=t.split('•').map(s=>s.trim()).filter(Boolean);
+      return parts.map(p=>'• '+p).join('\n');
+    }
+
+    const hasDesc=!!(h.descarriladores&&h.descarriladores.trim());
+    const hasOport=!!(h.oportunidades&&h.oportunidades.trim());
+    const hasMotiv=!!(h.motivadores&&h.motivadores.trim());
+    textSection.style.gridTemplateColumns='1fr 1fr 1fr';
+
+    fortEl.innerHTML='<div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#a16207;padding:6px 16px;background:#fef9c3;justify-content:center;border-radius:8px;margin-bottom:10px;"><svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>FORTALEZAS (HPI)</div>'+
+      '<div style="font-size:11px;color:var(--text);line-height:1.7;white-space:pre-line;">'+formatBullets(h.fortalezas)+'</div>';
+    fortEl.style.display='';
+
+    if(hasDesc){
+      mejEl.innerHTML='<div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#b91c1c;padding:6px 16px;background:#fee2e2;justify-content:center;border-radius:8px;margin-bottom:10px;"><svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>DESCARRILADORES (HDS)</div>'+
+        '<div style="font-size:11px;color:var(--text);line-height:1.7;white-space:pre-line;">'+formatBullets(h.descarriladores)+'</div>';
+    } else if(hasOport){
+      mejEl.innerHTML='<div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#b91c1c;padding:6px 16px;background:#fee2e2;justify-content:center;border-radius:8px;margin-bottom:10px;"><svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>OPORTUNIDADES DE DESARROLLO</div>'+
+        '<div style="font-size:11px;color:var(--text);line-height:1.7;white-space:pre-line;">'+formatBullets(h.oportunidades)+'</div>';
+    } else {
+      mejEl.innerHTML='<div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#b91c1c;padding:6px 16px;background:#fee2e2;justify-content:center;border-radius:8px;margin-bottom:10px;"><svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>DESCARRILADORES (HDS)</div>'+
+        '<div style="font-size:11px;color:var(--text-dim);font-style:italic;text-align:center;padding:8px;">Sin datos</div>';
+    }
+    mejEl.style.display='';
+
+    if(hasMotiv){
+      movEl.innerHTML='<div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1d4ed8;padding:6px 16px;background:#dbeafe;justify-content:center;border-radius:8px;margin-bottom:10px;"><svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>MOTIVADORES (MVPI)</div>'+
+        '<div style="font-size:11px;color:var(--text);line-height:1.7;white-space:pre-line;">'+formatBullets(h.motivadores)+'</div>';
+    } else {
+      movEl.innerHTML='<div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1d4ed8;padding:6px 16px;background:#dbeafe;justify-content:center;border-radius:8px;margin-bottom:10px;"><svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>MOTIVADORES (MVPI)</div>'+
+        '<div style="font-size:11px;color:var(--text-dim);font-style:italic;text-align:center;padding:8px;">Sin datos</div>';
+    }
+    movEl.style.display='';
+
+    if(h.foco&&h.foco.trim()){
+      const topHpi=Object.entries(h.hpi).sort((a,b)=>b[1]-a[1]).slice(0,3);
+      const hpiLine=topHpi.map(([n,v])=>'<b>'+n+'</b> '+v).join(' · ');
+      let focoLines='<div style="font-size:12px;color:#a16207;margin-bottom:4px;text-align:center;">HPI Fortalezas: '+hpiLine+'</div>';
+      if(hasHds){const topHds=Object.entries(h.hds).sort((a,b)=>b[1]-a[1]).slice(0,3);focoLines+='<div style="font-size:12px;color:#dc2626;margin-bottom:4px;text-align:center;">HDS Riesgo: '+topHds.map(([n,v])=>'<b>'+n+'</b> '+v).join(' · ')+'</div>';}
+      if(hasMvpi){const topMvpi=Object.entries(h.mvpi).sort((a,b)=>b[1]-a[1]).slice(0,3);focoLines+='<div style="font-size:12px;color:#2563eb;margin-bottom:12px;text-align:center;">MVPI Motivadores: '+topMvpi.map(([n,v])=>'<b>'+n+'</b> '+v).join(' · ')+'</div>';}
+      const focoItems=h.foco.split(/•\s*/).map(s=>s.trim()).filter(Boolean);
+      const focoBullets=focoItems.map(item=>'<div style="display:flex;gap:6px;margin-bottom:4px;font-size:11px;color:var(--text);line-height:1.5;"><span style="color:#15803d;flex-shrink:0;">•</span><span>'+item+'</span></div>').join('');
+      focoEl.style.display='block';
+      focoEl.innerHTML=
+        '<div style="font-family:\'Space Grotesk\',sans-serif;font-size:14px;font-weight:700;color:#15803d;text-align:center;margin-bottom:10px;">FOCO DE DESARROLLO</div>'+
+        '<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:20px 24px;">'+
+          focoLines+
+          '<div style="margin-top:8px;">'+focoBullets+'</div>'+
+        '</div>';
+    }
+  }
+
+  // Competencias section (independent of HPI/HDS/MVPI)
+  if(h&&h.competencias&&h.competencias.length>0){
+    const compSection=document.getElementById('competenciasSection');
+    const compChart=document.getElementById('competenciasChart');
+    const compFortSection=document.getElementById('compFortalezasSection');
+    const compFort=document.getElementById('compFortalezas');
+    const compOportSection=document.getElementById('compOportunidadesSection');
+    const compOport=document.getElementById('compOportunidades');
+    const compDesSection=document.getElementById('compDesarrolloSection');
+    const compDes=document.getElementById('compDesarrollo');
+    
+    compSection.style.display='block';
+    
+    // Sort competencias alphabetically like Excel
+    const sorted=[...h.competencias].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
+    
+    // Render bar chart like Image 2
+    let chartHtml = '<div style="border:1px solid #ddd; border-radius:6px; overflow:hidden; background:#fff;">';
+    chartHtml += '<div style="background:#333; color:#fff; padding:8px 16px; font-size:13px; font-weight:700; font-family:\'Space Grotesk\',sans-serif; display:flex; justify-content:space-between; align-items:center;">';
+    chartHtml += '<span>PERFIL DE COMPETENCIAS (HOGAN) — ESCALA 0 A 100</span><span style="font-size:10px;font-weight:500;opacity:0.8;">(Puntaje)</span></div>';
+    chartHtml += '<div style="padding:16px 20px 24px 16px;"><div style="display:flex; flex-direction:column; gap:10px;">';
+    
+    sorted.forEach(c=>{
+      chartHtml+='<div style="display:flex; align-items:center; gap:12px;">';
+      chartHtml+='<div style="width:180px; text-align:right; font-size:11.5px; font-weight:500; color:#333; flex-shrink:0;">'+c.nombre+'</div>';
+      chartHtml+='<div style="flex:1; position:relative; height:20px; border-left:1px solid #ddd; border-right:1px solid #ddd;">';
+      for(let g=0;g<=100;g+=10){
+        chartHtml+='<div style="position:absolute; left:'+g+'%; top:-5px; bottom:-5px; width:1px; background:#f0f0f0; z-index:1;"></div>';
+      }
+      chartHtml+='<div style="position:absolute; left:0; top:2px; bottom:2px; width:'+Math.min(100, c.puntaje)+'%; background:#c0392b; z-index:2;"></div>';
+      chartHtml+='</div>';
+      chartHtml+='</div>';
+    });
+
+    // Draw X-axis
+    chartHtml += '<div style="display:flex; align-items:center; gap:12px; margin-top:4px;">';
+    chartHtml += '<div style="width:180px; flex-shrink:0;"></div>';
+    chartHtml += '<div style="flex:1; position:relative; height:15px;">';
+    for(let g=0; g<=100; g+=10){
+      let align = g === 0 ? 'left' : (g === 100 ? 'right' : 'center');
+      let transform = g === 0 ? '' : (g === 100 ? 'transform:translateX(50%);' : 'transform:translateX(-50%);');
+      if (g === 100) transform = '';
+      let leftAdjust = g === 100 ? 'right:0;' : 'left:'+g+'%;';
+      chartHtml += '<div style="position:absolute; '+leftAdjust+' top:0; font-size:10px; color:#666; '+transform+'">'+g+'</div>';
+    }
+    chartHtml += '</div></div>';
+    chartHtml += '</div></div></div>';
+
+    compChart.innerHTML=chartHtml;
+    
+    // Render fortalezas (no scores, colored names)
+    if(h.fortalezas&&h.fortalezas.trim()){
+      const fortLines=h.fortalezas.split('•').map(s=>s.trim()).filter(Boolean);
+      let fortHtml='';
+      fortLines.forEach(line=>{
+        const match=line.match(/^(.+?)\s*\(\d+\)\s*[—–-]?\s*(.*)$/);
+        if(match){
+          fortHtml+='<div style="padding:8px 0;border-bottom:1px solid #eee;font-size:12px;color:#333;">';
+          fortHtml+='<span style="font-weight:700;color:#2d5a27;">'+match[1].trim()+'</span>';
+          if(match[2]) fortHtml+=' — '+match[2];
+          fortHtml+='</div>';
+        } else {
+          fortHtml+='<div style="padding:8px 0;border-bottom:1px solid #eee;font-size:12px;color:#333;">• '+line+'</div>';
+        }
+      });
+      compFort.innerHTML=fortHtml;
+      compFortSection.style.display='block';
+    }
+    
+    // Render oportunidades (no scores, colored names)
+    if(h.oportunidades&&h.oportunidades.trim()){
+      const oportLines=h.oportunidades.split('•').map(s=>s.trim()).filter(Boolean);
+      let oportHtml='';
+      oportLines.forEach(line=>{
+        const match=line.match(/^(.+?)\s*\(\d+\)\s*[—–-]?\s*(.*)$/);
+        if(match){
+          oportHtml+='<div style="padding:8px 0;border-bottom:1px solid #eee;font-size:12px;color:#333;">';
+          oportHtml+='<span style="font-weight:700;color:#8b2500;">'+match[1].trim()+'</span>';
+          if(match[2]) oportHtml+=' — '+match[2];
+          oportHtml+='</div>';
+        } else {
+          oportHtml+='<div style="padding:8px 0;border-bottom:1px solid #eee;font-size:12px;color:#333;">• '+line+'</div>';
+        }
+      });
+      compOport.innerHTML=oportHtml;
+      compOportSection.style.display='block';
+    }
+    
+    // Render desarrollo
+    if(h.desarrollo&&h.desarrollo.trim()){
+      const desLines=h.desarrollo.split('•').map(s=>s.trim()).filter(Boolean);
+      let desHtml='';
+      desLines.forEach(line=>{
+        const match=line.match(/^(.+?):\s*(.*)$/);
+        if(match){
+          desHtml+='<div style="padding:8px 0;border-bottom:1px solid #eee;font-size:12px;color:#333;">';
+          desHtml+='<span style="font-weight:700;">'+match[1].trim()+'</span>';
+          if(match[2]) desHtml+=' — '+match[2];
+          desHtml+='</div>';
+        } else {
+          desHtml+='<div style="padding:8px 0;border-bottom:1px solid #eee;font-size:12px;color:#333;">• '+line+'</div>';
+        }
+      });
+      compDes.innerHTML=desHtml;
+      compDesSection.style.display='block';
+    }
+    return;
+  }
+
+  // Fallback: old format from observaciones
+  const obs=DATA.observaciones[exp];
+  if(!obs||(!obs.fortalezas&&!obs.oportunidades)){return;}
+  grid.style.display='';
+  barsSection.style.display='none';
+  textSection.style.display='grid';
+  textSection.style.marginTop='0';
+  focoEl.style.display='none';
+  const hasFort=!!obs.fortalezas, hasOport=!!obs.oportunidades;
+  textSection.style.gridTemplateColumns=hasFort&&hasOport?'1fr 1fr':'1fr';
+  fortEl.innerHTML=hasFort?'<div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:8px;">Fortalezas</div>'+
+      '<div style="margin:6px 0;padding:10px 12px;background:var(--green-soft);color:var(--text);border-radius:6px;border-left:3px solid var(--green);font-size:12px;color:var(--text);line-height:1.6;white-space:pre-line;">'+obs.fortalezas+'</div>':'';
+  fortEl.style.display=hasFort?'':'none';
+  mejEl.innerHTML=hasOport?'<div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px;">Oportunidades de desarrollo</div>'+
+      '<div style="margin:6px 0;padding:10px 12px;background:var(--gold-soft);color:var(--text);border-radius:6px;border-left:3px solid var(--gold);font-size:12px;color:var(--text);line-height:1.6;white-space:pre-line;">'+obs.oportunidades+'</div>':'';
+  mejEl.style.display=hasOport?'':'none';
+  movEl.innerHTML='';
+  movEl.style.display='none';
+}
+
+function downloadPDF(){
+  const el=document.getElementById('fichaContent');
+  const btn=event.target;
+  btn.textContent='Generando...';
+  btn.disabled=true;
+  html2canvas(el,{scale:2,useCORS:true,logging:false}).then(function(canvas){
+    const {jsPDF}=window.jspdf;
+    const doc=new jsPDF('p','mm','letter');
+    const pageW=doc.internal.pageSize.getWidth();
+    const pageH=doc.internal.pageSize.getHeight();
+    const margin=10;
+    const contentW=pageW-margin*2;
+    const contentH=pageH-margin*2;
+    const pxPerMm=canvas.width/contentW;
+    const pageSlicePx=Math.floor(contentH*pxPerMm);
+    let srcY=0;
+    let page=0;
+    while(srcY<canvas.height){
+      const dh=Math.min(pageSlicePx,canvas.height-srcY);
+      const sliceCanvas=document.createElement('canvas');
+      sliceCanvas.width=canvas.width;
+      sliceCanvas.height=dh;
+      sliceCanvas.getContext('2d').drawImage(canvas,0,srcY,canvas.width,dh,0,0,canvas.width,dh);
+      const sliceImgH=dh/pxPerMm;
+      if(page>0) doc.addPage();
+      doc.addImage(sliceCanvas.toDataURL('image/jpeg',0.95),'JPEG',margin,margin,contentW,sliceImgH);
+      srcY+=dh;
+      page++;
+    }
+    const nombre=(document.getElementById('iNombre').textContent||'Persona').replace(/\s+/g,'_');
+    doc.save('Ficha_Talento_'+nombre+'.pdf');
+    btn.textContent='Descargar PDF';
+    btn.disabled=false;
+  }).catch(function(){
+    btn.textContent='Descargar PDF';
+    btn.disabled=false;
+    alert('Error al generar PDF');
+  });
+}
+
+// Auto-load: check URL params ?nombre=NAME or ?expediente=EXP
+const urlParams=new URLSearchParams(window.location.search);
+const nombreParam=urlParams.get('nombre');
+const expParam=urlParams.get('expediente');
+if(expParam){
+  const match=SUCESORES.find(x=>x.exp===expParam);
+  if(match){
+    document.getElementById('cedulaInput').value=match.nombre;
+    loadFicha(match);
+  }else{
+    loadFicha(SUCESORES[0]);
+  }
+}else if(nombreParam){
+  const match=SUCESORES.find(x=>x.nombre.toUpperCase()===nombreParam.toUpperCase());
+  if(match){
+    document.getElementById('cedulaInput').value=nombreParam;
+    loadFicha(match);
+  }else{
+    loadFicha(SUCESORES[0]);
+  }
+}else{
+  loadFicha(SUCESORES[0]);
+}
+document.getElementById('cedulaInput').addEventListener('change',function(){if(this.value)searchPerson();});
+
+function toggleTheme(){
+  document.documentElement.classList.toggle('light');
+  localStorage.setItem('theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
+}
+if(localStorage.getItem('theme') === 'light'){
+  document.documentElement.classList.add('light');
+}
+
+</script>
+<script src="../data/nav.js"></script>
+</body>
+</html>
