@@ -6,19 +6,19 @@
 
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);font-family:'Inter',sans-serif;color:var(--text);min-height:100vh;}
-.header{background:var(--red);color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;}
+.header{background:var(--crimson);color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;}
 .header h1{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;}
 .header-search{display:flex;align-items:center;gap:10px;}
 .header-search input{padding:10px 14px;border-radius:8px;border:none;font-size:14px;width:220px;font-family:'Inter',sans-serif;}
-.header-search button{background:#fff;color:var(--red);border:none;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:14px;}
+.header-search button{background:#fff;color:var(--crimson);border:none;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:14px;}
 .header-search button:hover{background:#f0f0f0;}
 .main{max-width:1320px;margin:0 auto;padding:24px 32px 60px;}
-.section-title{background:var(--red);color:#fff;padding:10px 18px;border-radius:8px;font-weight:700;font-size:15px;margin:24px 0 12px;text-align:center;}
-.section-title.orange{background:var(--orange);}
-.section-title.blue{background:var(--cyan);}
+.section-title{background:var(--crimson);color:#fff;padding:10px 18px;border-radius:8px;font-weight:700;font-size:15px;margin:24px 0 12px;text-align:center;}
+.section-title.orange{background:var(--gold);}
+.section-title.blue{background:var(--blue);}
 .section-title.blue2{background:#1e40af;}
 .info-header{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:20px 28px;margin-bottom:24px;display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.06);}
-.info-header .ih-photo{width:160px;height:160px;border-radius:8px;background:linear-gradient(135deg,#e2e5ea,#c9cdd4);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:3px solid var(--red);overflow:hidden;}
+.info-header .ih-photo{width:160px;height:160px;border-radius:8px;background:linear-gradient(135deg,#e2e5ea,#c9cdd4);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:3px solid var(--crimson);overflow:hidden;}
 .info-header .ih-photo svg{width:36px;height:36px;opacity:.45;}
 .info-header .ih-photo img{width:100%;height:100%;border-radius:8px;object-fit:cover;}
 .info-header .ih-text{display:flex;flex-direction:column;gap:6px;flex:1;min-width:200px;}
@@ -27,8 +27,8 @@ body{background:var(--bg);font-family:'Inter',sans-serif;color:var(--text);min-h
 .info-header .ih-meta span{display:flex;align-items:center;gap:4px;}
 .info-header .ih-meta strong{color:var(--text);font-weight:600;}
 .info-header .ih-sep{color:#d1d5db;font-weight:300;}
-.sub-title{background:var(--cyan);color:#fff;padding:8px 14px;border-radius:6px;font-weight:600;font-size:13px;margin:16px 0 8px;}
-.sub-title.orange{background:var(--orange);}
+.sub-title{background:var(--blue);color:#fff;padding:8px 14px;border-radius:6px;font-weight:600;font-size:13px;margin:16px 0 8px;}
+.sub-title.orange{background:var(--gold);}
 .sub-title.blue{background:#1e40af;}
 .sub-title.green{background:var(--green);}
 .data-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px;}
@@ -59,8 +59,8 @@ body{background:var(--bg);font-family:'Inter',sans-serif;color:var(--text);min-h
 .score-pill.total{background:var(--text);color:var(--bg);}
 .score-pill.auto{background:#e97b1a;color:#fff;}
 .score-pill.lider{background:#e97b1a;color:#fff;}
-.score-pill.equipo{background:var(--red);color:#fff;}
-.score-pill.pares{background:var(--cyan);color:#fff;}
+.score-pill.equipo{background:var(--crimson);color:#fff;}
+.score-pill.pares{background:var(--blue);color:#fff;}
 .talent-obj{display:grid;grid-template-columns:110px 1fr;gap:0;margin:8px 0;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
 .talent-obj .to-talent{background:var(--text);color:var(--bg);padding:10px 12px;font-size:12px;font-weight:600;}
 .talent-obj .to-obj{padding:10px 14px;font-size:13px;color:var(--text-dim);}

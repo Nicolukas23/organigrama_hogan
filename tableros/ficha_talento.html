@@ -27,7 +27,7 @@
     <datalist id="cedulas"></datalist>
     <button onclick="searchPerson()">Buscar</button>
     <button class="btn-icon" onclick="toggleTheme()" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.3);padding:10px;border-radius:8px;font-size:16px;cursor:pointer;margin-right:8px;">🌓</button>
-    <button onclick="downloadPDF()" style="background:#fff;color:var(--red);border:2px solid #fff;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:14px;">Descargar PDF</button>
+    <button onclick="downloadPDF()" style="background:#fff;color:var(--crimson);border:2px solid #fff;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:14px;">Descargar PDF</button>
   </div>
 </div>
 <div class="main" id="fichaContent">
@@ -67,7 +67,7 @@
   <div class="section-title blue">Formación</div>
   <div class="formation-grid" style="grid-template-columns:repeat(2,1fr);">
     <div class="formation-card"><div class="fc-title" style="background:#1e40af;">Formación profesional</div><div class="fc-content" id="fProfesional">Sin datos</div></div>
-    <div class="formation-card"><div class="fc-title" style="background:var(--orange);">Formación complementaria</div><div class="fc-content" id="fMedida">Sin datos</div></div>
+    <div class="formation-card"><div class="fc-title" style="background:var(--gold);">Formación complementaria</div><div class="fc-content" id="fMedida">Sin datos</div></div>
   </div>
   </div>
 
@@ -407,9 +407,9 @@ function renderDesempeno(d){
   if(!d||(!d.y2024&&!d.y2025&&!d.y2026)){card.style.display='none';return;}
   card.style.display='';
   const allVals=[
-    {v:d.y2024,label:'2024',color:'var(--red)'},
+    {v:d.y2024,label:'2024',color:'var(--crimson)'},
     {v:d.y2025,label:'2025',color:'var(--green)'},
-    {v:d.y2026,label:'2026',color:'var(--orange)'}
+    {v:d.y2026,label:'2026',color:'var(--gold)'}
   ].filter(x=>x.v!=null);
   if(!allVals.length){card.style.display='none';return;}
   const max=Math.max(...allVals.map(x=>x.v),1);
@@ -434,7 +434,7 @@ function renderComportamientos(t){
   Object.entries(groups).forEach(([name,scores])=>{
     const avg=(scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1);
     const pct=Math.min(100,Math.round((avg/110)*100));
-    const color=avg>=103?'var(--green)':avg>=100?'var(--cyan)':'var(--orange)';
+    const color=avg>=103?'var(--green)':avg>=100?'var(--blue)':'var(--gold)';
     html+='<div class="score-bar-row"><span class="score-bar-label">'+name+'</span><div class="score-bar-track"><div class="score-bar-fill" style="width:'+pct+'%;background:'+color+';"></div></div><span class="score-bar-val">'+avg+'</span></div>';
   });
   el.innerHTML=html;
@@ -541,14 +541,14 @@ function drawRadar360(data){
       const x=cx+r*Math.cos(angle),y=cy+r*Math.sin(angle);
       i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
     }
-    ctx.closePath();ctx.strokeStyle='rgba(0,0,0,.1)';ctx.stroke();
+    ctx.closePath();ctx.strokeStyle='rgba(148,163,184,0.3)';ctx.stroke();
   }
 
   // Axes
-  ctx.font='9px Inter';ctx.fillStyle='#374151';
+  ctx.font='9px Inter';ctx.fillStyle='#94a3b8';
   keys.forEach((k,i)=>{
     const angle=(Math.PI*2/n)*i-Math.PI/2;
-    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+R*Math.cos(angle),cy+R*Math.sin(angle));ctx.strokeStyle='rgba(0,0,0,.06)';ctx.stroke();
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+R*Math.cos(angle),cy+R*Math.sin(angle));ctx.strokeStyle='rgba(148,163,184,0.2)';ctx.stroke();
     const lx=cx+(R+25)*Math.cos(angle),ly=cy+(R+25)*Math.sin(angle);
     ctx.textAlign=Math.cos(angle)>0.1?'left':Math.cos(angle)<-0.1?'right':'center';
     ctx.textBaseline=Math.sin(angle)>0.1?'top':Math.sin(angle)<-0.1?'bottom':'middle';
@@ -620,8 +620,8 @@ function renderClima(c){
   document.getElementById('climaGeneral').textContent=avg+'%';
   const getClimaColor=(v)=>{
     if(v>=70)return 'var(--green)';
-    if(v>=40)return 'var(--orange)';
-    return 'var(--red)';
+    if(v>=40)return 'var(--gold)';
+    return 'var(--crimson)';
   };
   document.getElementById('climaGeneral').style.color=getClimaColor(avg);
   const shortNames={'Objetivos Y Procesos Organizacionales':'Obj. Procesos','Desarrollo Profesional Y Capacitacion':'Des. Profesional','Orientación Al Servicio':'Orient. Servicio','Satisfaccion Y Compromiso Organizacional':'Satisfacción','Orientación A Resultados Y Logro De Objetivos':'Orient. Resultados','Trabajo En Equipo':'Trabajo Equipo','Cultura, Equidad Y Código De Ética':'Cultura Y Ética','Comunicación Organizacional':'Comunicación','Administración De Recursos':'Adm. Recursos'};
@@ -875,8 +875,8 @@ function renderHogan(h, exp){
   fortEl.innerHTML=hasFort?'<div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:8px;">Fortalezas</div>'+
       '<div style="margin:6px 0;padding:10px 12px;background:var(--green-soft);color:var(--text);border-radius:6px;border-left:3px solid var(--green);font-size:12px;color:var(--text);line-height:1.6;white-space:pre-line;">'+obs.fortalezas+'</div>':'';
   fortEl.style.display=hasFort?'':'none';
-  mejEl.innerHTML=hasOport?'<div style="font-size:13px;font-weight:700;color:var(--orange);margin-bottom:8px;">Oportunidades de desarrollo</div>'+
-      '<div style="margin:6px 0;padding:10px 12px;background:var(--gold-soft);color:var(--text);border-radius:6px;border-left:3px solid var(--orange);font-size:12px;color:var(--text);line-height:1.6;white-space:pre-line;">'+obs.oportunidades+'</div>':'';
+  mejEl.innerHTML=hasOport?'<div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px;">Oportunidades de desarrollo</div>'+
+      '<div style="margin:6px 0;padding:10px 12px;background:var(--gold-soft);color:var(--text);border-radius:6px;border-left:3px solid var(--gold);font-size:12px;color:var(--text);line-height:1.6;white-space:pre-line;">'+obs.oportunidades+'</div>':'';
   mejEl.style.display=hasOport?'':'none';
   movEl.innerHTML='';
   movEl.style.display='none';
