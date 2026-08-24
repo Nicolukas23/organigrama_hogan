@@ -351,7 +351,7 @@
       <div  id="teamCompGrid"></div>
     </div>
     <h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;margin:24px 0 12px">Evaluaciones Individuales</h3>
-    <div class="hogan-grid" id="hoganGrid"></div>
+    <div id="hoganGrid"></div>
   </section>
 
   <!-- TABLE VIEW -->
@@ -1487,6 +1487,7 @@ function renderHogan(){
   const hg = document.getElementById('hoganGrid');
   if(hg){
     hg.innerHTML = '';
+    hg.className = '';
     if(hev.length === 0){
       hg.innerHTML = '<div style="grid-column:1/-1;padding:24px;text-align:center;color:var(--text-dim)">No hay evaluaciones de Hogan para mostrar.</div>';
       return;
@@ -1521,7 +1522,11 @@ function renderHogan(){
     const tbody = table.querySelector('tbody');
 
     hev.forEach(p => {
-      const cNum = getCajaNum(p.caja);
+      let cajaVal = p.caja || p.caja_2024 || p.caja_2025 || p.caja_2026;
+      if (!cajaVal && window.HOGAN_EXTRAS && window.HOGAN_EXTRAS[p.expediente] && window.HOGAN_EXTRAS[p.expediente].caja) {
+          cajaVal = window.HOGAN_EXTRAS[p.expediente].caja;
+      }
+      const cNum = getCajaNum(cajaVal);
       let cajaBadge = '-';
       if(cNum) {
         cajaBadge = `<span style="display:inline-block;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:700;color:#fff;background:${BOX_COLORS[cNum] || '#6b7280'}">Caja ${cNum}</span>`;
