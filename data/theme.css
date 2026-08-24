@@ -33,20 +33,20 @@
   --purple: #8B5CF6;
   --purple-soft: rgba(139, 92, 246, 0.18);
 
+  
   /* Cajas Ninebox (Modo Oscuro) */
-  --c1: #47505c; --c1-soft: rgba(71, 80, 92, 0.28);
-  --c2: #58626f; --c2-soft: rgba(88, 98, 111, 0.28);
-  --c3: #69737f; --c3-soft: rgba(105, 115, 127, 0.28);
+  --c1: #ef4444; --c1-soft: rgba(239, 68, 68, 0.15);
+  --c2: #f97316; --c2-soft: rgba(249, 115, 22, 0.15);
+  --c3: #eab308; --c3-soft: rgba(234, 179, 8, 0.15);
   
-  --c4: #9c6a2e; --c4-soft: rgba(156, 106, 46, 0.30);
-  --c5: #c99a46; --c5-soft: rgba(201, 154, 70, 0.30);
-  --c6: #7fa65e; --c6-soft: rgba(127, 166, 94, 0.30);
+  --c4: #f97316; --c4-soft: rgba(249, 115, 22, 0.15);
+  --c5: #eab308; --c5-soft: rgba(234, 179, 8, 0.15);
+  --c6: #84cc16; --c6-soft: rgba(132, 204, 22, 0.15);
   
-  --c7: #1d6e8c; --c7-soft: rgba(29, 110, 140, 0.35);
-  --c8: #2f9271; --c8-soft: rgba(47, 146, 113, 0.35);
-  --c9: #1e7a4e; --c9-soft: rgba(30, 122, 78, 0.38);
-
-  /* Versatilidad Hogan */
+  --c7: #eab308; --c7-soft: rgba(234, 179, 8, 0.15);
+  --c8: #84cc16; --c8-soft: rgba(132, 204, 22, 0.15);
+  --c9: #22c55e; --c9-soft: rgba(34, 197, 94, 0.15);
+/* Versatilidad Hogan */
   --alta-bg: rgba(16, 185, 129, 0.20); --alta-txt: #34d399;
   --media-bg: rgba(245, 158, 11, 0.20); --media-txt: #fbbf24;
   --prof-bg: rgba(59, 130, 246, 0.20); --prof-txt: #60a5fa;
@@ -88,20 +88,20 @@
   --blue: #2563eb;
   --blue-soft: rgba(37, 99, 235, 0.12);
 
+  
   /* Cajas Ninebox (Modo Claro con Colores Vivos y Legibles) */
-  --c1: #64748b; --c1-soft: #f1f5f9;
-  --c2: #475569; --c2-soft: #e2e8f0;
-  --c3: #334155; --c3-soft: #cbd5e1;
+  --c1: #ef4444; --c1-soft: rgba(239, 68, 68, 0.15);
+  --c2: #f97316; --c2-soft: rgba(249, 115, 22, 0.15);
+  --c3: #eab308; --c3-soft: rgba(234, 179, 8, 0.15);
   
-  --c4: #b45309; --c4-soft: #fef3c7;
-  --c5: #a16207; --c5-soft: #fef08a;
-  --c6: #4d7c0f; --c6-soft: #d9f99d;
+  --c4: #f97316; --c4-soft: rgba(249, 115, 22, 0.15);
+  --c5: #eab308; --c5-soft: rgba(234, 179, 8, 0.15);
+  --c6: #84cc16; --c6-soft: rgba(132, 204, 22, 0.15);
   
-  --c7: #0e7490; --c7-soft: #cffafe;
-  --c8: #047857; --c8-soft: #a7f3d0;
-  --c9: #15803d; --c9-soft: #bbf7d0;
-
-  /* Versatilidad Hogan */
+  --c7: #eab308; --c7-soft: rgba(234, 179, 8, 0.15);
+  --c8: #84cc16; --c8-soft: rgba(132, 204, 22, 0.15);
+  --c9: #22c55e; --c9-soft: rgba(34, 197, 94, 0.15);
+/* Versatilidad Hogan */
   --alta-bg: #dcfce7; --alta-txt: #166534;
   --media-bg: #fef3c7; --media-txt: #92400e;
   --prof-bg: #dbeafe; --prof-txt: #1e40af;

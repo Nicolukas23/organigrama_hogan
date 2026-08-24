@@ -100,9 +100,9 @@
       <div class="stat-sub"><b id="kpiTopPct">0%</b> del total evaluado</div>
     </div>
     <div class="stat-card">
-      <div class="stat-lbl">Promedio Potencial Hogan</div>
+      <div class="stat-lbl">Permanencia Promedio</div>
       <div class="stat-val" style="color:var(--gold)"><span id="kpiHogan">0</span> <span style="font-size:14px;font-weight:500;color:var(--text-dim)">pts</span></div>
-      <div class="stat-sub">Evaluados en Hogan</div>
+      <div class="stat-sub">Años en el cargo</div>
     </div>
     <div class="stat-card">
       <div class="stat-lbl">Sucesores Identificados</div>
@@ -1139,8 +1139,16 @@ function renderAll(){
 function renderStats(){
   const n = FILTERED.length;
   const top = FILTERED.filter(r => [7,8,9].includes(getCajaNum(r.caja))).length;
-  const hEv = FILTERED.filter(r => r.hogan_potencial !== null && r.hogan_potencial !== undefined);
-  const avgPot = hEv.length > 0 ? Math.round(hEv.reduce((a, r) => a + (+r.hogan_potencial || 0), 0) / hEv.length) : 0;
+  let totalAños = 0;
+  let countAños = 0;
+  FILTERED.forEach(r => {
+    if (r.tiempo) {
+      const t = String(r.tiempo).toLowerCase().trim();
+      if (t.includes('año')) { totalAños += parseFloat(t); countAños++; }
+      else if (t.includes('mes')) { totalAños += parseFloat(t)/12; countAños++; }
+    }
+  });
+  const avgPot = countAños > 0 ? (totalAños / countAños).toFixed(1) : 0;
   const suc = FILTERED.filter(r => isSuc(r.sucesor)).length;
 
   document.getElementById('kpiTotal').textContent = n;
@@ -1402,11 +1410,17 @@ function renderHogan(){
       kc.forEach(c => {
         const v = (p.hogan_scores && p.hogan_scores[c] !== undefined) ? p.hogan_scores[c] : '-';
         const pct = typeof v === 'number' ? v : 0;
+        let cHex = '#d1d5db';
+        if (typeof v === 'number') {
+          if (v >= 70) cHex = '#10b981';
+          else if (v >= 40) cHex = '#f59e0b';
+          else cHex = '#ef4444';
+        }
         sc += `
           <div class="hs-row">
             <span class="hs-lbl">${c}</span>
-            <div class="hs-bar"><div class="hs-fill" style="width:${pct}%"></div></div>
-            <span class="hs-val">${v}</span>
+            <div class="hs-bar"><div class="hs-fill" style="width:${pct}%;background:${cHex}"></div></div>
+            <span class="hs-val" style="font-weight:700;color:${cHex}">${v}</span>
           </div>`;
       });
       const cNum = getCajaNum(p.caja);
@@ -1427,7 +1441,7 @@ function renderHogan(){
           ${cNum ? `<span class="mini-badge" style="background:${BOX_COLORS[cNum] || '#6b7280'};color:#fff">Caja ${cNum}</span>` : ''}
         </div>
         <div class="hcard-scores">${sc}</div>
-        <div style="margin-top:8px;text-align:right;font-size:11px;font-weight:700;color:var(--crimson)">Ver 11 competencias →</div>`;
+        <div style="margin-top:8px;text-align:right;font-size:11px;font-weight:700;color:var(--crimson)">Ver 10 competencias →</div>`;
       hg.appendChild(card);
     });
   }
