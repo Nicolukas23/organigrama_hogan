@@ -1493,24 +1493,30 @@ function renderHogan(){
     }
 
     const wrap = document.createElement('div');
-    wrap.style.cssText = 'overflow-x:auto; background:#fff; border-radius:12px; border:1px solid rgba(0,0,0,0.06); margin-top:20px;';
-    
-    const table = document.createElement('table');
-    table.className = 'nb-table';
-    table.style.cssText = 'width:100%; border-collapse:separate; border-spacing:0;';
-    table.innerHTML = `
-      <thead>
-        <tr>
-          <th style="width:25%">NOMBRE</th>
-          <th style="width:25%">CARGO</th>
-          <th>UBICACIÓN</th>
-          <th class="th-center">POTENCIAL HOGAN</th>
-          <th class="th-center">VERSATILIDAD</th>
-          <th class="th-center">FICHA</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
+    wrap.className = 'table-section';
+    wrap.style.marginTop = '24px';
+    wrap.innerHTML = `
+      <div class="table-wrap">
+        <div style="overflow-x:auto">
+          <table class="nb-table">
+            <thead>
+              <tr>
+                <th style="text-align:left;">NOMBRE</th>
+                <th style="text-align:left;">CARGO</th>
+                <th style="text-align:left;">UBICACIÓN</th>
+                <th style="text-align:center;">POSIBLE SUCESOR</th>
+                <th style="text-align:left;">TIEMPO</th>
+                <th style="text-align:center;">POTENCIAL HOGAN</th>
+                <th style="text-align:center;">VERSATILIDAD</th>
+                <th style="text-align:center;">FICHA</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
     `;
+    const table = wrap.querySelector('table');
     
     const tbody = table.querySelector('tbody');
 

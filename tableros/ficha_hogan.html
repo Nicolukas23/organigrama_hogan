@@ -60,11 +60,11 @@
   <div style="margin-top:24px;">
     <h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;color:var(--text);margin-bottom:12px;font-weight:bold;">Fortalezas y Oportunidades</h3>
     <div id="hoganTextSection" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-      <div id="hoganFortalezas" style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;">
+      <div id="hoganFortalezas" style="background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:16px;">
         <div style="font-size:12px;font-weight:700;color:#a16207;background:#fef9c3;padding:6px 12px;border-radius:6px;margin-bottom:12px;text-align:center;font-family:'Space Grotesk',sans-serif;">FORTALEZAS</div>
         <div id="fortText" style="font-size:11.5px;color:var(--text);line-height:1.6;white-space:pre-line;">Sin datos</div>
       </div>
-      <div id="hoganOportunidades" style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;">
+      <div id="hoganOportunidades" style="background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:16px;">
         <div style="font-size:12px;font-weight:700;color:#9f1239;background:#fecdd3;padding:6px 12px;border-radius:6px;margin-bottom:12px;text-align:center;font-family:'Space Grotesk',sans-serif;">OPORTUNIDADES DE DESARROLLO / DESCARRILADORES</div>
         <div id="oportText" style="font-size:11.5px;color:var(--text);line-height:1.6;white-space:pre-line;">Sin datos</div>
       </div>
@@ -74,7 +74,7 @@
   <!-- NINEBOX Y COMPETENCIAS -->
   <div style="display:grid; grid-template-columns:300px 1fr; gap:24px; margin-top:24px; align-items:start;">
     <!-- Left: Ninebox -->
-    <div id="nineboxContainer" style="background:#fff; border:1px solid var(--border); border-radius:10px; padding:16px;">
+    <div id="nineboxContainer" style="background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:16px;">
       <h3 style="font-family:'Space Grotesk',sans-serif;font-size:14px;color:var(--text);text-align:center;margin-bottom:16px;font-weight:bold;">NINEBOX</h3>
       <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; max-width:250px; margin:0 auto; aspect-ratio:1;">
         <!-- Row 1 (Alto Desempeño) -->
@@ -93,8 +93,8 @@
       <div id="nbText" style="text-align:center; font-size:12px; font-weight:600; margin-top:12px; color:var(--text);">Caja: -</div>
     </div>
     <!-- Right: Competencias -->
-    <div id="hoganChartContainer" style="background:#fff; border-radius:10px;">
-      <div style="padding:20px; text-align:center; color:#666;">Cargando gráfica...</div>
+    <div id="hoganChartContainer" style="background:var(--panel); border-radius:10px;">
+      <div style="padding:20px; text-align:center; color:var(--text-dim);">Cargando gráfica...</div>
     </div>
   </div>
 </div>
@@ -197,23 +197,37 @@ function loadFicha(p){
   document.getElementById('iGerencia').textContent=info.gerencia?info.gerencia:'—';
   document.getElementById('iJefe').textContent=info.jefe?info.jefe:'—';
   
-  if(info.fecha_nacimiento){
-    const fnac=new Date(info.fecha_nacimiento);
+  function parseExcelDate(val) {
+    if (!val) return null;
+    if (typeof val === 'number' || (typeof val === 'string' && !isNaN(val))) {
+      const days = parseInt(val, 10);
+      if (days > 20000 && days < 80000) {
+        return new Date((days - 25569) * 86400 * 1000); // Excel serial to JS date
+      }
+    }
+    const d = new Date(val);
+    if (!isNaN(d.getTime())) return d;
+    return null;
+  }
+
+  const fnac = parseExcelDate(info.fecha_nacimiento);
+  if(fnac){
     const hoy=new Date();
     let edad=hoy.getFullYear()-fnac.getFullYear();
     const m=hoy.getMonth()-fnac.getMonth();
     if(m<0||(m===0&&hoy.getDate()<fnac.getDate()))edad--;
-    document.getElementById('iEdad').textContent=edad+' años';
+    document.getElementById('iEdad').textContent = (edad >= 0 && edad < 100) ? edad+' años' : '—';
   } else {
     document.getElementById('iEdad').textContent='—';
   }
-  if(info.fecha_ingreso){
-    const fing=new Date(info.fecha_ingreso);
+  
+  const fing = parseExcelDate(info.fecha_ingreso);
+  if(fing){
     const hoy=new Date();
     let ant=hoy.getFullYear()-fing.getFullYear();
     const m=hoy.getMonth()-fing.getMonth();
     if(m<0||(m===0&&hoy.getDate()<fing.getDate()))ant--;
-    document.getElementById('iAntiguedad').textContent=ant+' años';
+    document.getElementById('iAntiguedad').textContent = (ant >= 0 && ant < 100) ? ant+' años' : '—';
   } else {
     document.getElementById('iAntiguedad').textContent='—';
   }
@@ -265,12 +279,12 @@ function loadFicha(p){
        box.innerHTML = '';
      }
   }
-  const cNum = getCajaNum(info.caja || p.caja);
+  const cNum = getCajaNum(extra.caja || info.caja || p.caja);
   if(cNum && document.getElementById('nb'+cNum)) {
      const actBox = document.getElementById('nb'+cNum);
-     actBox.style.border = '3px solid #111827';
+     actBox.style.border = '3px solid var(--text)';
      actBox.style.opacity = '1';
-     actBox.innerHTML = '<span style="color:#111827;">' + cNum + '</span>';
+     actBox.innerHTML = '<span style="color:#fff;">' + cNum + '</span>';
      document.getElementById('nbText').textContent = 'Caja ' + cNum;
   } else {
      document.getElementById('nbText').textContent = 'Sin evaluación Ninebox';
@@ -283,19 +297,19 @@ function loadFicha(p){
 
   if (comps.length > 0) {
     const sorted = [...comps].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
-    let chartHtml = '<div style="border:1px solid #ddd; border-radius:6px; overflow:hidden; background:#fff;">';
+    let chartHtml = '<div style="border:1px solid var(--border); border-radius:6px; overflow:hidden; background:var(--panel);">';
     chartHtml += '<div style="background:#333; color:#fff; padding:8px 16px; font-size:13px; font-weight:700; font-family:\"Space Grotesk\",sans-serif; display:flex; justify-content:space-between; align-items:center;">';
     chartHtml += '<span>PERFIL DE COMPETENCIAS (HOGAN) — ESCALA 0 A 100</span><span style="font-size:10px;font-weight:500;opacity:0.8;">(Puntaje)</span></div>';
     chartHtml += '<div style="padding:16px 20px 24px 16px;"><div style="display:flex; flex-direction:column; gap:10px;">';
     
     sorted.forEach(c=>{
       chartHtml+='<div style="display:flex; align-items:center; gap:12px;">';
-      chartHtml+='<div style="width:180px; text-align:right; font-size:11.5px; font-weight:500; color:#333; flex-shrink:0;">'+c.nombre+'</div>';
-      chartHtml+='<div style="flex:1; position:relative; height:20px; border-left:1px solid #ddd; border-right:1px solid #ddd;">';
+      chartHtml+='<div style="width:180px; text-align:right; font-size:11.5px; font-weight:500; color:var(--text); flex-shrink:0;">'+c.nombre+'</div>';
+      chartHtml+='<div style="flex:1; position:relative; height:20px; border-left:1px solid var(--border); border-right:1px solid var(--border);">';
       for(let g=0;g<=100;g+=10){
         let leftAdjust = g === 100 ? 'right:-10px;' : (g === 0 ? 'left:-5px;' : 'left:calc('+g+'% - 8px);');
         let transform = g === 100 ? '' : (g === 0 ? '' : 'transform:translateX(-50%);');
-        chartHtml+='<div style="position:absolute; left:'+g+'%; top:-5px; bottom:-5px; width:1px; background:#f0f0f0; z-index:1;"></div>';
+        chartHtml+='<div style="position:absolute; left:'+g+'%; top:-5px; bottom:-5px; width:1px; background:var(--border); z-index:1;"></div>';
       }
       chartHtml+='<div style="position:absolute; left:0; top:2px; bottom:2px; width:'+Math.min(100, c.puntaje)+'%; background:#c0392b; z-index:2;"></div>';
       chartHtml+='</div>';
@@ -308,14 +322,14 @@ function loadFicha(p){
     for(let g=0;g<=100;g+=10){
       let leftAdjust = g === 100 ? 'right:-10px;' : (g === 0 ? 'left:-5px;' : 'left:calc('+g+'% - 8px);');
       let transform = g === 100 ? '' : (g === 0 ? '' : 'transform:translateX(-50%);');
-      chartHtml += '<div style="position:absolute; '+leftAdjust+' top:0; font-size:10px; color:#666; '+transform+'">'+g+'</div>';
+      chartHtml += '<div style="position:absolute; '+leftAdjust+' top:0; font-size:10px; color:var(--text-dim); '+transform+'">'+g+'</div>';
     }
     chartHtml += '</div></div>';
     chartHtml += '</div></div></div>';
     
     document.getElementById('hoganChartContainer').innerHTML = chartHtml;
   } else {
-    document.getElementById('hoganChartContainer').innerHTML = '<div style="padding:20px; text-align:center; color:#666;">Sin datos de competencias Hogan</div>';
+    document.getElementById('hoganChartContainer').innerHTML = '<div style="padding:20px; text-align:center; color:var(--text-dim);">Sin datos de competencias Hogan</div>';
   }
   
   document.title = p.nombre + " - Hogan";
