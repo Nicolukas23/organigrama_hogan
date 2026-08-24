@@ -1149,6 +1149,7 @@ function renderStats(){
     }
   });
   const avgPot = countAños > 0 ? (totalAños / countAños).toFixed(1) : 0;
+  const hEv = FILTERED.filter(r => r.hogan_versatilidad);
   const suc = FILTERED.filter(r => isSuc(r.sucesor)).length;
 
   document.getElementById('kpiTotal').textContent = n;
