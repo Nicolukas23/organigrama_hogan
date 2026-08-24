@@ -1335,7 +1335,7 @@ function renderNineboxTable(){
           ${p.tiempo && p.tiempo !== 'N/A' ? p.tiempo : '—'}
         </td>
         <td>
-          ${hasFicha ? `<a href="ficha_talento.html?expediente=${p.expediente}" target="_blank" onclick="event.stopPropagation()" class="btn-ficha">Ver Ficha</a>` : `<span style="color:var(--text-faint)">—</span>`}
+          ${hasFicha ? `<a href="ficha_talento.html?expediente=${p.expediente}" target="_blank" onclick="event.stopPropagation()" class="btn-ficha">Ver Ficha</a>` : `<a href="ficha_hogan.html?exp=${p.expediente}" target="_blank" onclick="event.stopPropagation()" class="btn-ficha" style="background:#f1f5f9;color:var(--primary);border:1px solid #cbd5e1;">Preliminar</a>`}
         </td>
       `;
       tbody.appendChild(tr);
@@ -1525,16 +1525,7 @@ function renderHogan(){
       card.onmouseover = () => { card.style.transform = 'translateY(-2px)'; card.style.boxShadow = '0 6px 16px rgba(0,0,0,0.06)'; card.style.borderColor = 'var(--primary)'; };
       card.onmouseout = () => { card.style.transform = 'none'; card.style.boxShadow = '0 2px 8px rgba(0,0,0,0.02)'; card.style.borderColor = 'rgba(0,0,0,0.06)'; };
       card.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <div class="hcard-av" style="width:32px;height:32px;font-size:12px">${p.nombre.charAt(0)}</div>
-            <div style="min-width:0;flex:1">
-              <div style="font-size:12px;font-weight:700;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.nombre}</div>
-              <div style="font-size:10px;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.cargo || '-'}</div>
-            </div>
-          </div>
-          <button onclick="window.open('ficha_hogan.html?exp=${p.expediente}', '_blank')" style="background:var(--primary);color:#fff;border:none;border-radius:4px;padding:4px 8px;font-size:10px;font-weight:600;cursor:pointer;white-space:nowrap;">Ver ficha</button>
-        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
           <div class="hcard-av" style="width:32px;height:32px;font-size:12px">${p.nombre.charAt(0)}</div>
           <div style="min-width:0;flex:1">
             <div style="font-size:12px;font-weight:700;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.nombre}</div>
@@ -1552,7 +1543,9 @@ function renderHogan(){
           ${sc}
         </div>
         
-        <div style="text-align:center;font-size:10.5px;font-weight:700;color:var(--primary);margin-top:auto">Ver detalles →</div>`;
+        <div style="text-align:center;margin-top:auto">
+          <button onclick="event.stopPropagation(); window.open('ficha_hogan.html?exp=${p.expediente}', '_blank')" style="background:var(--primary);color:#fff;border:none;border-radius:6px;padding:6px 16px;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;width:100%;font-family:'Space Grotesk',sans-serif;">Ver ficha preliminar</button>
+        </div>`;
       hg.appendChild(card);
     });
   }
@@ -1616,7 +1609,16 @@ function renderTable(){
       const btn = document.createElement('button');
       btn.className = 'badge-ficha-btn';
       btn.textContent = 'Ver Ficha';
-      btn.onclick = (e) => { e.stopPropagation(); openModal(p); };
+      btn.onclick = (e) => { e.stopPropagation(); window.open(`ficha_talento.html?expediente=${p.expediente}`, '_blank'); };
+      tr.children[7].appendChild(btn);
+    } else {
+      const btn = document.createElement('button');
+      btn.className = 'badge-ficha-btn';
+      btn.style.background = '#f1f5f9';
+      btn.style.color = 'var(--primary)';
+      btn.style.border = '1px solid #cbd5e1';
+      btn.textContent = 'Preliminar';
+      btn.onclick = (e) => { e.stopPropagation(); window.open(`ficha_hogan.html?exp=${p.expediente}`, '_blank'); };
       tr.children[7].appendChild(btn);
     } else {
       tr.children[7].innerHTML = '<span class="badge-suc-no">—</span>';
@@ -1688,8 +1690,11 @@ function openModal(p){
   if(hasFicha) {
     btnContainer.style.display = 'block';
     btnEnlace.href = `ficha_talento.html?expediente=${p.expediente}`;
+    btnEnlace.innerHTML = 'Abrir Ficha de Talento Completa ↗';
   } else {
-    btnContainer.style.display = 'none';
+    btnContainer.style.display = 'block';
+    btnEnlace.href = `ficha_hogan.html?exp=${p.expediente}`;
+    btnEnlace.innerHTML = 'Abrir Ficha Preliminar ↗';
   }
 
   const mod = document.getElementById('profileModal');
