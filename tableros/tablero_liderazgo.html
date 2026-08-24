@@ -68,18 +68,18 @@
           Planificación de Talento &amp; Liderazgo Ejecutivo
         </div>
         <h1>Tablero Ejecutivo de Liderazgo <span>· Nine Box &amp; Hogan</span></h1>
-        <div class="hdr-meta">
-          <span>📍 Estructura activa: <b id="lblScope">Todas las Direcciones</b></span>
-        </div>
       </div>
     </div>
     <div class="hdr-right">
+      <div style="font-size:12px;color:var(--text-dim);margin-right:12px;display:flex;align-items:center;gap:8px;">
+        <span>📍 Estructura activa: <b id="lblScope" style="color:var(--text)">Todas las Direcciones</b></span>
+        <button class="btn-icon" id="btnScopeToggle" style="display:none; border-color:var(--gold); color:var(--gold); padding:2px 8px; font-size:11px;" onclick="showScopeOverlay()">🔄 Cambiar</button>
+      </div>
       <div class="user-badge">
         <span class="role-tag role-admin" id="lblRoleBadge">ADMIN</span>
         <b id="lblUserName">NICOLAS SANTOS</b>
         <a href="javascript:void(0)" onclick="showLoginOverlay()" style="color:var(--text-dim);font-size:11px;margin-left:4px;text-decoration:none">· cambiar</a>
       </div>
-      <button class="btn-icon" id="btnScopeToggle" style="display:none; border-color:var(--gold); color:var(--gold);" onclick="showScopeOverlay()">🔄 Cambiar Alcance</button>
       <button class="btn-icon" onclick="window.GlobalSearch && window.GlobalSearch.open()" title="Buscar colaborador (Cmd+K)">🔍 Buscar <kbd style="font-size:10px;opacity:0.7;background:rgba(255,255,255,0.1);padding:1px 4px;border-radius:3px">⌘K</kbd></button>
       <button class="btn-icon" onclick="window.print()" title="Exportar reporte ejecutivo">📄 PDF One-Pager</button>
       <button class="btn-icon" onclick="exportExcel()">📥 Descargar Excel</button>
