@@ -26,6 +26,7 @@
     <input type="text" id="cedulaInput" placeholder="Cédula o nombre..." autocomplete="off" list="cedulas">
     <datalist id="cedulas"></datalist>
     <button onclick="searchPerson()">Buscar</button>
+    <button class="btn-icon" onclick="toggleTheme()" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.3);padding:10px;border-radius:8px;font-size:16px;cursor:pointer;margin-right:8px;">🌓</button>
     <button onclick="downloadPDF()" style="background:#fff;color:var(--red);border:2px solid #fff;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:14px;">Descargar PDF</button>
   </div>
 </div>
@@ -596,14 +597,14 @@ function renderFormacion(p){
   const fp=document.getElementById('fProfesional');
   if(f.titulos&&f.titulos.length){
     const filtered=f.titulos.filter(t=>!(/^\d+$/.test(String(t).trim())));
-    if(filtered.length) fp.innerHTML=filtered.map(t=>'<div style="margin:4px 0;padding:6px 10px;background:#f0f4ff;border-radius:6px;font-size:12px;">'+t+'</div>').join('');
+    if(filtered.length) fp.innerHTML=filtered.map(t=>'<div style="margin:4px 0;padding:6px 10px;background:var(--blue-soft);color:var(--text);border-radius:6px;font-size:12px;">'+t+'</div>').join('');
     else fp.textContent='';
   } else fp.textContent='';
   // Formaciones (a la medida)
   const fm=document.getElementById('fMedida');
   if(f.formaciones&&f.formaciones.length){
     const filtered=f.formaciones.filter(t=>!(/^\d+$/.test(String(t).trim())));
-    if(filtered.length) fm.innerHTML=filtered.map(t=>'<div style="margin:4px 0;padding:6px 10px;background:#fff7ed;border-radius:6px;font-size:12px;">'+t+'</div>').join('');
+    if(filtered.length) fm.innerHTML=filtered.map(t=>'<div style="margin:4px 0;padding:6px 10px;background:var(--gold-soft);color:var(--text);border-radius:6px;font-size:12px;">'+t+'</div>').join('');
     else fm.textContent='';
   } else fm.textContent='';
 }
@@ -872,10 +873,10 @@ function renderHogan(h, exp){
   const hasFort=!!obs.fortalezas, hasOport=!!obs.oportunidades;
   textSection.style.gridTemplateColumns=hasFort&&hasOport?'1fr 1fr':'1fr';
   fortEl.innerHTML=hasFort?'<div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:8px;">Fortalezas</div>'+
-      '<div style="margin:6px 0;padding:10px 12px;background:#ecfdf5;border-radius:6px;border-left:3px solid var(--green);font-size:12px;color:var(--text);line-height:1.6;white-space:pre-line;">'+obs.fortalezas+'</div>':'';
+      '<div style="margin:6px 0;padding:10px 12px;background:var(--green-soft);color:var(--text);border-radius:6px;border-left:3px solid var(--green);font-size:12px;color:var(--text);line-height:1.6;white-space:pre-line;">'+obs.fortalezas+'</div>':'';
   fortEl.style.display=hasFort?'':'none';
   mejEl.innerHTML=hasOport?'<div style="font-size:13px;font-weight:700;color:var(--orange);margin-bottom:8px;">Oportunidades de desarrollo</div>'+
-      '<div style="margin:6px 0;padding:10px 12px;background:#fff7ed;border-radius:6px;border-left:3px solid var(--orange);font-size:12px;color:var(--text);line-height:1.6;white-space:pre-line;">'+obs.oportunidades+'</div>':'';
+      '<div style="margin:6px 0;padding:10px 12px;background:var(--gold-soft);color:var(--text);border-radius:6px;border-left:3px solid var(--orange);font-size:12px;color:var(--text);line-height:1.6;white-space:pre-line;">'+obs.oportunidades+'</div>':'';
   mejEl.style.display=hasOport?'':'none';
   movEl.innerHTML='';
   movEl.style.display='none';
@@ -945,6 +946,15 @@ if(expParam){
   loadFicha(SUCESORES[0]);
 }
 document.getElementById('cedulaInput').addEventListener('change',function(){if(this.value)searchPerson();});
+
+function toggleTheme(){
+  document.documentElement.classList.toggle('light');
+  localStorage.setItem('theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
+}
+if(localStorage.getItem('theme') === 'light'){
+  document.documentElement.classList.add('light');
+}
+
 </script>
 <script src="../data/nav.js"></script>
 </body>
