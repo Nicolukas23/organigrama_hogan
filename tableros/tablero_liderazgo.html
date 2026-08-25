@@ -15,7 +15,7 @@
   <link rel="manifest" href="../manifest.json">
   <script src="../data/global_search.js" defer></script>
 <link rel="stylesheet" href="../data/nav.css">
-<script src="../data/ficha_data.js?v=1787610093"></script>
+<script src="../data/ficha_data.js?v=1787667057"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
@@ -94,16 +94,7 @@
       <div class="stat-val" id="kpiTotal">0</div>
       <div class="stat-sub">Registros activos evaluados</div>
     </div>
-    <div class="stat-card">
-      <div class="stat-lbl">Talento Crítico (Cajas 7, 8, 9)</div>
-      <div class="stat-val" style="color:var(--green)" id="kpiTop">0</div>
-      <div class="stat-sub"><b id="kpiTopPct">0%</b> del total evaluado</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-lbl">Permanencia Promedio</div>
-      <div class="stat-val" style="color:var(--gold)"><span id="kpiHogan">0</span> <span style="font-size:14px;font-weight:500;color:var(--text-dim)">pts</span></div>
-      <div class="stat-sub">Años en el cargo</div>
-    </div>
+
     <div class="stat-card">
       <div class="stat-lbl">Sucesores Identificados</div>
       <div class="stat-val" style="color:#60a5fa" id="kpiSuc">0</div>
@@ -345,12 +336,6 @@
 
   <!-- HOGAN VIEW -->
   <section id="viewHG" style="display:none">
-    <div class="hogan-team-card">
-      <div style="display:flex;align-items:center;gap:12px"><h3 style="font-family:'Space Grotesk',sans-serif;font-size:15px;margin:0">Promedio Equipo — Competencias Hogan</h3><div id="hgTeamSummary" style="display:flex;gap:8px"></div></div>
-      <p style="font-size:12.5px;color:var(--text-dim);margin:4px 0">Consolidado de evaluados en tu estructura jerárquica.</p>
-      <div  id="teamCompGrid"></div>
-    </div>
-    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;margin:24px 0 12px">Evaluaciones Individuales</h3>
     <div id="hoganGrid"></div>
   </section>
 
@@ -1539,9 +1524,9 @@ function renderHogan(){
       const hasFicha = hasFichaData(p);
       let btnHtml = '';
       if(hasFicha) {
-        btnHtml = `<button class="badge-ficha-btn" onclick="event.stopPropagation(); window.open('ficha_talento.html?expediente=${p.expediente}', '_blank')">Ver Ficha</button>`;
+        btnHtml = `<button class="badge-ficha-btn" onclick="event.stopPropagation(); window.open('ficha_talento.html?expediente=${p.expediente}', '_blank')">Ver Reporte</button>`;
       } else {
-        btnHtml = `<button class="badge-ficha-btn" style="background:#f1f5f9;color:var(--primary);border:1px solid #cbd5e1;" onclick="event.stopPropagation(); window.open('ficha_hogan.html?exp=${p.expediente}', '_blank')">Preliminar</button>`;
+        btnHtml = `<button class="badge-ficha-btn" style="background:#f1f5f9;color:var(--primary);border:1px solid #cbd5e1;" onclick="event.stopPropagation(); window.open('ficha_hogan.html?exp=${p.expediente}', '_blank')">Ver Reporte</button>`;
       }
 
       const tr = document.createElement('tr');
