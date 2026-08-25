@@ -108,7 +108,7 @@
   <span>Planeación de Talento · Ficha de Talento — Claro Colombia 2026</span>
 </footer>
 
-<script src="../data/ficha_data.js?v=1787677736"></script>
+<script src="../data/ficha_data.js?v=1787685958"></script>
 <script src="../data/comite_hogan.js?v=1787677736"></script>
 <script>
 // ── CARGADOR SUPABASE ────────────────────────────────────────────
@@ -197,6 +197,18 @@ function loadFicha(p) {
   document.getElementById('iGerencia').textContent = info.gerencia || '—';
   document.getElementById('iJefe').textContent = info.jefe || '—';
   document.getElementById('iAntiguedad').textContent = info.antiguedad || info.antig || '—';
+  
+  // Foto
+  const fotoSrc = window.FOTOS_MAP ? window.FOTOS_MAP[p.exp] : null;
+  const photoDiv = document.getElementById('ihPhoto');
+  if (fotoSrc) {
+    photoDiv.style.padding = '0';
+    photoDiv.style.overflow = 'hidden';
+    photoDiv.innerHTML = `<img src="${fotoSrc}" style="width:100%; height:100%; object-fit:cover;" onerror="this.outerHTML='<svg viewBox=\'0 0 24 24\' fill=\'currentColor\' style=\'padding:12px;box-sizing:border-box;\'><path d=\'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\'/></svg>'" />`;
+  } else {
+    photoDiv.style.padding = '12px';
+    photoDiv.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
+  }
   
   if (info.fecha_nacimiento) {
      const age = new Date().getFullYear() - new Date(info.fecha_nacimiento).getFullYear();
