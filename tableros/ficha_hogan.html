@@ -131,34 +131,81 @@
 const SUPABASE_URL='https://yxxpjttdmwruyeqiuxzu.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4eHBqdHRkbXdydXllcWl1eHp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4MTQyNzUsImV4cCI6MjEwMjM5MDI3NX0.fxQc7o6Qv8Rvd8-PHJF_R-OEME-hbhbPPDnktjiNi9U';
 
+// Supabase (PostgREST) caps every response at 1000 rows regardless of the
+// requested limit. `personas` has 4000+ rows, so a plain fetch silently
+// truncated the roster and most people never loaded at all. Page through
+// with Range until every row has been retrieved.
+async function fetchAllRows(pathAndQuery){
+  const hdr={apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY};
+  const pageSize=1000;
+  let offset=0, all=[];
+  while(true){
+    const res=await fetch(SUPABASE_URL+'/rest/v1/'+pathAndQuery,{headers:{...hdr,Range:offset+'-'+(offset+pageSize-1)}});
+    const rows=await res.json();
+    if(!Array.isArray(rows)||rows.length===0) break;
+    all=all.concat(rows);
+    if(rows.length<pageSize) break;
+    offset+=pageSize;
+  }
+  return all;
+}
+
+function normWords(s){
+  if(!s) return '';
+  return s.normalize('NFKD').replace(/[\u0300-\u036f]/g,'')
+    .toUpperCase().split(/\s+/)
+    .filter(w => !['DE','LA','DEL','LOS','LAS','Y','SAN','SANTA'].includes(w))
+    .sort().join(' ');
+}
+
 async function loadSupabaseData(){
   try{
     const hdr={headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY}};
-    const [personas,desempeno,talentos,objetivos,tres60,clima,sucesores]=await Promise.all([
-      fetch(SUPABASE_URL+'/rest/v1/personas?select=*',hdr).then(r=>r.json()),
-      fetch(SUPABASE_URL+'/rest/v1/desempeno?select=*',hdr).then(r=>r.json()),
-      fetch(SUPABASE_URL+'/rest/v1/talentos?select=*',hdr).then(r=>r.json()),
-      fetch(SUPABASE_URL+'/rest/v1/objetivos?select=*',hdr).then(r=>r.json()),
-      fetch(SUPABASE_URL+'/rest/v1/evaluacion_360?select=*',hdr).then(r=>r.json()),
-      fetch(SUPABASE_URL+'/rest/v1/clima?select=*',hdr).then(r=>r.json()),
-      fetch(SUPABASE_URL+'/rest/v1/sucesores?select=*',hdr).then(r=>r.json()),
+    const [personas,nineboxRows,hgRows]=await Promise.all([
+      fetchAllRows('personas?select=*'),
+      fetch(SUPABASE_URL+'/rest/v1/ninebox?select=*',hdr).then(r=>r.json()),
+      fetch(SUPABASE_URL+'/rest/v1/tableros_json?clave=eq.hogan&select=data',hdr).then(r=>r.json()),
     ]);
     const informacion={ ...(window.DATA && window.DATA.informacion ? window.DATA.informacion : {}) };
-    const formacion={};
     personas.forEach(p=>{informacion[p.expediente]=p;});
-    const d3={}; desempeno.forEach(x=>{d3[x.expediente]={y2024:x.y2024,y2025:x.y2025,y2026:x.y2026};});
-    const t3={}; talentos.forEach(x=>{t3[x.expediente]={expediente:x.expediente,talento:x.talento,soy_dueno:x.soy_dueno,soy_lider:x.soy_lider,soy_digital:x.soy_digital};});
-    const o3={}; objetivos.forEach(x=>{o3[x.expediente]={expediente:x.expediente,obj:x.obj,talento:x.talento};});
-    const e3={}; tres60.forEach(x=>{if(!e3[x.expediente])e3[x.expediente]=[];e3[x.expediente].push({dim:x.competencia,lider:x.lider,propio:x.propio,reporte:x.reporte,par:x.par});});
-    const c3={}; clima.forEach(x=>{if(!c3[x.expediente])c3[x.expediente]=[];c3[x.expediente].push({dim:x.dimension,pct:x.pct});});
-    const s3={}; sucesores.forEach(x=>{s3[x.expediente]={sucesor:x.sucesor,tiempo:x.tiempo};});
-    const hijos=Object.keys(informacion).filter(exp=>informacion[exp].nombre&&informacion[exp].jefe);
+
+    // `personas` doesn't carry the 9-box position; it lives in `ninebox`.
+    const nbMap={};
+    (Array.isArray(nineboxRows)?nineboxRows:[]).forEach(n=>{nbMap[n.expediente]=n;});
+    Object.keys(informacion).forEach(exp=>{
+      const nb=nbMap[exp];
+      if(nb && informacion[exp]){
+        informacion[exp].caja=nb.caja;
+        if(!informacion[exp].jefe) informacion[exp].jefe=nb.jefe;
+      }
+    });
+
     const existingObs = (window.DATA && window.DATA.observaciones) ? window.DATA.observaciones : {};
-    const existingHogan = (window.DATA && window.DATA.hogan) ? window.DATA.hogan : {};
-    window.DATA={
-      informacion,formacion,desempeno:d3,talentos:t3,objetivos:o3,tres60:e3,clima:c3,sucesores:s3,
-      comite:{},hogan: existingHogan,observaciones: existingObs
-    };
+    const hogan = (window.DATA && window.DATA.hogan) ? { ...window.DATA.hogan } : {};
+
+    // Live Hogan competency scores, matched by normalized name (same source
+    // as the Tablero de Liderazgo) so the competencies table has data for
+    // everyone evaluated, not just the small static committee sample.
+    const hgMap={};
+    if(Array.isArray(hgRows) && hgRows.length && hgRows[0].data){
+      const hData=hgRows[0].data;
+      [...(hData.est||[]),...(hData.op||[])].forEach(group=>{
+        (group.team||[]).forEach(member=>{ hgMap[normWords(member.name)]=member; });
+      });
+    }
+    Object.keys(informacion).forEach(exp=>{
+      const member=hgMap[normWords(informacion[exp].nombre)];
+      if(member && member.scores){
+        const competencias=Object.entries(member.scores)
+          .filter(([k])=>k!=='Potencial' && k!=='Potential')
+          .map(([nombre,puntaje])=>({nombre,puntaje}));
+        hogan[exp]={ ...(hogan[exp]||{}), competencias, potencial:member.scores.Potencial, versatilidad:member.versatilidad };
+      }
+    });
+
+    const hijos=Object.keys(informacion).filter(exp=>informacion[exp].nombre&&informacion[exp].jefe);
+    window.DATA={ informacion, hogan, observaciones: existingObs };
+
     if (window.COMITE_HOGAN) {
       Object.keys(window.COMITE_HOGAN).forEach(name => {
         const removeAccents = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -170,7 +217,9 @@ async function loadSupabaseData(){
            const parts = searchName.split(' ');
            return parts.every(p => infoName.includes(p));
         });
-        if (exp) window.DATA.hogan[exp] = window.COMITE_HOGAN[name];
+        // Merge (don't replace): the committee file only carries fortalezas/
+        // oportunidades text, not the numeric competencias scores above.
+        if (exp) window.DATA.hogan[exp] = { ...window.DATA.hogan[exp], ...window.COMITE_HOGAN[name] };
       });
     }
     window.SUCESORES=hijos.map(exp=>({exp,nombre:informacion[exp].nombre}));
@@ -211,7 +260,7 @@ function loadFicha(p) {
   // Update Full Report Button
   const btnFull = document.getElementById('btnFullReport');
   if (btnFull) {
-    btnFull.onclick = () => window.location.href = 'ficha_talento.html?exp=' + p.exp;
+    btnFull.onclick = () => window.location.href = 'ficha_talento.html?expediente=' + p.exp;
   }
 
   document.getElementById('iCargo').textContent = info.cargo || '—';

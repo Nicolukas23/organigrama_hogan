@@ -158,11 +158,30 @@
 const SUPABASE_URL='https://yxxpjttdmwruyeqiuxzu.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4eHBqdHRkbXdydXllcWl1eHp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4MTQyNzUsImV4cCI6MjEwMjM5MDI3NX0.fxQc7o6Qv8Rvd8-PHJF_R-OEME-hbhbPPDnktjiNi9U';
 
+// Supabase (PostgREST) caps every response at 1000 rows regardless of the
+// requested limit. `personas` has 4000+ rows, so a plain fetch silently
+// truncated the roster to whichever 1000 came back first. Page through with
+// Range until every row has been retrieved.
+async function fetchAllRows(pathAndQuery){
+  const hdr={apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY};
+  const pageSize=1000;
+  let offset=0, all=[];
+  while(true){
+    const res=await fetch(SUPABASE_URL+'/rest/v1/'+pathAndQuery,{headers:{...hdr,Range:offset+'-'+(offset+pageSize-1)}});
+    const rows=await res.json();
+    if(!Array.isArray(rows)||rows.length===0) break;
+    all=all.concat(rows);
+    if(rows.length<pageSize) break;
+    offset+=pageSize;
+  }
+  return all;
+}
+
 async function loadSupabaseData(){
   try{
     const hdr={headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY}};
     const [personas,desempeno,talentos,objetivos,tres60,clima,sucesores]=await Promise.all([
-      fetch(SUPABASE_URL+'/rest/v1/personas?select=*',hdr).then(r=>r.json()),
+      fetchAllRows('personas?select=*'),
       fetch(SUPABASE_URL+'/rest/v1/desempeno?select=*',hdr).then(r=>r.json()),
       fetch(SUPABASE_URL+'/rest/v1/talentos?select=*',hdr).then(r=>r.json()),
       fetch(SUPABASE_URL+'/rest/v1/objetivos?select=*',hdr).then(r=>r.json()),
@@ -199,32 +218,14 @@ async function loadSupabaseData(){
     }
     window.SUCESORES=hijos.map(exp=>({exp,nombre:informacion[exp].nombre}));
     if(SUCESORES.length===0)SUCESORES.push(...hijos.map(exp=>({exp,nombre:informacion[exp].nombre})));
-    // Re-poblar el datalist de búsqueda con la data viva
-    const dl2=document.getElementById('cedulas');
-    dl2.innerHTML='';
-    SUCESORES.forEach(p=>{
-      const o=document.createElement('option');
-      o.value=p.exp;
-      o.textContent=p.nombre+' ('+p.exp+')';
-      dl2.appendChild(o);
-    });
     console.log('Supabase: data viva cargada,',SUCESORES.length,'personas');
   }catch(err){
     console.warn('Supabase no disponible, usando ficha_data.js estático',err);
   }
 }
-loadSupabaseData();
+const supabaseReady=loadSupabaseData();
 </script>
 <script>
-
-// Populate datalist
-const dl=document.getElementById('cedulas');
-SUCESORES.forEach(p=>{
-  const o=document.createElement('option');
-  o.value=p.exp;
-  o.textContent=p.nombre+' ('+p.exp+')';
-  dl.appendChild(o);
-});
 
 function searchPerson(){
   const q=document.getElementById('cedulaInput').value.trim();
@@ -954,29 +955,44 @@ function downloadPDF(){
   });
 }
 
-// Auto-load: check URL params ?nombre=NAME or ?expediente=EXP
-const urlParams=new URLSearchParams(window.location.search);
-const nombreParam=urlParams.get('nombre');
-const expParam=urlParams.get('expediente');
-if(expParam){
-  const match=SUCESORES.find(x=>x.exp===expParam);
-  if(match){
-    document.getElementById('cedulaInput').value=match.nombre;
-    loadFicha(match);
+// Wait for the live Supabase data before the first render: window.DATA only
+// has `informacion`/`hogan` until then, so calling loadFicha() earlier threw
+// (e.g. DATA.desempeno[exp] on an object that doesn't exist yet) and left the
+// ficha stuck mid-render.
+supabaseReady.finally(() => {
+  const dl=document.getElementById('cedulas');
+  dl.innerHTML='';
+  SUCESORES.forEach(p=>{
+    const o=document.createElement('option');
+    o.value=p.exp;
+    o.textContent=p.nombre+' ('+p.exp+')';
+    dl.appendChild(o);
+  });
+
+  // Auto-load: check URL params ?nombre=NAME or ?expediente=EXP
+  const urlParams=new URLSearchParams(window.location.search);
+  const nombreParam=urlParams.get('nombre');
+  const expParam=urlParams.get('expediente');
+  if(expParam){
+    const match=SUCESORES.find(x=>x.exp===expParam);
+    if(match){
+      document.getElementById('cedulaInput').value=match.nombre;
+      loadFicha(match);
+    }else{
+      loadFicha(SUCESORES[0]);
+    }
+  }else if(nombreParam){
+    const match=SUCESORES.find(x=>x.nombre.toUpperCase()===nombreParam.toUpperCase());
+    if(match){
+      document.getElementById('cedulaInput').value=nombreParam;
+      loadFicha(match);
+    }else{
+      loadFicha(SUCESORES[0]);
+    }
   }else{
     loadFicha(SUCESORES[0]);
   }
-}else if(nombreParam){
-  const match=SUCESORES.find(x=>x.nombre.toUpperCase()===nombreParam.toUpperCase());
-  if(match){
-    document.getElementById('cedulaInput').value=nombreParam;
-    loadFicha(match);
-  }else{
-    loadFicha(SUCESORES[0]);
-  }
-}else{
-  loadFicha(SUCESORES[0]);
-}
+});
 document.getElementById('cedulaInput').addEventListener('change',function(){if(this.value)searchPerson();});
 
 function toggleTheme(){
