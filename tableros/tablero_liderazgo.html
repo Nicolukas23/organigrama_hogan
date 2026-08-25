@@ -1314,7 +1314,7 @@ function renderNineboxTable(){
           ${p.tiempo && p.tiempo !== 'N/A' ? p.tiempo : '—'}
         </td>
         <td>
-          ${hasFicha ? `<a href="ficha_talento.html?expediente=${p.expediente}" target="_blank" onclick="event.stopPropagation()" class="btn-ficha">Ver Ficha</a>` : `<a href="ficha_hogan.html?exp=${p.expediente}" target="_blank" onclick="event.stopPropagation()" class="btn-ficha" style="background:#f1f5f9;color:var(--primary);border:1px solid #cbd5e1;">Preliminar</a>`}
+          ${hasFicha ? `<a href="ficha_talento.html?expediente=${p.expediente}" target="_blank" onclick="event.stopPropagation()" class="btn-ficha">Ver Reporte</a>` : `<a href="ficha_hogan.html?exp=${p.expediente}" target="_blank" onclick="event.stopPropagation()" class="btn-ficha" style="background:#f1f5f9;color:var(--primary);border:1px solid #cbd5e1;">Ver Reporte</a>`}
         </td>
       `;
       tbody.appendChild(tr);
@@ -1605,7 +1605,7 @@ function renderTable(){
     if(hasFicha) {
       const btn = document.createElement('button');
       btn.className = 'badge-ficha-btn';
-      btn.textContent = 'Ver Ficha';
+      btn.textContent = 'Ver Reporte';
       btn.onclick = (e) => { e.stopPropagation(); window.open(`ficha_talento.html?expediente=${p.expediente}`, '_blank'); };
       tr.children[7].appendChild(btn);
     } else {
