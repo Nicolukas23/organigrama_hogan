@@ -330,6 +330,9 @@
         </div>
       </div>
     </div>
+    
+    <!-- TEAM HOGAN CHART -->
+    <div id="teamHoganChartContainer" style="margin-top:24px; display:none;"></div>
   </section>
 
   <!-- HOGAN VIEW -->
@@ -1225,6 +1228,114 @@ function handleSort(key){
   }
   tableState.page = 1;
   renderNineboxTable();
+  renderTeamHoganChart();
+}
+
+function renderTeamHoganChart() {
+  const container = document.getElementById('teamHoganChartContainer');
+  if(!container) return;
+
+  const hev = FILTERED.filter(r => r.hogan_versatilidad || r.hogan_scores);
+  if(hev.length === 0){
+    container.style.display = 'none';
+    return;
+  }
+  container.style.display = 'block';
+
+  // Aggregate scores
+  const teamComps = {};
+  hev.forEach(r => {
+    let scores = null;
+    if (r.hogan_scores) scores = r.hogan_scores;
+    else if (window.DATA && window.DATA.hogan && window.DATA.hogan[r.expediente]) scores = window.DATA.hogan[r.expediente].competencias;
+
+    if (scores) {
+      if (Array.isArray(scores)) {
+        scores.forEach(c => {
+          if(!teamComps[c.nombre]) teamComps[c.nombre] = { sum: 0, count: 0 };
+          teamComps[c.nombre].sum += c.puntaje;
+          teamComps[c.nombre].count++;
+        });
+      } else {
+        Object.entries(scores).forEach(([comp, score]) => {
+          if(comp === 'Potencial' || comp === 'Potential') return;
+          if(typeof score === 'number') {
+            if(!teamComps[comp]) teamComps[comp] = { sum: 0, count: 0 };
+            teamComps[comp].sum += score;
+            teamComps[comp].count++;
+          }
+        });
+      }
+    }
+  });
+
+  const comps = [];
+  Object.keys(teamComps).forEach(k => {
+    comps.push({ nombre: k, puntaje: Math.round(teamComps[k].sum / teamComps[k].count) });
+  });
+
+  if (comps.length === 0) {
+    container.style.display = 'none';
+    return;
+  }
+
+  const sorted = [...comps].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
+  let chartHtml = '<div style="border:1px solid #ddd; border-radius:6px; overflow:hidden; background:#fff; max-width:900px; margin: 0 auto;">';
+  chartHtml += '<div style="background:#333; color:#fff; padding:12px 16px; font-size:14px; font-weight:700; font-family:\'Space Grotesk\',sans-serif; display:flex; justify-content:space-between; align-items:center;">';
+  chartHtml += '<span>PERFIL DE COMPETENCIAS HOGAN CONSOLIDADO (EQUIPO)</span><span style="font-size:11px;font-weight:500;opacity:0.8;">PROMEDIO</span></div>';
+  chartHtml += '<div style="padding:20px 24px 28px 20px;"><div style="display:flex; flex-direction:column; gap:12px;">';
+  
+  sorted.forEach(c=>{
+    chartHtml+='<div style="display:flex; align-items:center; gap:16px;">';
+    chartHtml+='<div style="width:200px; text-align:right; font-size:13px; font-weight:500; color:#333; flex-shrink:0;">'+c.nombre+'</div>';
+    chartHtml+='<div style="flex:1; position:relative; height:24px; border-left:1px solid #ddd; border-right:1px solid #ddd;">';
+    for(let g=0;g<=100;g+=10){
+      chartHtml+='<div style="position:absolute; left:'+g+'%; top:-5px; bottom:-5px; width:1px; background:#f0f0f0; z-index:1;"></div>';
+    }
+    chartHtml+='<div style="position:absolute; left:0; top:3px; bottom:3px; width:'+Math.min(100, c.puntaje)+'%; background:#c0392b; z-index:2; border-radius:0 3px 3px 0;"></div>';
+    chartHtml+='</div>';
+    chartHtml+='<div style="width:36px; font-size:14px; font-weight:800; color:#111; text-align:left;">'+c.puntaje+'</div>';
+    chartHtml+='</div>';
+  });
+
+  // Draw X-axis
+  chartHtml += '<div style="display:flex; align-items:center; gap:16px; margin-top:8px;">';
+  chartHtml += '<div style="width:200px; flex-shrink:0;"></div>';
+  chartHtml += '<div style="flex:1; position:relative; height:15px;">';
+  for(let g=0; g<=100; g+=10){
+    let transform = g === 0 ? '' : (g === 100 ? 'transform:translateX(50%);' : 'transform:translateX(-50%);');
+    if (g === 100) transform = '';
+    let leftAdjust = g === 100 ? 'right:0;' : 'left:'+g+'%;';
+    chartHtml += '<div style="position:absolute; '+leftAdjust+' top:0; font-size:11px; color:#666; font-weight:500; '+transform+'">'+g+'</div>';
+  }
+  chartHtml += '</div><div style="width:36px;"></div></div>';
+  chartHtml += '</div>';
+
+  // TOP 3 AND BOTTOM 3
+  const validComps = comps.filter(c => typeof c.puntaje === 'number');
+  validComps.sort((a,b) => b.puntaje - a.puntaje);
+  const top3 = validComps.slice(0, 3);
+  const bottom3 = validComps.slice().reverse().slice(0, 3);
+
+  chartHtml += `
+  <div style="border-top:1px solid #eee; padding:20px 24px; background:#fafafa; display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+    <div>
+      <div style="font-size:13px; font-weight:800; color:#166534; margin-bottom:12px; background:#dcfce7; padding:6px 12px; border-radius:6px; display:inline-block;">FORTALEZAS HOGAN DEL EQUIPO (Top 3)</div>
+      <ul style="margin:0; padding-left:20px; font-size:13px; color:#222; line-height:1.6;">
+        ${top3.map(c => `<li><strong>${c.nombre}</strong> (Promedio: ${c.puntaje})</li>`).join('')}
+      </ul>
+    </div>
+    <div>
+      <div style="font-size:13px; font-weight:800; color:#9f1239; margin-bottom:12px; background:#fecdd3; padding:6px 12px; border-radius:6px; display:inline-block;">OPORTUNIDADES DE DESARROLLO (Bottom 3)</div>
+      <ul style="margin:0; padding-left:20px; font-size:13px; color:#222; line-height:1.6;">
+        ${bottom3.map(c => `<li><strong>${c.nombre}</strong> (Promedio: ${c.puntaje})</li>`).join('')}
+      </ul>
+    </div>
+  </div>
+  `;
+
+  chartHtml += '</div></div>';
+  container.innerHTML = chartHtml;
 }
 
 function renderNineboxTable(){
