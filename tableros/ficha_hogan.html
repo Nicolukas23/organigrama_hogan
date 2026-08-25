@@ -193,19 +193,20 @@ function searchPerson(){
 function loadFicha(p) {
   if(!p) return;
   // Header
-  const headerHtml = `
-    <div class="ficha-header" style="margin-bottom:0;">
-      <div style="display:flex;align-items:center;gap:20px;">
-        <div class="ficha-avatar">${p.nombre.charAt(0)}</div>
-        <div class="ficha-title">
-          <div class="ficha-name">${p.nombre}</div>
-          <div class="ficha-cargo">${p.cargo||'-'}</div>
-          <div class="ficha-area">${p.direccion_area||'-'}</div>
-        </div>
-      </div>
-    </div>
-  `;
-  document.getElementById('fichaHeaderContainer').innerHTML = headerHtml;
+  const info = window.DATA && window.DATA.informacion && window.DATA.informacion[p.exp] ? window.DATA.informacion[p.exp] : p;
+  document.getElementById('iNombre').textContent = info.nombre || '—';
+  document.getElementById('iCargo').textContent = info.cargo || '—';
+  document.getElementById('iDirComite').textContent = info.direccion_comite || info.direccion_area || '—';
+  document.getElementById('iGerencia').textContent = info.gerencia || '—';
+  document.getElementById('iJefe').textContent = info.jefe || '—';
+  document.getElementById('iAntiguedad').textContent = info.antiguedad || '—';
+  
+  if (info.fecha_nacimiento) {
+     const age = new Date().getFullYear() - new Date(info.fecha_nacimiento).getFullYear();
+     document.getElementById('iEdad').textContent = age + ' años';
+  } else {
+     document.getElementById('iEdad').textContent = '—';
+  }
 
   // Hogan Data & Observaciones
   const h = window.DATA.hogan[p.exp];
