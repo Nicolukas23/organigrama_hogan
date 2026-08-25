@@ -245,7 +245,7 @@ function loadFicha(p) {
          box.innerHTML = i;
      }
   }
-  const caja = getCajaNum(p.caja);
+  const caja = getCajaNum(info.caja || p.caja);
   if(caja) {
     const box = document.getElementById('nb'+caja);
     if(box) {
