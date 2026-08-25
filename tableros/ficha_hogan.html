@@ -72,7 +72,7 @@
   </div>
 
   <!-- NINEBOX Y COMPETENCIAS -->
-  <div style="display:flex; flex-direction:column; gap:24px; margin-top:24px; align-items:center;">
+  <div style="display:grid; grid-template-columns:350px 1fr; gap:24px; margin-top:24px; align-items:start;">
     <!-- Left: Ninebox -->
     <div id="nineboxContainer" style="background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:16px; width:300px;">
       <h3 style="font-family:'Space Grotesk',sans-serif;font-size:14px;color:var(--text);text-align:center;margin-bottom:16px;font-weight:bold;">NINEBOX</h3>
@@ -123,7 +123,8 @@ async function loadSupabaseData(){
       fetch(SUPABASE_URL+'/rest/v1/clima?select=*',hdr).then(r=>r.json()),
       fetch(SUPABASE_URL+'/rest/v1/sucesores?select=*',hdr).then(r=>r.json()),
     ]);
-    const informacion={},formacion={};
+    const informacion={ ...(window.DATA && window.DATA.informacion ? window.DATA.informacion : {}) };
+    const formacion={};
     personas.forEach(p=>{informacion[p.expediente]=p;});
     const d3={}; desempeno.forEach(x=>{d3[x.expediente]={y2024:x.y2024,y2025:x.y2025,y2026:x.y2026};});
     const t3={}; talentos.forEach(x=>{t3[x.expediente]={expediente:x.expediente,talento:x.talento,soy_dueno:x.soy_dueno,soy_lider:x.soy_lider,soy_digital:x.soy_digital};});
@@ -132,9 +133,11 @@ async function loadSupabaseData(){
     const c3={}; clima.forEach(x=>{if(!c3[x.expediente])c3[x.expediente]=[];c3[x.expediente].push({dim:x.dimension,pct:x.pct});});
     const s3={}; sucesores.forEach(x=>{s3[x.expediente]={sucesor:x.sucesor,tiempo:x.tiempo};});
     const hijos=Object.keys(informacion).filter(exp=>informacion[exp].nombre&&informacion[exp].jefe);
+    const existingObs = (window.DATA && window.DATA.observaciones) ? window.DATA.observaciones : {};
+    const existingHogan = (window.DATA && window.DATA.hogan) ? window.DATA.hogan : {};
     window.DATA={
       informacion,formacion,desempeno:d3,talentos:t3,objetivos:o3,tres60:e3,clima:c3,sucesores:s3,
-      comite:{},hogan:{},observaciones:{}
+      comite:{},hogan: existingHogan,observaciones: existingObs
     };
     if (window.COMITE_HOGAN) {
       Object.keys(window.COMITE_HOGAN).forEach(name => {
