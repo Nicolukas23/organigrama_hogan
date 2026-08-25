@@ -159,17 +159,17 @@ async function loadSupabaseData(){
       });
     }
     window.SUCESORES=hijos.map(exp=>({exp,nombre:informacion[exp].nombre}));
-    if(SUCESORES.length===0)SUCESORES.push(...hijos.map(exp=>({exp,nombre:informacion[exp].nombre})));
+    if(window.SUCESORES.length===0)window.SUCESORES.push(...hijos.map(exp=>({exp,nombre:informacion[exp].nombre})));
     // Re-poblar el datalist de búsqueda con la data viva
     const dl2=document.getElementById('cedulas');
     dl2.innerHTML='';
-    SUCESORES.forEach(p=>{
+    window.SUCESORES.forEach(p=>{
       const o=document.createElement('option');
       o.value=p.exp;
       o.textContent=p.nombre+' ('+p.exp+')';
       dl2.appendChild(o);
     });
-    console.log('Supabase: data viva cargada,',SUCESORES.length,'personas');
+    console.log('Supabase: data viva cargada,',window.SUCESORES.length,'personas');
   }catch(err){
     console.warn('Supabase no disponible, usando ficha_data.js estático',err);
   }
@@ -177,19 +177,12 @@ async function loadSupabaseData(){
 </script>
 <script>
 
-// Populate datalist
-const dl=document.getElementById('cedulas');
-SUCESORES.forEach(p=>{
-  const o=document.createElement('option');
-  o.value=p.exp;
-  o.textContent=p.nombre+' ('+p.exp+')';
-  dl.appendChild(o);
-});
+
 
 function searchPerson(){
   const q=document.getElementById('cedulaInput').value.trim();
   if(!q)return;
-  const p=SUCESORES.find(x=>x.exp===q||x.nombre.toUpperCase().includes(q.toUpperCase()));
+  const p=window.SUCESORES.find(x=>x.exp===q||x.nombre.toUpperCase().includes(q.toUpperCase()));
   if(!p){alert('No se encontró');return;}
   loadFicha(p);
 }
@@ -203,11 +196,13 @@ function loadFicha(p) {
   document.getElementById('iDirComite').textContent = info.direccion_comite || info.direccion_area || '—';
   document.getElementById('iGerencia').textContent = info.gerencia || '—';
   document.getElementById('iJefe').textContent = info.jefe || '—';
-  document.getElementById('iAntiguedad').textContent = info.antiguedad || '—';
+  document.getElementById('iAntiguedad').textContent = info.antiguedad || info.antig || '—';
   
   if (info.fecha_nacimiento) {
      const age = new Date().getFullYear() - new Date(info.fecha_nacimiento).getFullYear();
      document.getElementById('iEdad').textContent = age + ' años';
+  } else if (info.edad) {
+     document.getElementById('iEdad').textContent = info.edad;
   } else {
      document.getElementById('iEdad').textContent = '—';
   }
@@ -362,18 +357,29 @@ function getCajaNum(c){
 
 // Initial Load
 loadSupabaseData().finally(() => {
+  // Populate datalist safely now that data is ready
+  const dl=document.getElementById('cedulas');
+  if(window.SUCESORES && window.SUCESORES.forEach) {
+      window.SUCESORES.forEach(p=>{
+        const o=document.createElement('option');
+        o.value=p.exp;
+        o.textContent=p.nombre+' ('+p.exp+')';
+        dl.appendChild(o);
+      });
+  }
+
   const urlParams=new URLSearchParams(window.location.search);
   const nombreParam=urlParams.get('nombre');
   const expParam=urlParams.get('exp') || urlParams.get('expediente');
 
   if(expParam){
-    const p=SUCESORES.find(x=>x.exp===expParam);
+    const p=window.SUCESORES.find(x=>x.exp===expParam);
     if(p)loadFicha(p);
   }else if(nombreParam){
-    const p=SUCESORES.find(x=>x.nombre===nombreParam);
+    const p=window.SUCESORES.find(x=>x.nombre===nombreParam);
     if(p)loadFicha(p);
   }else{
-    if(SUCESORES.length>0)loadFicha(SUCESORES[0]);
+    if(window.SUCESORES && window.SUCESORES.length>0)loadFicha(window.SUCESORES[0]);
   }
 });
 

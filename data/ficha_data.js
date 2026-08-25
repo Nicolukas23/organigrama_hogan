@@ -10,7 +10,9 @@ window.DATA = {
       "direccion_area": "Direccion Marketing Corporativo y Producto",
       "gerencia": "Gerencia Portafolio Corporativo",
       "jefe": "MONTAGUT MORALES PEDRO ANGEL",
-      "caja": "5"
+      "caja": "5",
+      "edad": "43 años",
+      "antig": "10.8 años"
     },
     "2968977": {
       "nombre": "MONTES ZULUAGA HERLEY",
@@ -18,7 +20,9 @@ window.DATA = {
       "direccion_area": "Gerencia Marketing Masivo",
       "gerencia": "Gerencia Eventos y Go to Market",
       "jefe": "ROCA ACEVEDO FEDERICO",
-      "caja": "3"
+      "caja": "3",
+      "edad": "47 años",
+      "antig": "12.8 años"
     },
     "3216158": {
       "nombre": "SARMIENTO GONZALEZ LUIS ALEJANDRO",
@@ -26,7 +30,9 @@ window.DATA = {
       "direccion_area": "Proyectos",
       "gerencia": "Gerencia Gestion Portafolio Estrategico",
       "jefe": "GUZMAN FLOREZ DANIEL",
-      "caja": "6"
+      "caja": "6",
+      "edad": "42 años",
+      "antig": "10.8 años"
     },
     "4517372": {
       "nombre": "ORTIZ TORO JUAN DIEGO",
@@ -34,7 +40,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Gerencia Regional Agentes Calle R1",
       "jefe": "PORTO VELASQUEZ LUIS MIGUEL",
-      "caja": "3"
+      "caja": "3",
+      "edad": "41 años",
+      "antig": "18.7 años"
     },
     "4520642": {
       "nombre": "DUQUE OSPINA ANDRES FELIPE",
@@ -42,7 +50,9 @@ window.DATA = {
       "direccion_area": "Gerencia Marketing Masivo",
       "gerencia": "Gerencia Go to Market Regional",
       "jefe": "ROCA ACEVEDO FEDERICO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "41 años",
+      "antig": "18.6 años"
     },
     "4617732": {
       "nombre": "ESTUPIÑAN LOPEZ ANDRES FERNANDO",
@@ -50,7 +60,9 @@ window.DATA = {
       "direccion_area": "Datos y Analitica de Negocios",
       "gerencia": "Direccion Datos y Analitica de Negocios",
       "jefe": "GUZMAN FLOREZ DANIEL",
-      "caja": "6"
+      "caja": "6",
+      "edad": "45 años",
+      "antig": "11.0 años"
     },
     "5827888": {
       "nombre": "VILLARREAL SANDOVAL HELMAN",
@@ -58,7 +70,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Direccion Region 4",
       "jefe": "VASCO GARCIA JOSE LUIS",
-      "caja": "6"
+      "caja": "6",
+      "edad": "44 años",
+      "antig": "2.6 años"
     },
     "7317314": {
       "nombre": "LANCHEROS CURREA CESAR FABIAN",
@@ -66,7 +80,9 @@ window.DATA = {
       "direccion_area": "Direccion Experiencia Soporte y Operacion IT",
       "gerencia": "Gerencia Control Operativo Devsecops",
       "jefe": "CAJIGAS SILVA MIGUEL EDUARDO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "45 años",
+      "antig": "14.8 años"
     },
     "7603469": {
       "nombre": "DEL CASTILLO PAVAJEAU RAFAEL JOSE",
@@ -74,7 +90,9 @@ window.DATA = {
       "direccion_area": "Datos y Analitica de Negocios",
       "gerencia": "Gerencia Analitica Avanzada",
       "jefe": "ESTUPIÑAN LOPEZ ANDRES FERNANDO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "46 años",
+      "antig": "6.1 años"
     },
     "8126425": {
       "nombre": "PEREZ PALMA JULIO CESAR",
@@ -82,7 +100,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Direccion Region 2",
       "jefe": "DOMINGUEZ DANIEL ARNALDO",
-      "caja": "3"
+      "caja": "3",
+      "edad": "42 años",
+      "antig": "2.7 años"
     },
     "8358192": {
       "nombre": "CARDENAS TAMAYO JOSE JAIME",
@@ -90,7 +110,9 @@ window.DATA = {
       "direccion_area": "Direccion Operaciones Tecnicas de Campo",
       "gerencia": "Gerencia Regional Operaciones Tecnicas de Campo R2",
       "jefe": "PEREZ PALMA JULIO CESAR",
-      "caja": "6"
+      "caja": "6",
+      "edad": "42 años",
+      "antig": "19.5 años"
     },
     "8533055": {
       "nombre": "PORTO VELASQUEZ LUIS MIGUEL",
@@ -98,7 +120,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Direccion Region 1",
       "jefe": "DOMINGUEZ DANIEL ARNALDO",
-      "caja": "4"
+      "caja": "4",
+      "edad": "58 años",
+      "antig": "14.8 años"
     },
     "9396968": {
       "nombre": "NUVAN HURTADO JAIRO ANTONIO",
@@ -106,7 +130,9 @@ window.DATA = {
       "direccion_area": "Planeacion Tecnologia",
       "gerencia": "Gerencia Planeacion Tecnologia",
       "jefe": "BAYONA PORRAS JUAN MAURICIO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "53 años",
+      "antig": "26.2 años"
     },
     "9397971": {
       "nombre": "BONILLA ALVAREZ SAUL",
@@ -114,7 +140,9 @@ window.DATA = {
       "direccion_area": "Supply Chain",
       "gerencia": "Gerencia Logistica Integral",
       "jefe": "TRUJILLO REHBEIN PABLO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "53 años",
+      "antig": "20.5 años"
     },
     "11223493": {
       "nombre": "VILLALOBOS BUITRAGO HERNANDO",
@@ -122,7 +150,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Gerencia Regional Agentes Calle R5",
       "jefe": "JAIMES VEGA DIEGO FERNANDO",
-      "caja": "2"
+      "caja": "2",
+      "edad": "46 años",
+      "antig": "19.3 años"
     },
     "11257516": {
       "nombre": "MANRIQUE CASAS JAVIER MAURICIO",
@@ -130,7 +160,9 @@ window.DATA = {
       "direccion_area": "Asuntos Contenciosos",
       "gerencia": "Gerencia Asuntos Contenciosos",
       "jefe": "OJEDA LUNA JUAN MANUEL",
-      "caja": "5"
+      "caja": "5",
+      "edad": "45 años",
+      "antig": "9.0 años"
     },
     "12193497": {
       "nombre": "QUINTERO LOPEZ CARLOS HUMBERTO",
@@ -138,7 +170,9 @@ window.DATA = {
       "direccion_area": "Direccion Operaciones Tecnicas de Campo",
       "gerencia": "Direccion Operaciones Tecnicas de Campo",
       "jefe": "MALDONADO ROBLES IADER ALBERTO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "55 años",
+      "antig": "34.1 años"
     },
     "13276383": {
       "nombre": "MONTAGUT GUERRERO JADWER PASTOR",
@@ -146,7 +180,9 @@ window.DATA = {
       "direccion_area": "Direccion Operaciones Tecnicas de Campo",
       "gerencia": "Gerencia Regional I&M R4",
       "jefe": "VASCO GARCIA JOSE LUIS",
-      "caja": "2"
+      "caja": "2",
+      "edad": "42 años",
+      "antig": "3.7 años"
     },
     "13870556": {
       "nombre": "MELENDEZ BETANCOURT JAVIER ALEJANDRO",
@@ -154,7 +190,9 @@ window.DATA = {
       "direccion_area": "Planeacion Tecnologia",
       "gerencia": "Gerencia Planeacion Servicios Corporativos y Datacenter",
       "jefe": "BAYONA PORRAS JUAN MAURICIO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "44 años",
+      "antig": "14.8 años"
     },
     "13871736": {
       "nombre": "JAIMES VEGA DIEGO FERNANDO",
@@ -162,7 +200,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Direccion Region 5",
       "jefe": "DOMINGUEZ DANIEL ARNALDO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "44 años",
+      "antig": "1.5 años"
     },
     "13874910": {
       "nombre": "VELASCO REYES ROMAN GILBERTO",
@@ -170,7 +210,9 @@ window.DATA = {
       "direccion_area": "Direccion Marketing Corporativo y Producto",
       "gerencia": "Gerencia Portafolio Corporativo",
       "jefe": "JIMENEZ MORALES JOSE JULIAN",
-      "caja": "5"
+      "caja": "5",
+      "edad": "44 años",
+      "antig": "0.8 años"
     },
     "16536601": {
       "nombre": "AREVALO DUQUE EVELIO HERNAN",
@@ -178,7 +220,9 @@ window.DATA = {
       "direccion_area": "Contratos Comerciales y Administrativos",
       "gerencia": "Gerencia Contratos Comerciales y Administrativos",
       "jefe": "TORRES OSPINA INGRID JULIET",
-      "caja": "5"
+      "caja": "5",
+      "edad": "44 años",
+      "antig": "12.0 años"
     },
     "16767270": {
       "nombre": "HERRERA URIBE GERMAN",
@@ -186,7 +230,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Gerencia Regional Agentes PDV R2",
       "jefe": "PEREZ PALMA JULIO CESAR",
-      "caja": "5"
+      "caja": "5",
+      "edad": "56 años",
+      "antig": "18.5 años"
     },
     "19420900": {
       "nombre": "CAJIGAS SILVA MIGUEL EDUARDO",
@@ -194,7 +240,9 @@ window.DATA = {
       "direccion_area": "Direccion Experiencia Soporte y Operacion IT",
       "gerencia": "Direccion Experiencia Soporte y Operacion IT",
       "jefe": "MALDONADO ROBLES IADER ALBERTO",
-      "caja": "4"
+      "caja": "4",
+      "edad": "54 años",
+      "antig": "20.9 años"
     },
     "28489014": {
       "nombre": "SANCHEZ CLARO INGRID ASTRID",
@@ -202,7 +250,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Direccion Region 5",
       "jefe": "JAIMES VEGA DIEGO FERNANDO",
-      "caja": "4"
+      "caja": "4",
+      "edad": "43 años",
+      "antig": "17.6 años"
     },
     "28566367": {
       "nombre": "BOTERO ARANGO DIANA PATRICIA",
@@ -210,7 +260,9 @@ window.DATA = {
       "direccion_area": "Direccion Canales de Venta Agentes",
       "gerencia": "Direccion Canales de Venta Agentes",
       "jefe": "MANOTAS SALCEDO ELIANA MARIA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "53 años",
+      "antig": "6.4 años"
     },
     "29284580": {
       "nombre": "CORREA PELAEZ TATIANA",
@@ -218,7 +270,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Direccion Region 3",
       "jefe": "MARTINEZ PINILLA DIEGO FELIPE",
-      "caja": "6"
+      "caja": "6",
+      "edad": "44 años",
+      "antig": "22.2 años"
     },
     "30333370": {
       "nombre": "GUTIERREZ HOYOS ANGELA MARIA",
@@ -226,7 +280,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Empresas Estrategicas",
       "gerencia": "Gerencia Comercial Sector Financiero",
       "jefe": "GIRALDO SANTAFE MARIA DEL PILAR",
-      "caja": "5"
+      "caja": "5",
+      "edad": "51 años",
+      "antig": "10.2 años"
     },
     "30402310": {
       "nombre": "GIRALDO SANTAFE MARIA DEL PILAR",
@@ -234,7 +290,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Empresas Estrategicas",
       "gerencia": "Direccion Comercial Empresas Estrategicas",
       "jefe": "ESCOLAR SUNDHEIM MARIA LUISA",
-      "caja": "3"
+      "caja": "3",
+      "edad": "46 años",
+      "antig": "1.8 años"
     },
     "31577454": {
       "nombre": "LARRAHONDO BUSTAMANTE MARTHA LILIANA",
@@ -242,7 +300,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Operativa y Financiera",
       "jefe": "MONSALVE HERNANDEZ DIANA CAROLINA",
-      "caja": "3"
+      "caja": "3",
+      "edad": "44 años",
+      "antig": "2.0 años"
     },
     "32228053": {
       "nombre": "ORTEGA ROLDAN DIANA MARCELA",
@@ -250,7 +310,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Direccion Region 2",
       "jefe": "PEREZ PALMA JULIO CESAR",
-      "caja": "5"
+      "caja": "5",
+      "edad": "46 años",
+      "antig": "7.5 años"
     },
     "32758818": {
       "nombre": "MUNARRIZ CASTILLO GISELA MERCEDES",
@@ -258,7 +320,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Direccion Region 1",
       "jefe": "PORTO VELASQUEZ LUIS MIGUEL",
-      "caja": "9"
+      "caja": "9",
+      "edad": "53 años",
+      "antig": "27.0 años"
     },
     "32842621": {
       "nombre": "MANOTAS SALCEDO ELIANA MARIA",
@@ -266,7 +330,9 @@ window.DATA = {
       "direccion_area": "Direccion Canales de Venta Agentes",
       "gerencia": "Direccion Canales de Venta Agentes",
       "jefe": "DOMINGUEZ DANIEL ARNALDO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "48 años",
+      "antig": "7.7 años"
     },
     "33066693": {
       "nombre": "PEÑA VEGA PATRICIA",
@@ -274,7 +340,9 @@ window.DATA = {
       "direccion_area": "Inteligencia Comercial",
       "gerencia": "Gerencia Inteligencia Comercial",
       "jefe": "ESCOLAR SUNDHEIM MARIA LUISA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "48 años",
+      "antig": "19.1 años"
     },
     "34327674": {
       "nombre": "ORDOÑEZ USSA LEIDY YURANY",
@@ -282,7 +350,9 @@ window.DATA = {
       "direccion_area": "Direccion Producto Masivo",
       "gerencia": "Gerencia Estrategia Fidelizacion",
       "jefe": "PEREZ MEDINA HUMBERTO ALEJANDRO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "41 años",
+      "antig": "16.9 años"
     },
     "34571175": {
       "nombre": "CANCIMANSE MOLANO ARELY EMILSE",
@@ -290,7 +360,9 @@ window.DATA = {
       "direccion_area": "Direccion Ingenieria",
       "gerencia": "Gerencia Ingenieria Productos y Servicios",
       "jefe": "SALAZAR BARON HUGO ALEXANDER",
-      "caja": "8"
+      "caja": "8",
+      "edad": "50 años",
+      "antig": "13.8 años"
     },
     "35536544": {
       "nombre": "CAÑON REINA VIVIAN ANDREA",
@@ -298,7 +370,9 @@ window.DATA = {
       "direccion_area": "Direccion Operaciones Tecnicas de Campo",
       "gerencia": "Gerencia Operacion Centros Digitales",
       "jefe": "QUINTERO LOPEZ CARLOS HUMBERTO",
-      "caja": "8"
+      "caja": "8",
+      "edad": "41 años",
+      "antig": "12.7 años"
     },
     "36306108": {
       "nombre": "DURAN MANCHOLA ANA LUCIA",
@@ -306,7 +380,9 @@ window.DATA = {
       "direccion_area": "Regulacion Y Relacion Con Operadores",
       "gerencia": "Gerencia Regulacion y Relacion con Operadores",
       "jefe": "CASTAÑEDA GUERRERO MARIA TERESA DEL PILAR",
-      "caja": "6"
+      "caja": "6",
+      "edad": "44 años",
+      "antig": "7.9 años"
     },
     "37334180": {
       "nombre": "PEREZ SERRANO RUBIELA",
@@ -314,7 +390,9 @@ window.DATA = {
       "direccion_area": "Direccion Operaciones Tecnicas de Campo",
       "gerencia": "Gerencia Regional Operaciones Tecnicas de Campo R1",
       "jefe": "PORTO VELASQUEZ LUIS MIGUEL",
-      "caja": "6"
+      "caja": "6",
+      "edad": "46 años",
+      "antig": "19.2 años"
     },
     "37844085": {
       "nombre": "ACEROS YANEIRA",
@@ -322,7 +400,9 @@ window.DATA = {
       "direccion_area": "Direccion Experiencia del Cliente",
       "gerencia": "Gerencia Experiencia a Clientes",
       "jefe": "CHACON GOMEZ MYRIAM YOLANDA",
-      "caja": "2"
+      "caja": "2",
+      "edad": "45 años",
+      "antig": "1.5 años"
     },
     "37844585": {
       "nombre": "ARIAS ROJAS JENNY MILENA",
@@ -330,7 +410,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Pymes",
       "gerencia": "Gerencia Comercial Pymes R2",
       "jefe": "PARRA BELTRAN LUIS FERNANDO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "45 años",
+      "antig": "7.9 años"
     },
     "37861236": {
       "nombre": "GUIZA GARCIA ADRIANA MARCELA",
@@ -338,7 +420,9 @@ window.DATA = {
       "direccion_area": "Regulacion Y Relacion Con Operadores",
       "gerencia": "Gerencia Regulacion y Relacion con Operadores",
       "jefe": "CASTAÑEDA GUERRERO MARIA TERESA DEL PILAR",
-      "caja": "5"
+      "caja": "5",
+      "edad": "45 años",
+      "antig": "13.1 años"
     },
     "37893805": {
       "nombre": "CASTILLO MARTINEZ MARTHA LILIANA",
@@ -346,7 +430,9 @@ window.DATA = {
       "direccion_area": "Direccion Gestion de Riesgo y Control Interno",
       "gerencia": "Direccion Gestion de Riesgo y Control Interno",
       "jefe": "VARGAS BLANCO FREDDY ALEXANDER",
-      "caja": "9"
+      "caja": "9",
+      "edad": "54 años",
+      "antig": "26.0 años"
     },
     "37947760": {
       "nombre": "MENDIETA GIRON EDNA MILENA",
@@ -354,7 +440,9 @@ window.DATA = {
       "direccion_area": "Direccion Aseguramiento Calidad de Servicio",
       "gerencia": "Gerencia SOC Empresas y Negocios",
       "jefe": "AVILA PLATA OSCAR MAURICIO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "46 años",
+      "antig": "22.2 años"
     },
     "39582818": {
       "nombre": "JARAMILLO YARCE YULIANA ANDREA",
@@ -362,7 +450,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Sistemas",
       "jefe": "MORENO MORENO ADRIANA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "42 años",
+      "antig": "4.2 años"
     },
     "39689452": {
       "nombre": "SALGADO JARAMILLO MARIA XIMENA",
@@ -370,7 +460,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Empresas Estrategicas",
       "gerencia": "Gerencia Cuentas Estrategicas 1",
       "jefe": "GIRALDO SANTAFE MARIA DEL PILAR",
-      "caja": "8"
+      "caja": "8",
+      "edad": "61 años",
+      "antig": "13.8 años"
     },
     "39781813": {
       "nombre": "PEÑA ESPITIA SONIA",
@@ -378,7 +470,9 @@ window.DATA = {
       "direccion_area": "Direccion Estrategia Comercial",
       "gerencia": "Direccion Estrategia Comercial",
       "jefe": "ESCOLAR SUNDHEIM MARIA LUISA",
-      "caja": "4"
+      "caja": "4",
+      "edad": "57 años",
+      "antig": "30.7 años"
     },
     "39783211": {
       "nombre": "OSPINA SALAZAR DIANA ISELA",
@@ -386,7 +480,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Grandes Empresas",
       "gerencia": "Gerencia Comercial Cuentas Intermedias 1",
       "jefe": "ZAPATA ORTIZ BEATRIZ",
-      "caja": "5"
+      "caja": "5",
+      "edad": "56 años",
+      "antig": "17.9 años"
     },
     "40079874": {
       "nombre": "ENDO COLLAZOS NINI JOHANNA",
@@ -394,7 +490,9 @@ window.DATA = {
       "direccion_area": "Transparencia y Etica Empresarial",
       "gerencia": "Gerencia Contratos Transparencia y Etica Empresarial",
       "jefe": "BAENA JARAMILLO ALEJANDRO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "45 años",
+      "antig": "19.5 años"
     },
     "42118566": {
       "nombre": "ARANGO ROLDAN LUISA ADRIANA",
@@ -402,7 +500,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Gerencia Regional Agentes Calle R3",
       "jefe": "MARTINEZ PINILLA DIEGO FELIPE",
-      "caja": "2"
+      "caja": "2",
+      "edad": "50 años",
+      "antig": "7.1 años"
     },
     "43220478": {
       "nombre": "SORGE RADOVANI FLAVIA LUISA",
@@ -410,7 +510,9 @@ window.DATA = {
       "direccion_area": "Gerencia Marketing Masivo",
       "gerencia": "Gerencia Marketing Tecnologia y Prepago",
       "jefe": "ROCA ACEVEDO FEDERICO",
-      "caja": "9"
+      "caja": "9",
+      "edad": "48 años",
+      "antig": "16.0 años"
     },
     "43684915": {
       "nombre": "CORREA VELEZ LINA MARIA",
@@ -418,7 +520,9 @@ window.DATA = {
       "direccion_area": "Direccion Producto Masivo",
       "gerencia": "Gerencia Interconexion",
       "jefe": "CARLESIMO REY ANDRES",
-      "caja": "8"
+      "caja": "8",
+      "edad": "53 años",
+      "antig": "19.5 años"
     },
     "43840388": {
       "nombre": "PEREZ RUEDA ERIKA MARCELA",
@@ -426,7 +530,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Direccion Region 2",
       "jefe": "PEREZ PALMA JULIO CESAR",
-      "caja": "8"
+      "caja": "8",
+      "edad": "47 años",
+      "antig": "25.1 años"
     },
     "43869457": {
       "nombre": "CASTRO MARIN VICTORIA EUGENIA",
@@ -434,7 +540,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Grandes Empresas",
       "gerencia": "Gerencia Comercial Grandes Empresas R2",
       "jefe": "ZAPATA ORTIZ BEATRIZ",
-      "caja": "6"
+      "caja": "6",
+      "edad": "46 años",
+      "antig": "22.8 años"
     },
     "43983175": {
       "nombre": "GARCES ZAPATA CAROLINA",
@@ -442,7 +550,9 @@ window.DATA = {
       "direccion_area": "Direccion Aseguramiento Calidad de Servicio",
       "gerencia": "Gerencia SOC Masivo",
       "jefe": "AVILA PLATA OSCAR MAURICIO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "41 años",
+      "antig": "12.6 años"
     },
     "46670410": {
       "nombre": "SANABRIA HIGUERA ANA PATRICIA",
@@ -450,7 +560,9 @@ window.DATA = {
       "direccion_area": "Soporte A La Operacion",
       "gerencia": "Direccion Soporte a la Operacion",
       "jefe": "BORDA FERRO WALTER JAVIER",
-      "caja": "8"
+      "caja": "8",
+      "edad": "51 años",
+      "antig": "27.3 años"
     },
     "50898660": {
       "nombre": "JULIO CABRALES TATIANA MARIA",
@@ -458,7 +570,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Empresas Estrategicas",
       "gerencia": "Gerencia Cuentas Estrategicas 2",
       "jefe": "GIRALDO SANTAFE MARIA DEL PILAR",
-      "caja": "6"
+      "caja": "6",
+      "edad": "54 años",
+      "antig": "20.0 años"
     },
     "51976159": {
       "nombre": "VARGAS ANGEL SANDRA PATRICIA",
@@ -466,7 +580,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Transversal",
       "gerencia": "Gerencia Inteligencia Comercial Mercado Masivo",
       "jefe": "DOMINGUEZ DANIEL ARNALDO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "55 años",
+      "antig": "27.6 años"
     },
     "51976888": {
       "nombre": "CUELLAR ARIAS CLAUDIA CONSTANZA",
@@ -474,7 +590,9 @@ window.DATA = {
       "direccion_area": "Proyectos",
       "gerencia": "Gerencia Gestion Portafolio Estrategico",
       "jefe": "SARMIENTO GONZALEZ LUIS ALEJANDRO",
-      "caja": "8"
+      "caja": "8",
+      "edad": "56 años",
+      "antig": "7.6 años"
     },
     "51986597": {
       "nombre": "MOLANO VALDERRAMA MARTHA",
@@ -482,7 +600,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Gerencia Regional Agentes PDV R4",
       "jefe": "VASCO GARCIA JOSE LUIS",
-      "caja": "5"
+      "caja": "5",
+      "edad": "56 años",
+      "antig": "32.7 años"
     },
     "52009864": {
       "nombre": "CHACON GONZALEZ LILIANA PATRICIA",
@@ -490,7 +610,9 @@ window.DATA = {
       "direccion_area": "Direccion Ingenieria",
       "gerencia": "Gerencia Ingenieria Red IP Transmision & Infraestructura",
       "jefe": "SALAZAR BARON HUGO ALEXANDER",
-      "caja": "9"
+      "caja": "9",
+      "edad": "53 años",
+      "antig": "4.2 años"
     },
     "52047965": {
       "nombre": "CASTRO PINEDA MARIA CONSUELO",
@@ -498,7 +620,9 @@ window.DATA = {
       "direccion_area": "Sostenibilidad",
       "gerencia": "Gerencia Sostenibilidad",
       "jefe": "PARDO FAJARDO SANTIAGO",
-      "caja": "9"
+      "caja": "9",
+      "edad": "54 años",
+      "antig": "7.5 años"
     },
     "52053945": {
       "nombre": "TRUJILLO RAMIREZ MARIA VERONICA",
@@ -506,7 +630,9 @@ window.DATA = {
       "direccion_area": "Datos y Analitica de Negocios",
       "gerencia": "Gerencia Inteligencia Negocios",
       "jefe": "ESTUPIÑAN LOPEZ ANDRES FERNANDO",
-      "caja": "2"
+      "caja": "2",
+      "edad": "54 años",
+      "antig": "29.8 años"
     },
     "52085624": {
       "nombre": "ARDILA CRUZ ELSY CONSTANZA",
@@ -514,7 +640,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Direccion Region 4",
       "jefe": "VASCO GARCIA JOSE LUIS",
-      "caja": "5"
+      "caja": "5",
+      "edad": "51 años",
+      "antig": "7.9 años"
     },
     "52093668": {
       "nombre": "PEÑA HERNANDEZ YOLIMA",
@@ -522,7 +650,9 @@ window.DATA = {
       "direccion_area": "Soporte A La Operacion",
       "gerencia": "Gerencia Gestion Cartera Y Riesgo",
       "jefe": "SANABRIA HIGUERA ANA PATRICIA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "50 años",
+      "antig": "18.0 años"
     },
     "52105775": {
       "nombre": "SARMIENTO SANDOVAL ADRIANA CONSUELO",
@@ -530,7 +660,9 @@ window.DATA = {
       "direccion_area": "Seguridad Informacion",
       "gerencia": "Gerencia Seguridad Informacion",
       "jefe": "CASTRO CARDOZO CARLOS ANDRES",
-      "caja": "5"
+      "caja": "5",
+      "edad": "51 años",
+      "antig": "22.7 años"
     },
     "52110121": {
       "nombre": "SANABRIA CARDOZO LILIANA PATRICIA",
@@ -538,7 +670,9 @@ window.DATA = {
       "direccion_area": "Cumplimiento y Continuidad Datacenter",
       "gerencia": "Gerencia Cumplimiento y Continuidad Datacenter",
       "jefe": "VARGAS BLANCO FREDDY ALEXANDER",
-      "caja": "3"
+      "caja": "3",
+      "edad": "51 años",
+      "antig": "6.9 años"
     },
     "52153221": {
       "nombre": "DE LA ROCHE BENITEZ SONIA ANGELICA",
@@ -546,7 +680,9 @@ window.DATA = {
       "direccion_area": "Servicio A Cliente Corporativo",
       "gerencia": "Direccion Servicio A Clientes Corporativos",
       "jefe": "ESCOLAR SUNDHEIM MARIA LUISA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "51 años",
+      "antig": "25.8 años"
     },
     "52195354": {
       "nombre": "ACEVEDO CORDOBA EDNA MONICA",
@@ -554,7 +690,9 @@ window.DATA = {
       "direccion_area": "Supply Chain",
       "gerencia": "Gerencia Value Chain Servicios",
       "jefe": "TRUJILLO REHBEIN PABLO",
-      "caja": "8"
+      "caja": "8",
+      "edad": "50 años",
+      "antig": "24.3 años"
     },
     "52196323": {
       "nombre": "LOPEZ PABON DINA MARGARITA",
@@ -562,7 +700,9 @@ window.DATA = {
       "direccion_area": "Direccion Servicios TIC y Datacenter",
       "gerencia": "Gerencia de Proyectos Empresariales",
       "jefe": "DONADO ARENAS CARLOS EFREN",
-      "caja": "5"
+      "caja": "5",
+      "edad": "50 años",
+      "antig": "13.4 años"
     },
     "52236050": {
       "nombre": "PRADO MEJIA CAROL ALEXANDRA",
@@ -570,7 +710,9 @@ window.DATA = {
       "direccion_area": "Soluciones Cloud",
       "gerencia": "Gerencia Soluciones Cloud",
       "jefe": "JIMENEZ MORALES JOSE JULIAN",
-      "caja": "9"
+      "caja": "9",
+      "edad": "46 años",
+      "antig": "20.8 años"
     },
     "52252627": {
       "nombre": "JIMENEZ VALENCIA SONIA VIVIANA",
@@ -578,7 +720,9 @@ window.DATA = {
       "direccion_area": "Soporte A La Operacion",
       "gerencia": "Gerencia Gestion Pqr's",
       "jefe": "SANABRIA HIGUERA ANA PATRICIA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "51 años",
+      "antig": "21.9 años"
     },
     "52327945": {
       "nombre": "FORERO GAMBOA MYRIAM JANNETH",
@@ -586,7 +730,9 @@ window.DATA = {
       "direccion_area": "Direccion Servicios TIC y Datacenter",
       "gerencia": "Gerencia Implementacion y Despliegue Servicios TI",
       "jefe": "DONADO ARENAS CARLOS EFREN",
-      "caja": "3"
+      "caja": "3",
+      "edad": "52 años",
+      "antig": "26.0 años"
     },
     "52382880": {
       "nombre": "BALAGUERA GIL YALFA LISETH",
@@ -594,7 +740,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Pymes",
       "gerencia": "Gerencia Canales Pymes",
       "jefe": "PARRA BELTRAN LUIS FERNANDO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "48 años",
+      "antig": "0.6 años"
     },
     "52413825": {
       "nombre": "FERNANDEZ CASTILLO ANGELA MARIA",
@@ -602,7 +750,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Transversal",
       "gerencia": "Gerencia Claro Pay",
       "jefe": "MONTAGUT MORALES PEDRO ANGEL",
-      "caja": "4"
+      "caja": "4",
+      "edad": "50 años",
+      "antig": "19.6 años"
     },
     "52433846": {
       "nombre": "GALINDO LOPEZ BIBIAM JIMENA",
@@ -610,7 +760,9 @@ window.DATA = {
       "direccion_area": "Administrativa Tecnologia",
       "gerencia": "Gerencia Administrativa Inmuebles e Infraestructura",
       "jefe": "CASTAÑEDA ALDANA NAYIBE ALCIRA",
-      "caja": "9"
+      "caja": "9",
+      "edad": "48 años",
+      "antig": "17.8 años"
     },
     "52492548": {
       "nombre": "MORENO MORENO ADRIANA",
@@ -618,7 +770,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Sistemas",
       "jefe": "HERNANDEZ HERNANDEZ SANDRA LILIANA",
-      "caja": "9"
+      "caja": "9",
+      "edad": "48 años",
+      "antig": "0.5 años"
     },
     "52526001": {
       "nombre": "ALVAREZ ZULUAGA LUZ ASTRID",
@@ -626,7 +780,9 @@ window.DATA = {
       "direccion_area": "Nacional B2B2C y Proyectos Especiales",
       "gerencia": "Gerencia Nacional B2B2C y Proyectos Especiales",
       "jefe": "DOMINGUEZ DANIEL ARNALDO",
-      "caja": "8"
+      "caja": "8",
+      "edad": "47 años",
+      "antig": "20.6 años"
     },
     "52534703": {
       "nombre": "MUÑOZ RONCANCIO LUZ NEILA",
@@ -634,7 +790,9 @@ window.DATA = {
       "direccion_area": "Direccion Negocio Terminales y Equipos Hogar",
       "gerencia": "Direccion Negocio Terminales y Equipos Hogar",
       "jefe": "DOMINGUEZ DANIEL ARNALDO",
-      "caja": "8"
+      "caja": "8",
+      "edad": "46 años",
+      "antig": "7.1 años"
     },
     "52557971": {
       "nombre": "BARRAGAN SUA CLAUDIA LUCIA",
@@ -642,7 +800,9 @@ window.DATA = {
       "direccion_area": "Direccion Experiencia Soporte y Operacion IT",
       "gerencia": "Gerencia Arquitectura IT",
       "jefe": "CAJIGAS SILVA MIGUEL EDUARDO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "53 años",
+      "antig": "15.9 años"
     },
     "52704630": {
       "nombre": "CASAS GUTIERREZ MARIA CECILIA",
@@ -650,7 +810,9 @@ window.DATA = {
       "direccion_area": "Supply Chain",
       "gerencia": "Gerencia Value Chain Mercado Masivo",
       "jefe": "TRUJILLO REHBEIN PABLO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "46 años",
+      "antig": "22.9 años"
     },
     "52706228": {
       "nombre": "RIVEROS GUZMAN CAROLINA",
@@ -658,7 +820,9 @@ window.DATA = {
       "direccion_area": "Prevencion Fraude",
       "gerencia": "Gerencia Prevencion Fraude",
       "jefe": "RAMIREZ RINCON CARLOS JULIO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "46 años",
+      "antig": "17.4 años"
     },
     "52709691": {
       "nombre": "CASTAÑEDA GUERRERO MARIA TERESA DEL PILAR",
@@ -666,7 +830,9 @@ window.DATA = {
       "direccion_area": "Regulacion Y Relacion Con Operadores",
       "gerencia": "Gerencia Regulacion y Relacion con Operadores",
       "jefe": "PARDO FAJARDO SANTIAGO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "46 años",
+      "antig": "17.4 años"
     },
     "52750890": {
       "nombre": "CASTELLANOS MANRIQUE LADDY IVONNE",
@@ -674,7 +840,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Operativa y Financiera",
       "jefe": "MONSALVE HERNANDEZ DIANA CAROLINA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "41 años",
+      "antig": "13.1 años"
     },
     "52807479": {
       "nombre": "JIMENEZ GONZALEZ JENNY",
@@ -682,7 +850,9 @@ window.DATA = {
       "direccion_area": "Servicio A Cliente Corporativo",
       "gerencia": "Gerencia Servicio Al Cliente Corporativo",
       "jefe": "DE LA ROCHE BENITEZ SONIA ANGELICA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "45 años",
+      "antig": "14.0 años"
     },
     "52809026": {
       "nombre": "CASTAÑEDA ALDANA NAYIBE ALCIRA",
@@ -690,7 +860,9 @@ window.DATA = {
       "direccion_area": "Administrativa Tecnologia",
       "gerencia": "Direccion de Administracion Recursos Tecnicos",
       "jefe": "MALDONADO ROBLES IADER ALBERTO",
-      "caja": "9"
+      "caja": "9",
+      "edad": "45 años",
+      "antig": "25.5 años"
     },
     "52818441": {
       "nombre": "TORRES OSPINA INGRID JULIET",
@@ -698,7 +870,9 @@ window.DATA = {
       "direccion_area": "Contratos Comerciales y Administrativos",
       "gerencia": "Gerencia Contratos Comerciales y Administrativos",
       "jefe": "PARDO FAJARDO SANTIAGO",
-      "caja": "2"
+      "caja": "2",
+      "edad": "42 años",
+      "antig": "4.7 años"
     },
     "52824581": {
       "nombre": "VILLANUEVA RODRIGUEZ JOHANA",
@@ -706,7 +880,9 @@ window.DATA = {
       "direccion_area": "Asuntos Contenciosos",
       "gerencia": "Gerencia Asuntos Contenciosos",
       "jefe": "OJEDA LUNA JUAN MANUEL",
-      "caja": "9"
+      "caja": "9",
+      "edad": "46 años",
+      "antig": "5.5 años"
     },
     "52827755": {
       "nombre": "BARRETO OSORIO DEYANIRA",
@@ -714,7 +890,9 @@ window.DATA = {
       "direccion_area": "Nacional B2B2C y Proyectos Especiales",
       "gerencia": "Gerencia Nacional B2B2C y Proyectos Especiales",
       "jefe": "ALVAREZ ZULUAGA LUZ ASTRID",
-      "caja": "6"
+      "caja": "6",
+      "edad": "45 años",
+      "antig": "24.1 años"
     },
     "52879980": {
       "nombre": "RODRIGUEZ FUENTES LUZ DARY",
@@ -722,7 +900,9 @@ window.DATA = {
       "direccion_area": "Inteligencia Comercial",
       "gerencia": "Gerencia Inteligencia Comercial",
       "jefe": "PEÑA VEGA PATRICIA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "42 años",
+      "antig": "7.4 años"
     },
     "52882931": {
       "nombre": "MENDEZ HENAO ANDREA DEL PILAR",
@@ -730,7 +910,9 @@ window.DATA = {
       "direccion_area": "Direccion Claro Media",
       "gerencia": "Direccion Claro Media",
       "jefe": "ROJAS RINCON ANDRES DANIEL",
-      "caja": "5"
+      "caja": "5",
+      "edad": "45 años",
+      "antig": "17.8 años"
     },
     "52908559": {
       "nombre": "CASTAÑEDA GARZON DIANA PATRICIA",
@@ -738,7 +920,9 @@ window.DATA = {
       "direccion_area": "Inteligencia Comercial",
       "gerencia": "Gerencia Inteligencia Comercial",
       "jefe": "PEÑA VEGA PATRICIA",
-      "caja": "8"
+      "caja": "8",
+      "edad": "43 años",
+      "antig": "8.0 años"
     },
     "52912096": {
       "nombre": "CHACON GOMEZ MYRIAM YOLANDA",
@@ -746,7 +930,9 @@ window.DATA = {
       "direccion_area": "Direccion Experiencia del Cliente",
       "gerencia": "Direccion Experiencia A Clientes",
       "jefe": "BORDA FERRO WALTER JAVIER",
-      "caja": "6"
+      "caja": "6",
+      "edad": "43 años",
+      "antig": "21.4 años"
     },
     "52960631": {
       "nombre": "SOTO RAMIREZ MARTHA VIVIANA",
@@ -754,7 +940,9 @@ window.DATA = {
       "direccion_area": "Direccion Canales Atencion UMM",
       "gerencia": "Gerencia Relaciones Prioritarias Canales Atencion UMM",
       "jefe": "OCAMPO GIRON MARIA DEL PILAR",
-      "caja": "6"
+      "caja": "6",
+      "edad": "43 años",
+      "antig": "3.8 años"
     },
     "52964258": {
       "nombre": "MONROY CASTILLO JINETH ANDREA",
@@ -762,7 +950,9 @@ window.DATA = {
       "direccion_area": "Direccion Servicios TIC y Datacenter",
       "gerencia": "Gerencia de Infraestructura y Servicios de Datacenter",
       "jefe": "DONADO ARENAS CARLOS EFREN",
-      "caja": "6"
+      "caja": "6",
+      "edad": "42 años",
+      "antig": "19.7 años"
     },
     "52982623": {
       "nombre": "OJEDA ROJAS DIANA CAROLINA",
@@ -770,7 +960,9 @@ window.DATA = {
       "direccion_area": "Direccion Canales de Venta Agentes",
       "gerencia": "Gerencia Rentabilizacion Canal Agentes",
       "jefe": "MANOTAS SALCEDO ELIANA MARIA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "42 años",
+      "antig": "7.6 años"
     },
     "52991038": {
       "nombre": "RAMIREZ ACOSTA ANDREA DEL PILAR",
@@ -778,7 +970,9 @@ window.DATA = {
       "direccion_area": "Direccion Claro Media",
       "gerencia": "Direccion Revista",
       "jefe": "ROJAS RINCON ANDRES DANIEL",
-      "caja": "6"
+      "caja": "6",
+      "edad": "43 años",
+      "antig": "9.6 años"
     },
     "52997400": {
       "nombre": "LEMUS MEDINA INGRITH CATALINA",
@@ -786,7 +980,9 @@ window.DATA = {
       "direccion_area": "Direccion Servicios TIC y Datacenter",
       "gerencia": "Gerencia Implementacion y Clientes Corporativos",
       "jefe": "DONADO ARENAS CARLOS EFREN",
-      "caja": "5"
+      "caja": "5",
+      "edad": "42 años",
+      "antig": "20.7 años"
     },
     "53003157": {
       "nombre": "ROMERO RAMIREZ PAOLA ANDREA",
@@ -794,7 +990,9 @@ window.DATA = {
       "direccion_area": "Direccion Marketing Corporativo y Producto",
       "gerencia": "Gerencia Marketing Corporativo",
       "jefe": "MONTAGUT MORALES PEDRO ANGEL",
-      "caja": "9"
+      "caja": "9",
+      "edad": "43 años",
+      "antig": "8.9 años"
     },
     "53015362": {
       "nombre": "CASAS SILVA CAROLINA",
@@ -802,7 +1000,9 @@ window.DATA = {
       "direccion_area": "Riesgo Financiero",
       "gerencia": "Gerencia Riesgo Financiero",
       "jefe": "VARGAS BLANCO FREDDY ALEXANDER",
-      "caja": "6"
+      "caja": "6",
+      "edad": "41 años",
+      "antig": "1.2 años"
     },
     "53073416": {
       "nombre": "MONSALVE HERNANDEZ DIANA CAROLINA",
@@ -810,7 +1010,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Operativa y Financiera",
       "jefe": "HERNANDEZ HERNANDEZ SANDRA LILIANA",
-      "caja": "9"
+      "caja": "9",
+      "edad": "41 años",
+      "antig": "0.5 años"
     },
     "53082823": {
       "nombre": "HURTADO SALAZAR MARIA ANGELICA",
@@ -818,7 +1020,9 @@ window.DATA = {
       "direccion_area": "Datos y Analitica de Negocios",
       "gerencia": "Direccion Datos y Analitica de Negocios",
       "jefe": "ESTUPIÑAN LOPEZ ANDRES FERNANDO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "41 años",
+      "antig": "12.0 años"
     },
     "53099571": {
       "nombre": "DAZA DIANA CAROLINA",
@@ -826,7 +1030,9 @@ window.DATA = {
       "direccion_area": "Gerencia Marca e Impacto Pais",
       "gerencia": "Gerencia Marca e Impacto Pais",
       "jefe": "MORALES NARANJO JOHN EDWARD",
-      "caja": "6"
+      "caja": "6",
+      "edad": "41 años",
+      "antig": "6.5 años"
     },
     "53106007": {
       "nombre": "PINZON CHAPARRO MONICA XIMENA",
@@ -834,7 +1040,9 @@ window.DATA = {
       "direccion_area": "Proyectos",
       "gerencia": "Gerencia Gestion Portafolio Estrategico",
       "jefe": "SARMIENTO GONZALEZ LUIS ALEJANDRO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "41 años",
+      "antig": "6.6 años"
     },
     "53120673": {
       "nombre": "SALAS MAHECHA VIVIANA ANDREA",
@@ -842,7 +1050,9 @@ window.DATA = {
       "direccion_area": "Planeacion y Tesoreria",
       "gerencia": "Direccion Planeacion Financiera y Tesoreria",
       "jefe": "BORDA FERRO WALTER JAVIER",
-      "caja": "9"
+      "caja": "9",
+      "edad": "41 años",
+      "antig": "17.8 años"
     },
     "53905205": {
       "nombre": "MACHADO GONZALEZ PAOLA ANDREA",
@@ -850,7 +1060,9 @@ window.DATA = {
       "direccion_area": "Gerencia Marca e Impacto Pais",
       "gerencia": "Gerencia Marca e Impacto Pais",
       "jefe": "MORALES NARANJO JOHN EDWARD",
-      "caja": "9"
+      "caja": "9",
+      "edad": "44 años",
+      "antig": "3.2 años"
     },
     "55180918": {
       "nombre": "IBARRA CERON JANETH CONSTANZA",
@@ -858,7 +1070,9 @@ window.DATA = {
       "direccion_area": "Aseguramiento Ingresos",
       "gerencia": "Gerencia Aseguramiento Ingresos",
       "jefe": "VARGAS BLANCO FREDDY ALEXANDER",
-      "caja": "6"
+      "caja": "6",
+      "edad": "50 años",
+      "antig": "21.7 años"
     },
     "55230423": {
       "nombre": "ARIAS RIOS JENNIFER",
@@ -866,7 +1080,9 @@ window.DATA = {
       "direccion_area": "Direccion Ecommerce y Telemercadeo",
       "gerencia": "Gerencia Telemercadeo",
       "jefe": "MEDINA PEÑA IVAN RICARDO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "42 años",
+      "antig": "19.1 años"
     },
     "63493658": {
       "nombre": "CORSO SALAMANCA MARCELA MARIA",
@@ -874,7 +1090,9 @@ window.DATA = {
       "direccion_area": "Direccion Producto Masivo",
       "gerencia": "Gerencia Producto Movil",
       "jefe": "CARLESIMO REY ANDRES",
-      "caja": "8"
+      "caja": "8",
+      "edad": "52 años",
+      "antig": "24.7 años"
     },
     "63514458": {
       "nombre": "PEÑA ORTIZ PAOLA JOHANNA",
@@ -882,7 +1100,9 @@ window.DATA = {
       "direccion_area": "Gerencia Marketing Masivo",
       "gerencia": "Gerencia Marketing Pospago y Hogar",
       "jefe": "ROCA ACEVEDO FEDERICO",
-      "caja": "9"
+      "caja": "9",
+      "edad": "49 años",
+      "antig": "10.7 años"
     },
     "63532006": {
       "nombre": "ALBA RINCON ISABEL",
@@ -890,7 +1110,9 @@ window.DATA = {
       "direccion_area": "Seguridad Informacion",
       "gerencia": "Gerencia Seguridad Informacion",
       "jefe": "CASTRO CARDOZO CARLOS ANDRES",
-      "caja": "8"
+      "caja": "8",
+      "edad": "45 años",
+      "antig": "0.4 años"
     },
     "65775238": {
       "nombre": "SANTOFIMIO PEÑA MYRIAM",
@@ -898,7 +1120,9 @@ window.DATA = {
       "direccion_area": "Proyectos",
       "gerencia": "Gerencia Gestion Portafolio Estrategico",
       "jefe": "SARMIENTO GONZALEZ LUIS ALEJANDRO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "50 años",
+      "antig": "24.9 años"
     },
     "66881732": {
       "nombre": "OCAMPO GIRON MARIA DEL PILAR",
@@ -906,7 +1130,9 @@ window.DATA = {
       "direccion_area": "Direccion Canales Atencion UMM",
       "gerencia": "Direccion Canales Atencion UMM",
       "jefe": "DOMINGUEZ DANIEL ARNALDO",
-      "caja": "8"
+      "caja": "8",
+      "edad": "53 años",
+      "antig": "19.8 años"
     },
     "66952849": {
       "nombre": "ZAPATA ORTIZ BEATRIZ",
@@ -914,7 +1140,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Grandes Empresas",
       "gerencia": "Direccion Comercial Grandes Empresas",
       "jefe": "ESCOLAR SUNDHEIM MARIA LUISA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "50 años",
+      "antig": "8.5 años"
     },
     "71384327": {
       "nombre": "MUÑOZ OCAMPO ANDRES FERNANDO",
@@ -922,7 +1150,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Gerencia Regional Agentes Calle R2",
       "jefe": "PEREZ PALMA JULIO CESAR",
-      "caja": "5"
+      "caja": "5",
+      "edad": "44 años",
+      "antig": "18.9 años"
     },
     "72182013": {
       "nombre": "MORALES BERMEJO EDWIN RIGOBERTO",
@@ -930,7 +1160,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Empresas Estrategicas",
       "gerencia": "Gerencia Comercial Cuentas Estrategicas Norte",
       "jefe": "GIRALDO SANTAFE MARIA DEL PILAR",
-      "caja": "9"
+      "caja": "9",
+      "edad": "54 años",
+      "antig": "8.8 años"
     },
     "72229277": {
       "nombre": "CARBONELL COLINA ALVARO ENRIQUE",
@@ -938,7 +1170,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Gerencia Regional Agentes PDV R1",
       "jefe": "PORTO VELASQUEZ LUIS MIGUEL",
-      "caja": "6"
+      "caja": "6",
+      "edad": "48 años",
+      "antig": "7.5 años"
     },
     "72257140": {
       "nombre": "ZABALETA POMBO JULIO ALBERTO",
@@ -946,7 +1180,9 @@ window.DATA = {
       "direccion_area": "Planeacion Tecnologia",
       "gerencia": "Gerencia Planeacion Evolucion y Estrategia Servicio Movil y Fijo",
       "jefe": "BAYONA PORRAS JUAN MAURICIO",
-      "caja": "9"
+      "caja": "9",
+      "edad": "45 años",
+      "antig": "20.0 años"
     },
     "72273597": {
       "nombre": "BERRIO GARCIA JULIO CESAR",
@@ -954,7 +1190,9 @@ window.DATA = {
       "direccion_area": "Direccion Experiencia del Cliente",
       "gerencia": "Gerencia Digital Proyectos",
       "jefe": "CHACON GOMEZ MYRIAM YOLANDA",
-      "caja": "9"
+      "caja": "9",
+      "edad": "44 años",
+      "antig": "4.8 años"
     },
     "72285538": {
       "nombre": "PEREZ MEDINA HUMBERTO ALEJANDRO",
@@ -962,7 +1200,9 @@ window.DATA = {
       "direccion_area": "Growth",
       "gerencia": "Gerencia Growth",
       "jefe": "DOMINGUEZ DANIEL ARNALDO",
-      "caja": "7"
+      "caja": "7",
+      "edad": "43 años",
+      "antig": "11.6 años"
     },
     "73569561": {
       "nombre": "CANTILLO FERNANDEZ GIL ALBERTO",
@@ -970,7 +1210,9 @@ window.DATA = {
       "direccion_area": "Direccion Aseguramiento Calidad de Servicio",
       "gerencia": "Gerencia Sistemas Gestion Red",
       "jefe": "AVILA PLATA OSCAR MAURICIO",
-      "caja": "8"
+      "caja": "8",
+      "edad": "50 años",
+      "antig": "23.6 años"
     },
     "74359373": {
       "nombre": "VASQUEZ CORREDOR FRANKLIN GILDARDO",
@@ -978,7 +1220,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Empresas Estrategicas",
       "gerencia": "Direccion Comercial Empresas Estrategicas",
       "jefe": "GIRALDO SANTAFE MARIA DEL PILAR",
-      "caja": "6"
+      "caja": "6",
+      "edad": "50 años",
+      "antig": "19.2 años"
     },
     "75071067": {
       "nombre": "BEDOYA RODRIGUEZ JULIAN ANDRES",
@@ -986,7 +1230,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Sistemas",
       "jefe": "MORENO MORENO ADRIANA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "53 años",
+      "antig": "11.6 años"
     },
     "75071414": {
       "nombre": "RESTREPO SEPULVEDA HAROLD RICARDO",
@@ -994,7 +1240,9 @@ window.DATA = {
       "direccion_area": "Aseguramiento Ingresos",
       "gerencia": "Gerencia Aseguramiento Ingresos",
       "jefe": "IBARRA CERON JANETH CONSTANZA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "53 años",
+      "antig": "5.6 años"
     },
     "75145916": {
       "nombre": "RESTREPO TABARES SILVIO",
@@ -1002,7 +1250,9 @@ window.DATA = {
       "direccion_area": "Direccion Operaciones Tecnicas de Campo",
       "gerencia": "Gerencia Regional Operaciones Tecnicas de Campo R3",
       "jefe": "MARTINEZ PINILLA DIEGO FELIPE",
-      "caja": "6"
+      "caja": "6",
+      "edad": "49 años",
+      "antig": "18.9 años"
     },
     "76320829": {
       "nombre": "VERGARA VALENCIA ADRIAN ALFREDO",
@@ -1010,7 +1260,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Gobierno",
       "gerencia": "Direccion Comercial Gobierno",
       "jefe": "ESCOLAR SUNDHEIM MARIA LUISA",
-      "caja": "9"
+      "caja": "9",
+      "edad": "51 años",
+      "antig": "9.3 años"
     },
     "76333059": {
       "nombre": "MUÑOZ IBARRA ANDHERSON FABIAN",
@@ -1018,7 +1270,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Gobierno",
       "gerencia": "Gerencia Comercial Gobierno 1",
       "jefe": "VERGARA VALENCIA ADRIAN ALFREDO",
-      "caja": "9"
+      "caja": "9",
+      "edad": "46 años",
+      "antig": "8.7 años"
     },
     "78747249": {
       "nombre": "OTERO DUMAR ALVARO MIGUEL",
@@ -1026,7 +1280,9 @@ window.DATA = {
       "direccion_area": "Direccion Implementacion",
       "gerencia": "Direccion Implementacion",
       "jefe": "MALDONADO ROBLES IADER ALBERTO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "50 años",
+      "antig": "3.9 años"
     },
     "79056828": {
       "nombre": "SANABRIA RAMIREZ LEONARDO ELKIN",
@@ -1034,7 +1290,9 @@ window.DATA = {
       "direccion_area": "Soporte A La Operacion",
       "gerencia": "Gerencia Recaudo",
       "jefe": "SANABRIA HIGUERA ANA PATRICIA",
-      "caja": "3"
+      "caja": "3",
+      "edad": "55 años",
+      "antig": "32.0 años"
     },
     "79277334": {
       "nombre": "DONADO ARENAS CARLOS EFREN",
@@ -1042,7 +1300,9 @@ window.DATA = {
       "direccion_area": "Direccion Servicios TIC y Datacenter",
       "gerencia": "Direccion Servicios TIC y Datacenter",
       "jefe": "MALDONADO ROBLES IADER ALBERTO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "62 años",
+      "antig": "25.3 años"
     },
     "79385806": {
       "nombre": "CORTES LOPEZ JORGE ARTURO",
@@ -1050,7 +1310,9 @@ window.DATA = {
       "direccion_area": "Gestion Control Facturacion Y Pago",
       "gerencia": "Gerencia De Gestion Control Facturacion Y Pago",
       "jefe": "PARDO FAJARDO SANTIAGO",
-      "caja": "8"
+      "caja": "8",
+      "edad": "59 años",
+      "antig": "5.4 años"
     },
     "79418021": {
       "nombre": "RODRIGUEZ RODRIGUEZ OSCAR ARTURO",
@@ -1058,7 +1320,9 @@ window.DATA = {
       "direccion_area": "Direccion Contraloria",
       "gerencia": "Gerencia Cumplimiento Corporativo y Regulatoria",
       "jefe": "TORRES RIVERA CARLOS ALBERTO",
-      "caja": "8"
+      "caja": "8",
+      "edad": "59 años",
+      "antig": "31.1 años"
     },
     "79432588": {
       "nombre": "MENDEZ MARTINEZ NICOLAS",
@@ -1066,7 +1330,9 @@ window.DATA = {
       "direccion_area": "Direccion Ingenieria",
       "gerencia": "Gerencia Ingenieria Core y Acceso Fijo",
       "jefe": "SALAZAR BARON HUGO ALEXANDER",
-      "caja": "3"
+      "caja": "3",
+      "edad": "58 años",
+      "antig": "35.4 años"
     },
     "79455718": {
       "nombre": "BAYONA PORRAS JUAN MAURICIO",
@@ -1074,7 +1340,9 @@ window.DATA = {
       "direccion_area": "Planeacion Tecnologia",
       "gerencia": "Gerencia Planeacion Tecnologia",
       "jefe": "MALDONADO ROBLES IADER ALBERTO",
-      "caja": "8"
+      "caja": "8",
+      "edad": "56 años",
+      "antig": "26.1 años"
     },
     "79495740": {
       "nombre": "ACEVEDO ARIAS MAURICIO",
@@ -1082,7 +1350,9 @@ window.DATA = {
       "direccion_area": "Direccion Contraloria",
       "gerencia": "Gerencia Impuestos",
       "jefe": "TORRES RIVERA CARLOS ALBERTO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "56 años",
+      "antig": "30.8 años"
     },
     "79506436": {
       "nombre": "ARIAS MORA JAIME ALBERTO",
@@ -1090,7 +1360,9 @@ window.DATA = {
       "direccion_area": "Direccion Consultoria y Diseño",
       "gerencia": "Direccion Consultoria y Diseño",
       "jefe": "ESCOLAR SUNDHEIM MARIA LUISA",
-      "caja": "9"
+      "caja": "9",
+      "edad": "56 años",
+      "antig": "21.9 años"
     },
     "79532521": {
       "nombre": "SALAZAR BARON HUGO ALEXANDER",
@@ -1098,7 +1370,9 @@ window.DATA = {
       "direccion_area": "Direccion Ingenieria",
       "gerencia": "Direccion Ingenieria",
       "jefe": "MALDONADO ROBLES IADER ALBERTO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "55 años",
+      "antig": "31.3 años"
     },
     "79539397": {
       "nombre": "RONCANCIO CALDERON RENE MAURICIO",
@@ -1106,7 +1380,9 @@ window.DATA = {
       "direccion_area": "Direccion Consultoria y Diseño",
       "gerencia": "Gerencia Preventa",
       "jefe": "ARIAS MORA JAIME ALBERTO",
-      "caja": "8"
+      "caja": "8",
+      "edad": "55 años",
+      "antig": "18.7 años"
     },
     "79553598": {
       "nombre": "RODRIGUEZ MORENO FERNANDO GUSTAVO",
@@ -1114,7 +1390,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Grandes Empresas",
       "gerencia": "Gerencia Comercial Grandes Empresas Bogota 2",
       "jefe": "ZAPATA ORTIZ BEATRIZ",
-      "caja": "5"
+      "caja": "5",
+      "edad": "55 años",
+      "antig": "26.3 años"
     },
     "79556029": {
       "nombre": "CARLESIMO REY ANDRES",
@@ -1122,7 +1400,9 @@ window.DATA = {
       "direccion_area": "Direccion Producto Masivo",
       "gerencia": "Direccion Producto Masivo",
       "jefe": "DOMINGUEZ DANIEL ARNALDO",
-      "caja": "8"
+      "caja": "8",
+      "edad": "54 años",
+      "antig": "28.3 años"
     },
     "79567712": {
       "nombre": "SASTRE CASTRO JOHN MANUEL",
@@ -1130,7 +1410,9 @@ window.DATA = {
       "direccion_area": "Direccion Servicios TIC y Datacenter",
       "gerencia": "Gerencia AOSM Servicios IT",
       "jefe": "DONADO ARENAS CARLOS EFREN",
-      "caja": "5"
+      "caja": "5",
+      "edad": "53 años",
+      "antig": "1.0 años"
     },
     "79574339": {
       "nombre": "MONTEJO MORA JOSE ALFREDO",
@@ -1138,7 +1420,9 @@ window.DATA = {
       "direccion_area": "Direccion Consultoria y Diseño",
       "gerencia": "Gerencia Consultoria It",
       "jefe": "ARIAS MORA JAIME ALBERTO",
-      "caja": "8"
+      "caja": "8",
+      "edad": "55 años",
+      "antig": "22.2 años"
     },
     "79576371": {
       "nombre": "TORRES RIVERA CARLOS ALBERTO",
@@ -1146,7 +1430,9 @@ window.DATA = {
       "direccion_area": "Direccion Contraloria",
       "gerencia": "Direccion Contraloria",
       "jefe": "BORDA FERRO WALTER JAVIER",
-      "caja": "5"
+      "caja": "5",
+      "edad": "54 años",
+      "antig": "19.8 años"
     },
     "79577126": {
       "nombre": "MORALES NARANJO JOHN EDWARD",
@@ -1154,7 +1440,9 @@ window.DATA = {
       "direccion_area": "Gerencia Marca e Impacto Pais",
       "gerencia": "Gerencia Marca e Impacto Pais",
       "jefe": "DE GUSMAO RIBEIRO RODRIGO",
-      "caja": "0"
+      "caja": "0",
+      "edad": "55 años",
+      "antig": "15.8 años"
     },
     "79577896": {
       "nombre": "RIVAS CELEITA ANGEL ALBERTO",
@@ -1162,7 +1450,9 @@ window.DATA = {
       "direccion_area": "Direccion Servicios TIC y Datacenter",
       "gerencia": "Gerencia AOSM Servicios UMC y Datacenter",
       "jefe": "DONADO ARENAS CARLOS EFREN",
-      "caja": "6"
+      "caja": "6",
+      "edad": "55 años",
+      "antig": "14.2 años"
     },
     "79618973": {
       "nombre": "PULECIO SABOGAL RODRIGO ALEJANDRO",
@@ -1170,7 +1460,9 @@ window.DATA = {
       "direccion_area": "Proyectos",
       "gerencia": "Gerencia Gestion Portafolio Estrategico",
       "jefe": "SARMIENTO GONZALEZ LUIS ALEJANDRO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "52 años",
+      "antig": "7.5 años"
     },
     "79620994": {
       "nombre": "RODRIGUEZ RODRIGUEZ JORGE IGNACIO",
@@ -1178,7 +1470,9 @@ window.DATA = {
       "direccion_area": "Direccion Experiencia Soporte y Operacion IT",
       "gerencia": "Gerencia Control Estrategico  y Presupuestal IT",
       "jefe": "CAJIGAS SILVA MIGUEL EDUARDO",
-      "caja": "9"
+      "caja": "9",
+      "edad": "52 años",
+      "antig": "14.5 años"
     },
     "79621141": {
       "nombre": "VARGAS SANCHEZ YAYR",
@@ -1186,7 +1480,9 @@ window.DATA = {
       "direccion_area": "Planeacion Estrategica",
       "gerencia": "Gerencia Planeacion Y Aseguramiento de Estrategia Corporativa",
       "jefe": "PUERTAS OROZCO CARLOS ANDRES",
-      "caja": "5"
+      "caja": "5",
+      "edad": "52 años",
+      "antig": "26.2 años"
     },
     "79623178": {
       "nombre": "VIANCHA CARDENAS JAIME",
@@ -1194,7 +1490,9 @@ window.DATA = {
       "direccion_area": "Soporte A La Operacion",
       "gerencia": "Gerencia Facturacion",
       "jefe": "SANABRIA HIGUERA ANA PATRICIA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "52 años",
+      "antig": "15.7 años"
     },
     "79623776": {
       "nombre": "MONTES SERNA LUIS CARLOS",
@@ -1202,7 +1500,9 @@ window.DATA = {
       "direccion_area": "Direccion Contraloria",
       "gerencia": "Gerencia Control Capitalizacion Financiera e Inventarios",
       "jefe": "TORRES RIVERA CARLOS ALBERTO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "52 años",
+      "antig": "21.4 años"
     },
     "79628903": {
       "nombre": "URDANETA RINCON JOHN ALEJANDRO",
@@ -1210,7 +1510,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Gerencia Regional Prepago R4",
       "jefe": "VASCO GARCIA JOSE LUIS",
-      "caja": "6"
+      "caja": "6",
+      "edad": "47 años",
+      "antig": "2.7 años"
     },
     "79641074": {
       "nombre": "CHITIVA ABELLA FREDY",
@@ -1218,7 +1520,9 @@ window.DATA = {
       "direccion_area": "Direccion Operaciones Tecnicas de Campo",
       "gerencia": "Gerencia Regional Operaciones Tecnicas de Campo R4",
       "jefe": "VASCO GARCIA JOSE LUIS",
-      "caja": "5"
+      "caja": "5",
+      "edad": "52 años",
+      "antig": "22.9 años"
     },
     "79641078": {
       "nombre": "SARMIENTO ROZO JAVIER ALFONSO",
@@ -1226,7 +1530,9 @@ window.DATA = {
       "direccion_area": "Direccion Operaciones Tecnicas de Campo",
       "gerencia": "Direccion Operaciones Tecnicas de Campo",
       "jefe": "QUINTERO LOPEZ CARLOS HUMBERTO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "52 años",
+      "antig": "19.3 años"
     },
     "79672107": {
       "nombre": "MEDINA GONZALEZ WILLIAM RICARDO",
@@ -1234,7 +1540,9 @@ window.DATA = {
       "direccion_area": "Supply Chain",
       "gerencia": "Gerencia Centro de Excelencia Supply Chain",
       "jefe": "TRUJILLO REHBEIN PABLO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "51 años",
+      "antig": "18.5 años"
     },
     "79684854": {
       "nombre": "ARCE CLAVIJO PABLO ALEJANDRO",
@@ -1242,7 +1550,9 @@ window.DATA = {
       "direccion_area": "Direccion Experiencia del Cliente",
       "gerencia": "Gerencia Experiencia Segmento Corporativo",
       "jefe": "CHACON GOMEZ MYRIAM YOLANDA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "51 años",
+      "antig": "20.7 años"
     },
     "79686033": {
       "nombre": "GUEVARA PEREIRA CARLOS MARIO",
@@ -1250,7 +1560,9 @@ window.DATA = {
       "direccion_area": "Direccion Marketing Corporativo y Producto",
       "gerencia": "Gerencia Investigacion y Desarrollo",
       "jefe": "MONTAGUT MORALES PEDRO ANGEL",
-      "caja": "5"
+      "caja": "5",
+      "edad": "52 años",
+      "antig": "24.8 años"
     },
     "79686499": {
       "nombre": "SILVA LOPEZ WILLIAM ALEJANDRO",
@@ -1258,7 +1570,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Transversal",
       "gerencia": "Gerencia Inteligencia Comercial Mercado Masivo",
       "jefe": "VARGAS ANGEL SANDRA PATRICIA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "51 años",
+      "antig": "24.7 años"
     },
     "79687677": {
       "nombre": "GONZALEZ PAIPA IVAN DANILO ARTURO",
@@ -1266,7 +1580,9 @@ window.DATA = {
       "direccion_area": "Direccion Negocio Terminales y Equipos Hogar",
       "gerencia": "Gerencia Negocios Tecnologia",
       "jefe": "MUÑOZ RONCANCIO LUZ NEILA",
-      "caja": "8"
+      "caja": "8",
+      "edad": "50 años",
+      "antig": "14.5 años"
     },
     "79694810": {
       "nombre": "PERNETT PINILLA IVAN ENRIQUE",
@@ -1274,7 +1590,9 @@ window.DATA = {
       "direccion_area": "Direccion Ingenieria",
       "gerencia": "Gerencia Ingenieria Core Movil",
       "jefe": "SALAZAR BARON HUGO ALEXANDER",
-      "caja": "8"
+      "caja": "8",
+      "edad": "50 años",
+      "antig": "24.1 años"
     },
     "79695754": {
       "nombre": "ROJAS RINCON ANDRES DANIEL",
@@ -1282,7 +1600,9 @@ window.DATA = {
       "direccion_area": "Direccion Claro Media",
       "gerencia": "Direccion Claro Media",
       "jefe": "DE GUSMAO RIBEIRO RODRIGO",
-      "caja": "0"
+      "caja": "0",
+      "edad": "50 años",
+      "antig": "6.3 años"
     },
     "79722577": {
       "nombre": "ALFONSO ESTRADA JOHN GUSTAVO",
@@ -1290,7 +1610,9 @@ window.DATA = {
       "direccion_area": "Direccion Claro Media",
       "gerencia": "Direccion Claro Media",
       "jefe": "ROJAS RINCON ANDRES DANIEL",
-      "caja": "3"
+      "caja": "3",
+      "edad": "49 años",
+      "antig": "4.8 años"
     },
     "79753323": {
       "nombre": "HERRERA ORBEGOZO DARIO ALEJANDRO",
@@ -1298,7 +1620,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Grandes Empresas",
       "gerencia": "Gerencia Comercial Grandes Empresas Bogota 1",
       "jefe": "ZAPATA ORTIZ BEATRIZ",
-      "caja": "5"
+      "caja": "5",
+      "edad": "51 años",
+      "antig": "8.2 años"
     },
     "79793002": {
       "nombre": "JIMENEZ CALLE HECTOR ANDRES",
@@ -1306,7 +1630,9 @@ window.DATA = {
       "direccion_area": "Gerencia Marca e Impacto Pais",
       "gerencia": "Gerencia Medios",
       "jefe": "MORALES NARANJO JOHN EDWARD",
-      "caja": "9"
+      "caja": "9",
+      "edad": "48 años",
+      "antig": "12.8 años"
     },
     "79795948": {
       "nombre": "ALMARIO GALINDO LUIS CARLOS",
@@ -1314,7 +1640,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Pymes",
       "gerencia": "Gerencia Comercial Telemercadeo UMC",
       "jefe": "PARRA BELTRAN LUIS FERNANDO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "48 años",
+      "antig": "11.6 años"
     },
     "79801067": {
       "nombre": "MUÑOZ BERMUDEZ WILLIAM ANTONIO",
@@ -1322,7 +1650,9 @@ window.DATA = {
       "direccion_area": "Direccion Operaciones Tecnicas de Campo",
       "gerencia": "Gerencia O&M Red Movil",
       "jefe": "QUINTERO LOPEZ CARLOS HUMBERTO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "50 años",
+      "antig": "21.0 años"
     },
     "79803893": {
       "nombre": "MORENO RODRIGUEZ MARCO ALEXANDER",
@@ -1330,7 +1660,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Operativa y Financiera",
       "jefe": "MONSALVE HERNANDEZ DIANA CAROLINA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "49 años",
+      "antig": "20.5 años"
     },
     "79805697": {
       "nombre": "CASTIBLANCO CLAVIJO JIMMY ANDERSON",
@@ -1338,7 +1670,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Pymes",
       "gerencia": "Gerencia Comercial Pymes R4",
       "jefe": "PARRA BELTRAN LUIS FERNANDO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "49 años",
+      "antig": "21.5 años"
     },
     "79837724": {
       "nombre": "SARMIENTO ROMERO EDICSON ALEXIS",
@@ -1346,7 +1680,9 @@ window.DATA = {
       "direccion_area": "Direccion Operaciones Tecnicas de Campo",
       "gerencia": "Gerencia I&M Clientes UMC",
       "jefe": "QUINTERO LOPEZ CARLOS HUMBERTO",
-      "caja": "2"
+      "caja": "2",
+      "edad": "50 años",
+      "antig": "17.9 años"
     },
     "79843010": {
       "nombre": "BUSTOS MANCERA CAMILO ANDRES",
@@ -1354,7 +1690,9 @@ window.DATA = {
       "direccion_area": "Riesgos de Proyectos y Monitoreo",
       "gerencia": "Gerencia Riesgos de Proyectos y Monitoreo",
       "jefe": "VARGAS BLANCO FREDDY ALEXANDER",
-      "caja": "6"
+      "caja": "6",
+      "edad": "49 años",
+      "antig": "0.4 años"
     },
     "79846335": {
       "nombre": "SALCEDO CAMELO ALFONSO",
@@ -1362,7 +1700,9 @@ window.DATA = {
       "direccion_area": "Direccion Aseguramiento Calidad de Servicio",
       "gerencia": "Gerencia Plataformas de Core",
       "jefe": "AVILA PLATA OSCAR MAURICIO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "51 años",
+      "antig": "24.5 años"
     },
     "79850668": {
       "nombre": "HERNANDEZ RODRIGUEZ JORGE ANDRES",
@@ -1370,7 +1710,9 @@ window.DATA = {
       "direccion_area": "Direccion Marketing Corporativo y Producto",
       "gerencia": "Gerencia Oferta Corporativa",
       "jefe": "MONTAGUT MORALES PEDRO ANGEL",
-      "caja": "5"
+      "caja": "5",
+      "edad": "49 años",
+      "antig": "1.2 años"
     },
     "79851025": {
       "nombre": "HOYOS BARBOSA ANDRES GUSTAVO",
@@ -1378,7 +1720,9 @@ window.DATA = {
       "direccion_area": "Direccion Producto Masivo",
       "gerencia": "Gerencia Precios y Oferta",
       "jefe": "CARLESIMO REY ANDRES",
-      "caja": "6"
+      "caja": "6",
+      "edad": "49 años",
+      "antig": "18.5 años"
     },
     "79853344": {
       "nombre": "VACCA ORTEGA RAFAEL LEONARDO",
@@ -1386,7 +1730,9 @@ window.DATA = {
       "direccion_area": "Planeacion Estrategica",
       "gerencia": "Gerencia Gestion Estrategica",
       "jefe": "PUERTAS OROZCO CARLOS ANDRES",
-      "caja": "8"
+      "caja": "8",
+      "edad": "48 años",
+      "antig": "17.5 años"
     },
     "79858283": {
       "nombre": "GUIZA BARROS JUAN JAVIER",
@@ -1394,7 +1740,9 @@ window.DATA = {
       "direccion_area": "Direccion Negocio Terminales y Equipos Hogar",
       "gerencia": "Direccion Negocio Terminales y Equipos Hogar",
       "jefe": "MUÑOZ RONCANCIO LUZ NEILA",
-      "caja": "7"
+      "caja": "7",
+      "edad": "51 años",
+      "antig": "25.7 años"
     },
     "79858384": {
       "nombre": "PACHECO BUSTOS CESAR ORLANDO",
@@ -1402,7 +1750,9 @@ window.DATA = {
       "direccion_area": "Direccion Implementacion",
       "gerencia": "Gerencia Implementacion Acceso Core Voz y Plataformas",
       "jefe": "OTERO DUMAR ALVARO MIGUEL",
-      "caja": "5"
+      "caja": "5",
+      "edad": "51 años",
+      "antig": "24.0 años"
     },
     "79861675": {
       "nombre": "VASCO GARCIA JOSE LUIS",
@@ -1410,7 +1760,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Direccion Region 4",
       "jefe": "DOMINGUEZ DANIEL ARNALDO",
-      "caja": "4"
+      "caja": "4",
+      "edad": "50 años",
+      "antig": "6.4 años"
     },
     "79862003": {
       "nombre": "GOMEZ ALEJO RUBEN DARIO",
@@ -1418,7 +1770,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Transversal",
       "gerencia": "Gerencia Inteligencia Comercial Mercado Masivo",
       "jefe": "VARGAS ANGEL SANDRA PATRICIA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "50 años",
+      "antig": "19.7 años"
     },
     "79873277": {
       "nombre": "LIZARAZO DIAZ JUAN CARLOS",
@@ -1426,7 +1780,9 @@ window.DATA = {
       "direccion_area": "Direccion Operaciones Tecnicas de Campo",
       "gerencia": "Gerencia Soporte Herramientas de Operacion",
       "jefe": "QUINTERO LOPEZ CARLOS HUMBERTO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "49 años",
+      "antig": "30.4 años"
     },
     "79876492": {
       "nombre": "CELIS SARMIENTO HECTOR GEOVANNI",
@@ -1434,7 +1790,9 @@ window.DATA = {
       "direccion_area": "Direccion Noticias",
       "gerencia": "Direccion Noticias",
       "jefe": "ROJAS RINCON ANDRES DANIEL",
-      "caja": "0"
+      "caja": "0",
+      "edad": "48 años",
+      "antig": "12.8 años"
     },
     "79879314": {
       "nombre": "CASTRILLON ROZO CARLOS ANDRES",
@@ -1442,7 +1800,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Direccion Region 5",
       "jefe": "JAIMES VEGA DIEGO FERNANDO",
-      "caja": "4"
+      "caja": "4",
+      "edad": "47 años",
+      "antig": "14.0 años"
     },
     "79883150": {
       "nombre": "BERNAL BERNAL CAMILO ANDRES",
@@ -1450,7 +1810,9 @@ window.DATA = {
       "direccion_area": "Direccion Ecommerce y Telemercadeo",
       "gerencia": "Gerencia Aseguramiento Comercial",
       "jefe": "MEDINA PEÑA IVAN RICARDO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "45 años",
+      "antig": "17.7 años"
     },
     "79897183": {
       "nombre": "SANCHEZ DIEZ MAURICIO ALBERTO",
@@ -1458,7 +1820,9 @@ window.DATA = {
       "direccion_area": "Direccion Ingenieria",
       "gerencia": "Gerencia Ingenieria y Arquitectura Servicio Movil",
       "jefe": "SALAZAR BARON HUGO ALEXANDER",
-      "caja": "9"
+      "caja": "9",
+      "edad": "47 años",
+      "antig": "20.7 años"
     },
     "79900456": {
       "nombre": "AMADO LANDINEZ OSWALDO",
@@ -1466,7 +1830,9 @@ window.DATA = {
       "direccion_area": "Direccion Negocio Terminales y Equipos Hogar",
       "gerencia": "Gerencia Producto y Pronostico de Terminales",
       "jefe": "MUÑOZ RONCANCIO LUZ NEILA",
-      "caja": "8"
+      "caja": "8",
+      "edad": "46 años",
+      "antig": "18.5 años"
     },
     "79904332": {
       "nombre": "PICON RUIZ GERMAN",
@@ -1474,7 +1840,9 @@ window.DATA = {
       "direccion_area": "Direccion Producto Masivo",
       "gerencia": "Gerencia Producto Fijo y Convergencia",
       "jefe": "CARLESIMO REY ANDRES",
-      "caja": "9"
+      "caja": "9",
+      "edad": "49 años",
+      "antig": "19.6 años"
     },
     "79908025": {
       "nombre": "MIRANDA RODRIGUEZ ORLANDO ANDRES",
@@ -1482,7 +1850,9 @@ window.DATA = {
       "direccion_area": "Direccion Consultoria y Diseño",
       "gerencia": "Direccion Consultoria y Diseño",
       "jefe": "ARIAS MORA JAIME ALBERTO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "48 años",
+      "antig": "17.7 años"
     },
     "79940951": {
       "nombre": "ROCA ACEVEDO FEDERICO",
@@ -1490,7 +1860,9 @@ window.DATA = {
       "direccion_area": "Gerencia Marketing Masivo",
       "gerencia": "Gerencia Marketing Masivo",
       "jefe": "DOMINGUEZ DANIEL ARNALDO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "49 años",
+      "antig": "17.9 años"
     },
     "79943837": {
       "nombre": "SANCHEZ BORDA OSCAR ALBERTO",
@@ -1498,7 +1870,9 @@ window.DATA = {
       "direccion_area": "Direccion Operaciones Tecnicas de Campo",
       "gerencia": "Gerencia Aseguramiento Calidad y Recursos",
       "jefe": "QUINTERO LOPEZ CARLOS HUMBERTO",
-      "caja": "8"
+      "caja": "8",
+      "edad": "48 años",
+      "antig": "22.3 años"
     },
     "79946666": {
       "nombre": "MONTOYA OTALORA RICARDO AUGUSTO",
@@ -1506,7 +1880,9 @@ window.DATA = {
       "direccion_area": "Soluciones Cloud",
       "gerencia": "Gerencia Soluciones Cloud",
       "jefe": "JIMENEZ MORALES JOSE JULIAN",
-      "caja": "4"
+      "caja": "4",
+      "edad": "48 años",
+      "antig": "19.2 años"
     },
     "79946971": {
       "nombre": "BAPTISTE ESPINOSA CAMILO ANDRES",
@@ -1514,7 +1890,9 @@ window.DATA = {
       "direccion_area": "Direccion Ingenieria",
       "gerencia": "Gerencia Ingenieria Red Acceso",
       "jefe": "SALAZAR BARON HUGO ALEXANDER",
-      "caja": "8"
+      "caja": "8",
+      "edad": "48 años",
+      "antig": "19.3 años"
     },
     "79952714": {
       "nombre": "TRIANA MARTINEZ WILSON",
@@ -1522,7 +1900,9 @@ window.DATA = {
       "direccion_area": "Inteligencia Comercial",
       "gerencia": "Gerencia Inteligencia Comercial",
       "jefe": "PEÑA VEGA PATRICIA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "46 años",
+      "antig": "17.6 años"
     },
     "79955163": {
       "nombre": "RODRIGUEZ RODRIGUEZ CESAR DAVID",
@@ -1530,7 +1910,9 @@ window.DATA = {
       "direccion_area": "Direccion Canales de Venta Agentes",
       "gerencia": "Gerencia Nacional Calle",
       "jefe": "MANOTAS SALCEDO ELIANA MARIA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "45 años",
+      "antig": "18.1 años"
     },
     "79963185": {
       "nombre": "ALZATE VARGAS LUIS FERNANDO",
@@ -1538,7 +1920,9 @@ window.DATA = {
       "direccion_area": "Planeacion y Tesoreria",
       "gerencia": "Gerencia Rentabilizacion",
       "jefe": "SALAS MAHECHA VIVIANA ANDREA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "48 años",
+      "antig": "19.7 años"
     },
     "79965710": {
       "nombre": "GONZALEZ CHAVES DIEGO MIGUEL",
@@ -1546,7 +1930,9 @@ window.DATA = {
       "direccion_area": "Riesgo Operativo y Control Interno",
       "gerencia": "Gerencia Riesgo Operativo y Control Interno",
       "jefe": "VARGAS BLANCO FREDDY ALEXANDER",
-      "caja": "6"
+      "caja": "6",
+      "edad": "48 años",
+      "antig": "1.3 años"
     },
     "79976291": {
       "nombre": "HERNANDEZ JARAMILLO MARIO ANDRES",
@@ -1554,7 +1940,9 @@ window.DATA = {
       "direccion_area": "Direccion Aseguramiento Calidad de Servicio",
       "gerencia": "Gerencia Desempeño Transporte",
       "jefe": "AVILA PLATA OSCAR MAURICIO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "45 años",
+      "antig": "18.1 años"
     },
     "79982848": {
       "nombre": "PEREZ RAMIREZ LUIS ANDRES",
@@ -1562,7 +1950,9 @@ window.DATA = {
       "direccion_area": "Planeacion Y Tesoreria",
       "gerencia": "Gerencia Tesoreria",
       "jefe": "SALAS MAHECHA VIVIANA ANDREA",
-      "caja": "8"
+      "caja": "8",
+      "edad": "46 años",
+      "antig": "18.8 años"
     },
     "79988248": {
       "nombre": "NEIRA CORTES RODRIGO ORLANDO",
@@ -1570,7 +1960,9 @@ window.DATA = {
       "direccion_area": "Direccion Experiencia Soporte y Operacion IT",
       "gerencia": "Gerencia It X It Devops",
       "jefe": "CAJIGAS SILVA MIGUEL EDUARDO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "47 años",
+      "antig": "22.1 años"
     },
     "79999930": {
       "nombre": "JIMENEZ MORALES JOSE JULIAN",
@@ -1578,7 +1970,9 @@ window.DATA = {
       "direccion_area": "Soluciones Cloud",
       "gerencia": "Gerencia Soluciones Cloud",
       "jefe": "ESCOLAR SUNDHEIM MARIA LUISA",
-      "caja": "8"
+      "caja": "8",
+      "edad": "47 años",
+      "antig": "5.4 años"
     },
     "80004393": {
       "nombre": "RAMIREZ RINCON CARLOS JULIO",
@@ -1586,7 +1980,9 @@ window.DATA = {
       "direccion_area": "Prevencion Fraude",
       "gerencia": "Gerencia Prevencion Fraude",
       "jefe": "VARGAS BLANCO FREDDY ALEXANDER",
-      "caja": "9"
+      "caja": "9",
+      "edad": "46 años",
+      "antig": "18.3 años"
     },
     "80013914": {
       "nombre": "MANRIQUE JUAN ANYELO",
@@ -1594,7 +1990,9 @@ window.DATA = {
       "direccion_area": "Direccion Negocio Terminales y Equipos Hogar",
       "gerencia": "Direccion Negocio Terminales y Equipos Hogar",
       "jefe": "MUÑOZ RONCANCIO LUZ NEILA",
-      "caja": "8"
+      "caja": "8",
+      "edad": "45 años",
+      "antig": "18.3 años"
     },
     "80021548": {
       "nombre": "RODRIGUEZ CORREA JULIAN HERNANDO",
@@ -1602,7 +2000,9 @@ window.DATA = {
       "direccion_area": "Direccion Operaciones Tecnicas de Campo",
       "gerencia": "Gerencia O&M Red Fija",
       "jefe": "QUINTERO LOPEZ CARLOS HUMBERTO",
-      "caja": "8"
+      "caja": "8",
+      "edad": "47 años",
+      "antig": "23.0 años"
     },
     "80029877": {
       "nombre": "ESCOBAR HUERTAS JUAN CARLOS",
@@ -1610,7 +2010,9 @@ window.DATA = {
       "direccion_area": "Direccion Ecommerce y Telemercadeo",
       "gerencia": "Gerencia Estrategia Comercial y Operativa Telemercadeo y Digital",
       "jefe": "MEDINA PEÑA IVAN RICARDO",
-      "caja": "9"
+      "caja": "9",
+      "edad": "45 años",
+      "antig": "19.7 años"
     },
     "80031219": {
       "nombre": "BENAVIDES VALDERRAMA GERMAN ANDRES",
@@ -1618,7 +2020,9 @@ window.DATA = {
       "direccion_area": "Direccion Canales de Venta Agentes",
       "gerencia": "Gerencia Operacion y Soporte Canal Agentes",
       "jefe": "MANOTAS SALCEDO ELIANA MARIA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "45 años",
+      "antig": "22.7 años"
     },
     "80055143": {
       "nombre": "MARTINEZ NIÑO JESUS GIOVANY",
@@ -1626,7 +2030,9 @@ window.DATA = {
       "direccion_area": "Direccion Canales Atencion UMM",
       "gerencia": "Gerencia Servicio Integral Canales Atencion UMM",
       "jefe": "OCAMPO GIRON MARIA DEL PILAR",
-      "caja": "9"
+      "caja": "9",
+      "edad": "46 años",
+      "antig": "20.8 años"
     },
     "80055832": {
       "nombre": "SANTIAGO SANCHEZ RONAL ANTONIO",
@@ -1634,7 +2040,9 @@ window.DATA = {
       "direccion_area": "Administrativa Tecnologia",
       "gerencia": "Gerencia Control de Costos y Operacion",
       "jefe": "CASTAÑEDA ALDANA NAYIBE ALCIRA",
-      "caja": "9"
+      "caja": "9",
+      "edad": "46 años",
+      "antig": "19.9 años"
     },
     "80057534": {
       "nombre": "CAMELO OLAYA LUIS FERNANDO",
@@ -1642,7 +2050,9 @@ window.DATA = {
       "direccion_area": "Supply Chain",
       "gerencia": "Gerencia Value Chain Tecnologia",
       "jefe": "TRUJILLO REHBEIN PABLO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "45 años",
+      "antig": "19.8 años"
     },
     "80058898": {
       "nombre": "MARTINEZ FLORIDO ANDRES FRANCISCO",
@@ -1650,7 +2060,9 @@ window.DATA = {
       "direccion_area": "Soporte A La Operacion",
       "gerencia": "Gerencia Comisiones",
       "jefe": "SANABRIA HIGUERA ANA PATRICIA",
-      "caja": "9"
+      "caja": "9",
+      "edad": "45 años",
+      "antig": "21.7 años"
     },
     "80060767": {
       "nombre": "MACHADO SANCHEZ JAIRO LAIRD",
@@ -1658,7 +2070,9 @@ window.DATA = {
       "direccion_area": "Direccion Ecommerce y Telemercadeo",
       "gerencia": "Gerencia Telemercadeo",
       "jefe": "MEDINA PEÑA IVAN RICARDO",
-      "caja": "x"
+      "caja": "x",
+      "edad": "47 años",
+      "antig": "15.0 años"
     },
     "80065277": {
       "nombre": "MURCIA RODRIGUEZ MIGUEL ANGEL",
@@ -1666,7 +2080,9 @@ window.DATA = {
       "direccion_area": "Gerencia Marca e Impacto Pais",
       "gerencia": "Gerencia Marca e Impacto Pais",
       "jefe": "MORALES NARANJO JOHN EDWARD",
-      "caja": "9"
+      "caja": "9",
+      "edad": "46 años",
+      "antig": "17.8 años"
     },
     "80070878": {
       "nombre": "IGUA PORRAS FREDDY ALDEMAR",
@@ -1674,7 +2090,9 @@ window.DATA = {
       "direccion_area": "Direccion Experiencia del Cliente",
       "gerencia": "Gerencia Experiencia Pospago y Hogar",
       "jefe": "CHACON GOMEZ MYRIAM YOLANDA",
-      "caja": "2"
+      "caja": "2",
+      "edad": "44 años",
+      "antig": "14.0 años"
     },
     "80070923": {
       "nombre": "CAÑON LARA CARLOS ANDRES",
@@ -1682,7 +2100,9 @@ window.DATA = {
       "direccion_area": "Supply Chain",
       "gerencia": "Gerencia Supply Chain Aliados y Proveedores",
       "jefe": "TRUJILLO REHBEIN PABLO",
-      "caja": "9"
+      "caja": "9",
+      "edad": "44 años",
+      "antig": "11.3 años"
     },
     "80076187": {
       "nombre": "JIMENEZ MEDINA JUAN SEBASTIAN",
@@ -1690,7 +2110,9 @@ window.DATA = {
       "direccion_area": "Direccion Producto Masivo",
       "gerencia": "Direccion Producto Masivo",
       "jefe": "CARLESIMO REY ANDRES",
-      "caja": "5"
+      "caja": "5",
+      "edad": "40 años",
+      "antig": "15.7 años"
     },
     "80084586": {
       "nombre": "LOPERA MARQUEZ GERMAN AUGUSTO",
@@ -1698,7 +2120,9 @@ window.DATA = {
       "direccion_area": "Direccion Experiencia Soporte y Operacion IT",
       "gerencia": "Gerencia Control Portafolio de Proyectos",
       "jefe": "CAJIGAS SILVA MIGUEL EDUARDO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "46 años",
+      "antig": "18.1 años"
     },
     "80096673": {
       "nombre": "GARCIA CERTUCHE CESAR EDUARDO",
@@ -1706,7 +2130,9 @@ window.DATA = {
       "direccion_area": "Riesgo Operativo y Control Interno",
       "gerencia": "Gerencia Riesgo Operativo y Control Interno",
       "jefe": "GONZALEZ CHAVES DIEGO MIGUEL",
-      "caja": "9"
+      "caja": "9",
+      "edad": "44 años",
+      "antig": "1.1 años"
     },
     "80096815": {
       "nombre": "TRUJILLO REHBEIN PABLO",
@@ -1714,7 +2140,9 @@ window.DATA = {
       "direccion_area": "Supply Chain",
       "gerencia": "Direccion Supply Chain",
       "jefe": "BORDA FERRO WALTER JAVIER",
-      "caja": "6"
+      "caja": "6",
+      "edad": "43 años",
+      "antig": "7.7 años"
     },
     "80097553": {
       "nombre": "TRIVIÑO HERRERA NESTOR DAVID",
@@ -1722,7 +2150,9 @@ window.DATA = {
       "direccion_area": "Direccion Servicios TIC y Datacenter",
       "gerencia": "Direccion Servicios TIC y Datacenter",
       "jefe": "DONADO ARENAS CARLOS EFREN",
-      "caja": "6"
+      "caja": "6",
+      "edad": "43 años",
+      "antig": "20.4 años"
     },
     "80098521": {
       "nombre": "USECHE VARON JOHN JAIRO",
@@ -1730,7 +2160,9 @@ window.DATA = {
       "direccion_area": "Planeacion Estrategica",
       "gerencia": "Gerencia Planeacion Estrategica",
       "jefe": "PUERTAS OROZCO CARLOS ANDRES",
-      "caja": "6"
+      "caja": "6",
+      "edad": "43 años",
+      "antig": "15.7 años"
     },
     "80099040": {
       "nombre": "AVILA PLATA OSCAR MAURICIO",
@@ -1738,7 +2170,9 @@ window.DATA = {
       "direccion_area": "Direccion Aseguramiento Calidad de Servicio",
       "gerencia": "Direccion Aseguramiento Calidad de Servicio",
       "jefe": "MALDONADO ROBLES IADER ALBERTO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "42 años",
+      "antig": "3.2 años"
     },
     "80108672": {
       "nombre": "FRANCO HERNANDEZ FABIO NELSON",
@@ -1746,7 +2180,9 @@ window.DATA = {
       "direccion_area": "Riesgo Tecnologico",
       "gerencia": "Gerencia Riesgo Tecnologico",
       "jefe": "BOHORQUEZ HERNANDEZ JOHNATHAN ERNESTO",
-      "caja": "1"
+      "caja": "1",
+      "edad": "45 años",
+      "antig": "0.3 años"
     },
     "80109732": {
       "nombre": "SANCHEZ OTERO ANDRES ARTURO",
@@ -1754,7 +2190,9 @@ window.DATA = {
       "direccion_area": "Administrativa Tecnologia",
       "gerencia": "Direccion de Administracion Recursos Tecnicos",
       "jefe": "CASTAÑEDA ALDANA NAYIBE ALCIRA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "43 años",
+      "antig": "19.6 años"
     },
     "80111618": {
       "nombre": "BAENA JARAMILLO ALEJANDRO",
@@ -1762,7 +2200,9 @@ window.DATA = {
       "direccion_area": "Transparencia y Etica Empresarial",
       "gerencia": "Gerencia Contratos Transparencia y Etica Empresarial",
       "jefe": "PARDO FAJARDO SANTIAGO",
-      "caja": "2"
+      "caja": "2",
+      "edad": "42 años",
+      "antig": "10.2 años"
     },
     "80120803": {
       "nombre": "BELTRAN JIMENEZ JOHAN MANUEL",
@@ -1770,7 +2210,9 @@ window.DATA = {
       "direccion_area": "Direccion Implementacion",
       "gerencia": "Direccion Implementacion",
       "jefe": "OTERO DUMAR ALVARO MIGUEL",
-      "caja": "8"
+      "caja": "8",
+      "edad": "42 años",
+      "antig": "4.9 años"
     },
     "80123219": {
       "nombre": "RUSSI CARDENAS GIANCARLO",
@@ -1778,7 +2220,9 @@ window.DATA = {
       "direccion_area": "Direccion Ecommerce y Telemercadeo",
       "gerencia": "Gerencia Telemercadeo Terminales y Tecnologia",
       "jefe": "MEDINA PEÑA IVAN RICARDO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "44 años",
+      "antig": "15.5 años"
     },
     "80133229": {
       "nombre": "BELLO TORRES FREDDY ANDRES",
@@ -1786,7 +2230,9 @@ window.DATA = {
       "direccion_area": "Nacional B2B2C y Proyectos Especiales",
       "gerencia": "Gerencia Nacional B2B2C y Proyectos Especiales",
       "jefe": "ALVAREZ ZULUAGA LUZ ASTRID",
-      "caja": "5"
+      "caja": "5",
+      "edad": "44 años",
+      "antig": "19.6 años"
     },
     "80153086": {
       "nombre": "PEÑUELA CRUZ JOHN HOWARD",
@@ -1794,7 +2240,9 @@ window.DATA = {
       "direccion_area": "Datos y Analitica de Negocios",
       "gerencia": "Gerencia Arquitectura e Ingenieria Datos",
       "jefe": "ESTUPIÑAN LOPEZ ANDRES FERNANDO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "45 años",
+      "antig": "4.3 años"
     },
     "80157725": {
       "nombre": "ROJAS GALINDO ARTURO IVAN",
@@ -1802,7 +2250,9 @@ window.DATA = {
       "direccion_area": "Direccion Canales Atencion UMM",
       "gerencia": "Gerencia Control y Aseguramiento Canales Atencion UMM",
       "jefe": "OCAMPO GIRON MARIA DEL PILAR",
-      "caja": "6"
+      "caja": "6",
+      "edad": "44 años",
+      "antig": "11.4 años"
     },
     "80188592": {
       "nombre": "GONZALEZ TORRES JHONNATAN PAOLO",
@@ -1810,7 +2260,9 @@ window.DATA = {
       "direccion_area": "Direccion Implementacion",
       "gerencia": "Gerencia Implementacion Acceso Celular e Infraestructura",
       "jefe": "OTERO DUMAR ALVARO MIGUEL",
-      "caja": "6"
+      "caja": "6",
+      "edad": "42 años",
+      "antig": "20.5 años"
     },
     "80206381": {
       "nombre": "ESCOBAR MENDIGAÑA JAVIER NICOLAS",
@@ -1818,7 +2270,9 @@ window.DATA = {
       "direccion_area": "Gerencia Marketing Masivo",
       "gerencia": "Gerencia Marketing Innovacion y Comunicaciones",
       "jefe": "ROCA ACEVEDO FEDERICO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "43 años",
+      "antig": "12.9 años"
     },
     "80228885": {
       "nombre": "RAMIREZ PATIÑO ALEXANDER",
@@ -1826,7 +2280,9 @@ window.DATA = {
       "direccion_area": "Planeacion y Tesoreria",
       "gerencia": "Gerencia Administracion Capex",
       "jefe": "SALAS MAHECHA VIVIANA ANDREA",
-      "caja": "9"
+      "caja": "9",
+      "edad": "46 años",
+      "antig": "17.9 años"
     },
     "80229765": {
       "nombre": "AYALA MURCIA SAMUEL IVAN",
@@ -1834,7 +2290,9 @@ window.DATA = {
       "direccion_area": "Servicio A Cliente Corporativo",
       "gerencia": "Gerencia Cuidado Al Cliente Negocios",
       "jefe": "DE LA ROCHE BENITEZ SONIA ANGELICA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "46 años",
+      "antig": "17.6 años"
     },
     "80418091": {
       "nombre": "PARRA BELTRAN LUIS FERNANDO",
@@ -1842,7 +2300,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Pymes",
       "gerencia": "Direccion Comercial Pymes",
       "jefe": "ESCOLAR SUNDHEIM MARIA LUISA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "56 años",
+      "antig": "19.9 años"
     },
     "80471459": {
       "nombre": "MEDINA PEÑA IVAN RICARDO",
@@ -1850,7 +2310,9 @@ window.DATA = {
       "direccion_area": "Direccion Ecommerce y Telemercadeo",
       "gerencia": "Direccion Ecommerce y Telemercadeo",
       "jefe": "DOMINGUEZ DANIEL ARNALDO",
-      "caja": "4"
+      "caja": "4",
+      "edad": "53 años",
+      "antig": "17.6 años"
     },
     "80501488": {
       "nombre": "ROJAS IBAÑEZ HERMES EDUARDO",
@@ -1858,7 +2320,9 @@ window.DATA = {
       "direccion_area": "Direccion Consultoria y Diseño",
       "gerencia": "Gerencia Precios Corporativo",
       "jefe": "ARIAS MORA JAIME ALBERTO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "48 años",
+      "antig": "18.0 años"
     },
     "80504800": {
       "nombre": "CHAMORRO MONTOYA MANUEL ALEJANDRO",
@@ -1866,7 +2330,9 @@ window.DATA = {
       "direccion_area": "Soporte A La Operacion",
       "gerencia": "Gerencia Activaciones",
       "jefe": "SANABRIA HIGUERA ANA PATRICIA",
-      "caja": "9"
+      "caja": "9",
+      "edad": "52 años",
+      "antig": "28.3 años"
     },
     "80512772": {
       "nombre": "ROSIASCO JIMENEZ JAIME ALEXANDER",
@@ -1874,7 +2340,9 @@ window.DATA = {
       "direccion_area": "Cumplimiento",
       "gerencia": "Gerencia Cumplimiento",
       "jefe": "ACOSTA BERNAL JOHN JAIRO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "52 años",
+      "antig": "20.9 años"
     },
     "80527831": {
       "nombre": "GUEVARA TOCANCHON JOSE FRANCISCO",
@@ -1882,7 +2350,9 @@ window.DATA = {
       "direccion_area": "Direccion Consultoria y Diseño",
       "gerencia": "Gerencia Soluciones IT",
       "jefe": "ARIAS MORA JAIME ALBERTO",
-      "caja": "9"
+      "caja": "9",
+      "edad": "52 años",
+      "antig": "19.8 años"
     },
     "80720654": {
       "nombre": "ACOSTA BERNAL JOHN JAIRO",
@@ -1890,7 +2360,9 @@ window.DATA = {
       "direccion_area": "Cumplimiento",
       "gerencia": "Gerencia Cumplimiento",
       "jefe": "PARDO FAJARDO SANTIAGO",
-      "caja": "3"
+      "caja": "3",
+      "edad": "44 años",
+      "antig": "9.4 años"
     },
     "80747350": {
       "nombre": "ARIAS RONCANCIO FERNANDO",
@@ -1898,7 +2370,9 @@ window.DATA = {
       "direccion_area": "Direccion Canales Atencion UMM",
       "gerencia": "Gerencia Soporte Integral Canales Atencion UMM",
       "jefe": "OCAMPO GIRON MARIA DEL PILAR",
-      "caja": "8"
+      "caja": "8",
+      "edad": "41 años",
+      "antig": "22.0 años"
     },
     "80755651": {
       "nombre": "RIVAS GUARNIZO MARCO AURELIO",
@@ -1906,7 +2380,9 @@ window.DATA = {
       "direccion_area": "Direccion Aseguramiento Calidad de Servicio",
       "gerencia": "Gerencia Riesgos y Aseguramiento Operacion",
       "jefe": "AVILA PLATA OSCAR MAURICIO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "43 años",
+      "antig": "17.2 años"
     },
     "80801701": {
       "nombre": "CENDALES LARA MIGUEL ANTONIO",
@@ -1914,7 +2390,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Corporativo",
       "gerencia": "Gerencia Ciberseguridad",
       "jefe": "ESCOLAR SUNDHEIM MARIA LUISA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "41 años",
+      "antig": "19.1 años"
     },
     "80815078": {
       "nombre": "VANEGAS CARDENAS NESTOR JAVIER",
@@ -1922,7 +2400,9 @@ window.DATA = {
       "direccion_area": "Direccion Claro Media",
       "gerencia": "Gerencia Operaciones y Contenido",
       "jefe": "ROJAS RINCON ANDRES DANIEL",
-      "caja": "6"
+      "caja": "6",
+      "edad": "42 años",
+      "antig": "3.7 años"
     },
     "80815917": {
       "nombre": "VEGA PINZON DAVID ANDRES",
@@ -1930,7 +2410,9 @@ window.DATA = {
       "direccion_area": "Reputacion y Relaciones Publicas",
       "gerencia": "Gerencia Reputacion y Relaciones Publicas",
       "jefe": "GONZALEZ SANCHEZ MAURICIO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "41 años",
+      "antig": "6.2 años"
     },
     "80820898": {
       "nombre": "CASTRO CARDOZO CARLOS ANDRES",
@@ -1938,7 +2420,9 @@ window.DATA = {
       "direccion_area": "Seguridad Informacion",
       "gerencia": "Gerencia Seguridad Informacion",
       "jefe": "VARGAS BLANCO FREDDY ALEXANDER",
-      "caja": "3"
+      "caja": "3",
+      "edad": "41 años",
+      "antig": "2.2 años"
     },
     "80844584": {
       "nombre": "MATEUS VELASCO HECTOR VICENTE",
@@ -1946,7 +2430,9 @@ window.DATA = {
       "direccion_area": "Direccion Contraloria",
       "gerencia": "Gerencia Control Ingresos y Costos",
       "jefe": "TORRES RIVERA CARLOS ALBERTO",
-      "caja": "3"
+      "caja": "3",
+      "edad": "41 años",
+      "antig": "17.5 años"
     },
     "80870574": {
       "nombre": "ROSERO PLAZAS ALBERTO JOSE",
@@ -1954,7 +2440,9 @@ window.DATA = {
       "direccion_area": "Direccion Claro Media",
       "gerencia": "Gerencia Comercial Contenido",
       "jefe": "ROJAS RINCON ANDRES DANIEL",
-      "caja": "6"
+      "caja": "6",
+      "edad": "41 años",
+      "antig": "5.9 años"
     },
     "80895159": {
       "nombre": "NORIEGA NIEBLES ESTEBAN JOSE",
@@ -1962,7 +2450,9 @@ window.DATA = {
       "direccion_area": "Direccion Ecommerce y Telemercadeo",
       "gerencia": "Gerencia Ecommerce y Canales Digitales",
       "jefe": "MEDINA PEÑA IVAN RICARDO",
-      "caja": "9"
+      "caja": "9",
+      "edad": "41 años",
+      "antig": "15.5 años"
     },
     "86074466": {
       "nombre": "VERDUGO PARRA JUAN GABRIEL",
@@ -1970,7 +2460,9 @@ window.DATA = {
       "direccion_area": "Direccion Aseguramiento Calidad de Servicio",
       "gerencia": "Gerencia NOC de Red",
       "jefe": "AVILA PLATA OSCAR MAURICIO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "43 años",
+      "antig": "18.0 años"
     },
     "88002967": {
       "nombre": "DUARTE MENDOZA HERMES ALFONSO",
@@ -1978,7 +2470,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Gerencia Regional Agentes PDV R5",
       "jefe": "JAIMES VEGA DIEGO FERNANDO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "43 años",
+      "antig": "20.2 años"
     },
     "88227648": {
       "nombre": "GALVIS CLARO JOSE LUIS",
@@ -1986,7 +2480,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Direccion Region 2",
       "jefe": "PEREZ PALMA JULIO CESAR",
-      "caja": "6"
+      "caja": "6",
+      "edad": "48 años",
+      "antig": "1.1 años"
     },
     "91278583": {
       "nombre": "JAIMES MORALES JOSE ALBERTO",
@@ -1994,7 +2490,9 @@ window.DATA = {
       "direccion_area": "Direccion Experiencia Soporte y Operacion IT",
       "gerencia": "Gerencia Transformacion Digital IT 1",
       "jefe": "CAJIGAS SILVA MIGUEL EDUARDO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "55 años",
+      "antig": "16.7 años"
     },
     "91474368": {
       "nombre": "PINTO ALONSO CARLOS DAVID",
@@ -2002,7 +2500,9 @@ window.DATA = {
       "direccion_area": "Direccion Consultoria y Diseño",
       "gerencia": "Gerencia Soluciones UC",
       "jefe": "ARIAS MORA JAIME ALBERTO",
-      "caja": "9"
+      "caja": "9",
+      "edad": "52 años",
+      "antig": "14.8 años"
     },
     "91478865": {
       "nombre": "ROMERO MALDONADO LUIS YESID",
@@ -2010,7 +2510,9 @@ window.DATA = {
       "direccion_area": "Direccion Operaciones Tecnicas de Campo",
       "gerencia": "Gerencia Regional Operaciones Tecnicas de Campo R5",
       "jefe": "JAIMES VEGA DIEGO FERNANDO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "50 años",
+      "antig": "18.6 años"
     },
     "91506857": {
       "nombre": "MEJIA RODRIGUEZ SERGIO ALONSO",
@@ -2018,7 +2520,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Direccion Region 5",
       "jefe": "JAIMES VEGA DIEGO FERNANDO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "44 años",
+      "antig": "6.2 años"
     },
     "91508488": {
       "nombre": "ZEA ACEVEDO DIEGO FERNANDO",
@@ -2026,7 +2530,9 @@ window.DATA = {
       "direccion_area": "Direccion Implementacion",
       "gerencia": "Gerencia Implementacion Core",
       "jefe": "OTERO DUMAR ALVARO MIGUEL",
-      "caja": "7"
+      "caja": "7",
+      "edad": "44 años",
+      "antig": "15.4 años"
     },
     "91532637": {
       "nombre": "CADENA RODRIGUEZ OSCAR LEONARDO",
@@ -2034,7 +2540,9 @@ window.DATA = {
       "direccion_area": "Direccion Ingenieria",
       "gerencia": "Gerencia Homologacion de Terminales",
       "jefe": "SALAZAR BARON HUGO ALEXANDER",
-      "caja": "6"
+      "caja": "6",
+      "edad": "41 años",
+      "antig": "12.3 años"
     },
     "93235739": {
       "nombre": "RUBIO GUZMAN JUAN RICARDO",
@@ -2042,7 +2550,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Direccion Region 1",
       "jefe": "PORTO VELASQUEZ LUIS MIGUEL",
-      "caja": "3"
+      "caja": "3",
+      "edad": "41 años",
+      "antig": "6.7 años"
     },
     "93368761": {
       "nombre": "ROBAYO MARCO ANTONIO",
@@ -2050,7 +2560,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Sistemas",
       "jefe": "MORENO MORENO ADRIANA",
-      "caja": "4"
+      "caja": "4",
+      "edad": "59 años",
+      "antig": "4.5 años"
     },
     "94317564": {
       "nombre": "TOVAR REYES ALVARO JOSE",
@@ -2058,7 +2570,9 @@ window.DATA = {
       "direccion_area": "Contratos Comerciales y Administrativos",
       "gerencia": "Gerencia Contratos Comerciales y Administrativos",
       "jefe": "TORRES OSPINA INGRID JULIET",
-      "caja": "4"
+      "caja": "4",
+      "edad": "52 años",
+      "antig": "12.1 años"
     },
     "94378000": {
       "nombre": "REYES SIERRA ROBERTO",
@@ -2066,7 +2580,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Empresas Estrategicas",
       "gerencia": "Gerencia Comercial Cuentas Estrategicas Occidente",
       "jefe": "GIRALDO SANTAFE MARIA DEL PILAR",
-      "caja": "6"
+      "caja": "6",
+      "edad": "53 años",
+      "antig": "3.4 años"
     },
     "94429618": {
       "nombre": "PUERTAS OROZCO CARLOS ANDRES",
@@ -2074,7 +2590,9 @@ window.DATA = {
       "direccion_area": "Planeacion Estrategica",
       "gerencia": "Direccion Planeacion Estrategica",
       "jefe": "GUZMAN FLOREZ DANIEL",
-      "caja": "8"
+      "caja": "8",
+      "edad": "51 años",
+      "antig": "21.9 años"
     },
     "94452642": {
       "nombre": "GOMEZ MOLINA RODRIGO ALEXANDER",
@@ -2082,7 +2600,9 @@ window.DATA = {
       "direccion_area": "Direccion Experiencia Soporte y Operacion IT",
       "gerencia": "Gerencia Mesa de Servicios y Gestion de Accesos IT",
       "jefe": "CAJIGAS SILVA MIGUEL EDUARDO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "50 años",
+      "antig": "18.3 años"
     },
     "94527210": {
       "nombre": "VELEZ GUZMAN DIEGO ALEJANDRO",
@@ -2090,7 +2610,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Gerencia Regional Prepago R3",
       "jefe": "MARTINEZ PINILLA DIEGO FELIPE",
-      "caja": "5"
+      "caja": "5",
+      "edad": "47 años",
+      "antig": "7.5 años"
     },
     "98385917": {
       "nombre": "RICAURTE SEGOVIA IVAN ADOLFO",
@@ -2098,7 +2620,9 @@ window.DATA = {
       "direccion_area": "Direccion Implementacion",
       "gerencia": "Gerencia Implementacion Red Acceso",
       "jefe": "OTERO DUMAR ALVARO MIGUEL",
-      "caja": "9"
+      "caja": "9",
+      "edad": "52 años",
+      "antig": "3.7 años"
     },
     "98393973": {
       "nombre": "LOZANO ERASO OSCAR FERNANDO",
@@ -2106,7 +2630,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Gobierno",
       "gerencia": "Gerencia Comercial Gobierno 2",
       "jefe": "VERGARA VALENCIA ADRIAN ALFREDO",
-      "caja": "9"
+      "caja": "9",
+      "edad": "49 años",
+      "antig": "9.1 años"
     },
     "98556716": {
       "nombre": "TOBON MONSALVE ANDRES",
@@ -2114,7 +2640,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Empresas Estrategicas",
       "gerencia": "Gerencia Cuentas Estrategicas Antioquia",
       "jefe": "GIRALDO SANTAFE MARIA DEL PILAR",
-      "caja": "6"
+      "caja": "6",
+      "edad": "54 años",
+      "antig": "3.2 años"
     },
     "1001053538": {
       "nombre": "GERENA PAEZ FABIAN LEONARDO",
@@ -2122,7 +2650,9 @@ window.DATA = {
       "direccion_area": "Direccion Experiencia del Cliente",
       "gerencia": "Direccion Experiencia A Clientes",
       "jefe": "CHACON GOMEZ MYRIAM YOLANDA",
-      "caja": "2"
+      "caja": "2",
+      "edad": "33 años",
+      "antig": "11.8 años"
     },
     "1010189106": {
       "nombre": "JOYA APARICIO ALEJANDRO",
@@ -2130,7 +2660,9 @@ window.DATA = {
       "direccion_area": "Contratos Corporativos y Asuntos Societarios",
       "gerencia": "Gerencia Contratos Corporativos y Asuntos Societarios",
       "jefe": "PARDO FAJARDO SANTIAGO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "36 años",
+      "antig": "9.1 años"
     },
     "1010190662": {
       "nombre": "CAICEDO CASTRO KAREN LILIANA",
@@ -2138,7 +2670,9 @@ window.DATA = {
       "direccion_area": "Gerencia Marca e Impacto Pais",
       "gerencia": "Gerencia Marca e Impacto Pais",
       "jefe": "MORALES NARANJO JOHN EDWARD",
-      "caja": "6"
+      "caja": "6",
+      "edad": "36 años",
+      "antig": "1.5 años"
     },
     "1010198378": {
       "nombre": "PINZON LUIS KELLY JOHANA",
@@ -2146,7 +2680,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Operativa y Financiera",
       "jefe": "MONSALVE HERNANDEZ DIANA CAROLINA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "34 años",
+      "antig": "4.0 años"
     },
     "1014182084": {
       "nombre": "RODRIGUEZ BERNAL EDICSON",
@@ -2154,7 +2690,9 @@ window.DATA = {
       "direccion_area": "Direccion Experiencia del Cliente",
       "gerencia": "Gerencia Mejora Continua Procesos Corporativos",
       "jefe": "CHACON GOMEZ MYRIAM YOLANDA",
-      "caja": "8"
+      "caja": "8",
+      "edad": "39 años",
+      "antig": "0.5 años"
     },
     "1014197289": {
       "nombre": "PARRA PINZON OSCAR IVAN",
@@ -2162,7 +2700,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Pymes",
       "gerencia": "Gerencia Comercial Pymes R3",
       "jefe": "PARRA BELTRAN LUIS FERNANDO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "37 años",
+      "antig": "0.8 años"
     },
     "1014246406": {
       "nombre": "ACERO QUINTANA DIEGO ALEXANDER",
@@ -2170,7 +2710,9 @@ window.DATA = {
       "direccion_area": "Riesgo Financiero",
       "gerencia": "Gerencia Riesgo Financiero",
       "jefe": "CASAS SILVA CAROLINA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "32 años",
+      "antig": "0.4 años"
     },
     "1014251701": {
       "nombre": "ROSAS LOPEZ DIEGO FERNANDO",
@@ -2178,7 +2720,9 @@ window.DATA = {
       "direccion_area": "Seguridad Informacion",
       "gerencia": "Gerencia Seguridad Informacion",
       "jefe": "CASTRO CARDOZO CARLOS ANDRES",
-      "caja": "6"
+      "caja": "6",
+      "edad": "32 años",
+      "antig": "10.2 años"
     },
     "1014269093": {
       "nombre": "URAZAN SUAREZ HENRY ALEXANDER",
@@ -2186,7 +2730,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Sistemas",
       "jefe": "MORENO MORENO ADRIANA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "30 años",
+      "antig": "2.5 años"
     },
     "1015415329": {
       "nombre": "LOPEZ JARAMILLO HERNANDO",
@@ -2194,7 +2740,9 @@ window.DATA = {
       "direccion_area": "Aseguramiento Ingresos",
       "gerencia": "Gerencia Aseguramiento Ingresos",
       "jefe": "IBARRA CERON JANETH CONSTANZA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "36 años",
+      "antig": "10.8 años"
     },
     "1015415518": {
       "nombre": "TRIANA LOZADA MARCO TULIO",
@@ -2202,7 +2750,9 @@ window.DATA = {
       "direccion_area": "Direccion Aseguramiento Calidad de Servicio",
       "gerencia": "Gerencia Gestion de Recursos de Red y Explotacion",
       "jefe": "AVILA PLATA OSCAR MAURICIO",
-      "caja": "8"
+      "caja": "8",
+      "edad": "36 años",
+      "antig": "13.5 años"
     },
     "1015417124": {
       "nombre": "POVEDA VALERO JULIO CESAR",
@@ -2210,7 +2760,9 @@ window.DATA = {
       "direccion_area": "Planeacion Y Tesoreria",
       "gerencia": "Gerencia Analisis y Estrategia Financiera",
       "jefe": "SALAS MAHECHA VIVIANA ANDREA",
-      "caja": "8"
+      "caja": "8",
+      "edad": "36 años",
+      "antig": "11.9 años"
     },
     "1015425926": {
       "nombre": "VILLANUEVA ARGUELLO JORGE ANDRES",
@@ -2218,7 +2770,9 @@ window.DATA = {
       "direccion_area": "Servicio A Cliente Corporativo",
       "gerencia": "Gerencia Cuidado Al Cliente Negocios",
       "jefe": "DE LA ROCHE BENITEZ SONIA ANGELICA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "34 años",
+      "antig": "8.1 años"
     },
     "1015442451": {
       "nombre": "DURAN SOLANO MARIA FERNANDA",
@@ -2226,7 +2780,9 @@ window.DATA = {
       "direccion_area": "Direccion Canales de Venta Agentes",
       "gerencia": "Direccion Canales de Venta Agentes",
       "jefe": "MANOTAS SALCEDO ELIANA MARIA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "32 años",
+      "antig": "10.3 años"
     },
     "1015993219": {
       "nombre": "VELASCO GALEANO DEISSY JOHANNA",
@@ -2234,7 +2790,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Operativa y Financiera",
       "jefe": "MONSALVE HERNANDEZ DIANA CAROLINA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "40 años",
+      "antig": "6.7 años"
     },
     "1016014093": {
       "nombre": "MORA VARGAS NICOLAS ALFONSO",
@@ -2242,7 +2800,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Operativa y Financiera",
       "jefe": "MONSALVE HERNANDEZ DIANA CAROLINA",
-      "caja": "2"
+      "caja": "2",
+      "edad": "37 años",
+      "antig": "7.0 años"
     },
     "1016030752": {
       "nombre": "MURILLO BOBADILLA CARLOS ARTURO",
@@ -2250,7 +2810,9 @@ window.DATA = {
       "direccion_area": "Direccion Canales de Venta Agentes",
       "gerencia": "Gerencia Nacional PDV",
       "jefe": "MANOTAS SALCEDO ELIANA MARIA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "35 años",
+      "antig": "11.0 años"
     },
     "1016053644": {
       "nombre": "VELA MARTINEZ JUAN DAVID",
@@ -2258,7 +2820,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Operativa y Financiera",
       "jefe": "MONSALVE HERNANDEZ DIANA CAROLINA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "33 años",
+      "antig": "2.5 años"
     },
     "1017183953": {
       "nombre": "ARANGO CARDONA MONICA ISABEL",
@@ -2266,7 +2830,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Operativa y Financiera",
       "jefe": "MONSALVE HERNANDEZ DIANA CAROLINA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "35 años",
+      "antig": "2.0 años"
     },
     "1018414804": {
       "nombre": "COTRINA RODRIGUEZ DAVID ENRIQUE",
@@ -2274,7 +2840,9 @@ window.DATA = {
       "direccion_area": "Asuntos Contenciosos",
       "gerencia": "Gerencia Asuntos Contenciosos",
       "jefe": "OJEDA LUNA JUAN MANUEL",
-      "caja": "3"
+      "caja": "3",
+      "edad": "38 años",
+      "antig": "0.6 años"
     },
     "1018417641": {
       "nombre": "NATERA MELO IVAN GIOVANNI",
@@ -2282,7 +2850,9 @@ window.DATA = {
       "direccion_area": "Regulacion Competencia",
       "gerencia": "Gerencia Regulacion Competencia",
       "jefe": "PARDO FAJARDO SANTIAGO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "38 años",
+      "antig": "5.2 años"
     },
     "1018433732": {
       "nombre": "GIRALDO MONTOYA NATALIA ANDREA",
@@ -2290,7 +2860,9 @@ window.DATA = {
       "direccion_area": "Direccion Marketing Corporativo y Producto",
       "gerencia": "Gerencia Marketing Corporativo",
       "jefe": "MONTAGUT MORALES PEDRO ANGEL",
-      "caja": "9"
+      "caja": "9",
+      "edad": "36 años",
+      "antig": "12.7 años"
     },
     "1018444099": {
       "nombre": "ARIZA MONCADA LEIDY JOHANA",
@@ -2298,7 +2870,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Sistemas",
       "jefe": "MORENO MORENO ADRIANA",
-      "caja": "9"
+      "caja": "9",
+      "edad": "35 años",
+      "antig": "3.2 años"
     },
     "1018470744": {
       "nombre": "ORDUZ PORRAS LIZETH ANDREA",
@@ -2306,7 +2880,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Sistemas",
       "jefe": "MORENO MORENO ADRIANA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "31 años",
+      "antig": "1.9 años"
     },
     "1019011410": {
       "nombre": "BUSTOS LOPEZ CARLOS ALBERTO",
@@ -2314,7 +2890,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Pymes",
       "gerencia": "Gerencia Comercial Empresas & Pymes R5",
       "jefe": "PARRA BELTRAN LUIS FERNANDO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "39 años",
+      "antig": "0.2 años"
     },
     "1019024565": {
       "nombre": "CAÑON JIMENEZ MELISA LUCIA",
@@ -2322,7 +2900,9 @@ window.DATA = {
       "direccion_area": "Direccion Marketing Corporativo y Producto",
       "gerencia": "Gerencia Marketing Corporativo",
       "jefe": "MONTAGUT MORALES PEDRO ANGEL",
-      "caja": "8"
+      "caja": "8",
+      "edad": "37 años",
+      "antig": "3.7 años"
     },
     "1020721308": {
       "nombre": "OTERO ESPINOSA LORENA ALEXANDRA",
@@ -2330,7 +2910,9 @@ window.DATA = {
       "direccion_area": "Reputacion y Relaciones Publicas",
       "gerencia": "Gerencia Reputacion y Relaciones Publicas",
       "jefe": "GONZALEZ SANCHEZ MAURICIO",
-      "caja": "9"
+      "caja": "9",
+      "edad": "39 años",
+      "antig": "12.2 años"
     },
     "1020751309": {
       "nombre": "GONZALEZ SANCHEZ MAURICIO",
@@ -2338,7 +2920,9 @@ window.DATA = {
       "direccion_area": "Reputacion y Relaciones Publicas",
       "gerencia": "Gerencia Reputacion y Relaciones Publicas",
       "jefe": "DE GUSMAO RIBEIRO RODRIGO",
-      "caja": "0"
+      "caja": "0",
+      "edad": "36 años",
+      "antig": "6.2 años"
     },
     "1020773730": {
       "nombre": "MONTILLA PARRA NICOLAS SANTIAGO",
@@ -2346,7 +2930,9 @@ window.DATA = {
       "direccion_area": "Asuntos Contenciosos",
       "gerencia": "Gerencia Asuntos Contenciosos",
       "jefe": "OJEDA LUNA JUAN MANUEL",
-      "caja": "6"
+      "caja": "6",
+      "edad": "33 años",
+      "antig": "0.7 años"
     },
     "1024531733": {
       "nombre": "CAÑON RAMIREZ LUIS EDUARDO",
@@ -2354,7 +2940,9 @@ window.DATA = {
       "direccion_area": "Sostenibilidad",
       "gerencia": "Gerencia Sostenibilidad",
       "jefe": "CASTRO PINEDA MARIA CONSUELO",
-      "caja": "9"
+      "caja": "9",
+      "edad": "33 años",
+      "antig": "4.7 años"
     },
     "1026593032": {
       "nombre": "GRANADOS JAUREGUI JESICA ALEXANDRA",
@@ -2362,7 +2950,9 @@ window.DATA = {
       "direccion_area": "Riesgo Operativo y Control Interno",
       "gerencia": "Gerencia Riesgo Operativo y Control Interno",
       "jefe": "GONZALEZ CHAVES DIEGO MIGUEL",
-      "caja": "6"
+      "caja": "6",
+      "edad": "28 años",
+      "antig": "1.1 años"
     },
     "1030523953": {
       "nombre": "MARTINEZ DAZA RAFAEL ANTONIO",
@@ -2370,7 +2960,9 @@ window.DATA = {
       "direccion_area": "Direccion Canales Atencion UMM",
       "gerencia": "Gerencia Comercial Canales Atencion UMM",
       "jefe": "OCAMPO GIRON MARIA DEL PILAR",
-      "caja": "9"
+      "caja": "9",
+      "edad": "40 años",
+      "antig": "12.1 años"
     },
     "1030551017": {
       "nombre": "GARCIA AVILA FELIPE ALEJANDRO",
@@ -2378,7 +2970,9 @@ window.DATA = {
       "direccion_area": "Asuntos Contenciosos",
       "gerencia": "Gerencia Asuntos Contenciosos",
       "jefe": "OJEDA LUNA JUAN MANUEL",
-      "caja": "6"
+      "caja": "6",
+      "edad": "37 años",
+      "antig": "5.1 años"
     },
     "1030561376": {
       "nombre": "CHACON LIZETH CATERINE",
@@ -2386,7 +2980,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Operativa y Financiera",
       "jefe": "MONSALVE HERNANDEZ DIANA CAROLINA",
-      "caja": "5"
+      "caja": "5",
+      "edad": "36 años",
+      "antig": "2.5 años"
     },
     "1031122523": {
       "nombre": "MARTINEZ LANCHEROS WILLIAM ANDRES",
@@ -2394,7 +2990,9 @@ window.DATA = {
       "direccion_area": "Direccion Marketing Corporativo y Producto",
       "gerencia": "Gerencia Data Growth Corporativo",
       "jefe": "MONTAGUT MORALES PEDRO ANGEL",
-      "caja": "8"
+      "caja": "8",
+      "edad": "39 años",
+      "antig": "14.9 años"
     },
     "1032365189": {
       "nombre": "MONTAGUT MORALES PEDRO ANGEL",
@@ -2402,7 +3000,9 @@ window.DATA = {
       "direccion_area": "Direccion Marketing Corporativo y Producto",
       "gerencia": "Direccion Marketing Corporativo y Producto",
       "jefe": "ESCOLAR SUNDHEIM MARIA LUISA",
-      "caja": "6"
+      "caja": "6",
+      "edad": "40 años",
+      "antig": "13.6 años"
     },
     "1032383448": {
       "nombre": "ENCISO ZURITA CAMILO ANDRES",
@@ -2410,7 +3010,9 @@ window.DATA = {
       "direccion_area": "Sostenibilidad",
       "gerencia": "Gerencia Sostenibilidad",
       "jefe": "CASTRO PINEDA MARIA CONSUELO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "39 años",
+      "antig": "3.2 años"
     },
     "1032396133": {
       "nombre": "MARTINEZ PINILLA DIEGO FELIPE",
@@ -2418,7 +3020,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Direccion Region 3",
       "jefe": "DOMINGUEZ DANIEL ARNALDO",
-      "caja": "4"
+      "caja": "4",
+      "edad": "38 años",
+      "antig": "0.6 años"
     },
     "1032404330": {
       "nombre": "PEREZ FLOREZ JOHANA ANDREA",
@@ -2426,7 +3030,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Operativa y Financiera",
       "jefe": "MONSALVE HERNANDEZ DIANA CAROLINA",
-      "caja": "2"
+      "caja": "2",
+      "edad": "38 años",
+      "antig": "3.3 años"
     },
     "1032438728": {
       "nombre": "GAMEZ ALVERNIA ALEJANDRO",
@@ -2434,7 +3040,9 @@ window.DATA = {
       "direccion_area": "Contratos Comerciales y Administrativos",
       "gerencia": "Gerencia Contratos Comerciales y Administrativos",
       "jefe": "TORRES OSPINA INGRID JULIET",
-      "caja": "3"
+      "caja": "3",
+      "edad": "35 años",
+      "antig": "0.8 años"
     },
     "1032464118": {
       "nombre": "DIAZ HERNANDEZ JOHAN CAMILO",
@@ -2442,7 +3050,9 @@ window.DATA = {
       "direccion_area": "Seguridad Informacion",
       "gerencia": "Gerencia Seguridad Informacion",
       "jefe": "CASTRO CARDOZO CARLOS ANDRES",
-      "caja": "4"
+      "caja": "4",
+      "edad": "31 años",
+      "antig": "1.4 años"
     },
     "1033684993": {
       "nombre": "LANCHEROS GONZALEZ DIANA ROCIO",
@@ -2450,7 +3060,9 @@ window.DATA = {
       "direccion_area": "Seguridad Informacion",
       "gerencia": "Gerencia Seguridad Informacion",
       "jefe": "CASTRO CARDOZO CARLOS ANDRES",
-      "caja": "5"
+      "caja": "5",
+      "edad": "39 años",
+      "antig": "2.7 años"
     },
     "1036648287": {
       "nombre": "VELEZ BARON HAROLD STEVEN",
@@ -2458,7 +3070,9 @@ window.DATA = {
       "direccion_area": "Direccion Comercial Pymes",
       "gerencia": "Gerencia Comercial Pymes R1",
       "jefe": "PARRA BELTRAN LUIS FERNANDO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "32 años",
+      "antig": "7.2 años"
     },
     "1048221620": {
       "nombre": "ESCOBAR SOSA LAURA ELENA",
@@ -2466,7 +3080,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Operativa y Financiera",
       "jefe": "MONSALVE HERNANDEZ DIANA CAROLINA",
-      "caja": "8"
+      "caja": "8",
+      "edad": "28 años",
+      "antig": "1.2 años"
     },
     "1064996705": {
       "nombre": "BARRAZA RIVAS MARIANGEL",
@@ -2474,7 +3090,9 @@ window.DATA = {
       "direccion_area": "Regulacion Y Relacion Con Operadores",
       "gerencia": "Gerencia Regulacion y Relacion con Operadores",
       "jefe": "CASTAÑEDA GUERRERO MARIA TERESA DEL PILAR",
-      "caja": "9"
+      "caja": "9",
+      "edad": "34 años",
+      "antig": "3.8 años"
     },
     "1069713595": {
       "nombre": "HORTUA DIAZ NELSON FERNANDO",
@@ -2482,7 +3100,9 @@ window.DATA = {
       "direccion_area": "Nacional B2B2C y Proyectos Especiales",
       "gerencia": "Gerencia Nacional B2B2C y Proyectos Especiales",
       "jefe": "ALVAREZ ZULUAGA LUZ ASTRID",
-      "caja": "2"
+      "caja": "2",
+      "edad": "40 años",
+      "antig": "18.9 años"
     },
     "1069765749": {
       "nombre": "LOPEZ ARIAS ANGIE MELISSA",
@@ -2490,7 +3110,9 @@ window.DATA = {
       "direccion_area": "Riesgo Tecnologico",
       "gerencia": "Gerencia Riesgo Tecnologico",
       "jefe": "BOHORQUEZ HERNANDEZ JOHNATHAN ERNESTO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "27 años",
+      "antig": "1.1 años"
     },
     "1085273858": {
       "nombre": "OJEDA LUNA JUAN MANUEL",
@@ -2498,7 +3120,9 @@ window.DATA = {
       "direccion_area": "Asuntos Contenciosos",
       "gerencia": "Gerencia Asuntos Contenciosos",
       "jefe": "PARDO FAJARDO SANTIAGO",
-      "caja": "3"
+      "caja": "3",
+      "edad": "37 años",
+      "antig": "1.2 años"
     },
     "1085910589": {
       "nombre": "OVIEDO MESIAS MELANNY CATHERINE",
@@ -2506,7 +3130,9 @@ window.DATA = {
       "direccion_area": "Auditoria Interna",
       "gerencia": "Gerencia Auditoria Sistemas",
       "jefe": "MORENO MORENO ADRIANA",
-      "caja": "8"
+      "caja": "8",
+      "edad": "37 años",
+      "antig": "0.7 años"
     },
     "1098687767": {
       "nombre": "CALA DUARTE LUZ ANDREA",
@@ -2514,7 +3140,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Transversal",
       "gerencia": "Gerencia Inteligencia Comercial Mercado Masivo",
       "jefe": "VARGAS ANGEL SANDRA PATRICIA",
-      "caja": "9"
+      "caja": "9",
+      "edad": "36 años",
+      "antig": "10.5 años"
     },
     "1098704994": {
       "nombre": "COTE FLOREZ GERSON FABIAN",
@@ -2522,7 +3150,9 @@ window.DATA = {
       "direccion_area": "Direccion Servicios TIC y Datacenter",
       "gerencia": "Gerencia Ciberseguridad Servicios TIC",
       "jefe": "DONADO ARENAS CARLOS EFREN",
-      "caja": "5"
+      "caja": "5",
+      "edad": "35 años",
+      "antig": "1.1 años"
     },
     "1110468886": {
       "nombre": "GALEANO GALEANO ADRIANA LUCIA",
@@ -2530,7 +3160,9 @@ window.DATA = {
       "direccion_area": "Contratos Corporativos y Asuntos Societarios",
       "gerencia": "Gerencia Contratos Corporativos y Asuntos Societarios",
       "jefe": "JOYA APARICIO ALEJANDRO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "38 años",
+      "antig": "4.5 años"
     },
     "1129515915": {
       "nombre": "PEREZ CAICEDO MANUEL SALVADOR",
@@ -2538,7 +3170,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Direccion Region 1",
       "jefe": "PORTO VELASQUEZ LUIS MIGUEL",
-      "caja": "6"
+      "caja": "6",
+      "edad": "40 años",
+      "antig": "12.0 años"
     },
     "1129543149": {
       "nombre": "BOHORQUEZ HERNANDEZ JOHNATHAN ERNESTO",
@@ -2546,7 +3180,9 @@ window.DATA = {
       "direccion_area": "Riesgo Tecnologico",
       "gerencia": "Gerencia Riesgo Tecnologico",
       "jefe": "VARGAS BLANCO FREDDY ALEXANDER",
-      "caja": "6"
+      "caja": "6",
+      "edad": "36 años",
+      "antig": "1.6 años"
     },
     "1144029706": {
       "nombre": "PATIÑO ZAPATA JORGE LEONARDO",
@@ -2554,7 +3190,9 @@ window.DATA = {
       "direccion_area": "Unidad Mercado Masivo Regiones",
       "gerencia": "Gerencia Regional Agentes PDV R3",
       "jefe": "MARTINEZ PINILLA DIEGO FELIPE",
-      "caja": "3"
+      "caja": "3",
+      "edad": "36 años",
+      "antig": "6.9 años"
     },
     "1144033575": {
       "nombre": "PERDOMO CORDOBA FERNANDO ANDRES",
@@ -2562,7 +3200,9 @@ window.DATA = {
       "direccion_area": "Cumplimiento",
       "gerencia": "Gerencia Cumplimiento",
       "jefe": "ACOSTA BERNAL JOHN JAIRO",
-      "caja": "6"
+      "caja": "6",
+      "edad": "36 años",
+      "antig": "8.1 años"
     },
     "1233695609": {
       "nombre": "PACHON ARIAS NICOLAS DAVID",
@@ -2570,7 +3210,9 @@ window.DATA = {
       "direccion_area": "Prevencion Fraude",
       "gerencia": "Gerencia Prevencion Fraude",
       "jefe": "RAMIREZ RINCON CARLOS JULIO",
-      "caja": "5"
+      "caja": "5",
+      "edad": "26 años",
+      "antig": "0.3 años"
     },
     "34327674-C": {
       "nombre": "ORDOÑEZ USSA LEIDY YURANY",
