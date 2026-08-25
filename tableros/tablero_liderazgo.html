@@ -160,6 +160,7 @@
     </section>
 
     <!-- MATRIZ 9-BOX -->
+    <div style="font-size:16px; font-weight:800; letter-spacing:0.5px; color:#333; margin-bottom:16px; margin-top:32px; text-transform:uppercase;">UBICACIÓN EN LA NINEBOX</div>
     <div class="matrix-wrap">
       <div class="matrix-yaxis">
         <div class="yspacer"></div>
@@ -1281,7 +1282,8 @@ function renderTeamHoganChart() {
   }
 
   const sorted = [...comps].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
-  let chartHtml = '<div style="border:1px solid #ddd; border-radius:6px; overflow:hidden; background:#fff; max-width:900px; margin: 0 auto;">';
+  let chartHtml = '<div style="font-size:16px; font-weight:800; letter-spacing:0.5px; color:#333; margin-bottom:16px; text-transform:uppercase;">RESULTADOS DE HOGAN</div>';
+  chartHtml += '<div style="border:1px solid #ddd; border-radius:6px; overflow:hidden; background:#fff;">';
   chartHtml += '<div style="background:#333; color:#fff; padding:12px 16px; font-size:14px; font-weight:700; font-family:\'Space Grotesk\',sans-serif; display:flex; justify-content:space-between; align-items:center;">';
   chartHtml += '<span>PERFIL DE COMPETENCIAS HOGAN CONSOLIDADO (EQUIPO)</span><span style="font-size:11px;font-weight:500;opacity:0.8;">PROMEDIO</span></div>';
   chartHtml += '<div style="padding:20px 24px 28px 20px;"><div style="display:flex; flex-direction:column; gap:12px;">';
@@ -1322,7 +1324,7 @@ function renderTeamHoganChart() {
 
   // Create cards OUTSIDE the chart box
   chartHtml += `
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:24px; max-width:900px; margin-left:auto; margin-right:auto;">
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:24px;">
     <div style="background:#fff; border:1px solid #ddd; border-radius:10px; padding:24px; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
       <div style="font-size:13px; font-weight:800; color:#166534; margin-bottom:16px; background:#dcfce7; padding:8px 12px; border-radius:6px; text-align:center;">FORTALEZAS HOGAN DEL EQUIPO (Top 3)</div>
       <ul style="margin:0; padding-left:20px; font-size:14px; color:#333; line-height:2.2;">
