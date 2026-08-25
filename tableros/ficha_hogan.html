@@ -174,7 +174,6 @@ async function loadSupabaseData(){
     console.warn('Supabase no disponible, usando ficha_data.js estático',err);
   }
 }
-loadSupabaseData();
 </script>
 <script>
 
@@ -354,7 +353,7 @@ function getCajaNum(c){
 }
 
 // Initial Load
-setTimeout(() => {
+loadSupabaseData().finally(() => {
   const urlParams=new URLSearchParams(window.location.search);
   const nombreParam=urlParams.get('nombre');
   const expParam=urlParams.get('exp') || urlParams.get('expediente');
@@ -368,7 +367,7 @@ setTimeout(() => {
   }else{
     if(SUCESORES.length>0)loadFicha(SUCESORES[0]);
   }
-}, 500); // Give Supabase time to load since loadSupabaseData doesn't block DOM parsing
+});
 
 
 </script>
