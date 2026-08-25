@@ -103,7 +103,7 @@
   </div>
 
   <!-- TABS -->
-  <div class="tabs-bar">
+  <div class="tabs-bar" style="display:none;">
     <button class="tab-btn active" id="tabNB" onclick="switchView('ninebox')">📊 Matriz 9-Box &amp; Talento</button>
   </div>
 
@@ -1135,7 +1135,7 @@ function renderStats(){
   let el_kpiTop = document.getElementById('kpiTop'); if(el_kpiTop) el_kpiTop.textContent = top;
   let el_kpiTopPct = document.getElementById('kpiTopPct'); if(el_kpiTopPct) el_kpiTopPct.textContent = n > 0 ? ` (${Math.round(top/n*100)}%)` : ' (0%)';
   let el_kpiHogan = document.getElementById('kpiHogan'); if(el_kpiHogan) el_kpiHogan.textContent = avgPot;
-  document.getElementById('chipHG').textContent = hEv.length;
+  let el_chipHG = document.getElementById('chipHG'); if(el_chipHG) el_chipHG.textContent = hEv.length;
   document.getElementById('kpiSuc').textContent = suc;
   document.getElementById('kpiSucPct').textContent = n > 0 ? ` (${Math.round(suc/n*100)}%)` : ' (0%)';
 }
