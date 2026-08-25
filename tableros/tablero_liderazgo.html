@@ -1318,24 +1318,25 @@ function renderTeamHoganChart() {
   const top3 = validComps.slice(0, 3);
   const bottom3 = validComps.slice().reverse().slice(0, 3);
 
-  chartHtml += `
-  <div style="border-top:1px solid #eee; padding:20px 24px; background:#fafafa; display:grid; grid-template-columns:1fr 1fr; gap:24px;">
-    <div>
-      <div style="font-size:13px; font-weight:800; color:#166534; margin-bottom:12px; background:#dcfce7; padding:6px 12px; border-radius:6px; display:inline-block;">FORTALEZAS HOGAN DEL EQUIPO (Top 3)</div>
-      <ul style="margin:0; padding-left:20px; font-size:13px; color:#222; line-height:1.6;">
-        ${top3.map(c => `<li><strong>${c.nombre}</strong> (Promedio: ${c.puntaje})</li>`).join('')}
-      </ul>
-    </div>
-    <div>
-      <div style="font-size:13px; font-weight:800; color:#9f1239; margin-bottom:12px; background:#fecdd3; padding:6px 12px; border-radius:6px; display:inline-block;">OPORTUNIDADES DE DESARROLLO (Bottom 3)</div>
-      <ul style="margin:0; padding-left:20px; font-size:13px; color:#222; line-height:1.6;">
-        ${bottom3.map(c => `<li><strong>${c.nombre}</strong> (Promedio: ${c.puntaje})</li>`).join('')}
-      </ul>
-    </div>
-  </div>
-  `;
+  chartHtml += '</div></div>'; // Close the chart's main white box
 
-  chartHtml += '</div></div>';
+  // Create cards OUTSIDE the chart box
+  chartHtml += `
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:24px; max-width:900px; margin-left:auto; margin-right:auto;">
+    <div style="background:#fff; border:1px solid #ddd; border-radius:10px; padding:24px; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
+      <div style="font-size:13px; font-weight:800; color:#166534; margin-bottom:16px; background:#dcfce7; padding:8px 12px; border-radius:6px; text-align:center;">FORTALEZAS HOGAN DEL EQUIPO (Top 3)</div>
+      <ul style="margin:0; padding-left:20px; font-size:14px; color:#333; line-height:2.2;">
+        ${top3.map(c => `<li><strong>${c.nombre}</strong> (Promedio: <span style="color:#166534; font-weight:900;">${c.puntaje}</span>)</li>`).join('')}
+      </ul>
+    </div>
+    <div style="background:#fff; border:1px solid #ddd; border-radius:10px; padding:24px; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
+      <div style="font-size:13px; font-weight:800; color:#854d0e; margin-bottom:16px; background:#fef08a; padding:8px 12px; border-radius:6px; text-align:center;">OPORTUNIDADES DE DESARROLLO (Bottom 3)</div>
+      <ul style="margin:0; padding-left:20px; font-size:14px; color:#333; line-height:2.2;">
+        ${bottom3.map(c => `<li><strong>${c.nombre}</strong> (Promedio: <span style="color:#854d0e; font-weight:900;">${c.puntaje}</span>)</li>`).join('')}
+      </ul>
+    </div>
+  </div>`;
+
   container.innerHTML = chartHtml;
 }
 
