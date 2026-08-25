@@ -56,43 +56,48 @@
   </div>
 
 
-  <!-- FORTALEZAS Y OPORTUNIDADES -->
-  <div style="margin-top:24px;">
-    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;color:var(--text);margin-bottom:12px;font-weight:bold;">Fortalezas y Oportunidades</h3>
-    <div id="hoganTextSection" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-      <div id="hoganFortalezas" style="background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:16px;">
-        <div style="font-size:12px;font-weight:700;color:#a16207;background:#fef9c3;padding:6px 12px;border-radius:6px;margin-bottom:12px;text-align:center;font-family:'Space Grotesk',sans-serif;">FORTALEZAS</div>
-        <div id="fortText" style="font-size:11.5px;color:var(--text);line-height:1.6;white-space:pre-line;">Sin datos</div>
-      </div>
-      <div id="hoganOportunidades" style="background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:16px;">
-        <div style="font-size:12px;font-weight:700;color:#9f1239;background:#fecdd3;padding:6px 12px;border-radius:6px;margin-bottom:12px;text-align:center;font-family:'Space Grotesk',sans-serif;">OPORTUNIDADES DE DESARROLLO / DESCARRILADORES</div>
-        <div id="oportText" style="font-size:11.5px;color:var(--text);line-height:1.6;white-space:pre-line;">Sin datos</div>
+  <!-- NUEVO DISEÑO: NINEBOX (IZQ) Y FORTALEZAS/OPORTUNIDADES (DER) -->
+  <div style="display:grid; grid-template-columns:350px 1fr; gap:24px; margin-top:24px; align-items:start;">
+    
+    <!-- Lado Izquierdo: Ninebox -->
+    <div>
+      <div style="background: #1e293b; color: #ffffff; padding: 10px 16px; text-align: center; font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; border-radius: 8px; margin-bottom: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">UBICACIÓN EN LA NINEBOX</div>
+      <div id="nineboxContainer" style="background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:24px 16px; width:300px; margin:0 auto;">
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; max-width:250px; margin:0 auto; aspect-ratio:1;">
+          <!-- Row 1 (Alto Desempeño) -->
+          <div id="nb7" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">7</div>
+          <div id="nb8" style="background:#34d399; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">8</div>
+          <div id="nb9" style="background:#10b981; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">9</div>
+          <!-- Row 2 (Medio Desempeño) -->
+          <div id="nb4" style="background:#f59e0b; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">4</div>
+          <div id="nb5" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">5</div>
+          <div id="nb6" style="background:#34d399; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">6</div>
+          <!-- Row 3 (Bajo Desempeño) -->
+          <div id="nb1" style="background:#ef4444; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">1</div>
+          <div id="nb2" style="background:#f59e0b; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">2</div>
+          <div id="nb3" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">3</div>
+        </div>
+        <div id="nbText" style="text-align:center; font-size:12px; font-weight:600; margin-top:16px; color:var(--text);">Caja: -</div>
       </div>
     </div>
+
+    <!-- Lado Derecho: Fortalezas y Oportunidades -->
+    <div style="display:flex; flex-direction:column; gap:20px;">
+      <div id="hoganFortalezas" style="background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:24px;">
+        <div style="font-size:13px;font-weight:800;color:#166534;background:#dcfce7;padding:8px 12px;border-radius:6px;margin-bottom:16px;text-align:center;font-family:'Space Grotesk',sans-serif;">FORTALEZAS</div>
+        <div id="fortText" style="font-size:13px;color:var(--text);line-height:2;white-space:pre-line;">Sin datos</div>
+      </div>
+      <div id="hoganOportunidades" style="background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:24px;">
+        <div style="font-size:13px;font-weight:800;color:#854d0e;background:#fef08a;padding:8px 12px;border-radius:6px;margin-bottom:16px;text-align:center;font-family:'Space Grotesk',sans-serif;">OPORTUNIDADES DE DESARROLLO / DESCARRILADORES</div>
+        <div id="oportText" style="font-size:13px;color:var(--text);line-height:2;white-space:pre-line;">Sin datos</div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- NINEBOX Y COMPETENCIAS -->
-  <div style="display:grid; grid-template-columns:350px 1fr; gap:24px; margin-top:24px; align-items:start;">
-    <!-- Left: Ninebox -->
-    <div id="nineboxContainer" style="background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:16px; width:300px;">
-      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:14px;color:var(--text);text-align:center;margin-bottom:16px;font-weight:bold;">NINEBOX</h3>
-      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; max-width:250px; margin:0 auto; aspect-ratio:1;">
-        <!-- Row 1 (Alto Desempeño) -->
-        <div id="nb7" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">7</div>
-        <div id="nb8" style="background:#34d399; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">8</div>
-        <div id="nb9" style="background:#10b981; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">9</div>
-        <!-- Row 2 (Medio Desempeño) -->
-        <div id="nb4" style="background:#f59e0b; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">4</div>
-        <div id="nb5" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">5</div>
-        <div id="nb6" style="background:#34d399; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">6</div>
-        <!-- Row 3 (Bajo Desempeño) -->
-        <div id="nb1" style="background:#ef4444; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">1</div>
-        <div id="nb2" style="background:#f59e0b; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">2</div>
-        <div id="nb3" style="background:#fbbf24; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:12px;">3</div>
-      </div>
-      <div id="nbText" style="text-align:center; font-size:12px; font-weight:600; margin-top:12px; color:var(--text);">Caja: -</div>
-    </div>
-    <!-- Right: Competencias -->
+  <!-- Bottom: Gráfica Hogan -->
+  <div style="margin-top:40px; margin-bottom: 32px;">
+    <div style="background: #1e293b; color: #ffffff; padding: 14px 20px; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 8px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">COMPETENCIAS DE HOGAN</div>
     <div id="hoganChartContainer" style="background:var(--panel); border-radius:10px; width:100%;">
       <div style="padding:20px; text-align:center; color:var(--text-dim);">Cargando gráfica...</div>
     </div>
