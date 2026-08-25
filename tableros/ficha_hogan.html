@@ -61,25 +61,36 @@
 
 
   <!-- NUEVO DISEÑO: NINEBOX (IZQ) Y FORTALEZAS/OPORTUNIDADES (DER) -->
-  <div style="display:grid; grid-template-columns:350px 1fr; gap:24px; margin-top:24px; align-items:start;">
+  <div style="display:grid; grid-template-columns:380px 1fr; gap:24px; margin-top:24px; align-items:start;">
     
     <!-- Lado Izquierdo: Ninebox -->
     <div>
       <div style="background: #1e293b; color: #ffffff; padding: 10px 16px; text-align: center; font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; border-radius: 8px; margin-bottom: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">UBICACIÓN EN LA NINEBOX</div>
-      <div id="nineboxContainer" style="background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:24px 16px; width:300px; margin:0 auto;">
-        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; max-width:280px; margin:0 auto; aspect-ratio:1;">
+      <div id="nineboxContainer" style="background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:24px 16px; width:360px; margin:0 auto; display:flex; gap:12px;">
+        <div style="display:flex; flex-direction:column; justify-content:space-around; padding-bottom:30px; font-size:11px; font-weight:700; color:var(--text-dim); text-align:center; line-height:1.2;">
+          <div>Alto<br>desempeño</div>
+          <div>Desempeño<br>consistente</div>
+          <div>Bajo<br>desempeño</div>
+        </div>
+        <div style="flex:1;">
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; aspect-ratio:1;">
           <!-- Row 1 (Alto Desempeño) -->
-          <div id="nb7" style="position:relative; background:#fef08a; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#854d0e; font-weight:800; font-size:16px;">7</div>
-          <div id="nb8" style="position:relative; background:#a7f3d0; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#065f46; font-weight:800; font-size:16px;">8</div>
-          <div id="nb9" style="position:relative; background:#6ee7b7; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#064e3b; font-weight:800; font-size:16px;">9</div>
+          <div id="nb7" style="position:relative; background:var(--c7); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">7</div>
+          <div id="nb8" style="position:relative; background:var(--c8); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">8</div>
+          <div id="nb9" style="position:relative; background:var(--c9); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">9</div>
           <!-- Row 2 (Medio Desempeño) -->
-          <div id="nb4" style="position:relative; background:#fed7aa; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#9a3412; font-weight:800; font-size:16px;">4</div>
-          <div id="nb5" style="position:relative; background:#fef08a; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#854d0e; font-weight:800; font-size:16px;">5</div>
-          <div id="nb6" style="position:relative; background:#a7f3d0; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#065f46; font-weight:800; font-size:16px;">6</div>
+          <div id="nb4" style="position:relative; background:var(--c4); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">4</div>
+          <div id="nb5" style="position:relative; background:var(--c5); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">5</div>
+          <div id="nb6" style="position:relative; background:var(--c6); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">6</div>
           <!-- Row 3 (Bajo Desempeño) -->
-          <div id="nb1" style="position:relative; background:#fecaca; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#991b1b; font-weight:800; font-size:16px;">1</div>
-          <div id="nb2" style="position:relative; background:#fed7aa; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#9a3412; font-weight:800; font-size:16px;">2</div>
-          <div id="nb3" style="position:relative; background:#fef08a; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#854d0e; font-weight:800; font-size:16px;">3</div>
+          <div id="nb1" style="position:relative; background:var(--c1); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">1</div>
+          <div id="nb2" style="position:relative; background:var(--c2); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">2</div>
+          <div id="nb3" style="position:relative; background:var(--c3); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">3</div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-top:8px; font-size:11px; font-weight:700; color:var(--text-dim); text-align:center;">
+          <div>Experto</div>
+          <div>Sólido</div>
+          <div>Versátil</div>
         </div>
         <div id="nbText" style="text-align:center; font-size:12px; font-weight:600; margin-top:16px; color:var(--text);">Caja: -</div>
       </div>
