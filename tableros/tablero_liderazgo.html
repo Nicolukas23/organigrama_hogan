@@ -1543,7 +1543,7 @@ function renderNineboxTable(){
           ${p.tiempo && p.tiempo !== 'N/A' ? p.tiempo : '—'}
         </td>
         <td>
-          ${hasFicha ? `<a href="ficha_talento.html?expediente=${p.expediente}" target="_blank" onclick="event.stopPropagation()" class="btn-ficha">Ver Reporte</a>` : `<a href="ficha_hogan.html?exp=${p.expediente}" target="_blank" onclick="event.stopPropagation()" class="btn-ficha" style="background:#f1f5f9;color:var(--primary);border:1px solid #cbd5e1;">Ver Reporte</a>`}
+          ${hasFicha ? `<a href="ficha_talento.html?expediente=${p.expediente}" target="_blank" onclick="event.stopPropagation()" class="btn-ficha">Ver Reporte</a>` : `<a href="ficha_hogan.html?exp=${p.expediente}" target="_blank" onclick="event.stopPropagation()" class="btn-ficha" style="background:#f1f5f9;color:var(--crimson);border:1px solid #cbd5e1;">Ver Reporte</a>`}
         </td>
       `;
       tbody.appendChild(tr);
@@ -1753,7 +1753,7 @@ function renderHogan(){
       if(hasFicha) {
         btnHtml = `<button class="badge-ficha-btn" onclick="event.stopPropagation(); window.open('ficha_talento.html?expediente=${p.expediente}', '_blank')">Ver Reporte</button>`;
       } else {
-        btnHtml = `<button class="badge-ficha-btn" style="background:#f1f5f9;color:var(--primary);border:1px solid #cbd5e1;" onclick="event.stopPropagation(); window.open('ficha_hogan.html?exp=${p.expediente}', '_blank')">Ver Reporte</button>`;
+        btnHtml = `<button class="badge-ficha-btn" style="background:#f1f5f9;color:var(--crimson);border:1px solid #cbd5e1;" onclick="event.stopPropagation(); window.open('ficha_hogan.html?exp=${p.expediente}', '_blank')">Ver Reporte</button>`;
       }
 
       const tr = document.createElement('tr');
@@ -1841,7 +1841,7 @@ function renderTable(){
       const btn = document.createElement('button');
       btn.className = 'badge-ficha-btn';
       btn.style.background = '#f1f5f9';
-      btn.style.color = 'var(--primary)';
+      btn.style.color = 'var(--crimson)';
       btn.style.border = '1px solid #cbd5e1';
       btn.textContent = 'Preliminar';
       btn.onclick = (e) => { e.stopPropagation(); window.open(`ficha_hogan.html?exp=${p.expediente}`, '_blank'); };

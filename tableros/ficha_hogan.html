@@ -18,7 +18,6 @@
 
 <link rel="stylesheet" href="../data/ficha_talento.css">
   <link rel="manifest" href="../manifest.json">
-  <script src="../data/global_search.js" defer></script>
 </head>
 <body>
 <div class="header">
@@ -41,7 +40,7 @@
     ⚠️ MODO DEMOSTRACIÓN — Todos los datos de esta ficha son ficticios, no corresponden a una persona real.
   </div>
   <div class="info-header" style="position: relative;">
-    <button id="btnFullReport" style="position: absolute; right: 24px; top: 20px; background: #ffffff15; border: 1px solid #ffffff40; color: #fff; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 13px; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.background='#ffffff30'" onmouseout="this.style.background='#ffffff15'">
+    <button id="btnFullReport" style="position: absolute; right: 24px; top: 20px; background: var(--crimson-soft); border: 1px solid var(--crimson); color: var(--crimson); padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 13px; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.background='var(--crimson)';this.style.color='#fff'" onmouseout="this.style.background='var(--crimson-soft)';this.style.color='var(--crimson)'">
       <span>Ver reporte completo</span>
       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
     </button>
@@ -655,6 +654,5 @@ loadSupabaseData().finally(() => {
 
 
 </script>
-<script src="../data/nav.js"></script>
 </body>
 </html>
