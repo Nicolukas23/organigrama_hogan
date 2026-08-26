@@ -180,7 +180,7 @@ async function fetchAllRows(pathAndQuery){
 async function loadSupabaseData(){
   try{
     const hdr={headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY}};
-    const [personas,desempeno,talentos,objetivos,tres60,clima,sucesores]=await Promise.all([
+    const [personas,desempeno,talentos,objetivos,tres60,clima,sucesores,formacionRows]=await Promise.all([
       fetchAllRows('personas?select=*'),
       fetch(SUPABASE_URL+'/rest/v1/desempeno?select=*',hdr).then(r=>r.json()),
       fetch(SUPABASE_URL+'/rest/v1/talentos?select=*',hdr).then(r=>r.json()),
@@ -188,9 +188,19 @@ async function loadSupabaseData(){
       fetch(SUPABASE_URL+'/rest/v1/evaluacion_360?select=*',hdr).then(r=>r.json()),
       fetch(SUPABASE_URL+'/rest/v1/clima?select=*',hdr).then(r=>r.json()),
       fetch(SUPABASE_URL+'/rest/v1/sucesores?select=*',hdr).then(r=>r.json()),
+      fetch(SUPABASE_URL+'/rest/v1/formacion?select=*',hdr).then(r=>r.json()),
     ]);
     const informacion={},formacion={};
     personas.forEach(p=>{informacion[p.expediente]=p;});
+    const parseArr=(s)=>{ try{ const a=JSON.parse(s); return Array.isArray(a)?a:[]; }catch(e){ return []; } };
+    (Array.isArray(formacionRows)?formacionRows:[]).forEach(x=>{
+      formacion[x.expediente]={
+        cargos_int: parseArr(x.experiencia_claro),
+        cargos_ext: parseArr(x.experiencia_otros),
+        titulos: parseArr(x.educacion_formal),
+        formaciones: parseArr(x.educacion_complementaria)
+      };
+    });
     const d3={}; desempeno.forEach(x=>{d3[x.expediente]={y2024:x.y2024,y2025:x.y2025,y2026:x.y2026};});
     const t3={}; talentos.forEach(x=>{t3[x.expediente]={expediente:x.expediente,talento:x.talento,soy_dueno:x.soy_dueno,soy_lider:x.soy_lider,soy_digital:x.soy_digital};});
     const o3={}; objetivos.forEach(x=>{o3[x.expediente]={expediente:x.expediente,obj:x.obj,talento:x.talento};});
