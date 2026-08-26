@@ -159,36 +159,62 @@ const SUPABASE_URL='https://yxxpjttdmwruyeqiuxzu.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4eHBqdHRkbXdydXllcWl1eHp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4MTQyNzUsImV4cCI6MjEwMjM5MDI3NX0.fxQc7o6Qv8Rvd8-PHJF_R-OEME-hbhbPPDnktjiNi9U';
 
 // Supabase (PostgREST) caps every response at 1000 rows regardless of the
-// requested limit. `personas` has 4000+ rows, so a plain fetch silently
-// truncated the roster to whichever 1000 came back first. Page through with
-// Range until every row has been retrieved.
+// requested limit (clima alone has ~69,000). A plain fetch silently
+// truncated every one of these tables to whichever 1000 rows came back
+// first. Page through with Range until every row has been retrieved; once
+// the first page reveals the true total (via Content-Range), fetch the
+// remaining pages in parallel instead of one request at a time.
 async function fetchAllRows(pathAndQuery){
   const hdr={apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY};
   const pageSize=1000;
-  let offset=0, all=[];
-  while(true){
+  const getPage=async(offset)=>{
     const res=await fetch(SUPABASE_URL+'/rest/v1/'+pathAndQuery,{headers:{...hdr,Range:offset+'-'+(offset+pageSize-1)}});
     const rows=await res.json();
-    if(!Array.isArray(rows)||rows.length===0) break;
-    all=all.concat(rows);
-    if(rows.length<pageSize) break;
-    offset+=pageSize;
+    return {rows: Array.isArray(rows)?rows:[], contentRange: res.headers.get('content-range')};
+  };
+  const first=await getPage(0);
+  let all=first.rows.slice();
+  const total=first.contentRange && first.contentRange.includes('/') ? parseInt(first.contentRange.split('/')[1],10) : NaN;
+  if(!isNaN(total) && total>all.length){
+    const offsets=[];
+    for(let o=pageSize;o<total;o+=pageSize) offsets.push(o);
+    const pages=await Promise.all(offsets.map(o=>getPage(o)));
+    pages.forEach(p=>{all=all.concat(p.rows);});
+  } else if(isNaN(total) && first.rows.length===pageSize){
+    // Fallback if Content-Range is ever unavailable: page sequentially.
+    let offset=pageSize;
+    while(true){
+      const page=await getPage(offset);
+      if(!page.rows.length) break;
+      all=all.concat(page.rows);
+      if(page.rows.length<pageSize) break;
+      offset+=pageSize;
+    }
   }
   return all;
+}
+
+function normWords(s){
+  if(!s) return '';
+  return s.normalize('NFKD').replace(/[̀-ͯ]/g,'')
+    .toUpperCase().split(/\s+/)
+    .filter(w => !['DE','LA','DEL','LOS','LAS','Y','SAN','SANTA'].includes(w))
+    .sort().join(' ');
 }
 
 async function loadSupabaseData(){
   try{
     const hdr={headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY}};
-    const [personas,desempeno,talentos,objetivos,tres60,clima,sucesores,formacionRows]=await Promise.all([
+    const [personas,desempeno,talentos,objetivos,tres60,clima,sucesores,formacionRows,hgRows]=await Promise.all([
       fetchAllRows('personas?select=*'),
-      fetch(SUPABASE_URL+'/rest/v1/desempeno?select=*',hdr).then(r=>r.json()),
-      fetch(SUPABASE_URL+'/rest/v1/talentos?select=*',hdr).then(r=>r.json()),
-      fetch(SUPABASE_URL+'/rest/v1/objetivos?select=*',hdr).then(r=>r.json()),
-      fetch(SUPABASE_URL+'/rest/v1/evaluacion_360?select=*',hdr).then(r=>r.json()),
-      fetch(SUPABASE_URL+'/rest/v1/clima?select=*',hdr).then(r=>r.json()),
+      fetchAllRows('desempeno?select=*'),
+      fetchAllRows('talentos?select=*'),
+      fetchAllRows('objetivos?select=*'),
+      fetchAllRows('evaluacion_360?select=*'),
+      fetchAllRows('clima?select=*'),
       fetch(SUPABASE_URL+'/rest/v1/sucesores?select=*',hdr).then(r=>r.json()),
       fetch(SUPABASE_URL+'/rest/v1/formacion?select=*',hdr).then(r=>r.json()),
+      fetch(SUPABASE_URL+'/rest/v1/tableros_json?clave=eq.hogan&select=data',hdr).then(r=>r.json()),
     ]);
     const informacion={},formacion={};
     personas.forEach(p=>{informacion[p.expediente]=p;});
@@ -202,15 +228,37 @@ async function loadSupabaseData(){
       };
     });
     const d3={}; desempeno.forEach(x=>{d3[x.expediente]={y2024:x.y2024,y2025:x.y2025,y2026:x.y2026};});
-    const t3={}; talentos.forEach(x=>{t3[x.expediente]={expediente:x.expediente,talento:x.talento,soy_dueno:x.soy_dueno,soy_lider:x.soy_lider,soy_digital:x.soy_digital};});
-    const o3={}; objetivos.forEach(x=>{o3[x.expediente]={expediente:x.expediente,obj:x.obj,talento:x.talento};});
+    const t3={}; talentos.forEach(x=>{if(!t3[x.expediente])t3[x.expediente]=[];t3[x.expediente].push({talento:x.talento,score:x.calificacion});});
+    const o3={}; objetivos.forEach(x=>{if(!o3[x.expediente])o3[x.expediente]=[];o3[x.expediente].push({talento:x.talento,obj:x.obj,anio:x.anio});});
     const e3={}; tres60.forEach(x=>{if(!e3[x.expediente])e3[x.expediente]=[];e3[x.expediente].push({dim:x.competencia,lider:x.lider,propio:x.propio,reporte:x.reporte,par:x.par});});
     const c3={}; clima.forEach(x=>{if(!c3[x.expediente])c3[x.expediente]=[];c3[x.expediente].push({dim:x.dimension,pct:x.pct});});
     const s3={}; sucesores.forEach(x=>{s3[x.expediente]={sucesor:x.sucesor,tiempo:x.tiempo};});
+
+    // Live Hogan competency scores, matched by normalized name (same source
+    // as the Tablero de Liderazgo / Ficha Preliminar) so the "Resultados
+    // Hogan" competencias chart has data beyond the ~9 committee members
+    // with hand-curated HPI/HDS/MVPI text.
+    const hgMap={};
+    if(Array.isArray(hgRows) && hgRows.length && hgRows[0].data){
+      const hData=hgRows[0].data;
+      [...(hData.est||[]),...(hData.op||[])].forEach(group=>{
+        (group.team||[]).forEach(member=>{ hgMap[normWords(member.name)]=member; });
+      });
+    }
+    const hogan={};
+    Object.keys(informacion).forEach(exp=>{
+      const member=hgMap[normWords(informacion[exp].nombre)];
+      if(member && member.scores){
+        const competencias=Object.entries(member.scores)
+          .filter(([k])=>k!=='Potencial' && k!=='Potential')
+          .map(([nombre,puntaje])=>({nombre,puntaje}));
+        hogan[exp]={competencias, potencial:member.scores.Potencial, versatilidad:member.versatilidad};
+      }
+    });
     const hijos=Object.keys(informacion).filter(exp=>informacion[exp].nombre&&informacion[exp].jefe);
     window.DATA={
       informacion,formacion,desempeno:d3,talentos:t3,objetivos:o3,tres60:e3,clima:c3,sucesores:s3,
-      comite:{},hogan:{},observaciones:{}
+      comite:{},hogan,observaciones:{}
     };
     if (window.COMITE_HOGAN) {
       Object.keys(window.COMITE_HOGAN).forEach(name => {
@@ -223,7 +271,10 @@ async function loadSupabaseData(){
            const parts = searchName.split(' ');
            return parts.every(p => infoName.includes(p));
         });
-        if (exp) window.DATA.hogan[exp] = window.COMITE_HOGAN[name];
+        // Merge (don't replace): the committee file carries hand-curated
+        // HPI/HDS/MVPI text; the live blob above already supplied the
+        // numeric `competencias` scores for the chart.
+        if (exp) window.DATA.hogan[exp] = { ...window.DATA.hogan[exp], ...window.COMITE_HOGAN[name] };
       });
     }
     window.SUCESORES=hijos.map(exp=>({exp,nombre:informacion[exp].nombre}));
@@ -410,8 +461,8 @@ function loadFicha(p){
   const allCDExps=['52185300','79947402','80425417','1128466768','85467103','32781111','79516122','80150353','1138186','79577126','79695754','1020751309'];
   const isCDOwn=allCDExps.includes(p.exp);
   let reportsToCD=false;
-  if(!isCDOwn && p.jefe){
-    const jefeNorm=p.jefe.toUpperCase().trim();
+  if(!isCDOwn && info && info.jefe){
+    const jefeNorm=info.jefe.toUpperCase().trim();
     for(const cdExp of allCDExps){
       const cdInfo=DATA.informacion[cdExp];
       if(cdInfo&&cdInfo.nombre&&cdInfo.nombre.toUpperCase().trim()===jefeNorm){reportsToCD=true;break;}

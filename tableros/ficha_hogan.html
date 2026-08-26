@@ -134,18 +134,33 @@ const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 // Supabase (PostgREST) caps every response at 1000 rows regardless of the
 // requested limit. `personas` has 4000+ rows, so a plain fetch silently
 // truncated the roster and most people never loaded at all. Page through
-// with Range until every row has been retrieved.
+// with Range until every row has been retrieved; once the first page
+// reveals the true total (via Content-Range), fetch the rest in parallel.
 async function fetchAllRows(pathAndQuery){
   const hdr={apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY};
   const pageSize=1000;
-  let offset=0, all=[];
-  while(true){
+  const getPage=async(offset)=>{
     const res=await fetch(SUPABASE_URL+'/rest/v1/'+pathAndQuery,{headers:{...hdr,Range:offset+'-'+(offset+pageSize-1)}});
     const rows=await res.json();
-    if(!Array.isArray(rows)||rows.length===0) break;
-    all=all.concat(rows);
-    if(rows.length<pageSize) break;
-    offset+=pageSize;
+    return {rows: Array.isArray(rows)?rows:[], contentRange: res.headers.get('content-range')};
+  };
+  const first=await getPage(0);
+  let all=first.rows.slice();
+  const total=first.contentRange && first.contentRange.includes('/') ? parseInt(first.contentRange.split('/')[1],10) : NaN;
+  if(!isNaN(total) && total>all.length){
+    const offsets=[];
+    for(let o=pageSize;o<total;o+=pageSize) offsets.push(o);
+    const pages=await Promise.all(offsets.map(o=>getPage(o)));
+    pages.forEach(p=>{all=all.concat(p.rows);});
+  } else if(isNaN(total) && first.rows.length===pageSize){
+    let offset=pageSize;
+    while(true){
+      const page=await getPage(offset);
+      if(!page.rows.length) break;
+      all=all.concat(page.rows);
+      if(page.rows.length<pageSize) break;
+      offset+=pageSize;
+    }
   }
   return all;
 }
