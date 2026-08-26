@@ -352,7 +352,11 @@ function loadFicha(p) {
   }
   
   if (info.fecha_nacimiento) {
-     const age = new Date().getFullYear() - new Date(info.fecha_nacimiento).getFullYear();
+     const fnac = new Date(info.fecha_nacimiento);
+     const hoy = new Date();
+     let age = hoy.getFullYear() - fnac.getFullYear();
+     const m = hoy.getMonth() - fnac.getMonth();
+     if (m < 0 || (m === 0 && hoy.getDate() < fnac.getDate())) age--;
      document.getElementById('iEdad').textContent = age + ' años';
   } else if (info.edad) {
      document.getElementById('iEdad').textContent = info.edad;
