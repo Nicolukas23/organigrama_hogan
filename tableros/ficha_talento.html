@@ -30,6 +30,11 @@
     <button onclick="downloadPDF()" style="background:#fff;color:var(--crimson);border:2px solid #fff;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:14px;">Descargar PDF</button>
   </div>
 </div>
+<div id="loadingOverlay" style="position:fixed; inset:0; background:var(--bg,#f4f5f7); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;">
+  <div style="width:44px; height:44px; border:4px solid #e2e8f0; border-top-color:var(--crimson,#c0392b); border-radius:50%; animation:spin 0.8s linear infinite;"></div>
+  <div style="font-size:14px; font-weight:600; color:var(--text-dim,#666);">Cargando información de la ficha...</div>
+  <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+</div>
 <div class="main" id="fichaContent">
   <div class="info-header">
     <div class="ih-photo" id="ihPhoto">
@@ -297,6 +302,8 @@ function searchPerson(){
 }
 
 function loadFicha(p){
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  if(loadingOverlay) loadingOverlay.style.display = 'none';
   document.getElementById('iNombre').textContent=p.nombre;
   const isCDName=['52185300','79947402','80425417','1128466768','85467103','32781111','79516122','80150353','1138186','79577126','79695754','1020751309'].includes(p.exp);
   const nameEl=document.getElementById('iNombre');

@@ -126,6 +126,13 @@
       <div style="padding:20px; text-align:center; color:var(--text-dim);">Cargando gráfica...</div>
     </div>
   </div>
+
+  <!-- Bottom: Gráfica Hogan de Grupo (promedio de la Dirección) -->
+  <div id="hoganGroupSection" style="margin-top:40px; margin-bottom: 32px; display:none;">
+    <div style="background: #334155; color: #ffffff; padding: 14px 20px; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 8px; margin-bottom: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">ANÁLISIS DE GRUPO — COMPETENCIAS DE HOGAN</div>
+    <div id="hoganGroupSubtitle" style="text-align:center; font-size:12px; color:var(--text-dim); margin-bottom:16px;"></div>
+    <div id="hoganGroupChartContainer" style="background:var(--panel); border-radius:10px; width:100%;"></div>
+  </div>
 </div>
 </div>
 <footer style="margin-top:32px;padding:16px 32px;border-top:1px solid var(--border);text-align:center;color:var(--text-dim);font-size:12px;font-family:'Inter',sans-serif;">
@@ -213,8 +220,11 @@ async function loadSupabaseData(){
     const hgMap={};
     if(Array.isArray(hgRows) && hgRows.length && hgRows[0].data){
       const hData=hgRows[0].data;
-      [...(hData.est||[]),...(hData.op||[])].forEach(group=>{
-        (group.team||[]).forEach(member=>{ hgMap[normWords(member.name)]=member; });
+      (hData.est||[]).forEach(group=>{
+        (group.team||[]).forEach(member=>{ hgMap[normWords(member.name)]={ ...member, tipo:'Estratégico' }; });
+      });
+      (hData.op||[]).forEach(group=>{
+        (group.team||[]).forEach(member=>{ hgMap[normWords(member.name)]={ ...member, tipo:'Gerencial' }; });
       });
     }
     Object.keys(informacion).forEach(exp=>{
@@ -223,8 +233,33 @@ async function loadSupabaseData(){
         const competencias=Object.entries(member.scores)
           .filter(([k])=>k!=='Potencial' && k!=='Potential')
           .map(([nombre,puntaje])=>({nombre,puntaje}));
-        hogan[exp]={ ...(hogan[exp]||{}), competencias, potencial:member.scores.Potencial, versatilidad:member.versatilidad };
+        hogan[exp]={ ...(hogan[exp]||{}), competencias, potencial:member.scores.Potencial, versatilidad:member.versatilidad, dir_corp:member.dir_corp, tipo:member.tipo };
       }
+    });
+
+    // "Análisis de Grupo": promedio de competencias por Dirección + tipo de
+    // líder (Estratégico/Gerencial), igual al análisis que traen los
+    // archivos de resultados de Hogan por Dirección. Se muestra como una
+    // segunda gráfica debajo de la del individuo.
+    const groupAgg={};
+    Object.values(hgMap).forEach(m=>{
+      if(!m.scores || !m.dir_corp) return;
+      const key=m.dir_corp+'|'+m.tipo;
+      if(!groupAgg[key]) groupAgg[key]={ n:0, sums:{}, direccion:m.dir_corp, tipo:m.tipo };
+      groupAgg[key].n++;
+      Object.entries(m.scores).forEach(([k,v])=>{
+        if(k==='Potencial'||k==='Potential'||typeof v!=='number') return;
+        groupAgg[key].sums[k]=(groupAgg[key].sums[k]||0)+v;
+      });
+    });
+    window.HOGAN_GROUPS={};
+    Object.entries(groupAgg).forEach(([key,g])=>{
+      window.HOGAN_GROUPS[key]={
+        n:g.n,
+        direccion:g.direccion,
+        tipo:g.tipo,
+        competencias: Object.entries(g.sums).map(([nombre,sum])=>({nombre,puntaje:Math.round(sum/g.n)}))
+      };
     });
 
     const hijos=Object.keys(informacion).filter(exp=>informacion[exp].nombre&&informacion[exp].jefe);
@@ -391,69 +426,88 @@ function loadFicha(p) {
   }
 
   if (comps.length > 0) {
-    const sorted = [...comps].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
-    let chartHtml = '<div style="border:1px solid #ddd; border-radius:6px; overflow:hidden; background:#fff;">';
-    chartHtml += '<div style="background:#333; color:#fff; padding:8px 16px; font-size:13px; font-weight:700; font-family:\'Space Grotesk\',sans-serif; display:flex; justify-content:space-between; align-items:center;">';
-    chartHtml += '<span>PERFIL DE COMPETENCIAS (HOGAN) — ESCALA 0 A 100</span><span style="font-size:10px;font-weight:500;opacity:0.8;">(Puntaje)</span></div>';
-    chartHtml += '<div style="padding:16px 20px 24px 16px;"><div style="display:flex; flex-direction:column; gap:10px;">';
-    
-    sorted.forEach(c=>{
-      chartHtml+='<div style="display:flex; align-items:center; gap:12px;">';
-      chartHtml+='<div style="width:180px; text-align:right; font-size:11.5px; font-weight:500; color:#333; flex-shrink:0;">'+c.nombre+'</div>';
-      chartHtml+='<div style="flex:1; position:relative; height:20px; border-left:1px solid #ddd; border-right:1px solid #ddd;">';
-      for(let g=0;g<=100;g+=10){
-        chartHtml+='<div style="position:absolute; left:'+g+'%; top:-5px; bottom:-5px; width:1px; background:#f0f0f0; z-index:1;"></div>';
-      }
-      chartHtml+='<div style="position:absolute; left:0; top:2px; bottom:2px; width:'+Math.min(100, c.puntaje)+'%; background:#c0392b; z-index:2;"></div>';
-      chartHtml+='</div>';
-      // Append the number right next to the bar!
-      chartHtml+='<div style="width:30px; font-size:12px; font-weight:700; color:#333; text-align:left;">'+c.puntaje+'</div>';
-      chartHtml+='</div>';
-    });
-
-    // Draw X-axis
-    chartHtml += '<div style="display:flex; align-items:center; gap:12px; margin-top:4px;">';
-    chartHtml += '<div style="width:180px; flex-shrink:0;"></div>';
-    chartHtml += '<div style="flex:1; position:relative; height:15px;">';
-    for(let g=0; g<=100; g+=10){
-      let align = g === 0 ? 'left' : (g === 100 ? 'right' : 'center');
-      let transform = g === 0 ? '' : (g === 100 ? 'transform:translateX(50%);' : 'transform:translateX(-50%);');
-      if (g === 100) transform = '';
-      let leftAdjust = g === 100 ? 'right:0;' : 'left:'+g+'%;';
-      chartHtml += '<div style="position:absolute; '+leftAdjust+' top:0; font-size:10px; color:#666; '+transform+'">'+g+'</div>';
-    }
-    chartHtml += '</div><div style="width:30px;"></div></div>';
-    chartHtml += '</div>';
-
-    // TOP 3 AND BOTTOM 3
-    const validComps = comps.filter(c => typeof c.puntaje === 'number');
-    validComps.sort((a,b) => b.puntaje - a.puntaje);
-    const top3 = validComps.slice(0, 3);
-    const bottom3 = validComps.slice().reverse().slice(0, 3);
-
-    chartHtml += `
-    <div style="border-top:1px solid #eee; padding:16px 20px; background:#fafafa; display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-      <div>
-        <div style="font-size:12px; font-weight:700; color:#166534; margin-bottom:8px;">FORTALEZAS HOGAN (Top 3)</div>
-        <ul style="margin:0; padding-left:16px; font-size:11.5px; color:#333;">
-          ${top3.map(c => `<li><strong>${c.nombre}</strong>: ${c.puntaje}</li>`).join('')}
-        </ul>
-      </div>
-      <div>
-        <div style="font-size:12px; font-weight:700; color:#b91c1c; margin-bottom:8px;">OPORTUNIDADES HOGAN (Bottom 3)</div>
-        <ul style="margin:0; padding-left:16px; font-size:11.5px; color:#333;">
-          ${bottom3.map(c => `<li><strong>${c.nombre}</strong>: ${c.puntaje}</li>`).join('')}
-        </ul>
-      </div>
-    </div>
-    `;
-
-    chartHtml += '</div></div>';
-    
-    document.getElementById('hoganChartContainer').innerHTML = chartHtml;
+    document.getElementById('hoganChartContainer').innerHTML = buildHoganChartHtml(comps, 'PERFIL DE COMPETENCIAS (HOGAN) — ESCALA 0 A 100');
   } else {
     document.getElementById('hoganChartContainer').innerHTML = '<div style="padding:20px; text-align:center; color:#666;">Sin datos de competencias Hogan</div>';
   }
+
+  // Segunda gráfica: análisis de grupo (promedio de la Dirección + tipo de
+  // líder al que pertenece la persona), tomado de los archivos de
+  // resultados de Hogan por Dirección.
+  const groupSection = document.getElementById('hoganGroupSection');
+  const groupKey = h && h.dir_corp && h.tipo ? (h.dir_corp + '|' + h.tipo) : null;
+  const group = groupKey && window.HOGAN_GROUPS ? window.HOGAN_GROUPS[groupKey] : null;
+  if (group && group.competencias && group.competencias.length > 0) {
+    groupSection.style.display = 'block';
+    document.getElementById('hoganGroupSubtitle').textContent = `${group.direccion} — Líderes ${group.tipo} (n=${group.n} personas que contestaron)`;
+    document.getElementById('hoganGroupChartContainer').innerHTML = buildHoganChartHtml(group.competencias, 'PROMEDIO DEL GRUPO — ESCALA 0 A 100');
+  } else {
+    groupSection.style.display = 'none';
+  }
+}
+
+// Construye el HTML de una gráfica de barras de competencias Hogan (0-100),
+// con su Top3/Bottom3. Se usa tanto para el individuo como para el
+// promedio de su grupo/Dirección.
+function buildHoganChartHtml(comps, headerLabel){
+  const sorted = [...comps].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
+  let chartHtml = '<div style="border:1px solid #ddd; border-radius:6px; overflow:hidden; background:#fff;">';
+  chartHtml += '<div style="background:#333; color:#fff; padding:8px 16px; font-size:13px; font-weight:700; font-family:\'Space Grotesk\',sans-serif; display:flex; justify-content:space-between; align-items:center;">';
+  chartHtml += '<span>'+headerLabel+'</span><span style="font-size:10px;font-weight:500;opacity:0.8;">(Puntaje)</span></div>';
+  chartHtml += '<div style="padding:16px 20px 24px 16px;"><div style="display:flex; flex-direction:column; gap:10px;">';
+
+  sorted.forEach(c=>{
+    chartHtml+='<div style="display:flex; align-items:center; gap:12px;">';
+    chartHtml+='<div style="width:180px; text-align:right; font-size:11.5px; font-weight:500; color:#333; flex-shrink:0;">'+c.nombre+'</div>';
+    chartHtml+='<div style="flex:1; position:relative; height:20px; border-left:1px solid #ddd; border-right:1px solid #ddd;">';
+    for(let g=0;g<=100;g+=10){
+      chartHtml+='<div style="position:absolute; left:'+g+'%; top:-5px; bottom:-5px; width:1px; background:#f0f0f0; z-index:1;"></div>';
+    }
+    chartHtml+='<div style="position:absolute; left:0; top:2px; bottom:2px; width:'+Math.min(100, c.puntaje)+'%; background:#c0392b; z-index:2;"></div>';
+    chartHtml+='</div>';
+    // Append the number right next to the bar!
+    chartHtml+='<div style="width:30px; font-size:12px; font-weight:700; color:#333; text-align:left;">'+c.puntaje+'</div>';
+    chartHtml+='</div>';
+  });
+
+  // Draw X-axis
+  chartHtml += '<div style="display:flex; align-items:center; gap:12px; margin-top:4px;">';
+  chartHtml += '<div style="width:180px; flex-shrink:0;"></div>';
+  chartHtml += '<div style="flex:1; position:relative; height:15px;">';
+  for(let g=0; g<=100; g+=10){
+    let transform = g === 0 ? '' : (g === 100 ? 'transform:translateX(50%);' : 'transform:translateX(-50%);');
+    if (g === 100) transform = '';
+    let leftAdjust = g === 100 ? 'right:0;' : 'left:'+g+'%;';
+    chartHtml += '<div style="position:absolute; '+leftAdjust+' top:0; font-size:10px; color:#666; '+transform+'">'+g+'</div>';
+  }
+  chartHtml += '</div><div style="width:30px;"></div></div>';
+  chartHtml += '</div>';
+
+  // TOP 3 AND BOTTOM 3
+  const validComps = comps.filter(c => typeof c.puntaje === 'number');
+  validComps.sort((a,b) => b.puntaje - a.puntaje);
+  const top3 = validComps.slice(0, 3);
+  const bottom3 = validComps.slice().reverse().slice(0, 3);
+
+  chartHtml += `
+  <div style="border-top:1px solid #eee; padding:16px 20px; background:#fafafa; display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+    <div>
+      <div style="font-size:12px; font-weight:700; color:#166534; margin-bottom:8px;">FORTALEZAS HOGAN (Top 3)</div>
+      <ul style="margin:0; padding-left:16px; font-size:11.5px; color:#333;">
+        ${top3.map(c => `<li><strong>${c.nombre}</strong>: ${c.puntaje}</li>`).join('')}
+      </ul>
+    </div>
+    <div>
+      <div style="font-size:12px; font-weight:700; color:#b91c1c; margin-bottom:8px;">OPORTUNIDADES HOGAN (Bottom 3)</div>
+      <ul style="margin:0; padding-left:16px; font-size:11.5px; color:#333;">
+        ${bottom3.map(c => `<li><strong>${c.nombre}</strong>: ${c.puntaje}</li>`).join('')}
+      </ul>
+    </div>
+  </div>
+  `;
+
+  chartHtml += '</div></div>';
+  return chartHtml;
 }
 
 
