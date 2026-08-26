@@ -230,7 +230,7 @@ async function loadSupabaseData(){
     const d3={}; desempeno.forEach(x=>{d3[x.expediente]={y2024:x.y2024,y2025:x.y2025,y2026:x.y2026};});
     const t3={}; talentos.forEach(x=>{if(!t3[x.expediente])t3[x.expediente]=[];t3[x.expediente].push({talento:x.talento,score:x.calificacion});});
     const o3={}; objetivos.forEach(x=>{if(!o3[x.expediente])o3[x.expediente]=[];o3[x.expediente].push({talento:x.talento,obj:x.obj,anio:x.anio});});
-    const e3={}; tres60.forEach(x=>{if(!e3[x.expediente])e3[x.expediente]=[];e3[x.expediente].push({dim:x.competencia,lider:x.lider,propio:x.propio,reporte:x.reporte,par:x.par});});
+    const e3={}; tres60.forEach(x=>{if(!e3[x.expediente])e3[x.expediente]=[];e3[x.expediente].push({dim:x.competencia,lider:x.lider,propio:x.propio,reporte:x.reporte,par:x.par,num:x.numero,valor:x.competencia});});
     const c3={}; clima.forEach(x=>{if(!c3[x.expediente])c3[x.expediente]=[];c3[x.expediente].push({dim:x.dimension,pct:x.pct});});
     const s3={}; sucesores.forEach(x=>{s3[x.expediente]={sucesor:x.sucesor,tiempo:x.tiempo};});
 
