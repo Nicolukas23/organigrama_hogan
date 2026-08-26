@@ -148,6 +148,7 @@
         <div id="compDesarrollo"></div>
       </div>
     </div>
+    <div id="hoganDetalleSection" style="margin-top:12px; display:none;"></div>
   </div>
 </div>
 <footer style="margin-top:32px;padding:16px 32px;border-top:1px solid var(--border);text-align:center;color:var(--text-dim);font-size:12px;font-family:'Inter',sans-serif;">
@@ -206,10 +207,76 @@ function normWords(s){
     .sort().join(' ');
 }
 
+// Construye el HTML de la segunda tabla de Hogan: competencias con
+// descripción, fortalezas, oportunidades y recomendaciones de desarrollo
+// por competencia, tal como viene en la hoja individual de cada persona.
+// (Idéntica a la de ficha_hogan.html.)
+function buildHoganDetalleHtml(d){
+  const esc = (s) => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  let html = '';
+
+  html += '<div style="background:var(--crimson); color:#fff; padding:14px 20px; text-align:center; font-size:16px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border-radius:8px 8px 0 0;">COMPETENCIAS</div>';
+  html += '<div style="border:1px solid var(--border); border-top:none; border-radius:0 0 8px 8px; overflow:hidden; margin-bottom:24px;">';
+  html += '<table style="width:100%; border-collapse:collapse; font-size:12.5px;">';
+  html += '<thead><tr style="background:var(--panel-2);">';
+  html += '<th style="text-align:left; padding:10px 14px; width:180px; color:var(--text);">Competencia</th>';
+  html += '<th style="text-align:center; padding:10px 14px; width:110px; color:var(--text);">Puntaje</th>';
+  html += '<th style="text-align:left; padding:10px 14px; color:var(--text);">Descripción</th>';
+  html += '</tr></thead><tbody>';
+  d.competencias.forEach(c => {
+    const pct = Math.max(0, Math.min(100, c.puntaje));
+    html += '<tr style="border-top:1px solid var(--border);">';
+    html += '<td style="padding:10px 14px; font-weight:600; color:var(--text); vertical-align:top;">'+esc(c.nombre)+'</td>';
+    html += '<td style="padding:10px 14px; vertical-align:top;">';
+    html += '<div style="position:relative; height:18px; border-radius:4px; background:var(--panel-2); overflow:hidden;">';
+    html += '<div style="position:absolute; inset:0; width:'+pct+'%; background:linear-gradient(90deg,#94a3b8,#475569);"></div>';
+    html += '<div style="position:relative; text-align:center; font-size:11px; font-weight:700; color:#fff; line-height:18px; text-shadow:0 1px 2px rgba(0,0,0,.4);">'+c.puntaje+'</div>';
+    html += '</div></td>';
+    html += '<td style="padding:10px 14px; color:var(--text-dim); vertical-align:top;">'+esc(c.descripcion)+'</td>';
+    html += '</tr>';
+  });
+  html += '</tbody></table></div>';
+
+  if (d.fortalezas) {
+    html += '<div style="font-size:14px; font-weight:800; color:var(--crimson); margin-bottom:6px;">FORTALEZAS</div>';
+    html += '<div style="background:var(--panel-2); border-radius:8px; padding:14px 18px; font-size:12.5px; color:var(--text); line-height:1.7; margin-bottom:20px;">'+esc(d.fortalezas)+'</div>';
+  }
+
+  if (d.oportunidades) {
+    html += '<div style="font-size:14px; font-weight:800; color:var(--crimson); margin-bottom:6px;">OPORTUNIDADES</div>';
+    html += '<div style="background:var(--crimson-soft); border-radius:8px; padding:14px 18px; font-size:12.5px; color:var(--text); line-height:1.7; margin-bottom:24px;">'+esc(d.oportunidades)+'</div>';
+  }
+
+  if ((d.recomendaciones && d.recomendaciones.length > 0) || d.recomendaciones_nota) {
+    html += '<div style="background:var(--crimson); color:#fff; padding:14px 20px; text-align:center; font-size:16px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border-radius:8px 8px 0 0;">RECOMENDACIONES DE DESARROLLO Y EXPERIENCIAS</div>';
+    html += '<div style="border:1px solid var(--border); border-top:none; border-radius:0 0 8px 8px; overflow:hidden;">';
+    if (d.recomendaciones && d.recomendaciones.length > 0) {
+      html += '<table style="width:100%; border-collapse:collapse; font-size:12.5px;">';
+      html += '<thead><tr style="background:var(--panel-2);">';
+      html += '<th style="text-align:left; padding:10px 14px; width:200px; color:var(--text);">Competencia</th>';
+      html += '<th style="text-align:left; padding:10px 14px; color:var(--text);">Experiencias clave / opciones de desarrollo</th>';
+      html += '</tr></thead><tbody>';
+      d.recomendaciones.forEach(r => {
+        html += '<tr style="border-top:1px solid var(--border);">';
+        html += '<td style="padding:10px 14px; font-weight:600; color:var(--text); vertical-align:top;">'+esc(r.competencia)+'</td>';
+        html += '<td style="padding:10px 14px; color:var(--text-dim); vertical-align:top;">';
+        html += (r.experiencias||[]).map(e => '<div style="margin-bottom:4px;">• '+esc(e)+'</div>').join('');
+        html += '</td></tr>';
+      });
+      html += '</tbody></table>';
+    } else {
+      html += '<div style="padding:14px 18px; font-size:12.5px; color:var(--text-dim); line-height:1.7; white-space:pre-line;">'+esc(d.recomendaciones_nota)+'</div>';
+    }
+    html += '</div>';
+  }
+
+  return html;
+}
+
 async function loadSupabaseData(){
   try{
     const hdr={headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY}};
-    const [personas,desempeno,talentos,objetivos,tres60,clima,sucesores,formacionRows,hgRows]=await Promise.all([
+    const [personas,desempeno,talentos,objetivos,tres60,clima,sucesores,formacionRows,hgRows,hgDetalleRows]=await Promise.all([
       fetchAllRows('personas?select=*'),
       fetchAllRows('desempeno?select=*'),
       fetchAllRows('talentos?select=*'),
@@ -219,6 +286,7 @@ async function loadSupabaseData(){
       fetch(SUPABASE_URL+'/rest/v1/sucesores?select=*',hdr).then(r=>r.json()),
       fetch(SUPABASE_URL+'/rest/v1/formacion?select=*',hdr).then(r=>r.json()),
       fetch(SUPABASE_URL+'/rest/v1/tableros_json?clave=eq.hogan&select=data',hdr).then(r=>r.json()),
+      fetch(SUPABASE_URL+'/rest/v1/tableros_json?clave=eq.hogan_detalle&select=data',hdr).then(r=>r.json()),
     ]);
     const informacion={},formacion={};
     personas.forEach(p=>{informacion[p.expediente]=p;});
@@ -249,6 +317,15 @@ async function loadSupabaseData(){
         (group.team||[]).forEach(member=>{ hgMap[normWords(member.name)]=member; });
       });
     }
+    // Detalle Hogan por persona (competencias con descripción, fortalezas,
+    // oportunidades y recomendaciones de desarrollo), igual que en la
+    // Ficha Preliminar — segunda tabla, tomada de la hoja individual de
+    // cada persona en los archivos de resultados de Hogan por Dirección.
+    let hgDetalleMap={};
+    if(Array.isArray(hgDetalleRows) && hgDetalleRows.length && hgDetalleRows[0].data){
+      hgDetalleMap=hgDetalleRows[0].data;
+    }
+
     const hogan={};
     Object.keys(informacion).forEach(exp=>{
       const member=hgMap[normWords(informacion[exp].nombre)];
@@ -257,6 +334,10 @@ async function loadSupabaseData(){
           .filter(([k])=>k!=='Potencial' && k!=='Potential')
           .map(([nombre,puntaje])=>({nombre,puntaje}));
         hogan[exp]={competencias, potencial:member.scores.Potencial, versatilidad:member.versatilidad};
+      }
+      const detalle=hgDetalleMap[normWords(informacion[exp].nombre)];
+      if(detalle){
+        hogan[exp]={ ...(hogan[exp]||{}), detalle };
       }
     });
     const hijos=Object.keys(informacion).filter(exp=>informacion[exp].nombre&&informacion[exp].jefe);
@@ -474,8 +555,8 @@ function loadFicha(p){
       if(cdInfo&&cdInfo.nombre&&cdInfo.nombre.toUpperCase().trim()===jefeNorm){reportsToCD=true;break;}
     }
   }
-  const showHogan=isCDOwn||reportsToCD;
   const h=DATA.hogan[p.exp];
+  const showHogan=isCDOwn||reportsToCD||(h&&h.competencias&&h.competencias.length>0);
   if(!showHogan){
     document.getElementById('hoganGrid').style.display='none';
     document.getElementById('competenciasSection').style.display='none';
@@ -959,6 +1040,20 @@ function renderHogan(h, exp){
       compDes.innerHTML=desHtml;
       compDesSection.style.display='block';
     }
+
+    // Segunda tabla: detalle Hogan de la persona (competencias con
+    // descripción, fortalezas, oportunidades y recomendaciones de
+    // desarrollo), igual que en la Ficha Preliminar.
+    const detalleSection=document.getElementById('hoganDetalleSection');
+    const detalle=h&&h.detalle;
+    if(detalle&&detalle.competencias&&detalle.competencias.length>0){
+      detalleSection.style.display='block';
+      detalleSection.innerHTML=buildHoganDetalleHtml(detalle);
+    }else{
+      detalleSection.style.display='none';
+      detalleSection.innerHTML='';
+    }
+
     return;
   }
 
