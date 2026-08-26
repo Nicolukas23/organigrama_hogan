@@ -30,7 +30,15 @@
     <button onclick="downloadPDF()" style="background:#fff;color:var(--crimson);border:2px solid #fff;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:14px;">Descargar PDF</button>
   </div>
 </div>
+<div id="loadingOverlay" style="position:fixed; inset:0; background:var(--bg,#f4f5f7); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;">
+  <div style="width:44px; height:44px; border:4px solid #e2e8f0; border-top-color:var(--crimson,#c0392b); border-radius:50%; animation:spin 0.8s linear infinite;"></div>
+  <div style="font-size:14px; font-weight:600; color:var(--text-dim,#666);">Cargando información de la ficha...</div>
+  <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+</div>
 <div class="main" id="fichaContent">
+  <div id="demoBanner" style="display:none; background:#fef3c7; color:#92400e; border:1px solid #f59e0b; border-radius:8px; padding:10px 16px; font-size:13px; font-weight:700; text-align:center; margin-bottom:16px;">
+    ⚠️ MODO DEMOSTRACIÓN — Todos los datos de esta ficha son ficticios, no corresponden a una persona real.
+  </div>
   <div class="info-header" style="position: relative;">
     <button id="btnFullReport" style="position: absolute; right: 24px; top: 20px; background: #ffffff15; border: 1px solid #ffffff40; color: #fff; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 13px; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.background='#ffffff30'" onmouseout="this.style.background='#ffffff15'">
       <span>Ver reporte completo</span>
@@ -94,6 +102,7 @@
         </div>
         <div id="nbText" style="text-align:center; font-size:12px; font-weight:600; margin-top:16px; color:var(--text);">Caja: -</div>
       </div>
+    </div>
     </div>
 
     <!-- Lado Derecho: Fortalezas y Oportunidades -->
@@ -268,14 +277,25 @@ function searchPerson(){
 
 function loadFicha(p) {
   if(!p) return;
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  if(loadingOverlay) loadingOverlay.style.display = 'none';
   // Header
   const info = window.DATA && window.DATA.informacion && window.DATA.informacion[p.exp] ? window.DATA.informacion[p.exp] : p;
   document.getElementById('iNombre').textContent = info.nombre || '—';
   
   // Update Full Report Button
   const btnFull = document.getElementById('btnFullReport');
+  const isDemo = String(p.exp || '').startsWith('DEMO-');
+  const demoBanner = document.getElementById('demoBanner');
+  if (demoBanner) demoBanner.style.display = isDemo ? 'block' : 'none';
   if (btnFull) {
-    btnFull.onclick = () => window.location.href = 'ficha_talento.html?expediente=' + p.exp;
+    if (isDemo) {
+      btnFull.onclick = (e) => { e.preventDefault(); alert('Este es un perfil de demostración. La Ficha Completa solo está disponible para colaboradores reales.'); };
+      btnFull.style.opacity = '0.6';
+    } else {
+      btnFull.onclick = () => window.location.href = 'ficha_talento.html?expediente=' + p.exp;
+      btnFull.style.opacity = '';
+    }
   }
 
   document.getElementById('iCargo').textContent = info.cargo || '—';
@@ -437,6 +457,14 @@ function loadFicha(p) {
 }
 
 
+function toggleTheme(){
+  document.documentElement.classList.toggle('light');
+  localStorage.setItem('theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
+}
+if(localStorage.getItem('theme') === 'light'){
+  document.documentElement.classList.add('light');
+}
+
 function getCajaNum(c){
   if(!c) return 0;
   const s = String(c).trim();
@@ -453,8 +481,86 @@ function getCajaNum(c){
   return 0;
 }
 
+// Perfil de demostración: mismas 9 personas ficticias que en el tablero de
+// liderazgo (tablero_liderazgo.html / buildDemoData), con datos 100%
+// inventados (header, ninebox y Hogan) para mostrarle a directores y
+// gerentes cómo se usa la ficha sin exponer información real.
+function injectDemoData(){
+  window.DATA = window.DATA || {};
+  window.DATA.informacion = window.DATA.informacion || {};
+  window.DATA.hogan = window.DATA.hogan || {};
+  window.DATA.observaciones = window.DATA.observaciones || {};
+
+  const demo = [
+    { exp:'DEMO-001', nombre:'TORRES VELASQUEZ ANDREA CAROLINA', cargo:'Gerente Demo Uno', jefe:'DIRECTOR DEMO', caja:'8',
+      comps:[72,68,74,61,70,58,75,63,80,77,66],
+      fort:'• Impulsa la innovación y traduce la estrategia en planes concretos para su equipo.\n• Comunica con impacto en espacios directivos.\n• Genera confianza y compromiso en sus colaboradores.',
+      oport:'• Puede fortalecer el manejo de la ambigüedad en escenarios de alta incertidumbre.\n• Delegar más para liberar capacidad estratégica.' },
+    { exp:'DEMO-002', nombre:'MENDOZA CASTILLO FELIPE SANTIAGO', cargo:'Analista Demo Senior', jefe:'TORRES VELASQUEZ ANDREA CAROLINA', caja:'5',
+      comps:[55,60,58,52,49,63,47,55,60,52,58],
+      fort:'• Cumple de forma consistente con sus compromisos.\n• Buen manejo de relaciones dentro del equipo.',
+      oport:'• Oportunidad de fortalecer la toma de decisiones bajo presión.\n• Desarrollar mayor iniciativa para proponer cambios.' },
+    { exp:'DEMO-003', nombre:'ROJAS PARDO VALENTINA SOFIA', cargo:'Analista Demo Junior', jefe:'TORRES VELASQUEZ ANDREA CAROLINA', caja:'2',
+      comps:[38,42,45,40,35,48,33,41,44,39,37],
+      fort:'• Alta disposición para aprender y recibir retroalimentación.',
+      oport:'• Requiere acompañamiento cercano para fortalecer su desempeño.\n• Desarrollar habilidades de comunicación e influencia.' },
+    { exp:'DEMO-004', nombre:'CASTELLANOS RUIZ DIEGO ALEJANDRO', cargo:'Gerente Demo Dos', jefe:'DIRECTOR DEMO', caja:'9',
+      comps:[81,79,73,69,77,72,66,80,84,78,75],
+      fort:'• Visión estratégica sobresaliente y alta capacidad de influencia.\n• Lidera procesos de cambio con resultados consistentes.',
+      oport:'• Puede seguir desarrollando la escucha activa en contextos de conflicto.' },
+    { exp:'DEMO-005', nombre:'MORALES QUINTERO LAURA CAMILA', cargo:'Analista Demo Senior', jefe:'CASTELLANOS RUIZ DIEGO ALEJANDRO', caja:'6',
+      comps:[64,61,59,66,55,62,57,60,68,63,59],
+      fort:'• Sólido desempeño técnico y responsabilidad en la entrega de resultados.',
+      oport:'• Fortalecer la comunicación de impacto con públicos ejecutivos.' },
+    { exp:'DEMO-006', nombre:'HERRERA SALCEDO JUAN ESTEBAN', cargo:'Analista Demo Junior', jefe:'CASTELLANOS RUIZ DIEGO ALEJANDRO', caja:'3',
+      comps:[45,48,43,50,39,46,41,44,47,42,40],
+      fort:'• Buena disposición al trabajo en equipo.',
+      oport:'• Necesita desarrollar mayor autonomía en la toma de decisiones.\n• Fortalecer el impulso al cambio.' },
+    { exp:'DEMO-007', nombre:'VARGAS NIÑO CAMILA ANDREA', cargo:'Coordinadora Demo Tres', jefe:'DIRECTOR DEMO', caja:'7',
+      comps:[68,71,64,58,66,54,60,57,72,69,65],
+      fort:'• Alto potencial de crecimiento con fuerte orientación a resultados.',
+      oport:'• Desarrollar mayor tolerancia a la ambigüedad en proyectos nuevos.' },
+    { exp:'DEMO-008', nombre:'PATIÑO OSORIO SEBASTIAN DAVID', cargo:'Coordinador Demo Cuatro', jefe:'DIRECTOR DEMO', caja:'4',
+      comps:[58,55,60,53,57,65,51,54,59,56,52],
+      fort:'• Buen desarrollo de otros y trabajo colaborativo.',
+      oport:'• Fortalecer la visibilidad de sus logros ante la dirección.' },
+    { exp:'DEMO-009', nombre:'GUTIERREZ MONTOYA ISABELLA MARIA', cargo:'Especialista Demo Cinco', jefe:'DIRECTOR DEMO', caja:'1',
+      comps:[32,36,34,30,28,38,29,33,31,35,30],
+      fort:'• Cumple con las tareas asignadas dentro de los tiempos establecidos.',
+      oport:'• Requiere un plan de mejora activo y seguimiento cercano.\n• Fortalecer de forma integral las competencias de liderazgo.' }
+  ];
+
+  const compNames = ['Liderar a otros','Responsabilidad','Escuchar a Otros','Impulsar el Cambio','Toma de Decisiones','Desarrollo de Otros','Influenciar a otros','Impulsar la Estrategia','Impulsar la Innovación','Comunicación de Impacto'];
+
+  demo.forEach(d => {
+    window.DATA.informacion[d.exp] = {
+      nombre: d.nombre,
+      cargo: d.cargo,
+      direccion_area: 'Dirección Demo (Datos de Prueba)',
+      gerencia: 'Gerencia Demo',
+      jefe: d.jefe,
+      antiguedad: '—',
+      caja: d.caja,
+      edad: '—'
+    };
+    const potencial = d.comps[0];
+    const competencias = compNames.map((nombre,i) => ({ nombre, puntaje: d.comps[i+1] }));
+    window.DATA.hogan[d.exp] = {
+      competencias,
+      potencial,
+      versatilidad: potencial >= 70 ? 'Alta Versatilidad' : (potencial >= 45 ? 'Media Versatilidad' : 'Baja Versatilidad'),
+      fortalezas: d.fort,
+      oportunidades: d.oport
+    };
+  });
+
+  window.SUCESORES = window.SUCESORES || [];
+  demo.forEach(d => window.SUCESORES.push({ exp: d.exp, nombre: d.nombre }));
+}
+
 // Initial Load
 loadSupabaseData().finally(() => {
+  injectDemoData();
   // Populate datalist safely now that data is ready
   const dl=document.getElementById('cedulas');
   if(window.SUCESORES && window.SUCESORES.forEach) {
@@ -470,14 +576,25 @@ loadSupabaseData().finally(() => {
   const nombreParam=urlParams.get('nombre');
   const expParam=urlParams.get('exp') || urlParams.get('expediente');
 
+  let matched = null;
   if(expParam){
-    const p=window.SUCESORES.find(x=>x.exp===expParam);
-    if(p)loadFicha(p);
+    matched = window.SUCESORES.find(x=>x.exp===expParam);
   }else if(nombreParam){
-    const p=window.SUCESORES.find(x=>x.nombre===nombreParam);
-    if(p)loadFicha(p);
+    matched = window.SUCESORES.find(x=>x.nombre===nombreParam);
+  }else if(window.SUCESORES && window.SUCESORES.length>0){
+    matched = window.SUCESORES[0];
+  }
+
+  if(matched){
+    loadFicha(matched);
   }else{
-    if(window.SUCESORES && window.SUCESORES.length>0)loadFicha(window.SUCESORES[0]);
+    // No se encontró la persona: ocultar el loader y avisar en vez de
+    // dejar la pantalla en "Cargando..." indefinidamente.
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    if(loadingOverlay) loadingOverlay.style.display = 'none';
+    if(expParam || nombreParam){
+      document.getElementById('iNombre').textContent = 'No se encontró la persona solicitada';
+    }
   }
 });
 
