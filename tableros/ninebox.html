@@ -281,7 +281,12 @@
 <script src="../data/ficha_data.js?v=des2026"></script>
 <script>
 /* Session restore */
-(function(){var s=localStorage.getItem('portal_session');if(s){try{var obj=JSON.parse(s);if(obj.email&&(Date.now()-obj.ts)<86400000){var ol=document.getElementById('loginOverlay');if(ol)ol.classList.add('hidden');var mw=document.getElementById('mainWrap');if(mw)mw.style.display='';}}catch(e){}}})();
+(function(){var s=localStorage.getItem('portal_session');if(s){try{var obj=JSON.parse(s);if(obj.email&&(Date.now()-obj.ts)<86400000){var ol=document.getElementById('loginOverlay');if(ol)ol.classList.add('hidden');var mw=document.getElementById('mainWrap');if(mw)mw.style.display='';
+  // Los usuarios autorizados de Nine Box ya están validados para ver a
+  // toda la organización; propaga esa sesión para que ficha_hogan.html /
+  // ficha_talento.html (abiertas desde aquí) no bloqueen el acceso.
+  sessionStorage.setItem('talento_session', JSON.stringify({email:obj.email, nombre:obj.email, rol:'admin_ninebox', activeScope:'FULL', allowedExpedientes:null}));
+}}catch(e){}}})();
 /* ---------- Data & config ---------- */
 let RAW = JSON.parse(document.getElementById('dataStore').textContent);
 
@@ -1757,6 +1762,10 @@ function doLogin(){
   loggedInUser = email;
   document.getElementById('loginOverlay').classList.add('hidden');
   localStorage.setItem('portal_session',JSON.stringify({email:email,ts:Date.now()}));
+  // Los usuarios autorizados de Nine Box ya están validados para ver a
+  // toda la organización; propaga esa sesión para que ficha_hogan.html /
+  // ficha_talento.html (abiertas desde aquí) no bloqueen el acceso.
+  sessionStorage.setItem('talento_session', JSON.stringify({email:email, nombre:email, rol:'admin_ninebox', activeScope:'FULL', allowedExpedientes:null}));
   document.getElementById('mainWrap').style.display = '';
 }
 

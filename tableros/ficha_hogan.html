@@ -702,9 +702,44 @@ function injectDemoData(){
   demo.forEach(d => window.SUCESORES.push({ exp: d.exp, nombre: d.nombre }));
 }
 
+// ── CONTROL DE ACCESO ────────────────────────────────────────────────
+// Esta ficha se abre desde el Tablero de Liderazgo, que guarda en
+// sessionStorage quién inició sesión y qué expedientes puede ver. Sin esa
+// sesión (o fuera de su alcance permitido) no se muestra ninguna ficha:
+// evita que un gerente o director pueda buscar/abrir la ficha de
+// cualquier persona de la compañía, no solo la de su equipo.
+function getTalentoSession(){
+  try{
+    const raw = sessionStorage.getItem('talento_session');
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){ return null; }
+}
+function showAccessDenied(){
+  const overlay = document.getElementById('loadingOverlay');
+  if(!overlay) return;
+  overlay.innerHTML = `
+    <div style="font-size:40px;">🔒</div>
+    <div style="font-size:16px; font-weight:700; color:var(--text,#1a1a2e); text-align:center; max-width:360px;">Acceso no autorizado</div>
+    <div style="font-size:13px; color:var(--text-dim,#666); text-align:center; max-width:360px;">Debes ingresar desde el Tablero de Liderazgo, y solo puedes ver fichas dentro de tu alcance.</div>
+    <a href="tablero_liderazgo.html" style="margin-top:8px; background:var(--crimson,#c0392b); color:#fff; padding:10px 20px; border-radius:8px; font-weight:700; text-decoration:none; font-size:14px;">Ir al Tablero de Liderazgo</a>`;
+  overlay.style.display = 'flex';
+}
+
 // Initial Load
 loadSupabaseData().finally(() => {
   injectDemoData();
+
+  const talentoSession = getTalentoSession();
+  if(!talentoSession){
+    showAccessDenied();
+    return;
+  }
+  if(Array.isArray(talentoSession.allowedExpedientes)){
+    const allowedSet = new Set(talentoSession.allowedExpedientes);
+    window.SUCESORES = (window.SUCESORES || []).filter(p => allowedSet.has(p.exp));
+  }
+
   // Populate datalist safely now that data is ready
   const dl=document.getElementById('cedulas');
   if(window.SUCESORES && window.SUCESORES.forEach) {
@@ -723,22 +758,22 @@ loadSupabaseData().finally(() => {
   let matched = null;
   if(expParam){
     matched = window.SUCESORES.find(x=>x.exp===expParam);
+    if(!matched){ showAccessDenied(); return; }
   }else if(nombreParam){
     matched = window.SUCESORES.find(x=>x.nombre===nombreParam);
-  }else if(window.SUCESORES && window.SUCESORES.length>0){
-    matched = window.SUCESORES[0];
+    if(!matched){ showAccessDenied(); return; }
+  }else{
+    // Sin parámetros en la URL: por defecto, la propia ficha de la sesión.
+    matched = window.SUCESORES.find(x=>x.exp===talentoSession.expediente);
+    if(!matched && window.SUCESORES && window.SUCESORES.length>0){
+      matched = window.SUCESORES[0];
+    }
   }
 
   if(matched){
     loadFicha(matched);
   }else{
-    // No se encontró la persona: ocultar el loader y avisar en vez de
-    // dejar la pantalla en "Cargando..." indefinidamente.
-    const loadingOverlay = document.getElementById('loadingOverlay');
-    if(loadingOverlay) loadingOverlay.style.display = 'none';
-    if(expParam || nombreParam){
-      document.getElementById('iNombre').textContent = 'No se encontró la persona solicitada';
-    }
+    showAccessDenied();
   }
 });
 

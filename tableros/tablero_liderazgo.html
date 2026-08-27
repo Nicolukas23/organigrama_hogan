@@ -81,7 +81,7 @@
         <a href="javascript:void(0)" onclick="showLoginOverlay()" style="color:var(--text-dim);font-size:11px;margin-left:4px;text-decoration:none">· cambiar</a>
       </div>
       <button class="btn-icon" onclick="window.GlobalSearch && window.GlobalSearch.open()" title="Buscar colaborador (Cmd+K)">🔍 Buscar <kbd style="font-size:10px;opacity:0.7;background:rgba(255,255,255,0.1);padding:1px 4px;border-radius:3px">⌘K</kbd></button>
-      <button class="btn-icon" onclick="window.print()" title="Exportar reporte ejecutivo">📄 PDF One-Pager</button>
+      <button class="btn-icon" onclick="hoganAction()" title="Hogan">🎯 Hogan</button>
       <button class="btn-icon" onclick="exportExcel()">📥 Descargar Excel</button>
       <button class="btn-icon" onclick="toggleTheme()">🌓</button>
     </div>
@@ -636,6 +636,11 @@ function toggleTheme(){
   document.documentElement.classList.toggle('light');
   localStorage.setItem('theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
 }
+
+function hoganAction(){
+  // Pendiente: falta definir la funcionalidad de este botón.
+  alert('Función Hogan próximamente.');
+}
 if(localStorage.getItem('theme') === 'light'){
   document.documentElement.classList.add('light');
 }
@@ -763,6 +768,19 @@ function init(){
   }
 
   if(foundUser){
+    // Igual que en loginByEmail(): hay que fijar el alcance ANTES de
+    // setSession(), porque getScopedData() depende de window.activeScope.
+    // Sin esto, al recargar la página (sesión restaurada desde
+    // localStorage) un gerente o director de reportes directos podía
+    // terminar viendo su estructura completa en vez de solo sus reportes
+    // directos.
+    if(foundUser.rol === 'admin' || foundUser.rol === 'admin_restricted'){
+      window.activeScope = 'FULL';
+    } else if(foundUser.rol === 'gerente' || foundUser.is_direct_reports_only){
+      window.activeScope = 'DIRECT';
+    } else if(!window.activeScope){
+      window.activeScope = 'FULL';
+    }
     setSession(foundUser);
   } else {
     showLoginOverlay();
@@ -918,9 +936,34 @@ function buildLeaders(){
 
 /* ── AUTH ──────────────────────────────────────────────────────────── */
 function showLoginOverlay(){
+  CUR = null;
+  sessionStorage.removeItem('talento_session');
   document.getElementById('loginOverlay').style.display = 'flex';
   document.getElementById('mainContent').style.display = 'none';
   document.getElementById('loginErr').style.display = 'none';
+}
+
+// Guarda en sessionStorage quién está logueado y qué expedientes puede ver,
+// para que ficha_hogan.html / ficha_talento.html (abiertas en otra pestaña
+// desde este tablero) solo puedan mostrar fichas dentro del alcance de este
+// usuario, y no la de cualquier persona de la compañía.
+function persistSession(){
+  if(!CUR){ sessionStorage.removeItem('talento_session'); return; }
+  let allowedExpedientes = null; // null = sin restricción (solo admin completo)
+  if(CUR.rol !== 'admin'){
+    const scoped = getScopedData();
+    const set = new Set(scoped.map(r => r.expediente));
+    if(CUR.expediente) set.add(CUR.expediente);
+    allowedExpedientes = Array.from(set);
+  }
+  sessionStorage.setItem('talento_session', JSON.stringify({
+    email: CUR.email,
+    nombre: CUR.nombre,
+    rol: CUR.rol,
+    expediente: CUR.expediente,
+    activeScope: window.activeScope,
+    allowedExpedientes
+  }));
 }
 
 function hideLoginOverlay(){
@@ -1031,6 +1074,7 @@ function selectScope(scope) {
     // If they were already logged in, just re-filter
     setupFilters();
     applyFilters();
+    persistSession();
   }
 }
 
@@ -1072,6 +1116,7 @@ function setSession(user){
   hideLoginOverlay();
   setupFilters();
   applyFilters();
+  persistSession();
 }
 
 /* ── SCOPE & FILTERS ───────────────────────────────────────────────── */
