@@ -478,8 +478,14 @@ const CD_EXPEDIENTES = ['52185300','79947402','80425417','1128466768','85467103'
 const DEMO_EMAIL = 'demo.director@claro.com.co';
 const DEMO_DIRECTOR_NAME = 'DIRECTOR DEMO';
 
-function demoScores(vals){
-  const comps = ['Liderar a otros','Responsabilidad','Escuchar a Otros','Impulsar el Cambio','Toma de Decisiones','Desarrollo de Otros','Influenciar a otros','Impulsar la Estrategia','Impulsar la Innovación','Comunicación de Impacto'];
+// Estratégico: Directores, Gerentes y Business Partners. Operación (antes
+// "Gerencial"): Jefes y Coordinadores. Cada vertiente tiene su propio set
+// de 10 competencias, tal como en los datos reales.
+const DEMO_COMPS_EST = ['Liderar a otros','Responsabilidad','Escuchar a Otros','Impulsar el Cambio','Toma de Decisiones','Desarrollo de Otros','Influenciar a otros','Impulsar la Estrategia','Impulsar la Innovación','Comunicación de Impacto'];
+const DEMO_COMPS_OP = ['Toma de Decisiones','Construcción de Equipos','Impulsar la Ejecución','Delegación','Visión del Negocio','Resolución de Problemas','Impulsar la Diversidad','Trabajo en Equipo','Responsabilidad','Manejo de la Ambigüedad'];
+
+function demoScores(vals, tipo){
+  const comps = tipo === 'Estratégico' ? DEMO_COMPS_EST : DEMO_COMPS_OP;
   const scores = { Potencial: vals[0] };
   comps.forEach((c,i) => { scores[c] = vals[i+1]; });
   return scores;
@@ -487,18 +493,18 @@ function demoScores(vals){
 
 function buildDemoData(){
   const base = [
-    { nombre:'TORRES VELASQUEZ ANDREA CAROLINA', cargo:'Gerente Demo Uno', caja:'8', jefe:DEMO_DIRECTOR_NAME, gerencia:'Gerencia Demo Uno', sucesor:'Sí', tiempo:'1 Año', desempeno:'Alto', potencial:'Alto', genero:'F', vals:[72,68,74,61,70,58,75,63,80,77,66] },
-    { nombre:'MENDOZA CASTILLO FELIPE SANTIAGO', cargo:'Analista Demo Senior', caja:'5', jefe:'TORRES VELASQUEZ ANDREA CAROLINA', gerencia:'Gerencia Demo Uno', sucesor:'No', tiempo:'—', desempeno:'Medio', potencial:'Medio', genero:'M', vals:[55,60,58,52,49,63,47,55,60,52,58] },
-    { nombre:'ROJAS PARDO VALENTINA SOFIA', cargo:'Analista Demo Junior', caja:'2', jefe:'TORRES VELASQUEZ ANDREA CAROLINA', gerencia:'Gerencia Demo Uno', sucesor:'No', tiempo:'—', desempeno:'Bajo', potencial:'Bajo', genero:'F', vals:[38,42,45,40,35,48,33,41,44,39,37] },
-    { nombre:'CASTELLANOS RUIZ DIEGO ALEJANDRO', cargo:'Gerente Demo Dos', caja:'9', jefe:DEMO_DIRECTOR_NAME, gerencia:'Gerencia Demo Dos', sucesor:'Sí', tiempo:'Listo ya', desempeno:'Alto', potencial:'Alto', genero:'M', vals:[81,79,73,69,77,72,66,80,84,78,75] },
-    { nombre:'MORALES QUINTERO LAURA CAMILA', cargo:'Analista Demo Senior', caja:'6', jefe:'CASTELLANOS RUIZ DIEGO ALEJANDRO', gerencia:'Gerencia Demo Dos', sucesor:'Sí', tiempo:'2 Años', desempeno:'Alto', potencial:'Medio', genero:'F', vals:[64,61,59,66,55,62,57,60,68,63,59] },
-    { nombre:'HERRERA SALCEDO JUAN ESTEBAN', cargo:'Analista Demo Junior', caja:'3', jefe:'CASTELLANOS RUIZ DIEGO ALEJANDRO', gerencia:'Gerencia Demo Dos', sucesor:'No', tiempo:'—', desempeno:'Medio', potencial:'Bajo', genero:'M', vals:[45,48,43,50,39,46,41,44,47,42,40] },
-    { nombre:'VARGAS NIÑO CAMILA ANDREA', cargo:'Coordinadora Demo Tres', caja:'7', jefe:DEMO_DIRECTOR_NAME, gerencia:'Gerencia Demo Tres', sucesor:'Sí', tiempo:'1 Año', desempeno:'Alto', potencial:'Bajo', genero:'F', vals:[68,71,64,58,66,54,60,57,72,69,65] },
-    { nombre:'PATIÑO OSORIO SEBASTIAN DAVID', cargo:'Coordinador Demo Cuatro', caja:'4', jefe:DEMO_DIRECTOR_NAME, gerencia:'Gerencia Demo Cuatro', sucesor:'No', tiempo:'—', desempeno:'Medio', potencial:'Alto', genero:'M', vals:[58,55,60,53,57,65,51,54,59,56,52] },
-    { nombre:'GUTIERREZ MONTOYA ISABELLA MARIA', cargo:'Especialista Demo Cinco', caja:'1', jefe:DEMO_DIRECTOR_NAME, gerencia:'Gerencia Demo Cinco', sucesor:'No', tiempo:'—', desempeno:'Bajo', potencial:'Bajo', genero:'F', vals:[32,36,34,30,28,38,29,33,31,35,30] }
+    { nombre:'TORRES VELASQUEZ ANDREA CAROLINA', cargo:'Gerente Demo Uno', caja:'8', jefe:DEMO_DIRECTOR_NAME, gerencia:'Gerencia Demo Uno', sucesor:'Sí', tiempo:'1 Año', desempeno:'Alto', potencial:'Alto', genero:'F', tipo:'Estratégico', vals:[72,68,74,61,70,58,75,63,80,77,66] },
+    { nombre:'MENDOZA CASTILLO FELIPE SANTIAGO', cargo:'Analista Demo Senior', caja:'5', jefe:'TORRES VELASQUEZ ANDREA CAROLINA', gerencia:'Gerencia Demo Uno', sucesor:'No', tiempo:'—', desempeno:'Medio', potencial:'Medio', genero:'M', tipo:'Gerencial', vals:[55,60,58,52,49,63,47,55,60,52,58] },
+    { nombre:'ROJAS PARDO VALENTINA SOFIA', cargo:'Analista Demo Junior', caja:'2', jefe:'TORRES VELASQUEZ ANDREA CAROLINA', gerencia:'Gerencia Demo Uno', sucesor:'No', tiempo:'—', desempeno:'Bajo', potencial:'Bajo', genero:'F', tipo:'Gerencial', vals:[38,42,45,40,35,48,33,41,44,39,37] },
+    { nombre:'CASTELLANOS RUIZ DIEGO ALEJANDRO', cargo:'Gerente Demo Dos', caja:'9', jefe:DEMO_DIRECTOR_NAME, gerencia:'Gerencia Demo Dos', sucesor:'Sí', tiempo:'Listo ya', desempeno:'Alto', potencial:'Alto', genero:'M', tipo:'Estratégico', vals:[81,79,73,69,77,72,66,80,84,78,75] },
+    { nombre:'MORALES QUINTERO LAURA CAMILA', cargo:'Analista Demo Senior', caja:'6', jefe:'CASTELLANOS RUIZ DIEGO ALEJANDRO', gerencia:'Gerencia Demo Dos', sucesor:'Sí', tiempo:'2 Años', desempeno:'Alto', potencial:'Medio', genero:'F', tipo:'Gerencial', vals:[64,61,59,66,55,62,57,60,68,63,59] },
+    { nombre:'HERRERA SALCEDO JUAN ESTEBAN', cargo:'Analista Demo Junior', caja:'3', jefe:'CASTELLANOS RUIZ DIEGO ALEJANDRO', gerencia:'Gerencia Demo Dos', sucesor:'No', tiempo:'—', desempeno:'Medio', potencial:'Bajo', genero:'M', tipo:'Gerencial', vals:[45,48,43,50,39,46,41,44,47,42,40] },
+    { nombre:'VARGAS NIÑO CAMILA ANDREA', cargo:'Coordinadora Demo Tres', caja:'7', jefe:DEMO_DIRECTOR_NAME, gerencia:'Gerencia Demo Tres', sucesor:'Sí', tiempo:'1 Año', desempeno:'Alto', potencial:'Bajo', genero:'F', tipo:'Gerencial', vals:[68,71,64,58,66,54,60,57,72,69,65] },
+    { nombre:'PATIÑO OSORIO SEBASTIAN DAVID', cargo:'Coordinador Demo Cuatro', caja:'4', jefe:DEMO_DIRECTOR_NAME, gerencia:'Gerencia Demo Cuatro', sucesor:'No', tiempo:'—', desempeno:'Medio', potencial:'Alto', genero:'M', tipo:'Gerencial', vals:[58,55,60,53,57,65,51,54,59,56,52] },
+    { nombre:'GUTIERREZ MONTOYA ISABELLA MARIA', cargo:'Especialista Demo Cinco', caja:'1', jefe:DEMO_DIRECTOR_NAME, gerencia:'Gerencia Demo Cinco', sucesor:'No', tiempo:'—', desempeno:'Bajo', potencial:'Bajo', genero:'F', tipo:'Gerencial', vals:[32,36,34,30,28,38,29,33,31,35,30] }
   ];
   return base.map((d,i) => {
-    const scores = demoScores(d.vals);
+    const scores = demoScores(d.vals, d.tipo);
     const versatilidad = scores.Potencial >= 70 ? 'Alta Versatilidad' : (scores.Potencial >= 45 ? 'Media Versatilidad' : 'Baja Versatilidad');
     return {
       expediente: 'DEMO-' + String(i+1).padStart(3,'0'),
@@ -525,7 +531,8 @@ function buildDemoData(){
       hogan_versatilidad: versatilidad,
       hogan_clasificacion: 'Demo',
       hogan_potencial: scores.Potencial,
-      hogan_status: 'Contestó'
+      hogan_status: 'Contestó',
+      hogan_tipo: d.tipo
     };
   });
 }
@@ -834,6 +841,11 @@ function buildLeaders(){
     const isGer = cargo.includes('gerente') || nivel === '2';
 
     if(isDir || isGer){
+      // Solo los directores de nivel Comité Directivo pueden alternar entre
+      // "Reportes Directos" y "Estructura Completa". El resto de directores
+      // (nivel de función directo, no CD) quedan igual que los gerentes:
+      // solamente ven sus reportes directos.
+      const isCDLevelDirector = isDir && CD_EXPEDIENTES.includes(r.expediente);
       map.set(email, {
         nombre: r.nombre,
         cargo: r.cargo,
@@ -842,6 +854,7 @@ function buildLeaders(){
         rol: isDir ? 'director' : 'gerente',
         scope_dir: r.direccion,
         scope_ger: r.gerencia,
+        is_direct_reports_only: isDir && !isCDLevelDirector,
         password: 'Claro2026*'
       });
     }
@@ -894,14 +907,17 @@ function findUserByInput(input){
   );
 
   if(foundInAll){
+    const isDirFallback = (foundInAll.cargo || '').toLowerCase().includes('director');
+    const isCDLevelDirector = isDirFallback && CD_EXPEDIENTES.includes(foundInAll.expediente);
     return {
       nombre: foundInAll.nombre,
       cargo: foundInAll.cargo,
       email: foundInAll.email || raw,
       expediente: foundInAll.expediente,
-      rol: (foundInAll.cargo || '').toLowerCase().includes('director') ? 'director' : 'gerente',
+      rol: isDirFallback ? 'director' : 'gerente',
       scope_dir: foundInAll.direccion,
       scope_ger: foundInAll.gerencia,
+      is_direct_reports_only: isDirFallback && !isCDLevelDirector,
       password: 'Claro2026*'
     };
   }
@@ -933,7 +949,9 @@ function loginByEmail(){
     window.activeScope = 'FULL';
     document.getElementById('loginOverlay').style.display = 'none';
     setSession(user);
-  } else if (user.rol === 'gerente') {
+  } else if (user.rol === 'gerente' || user.is_direct_reports_only) {
+    // Gerentes y directores que no son de nivel Comité Directivo solo ven
+    // sus reportes directos, sin opción de cambiar a estructura completa.
     window.activeScope = 'DIRECT';
     document.getElementById('loginOverlay').style.display = 'none';
     setSession(user);
@@ -967,7 +985,7 @@ function setSession(user){
   CUR = user;
   localStorage.setItem('lider_email', user.email);
 
-  if(user.rol === 'admin' || user.rol === 'admin_restricted' || user.rol === 'gerente'){
+  if(user.rol === 'admin' || user.rol === 'admin_restricted' || user.rol === 'gerente' || user.is_direct_reports_only){
     document.getElementById('btnScopeToggle').style.display = 'none';
   } else {
     document.getElementById('btnScopeToggle').style.display = 'inline-block';

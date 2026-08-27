@@ -120,14 +120,6 @@
 
   </div>
 
-  <!-- Bottom: Gráfica Hogan -->
-  <div style="margin-top:40px; margin-bottom: 32px;">
-    <div style="background: #1e293b; color: #ffffff; padding: 14px 20px; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 8px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">COMPETENCIAS DE HOGAN</div>
-    <div id="hoganChartContainer" style="background:var(--panel); border-radius:10px; width:100%;">
-      <div style="padding:20px; text-align:center; color:var(--text-dim);">Cargando gráfica...</div>
-    </div>
-  </div>
-
   <!-- Bottom: Detalle Hogan (competencias con descripción, fortalezas,
        oportunidades y recomendaciones de desarrollo por persona) -->
   <div id="hoganDetalleSection" style="margin-top:40px; margin-bottom: 32px; display:none;"></div>
@@ -406,21 +398,6 @@ function loadFicha(p) {
       box.innerHTML = `<span style="position:absolute; top:6px; left:8px; opacity:0.7; font-size:11px;">Caja ${caja}</span> <div style="background:#ffffff; color:#1e293b; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:900; box-shadow:0 4px 6px rgba(0,0,0,0.1); border:2px solid #1e293b; margin:auto;">${ini}</div>`;
       document.getElementById('nbText').innerText = 'Ubicación actual: Caja ' + caja;
     }
-  }
-
-  // Competencies Chart
-  let comps = [];
-  if (h && h.competencias) comps = h.competencias;
-  else if (p.hogan_scores) {
-    Object.entries(p.hogan_scores).forEach(([k,v]) => {
-      if(k !== 'Potencial' && k !== 'Potential') comps.push({nombre: k, puntaje: v});
-    });
-  }
-
-  if (comps.length > 0) {
-    document.getElementById('hoganChartContainer').innerHTML = buildHoganChartHtml(comps, 'PERFIL DE COMPETENCIAS (HOGAN) — ESCALA 0 A 100');
-  } else {
-    document.getElementById('hoganChartContainer').innerHTML = '<div style="padding:20px; text-align:center; color:#666;">Sin datos de competencias Hogan</div>';
   }
 
   // Segunda tabla: detalle Hogan de la persona (competencias con
