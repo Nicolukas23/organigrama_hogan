@@ -121,27 +121,56 @@
     <div class="chart-card" id="hoganFoco" style="margin-top:12px;display:none;"></div>
   </div>
 
+  <!-- Mapeo de Talento: ubicación en la ninebox + fortalezas/oportunidades,
+       igual que en la Ficha Preliminar. -->
+  <div id="mapeoTalentoSection" style="display:none;">
+    <div style="background: var(--crimson); color: #ffffff; padding: 14px 20px; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 8px; margin-top: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">MAPEO DE TALENTO</div>
+    <div style="display:grid; grid-template-columns:380px 1fr; gap:24px; margin-top:24px; align-items:start;">
+      <div>
+        <div style="background: #1e293b; color: #ffffff; padding: 10px 16px; text-align: center; font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; border-radius: 8px; margin-bottom: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">UBICACIÓN EN LA NINEBOX</div>
+        <div id="mapeoNineboxContainer" style="background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:24px 16px; width:360px; margin:0 auto; display:flex; gap:12px;">
+          <div style="display:flex; flex-direction:column; justify-content:space-around; padding-bottom:30px; font-size:11px; font-weight:700; color:var(--text-dim); text-align:center; line-height:1.2;">
+            <div>Alto<br>desempeño</div>
+            <div>Desempeño<br>consistente</div>
+            <div>Bajo<br>desempeño</div>
+          </div>
+          <div style="flex:1;">
+            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-bottom:8px; font-size:11px; font-weight:700; color:var(--text-dim); text-align:center;">
+              <div>Experto</div>
+              <div>Sólido</div>
+              <div>Versátil</div>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; aspect-ratio:1;">
+            <div id="mapeoNb7" style="position:relative; background:var(--c7); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">7</div>
+            <div id="mapeoNb8" style="position:relative; background:var(--c8); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">8</div>
+            <div id="mapeoNb9" style="position:relative; background:var(--c9); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">9</div>
+            <div id="mapeoNb4" style="position:relative; background:var(--c4); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">4</div>
+            <div id="mapeoNb5" style="position:relative; background:var(--c5); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">5</div>
+            <div id="mapeoNb6" style="position:relative; background:var(--c6); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">6</div>
+            <div id="mapeoNb1" style="position:relative; background:var(--c1); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">1</div>
+            <div id="mapeoNb2" style="position:relative; background:var(--c2); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">2</div>
+            <div id="mapeoNb3" style="position:relative; background:var(--c3); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">3</div>
+          </div>
+          <div id="mapeoNbText" style="text-align:center; font-size:12px; font-weight:600; margin-top:16px; color:var(--text);">Caja: -</div>
+        </div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div style="background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:24px;">
+          <div style="font-size:13px;font-weight:800;color:#166534;background:#dcfce7;padding:8px 12px;border-radius:6px;margin-bottom:16px;text-align:center;font-family:'Space Grotesk',sans-serif;">FORTALEZAS</div>
+          <div id="mapeoFortText" style="font-size:13px;color:var(--text);line-height:2;white-space:pre-line;">Sin datos</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:24px;">
+          <div style="font-size:13px;font-weight:800;color:#854d0e;background:#fef08a;padding:8px 12px;border-radius:6px;margin-bottom:16px;text-align:center;font-family:'Space Grotesk',sans-serif;">OPORTUNIDADES DE DESARROLLO / DESCARRILADORES</div>
+          <div id="mapeoOportText" style="font-size:13px;color:var(--text);line-height:2;white-space:pre-line;">Sin datos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Resultados Hogan -->
   <div id="competenciasSection" style="display:none;">
-    <div class="section-title" style="background:#1a1a2e;">Resultados Hogan</div>
-    <div class="chart-card">
-      <div class="chart-title">Perfil de Competencias — Escala 0 a 100</div>
-      <div id="competenciasChart"></div>
-    </div>
-    <div class="grid-2" style="margin-top:12px;">
-      <div id="compFortalezasSection" style="display:none;">
-        <div class="chart-card" style="text-align:left;">
-          <div class="chart-title" style="color:var(--green);font-weight:700;">Fortalezas</div>
-          <div id="compFortalezas"></div>
-        </div>
-      </div>
-      <div id="compOportunidadesSection" style="display:none;">
-        <div class="chart-card" style="text-align:left;">
-          <div class="chart-title" style="color:var(--crimson);font-weight:700;">Oportunidades</div>
-          <div id="compOportunidades"></div>
-        </div>
-      </div>
-    </div>
+    <div class="section-title" style="background:#1a1a2e;">Resultados de Hogan</div>
     <div id="compDesarrolloSection" style="display:none;margin-top:12px;">
       <div class="chart-card" style="text-align:left;">
         <div class="chart-title" style="font-weight:700;">Sugerencias de Desarrollo para ser Sucesor</div>
@@ -205,6 +234,21 @@ function normWords(s){
     .toUpperCase().split(/\s+/)
     .filter(w => !['DE','LA','DEL','LOS','LAS','Y','SAN','SANTA'].includes(w))
     .sort().join(' ');
+}
+
+function getCajaNum(c){
+  if(!c) return 0;
+  const s = String(c).trim();
+  if(s==='1'||s==='1. En riesgo') return 1;
+  if(s==='2'||s==='2. En revisión') return 2;
+  if(s==='3'||s==='3. Sólido') return 3;
+  if(s==='4'||s==='4. Oportunidad en Rol') return 4;
+  if(s==='5'||s==='5. Profesional Experimentado') return 5;
+  if(s==='6'||s==='6. Alto Impacto') return 6;
+  if(s==='7'||s==='7. Alto Potencial') return 7;
+  if(s==='8'||s==='8. Estrella Ascendente') return 8;
+  if(s==='9'||s==='9. Futuro Líder') return 9;
+  return 0;
 }
 
 // Construye el HTML de la segunda tabla de Hogan: competencias con
@@ -278,7 +322,7 @@ function buildHoganDetalleHtml(d){
 async function loadSupabaseData(){
   try{
     const hdr={headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY}};
-    const [personas,desempeno,talentos,objetivos,tres60,clima,sucesores,formacionRows,hgRows,hgDetalleRows]=await Promise.all([
+    const [personas,desempeno,talentos,objetivos,tres60,clima,sucesores,formacionRows,hgRows,hgDetalleRows,nineboxRows]=await Promise.all([
       fetchAllRows('personas?select=*'),
       fetchAllRows('desempeno?select=*'),
       fetchAllRows('talentos?select=*'),
@@ -289,9 +333,21 @@ async function loadSupabaseData(){
       fetch(SUPABASE_URL+'/rest/v1/formacion?select=*',hdr).then(r=>r.json()),
       fetch(SUPABASE_URL+'/rest/v1/tableros_json?clave=eq.hogan&select=data',hdr).then(r=>r.json()),
       fetch(SUPABASE_URL+'/rest/v1/tableros_json?clave=eq.hogan_detalle&select=data',hdr).then(r=>r.json()),
+      fetch(SUPABASE_URL+'/rest/v1/ninebox?select=*',hdr).then(r=>r.json()),
     ]);
     const informacion={},formacion={};
     personas.forEach(p=>{informacion[p.expediente]=p;});
+
+    // `personas` no trae la ubicación en la ninebox; vive en `ninebox`.
+    const nbMap={};
+    (Array.isArray(nineboxRows)?nineboxRows:[]).forEach(n=>{nbMap[n.expediente]=n;});
+    Object.keys(informacion).forEach(exp=>{
+      const nb=nbMap[exp];
+      if(nb && informacion[exp]){
+        informacion[exp].caja=nb.caja;
+        if(!informacion[exp].jefe) informacion[exp].jefe=nb.jefe;
+      }
+    });
     const parseArr=(s)=>{ try{ const a=JSON.parse(s); return Array.isArray(a)?a:[]; }catch(e){ return []; } };
     (Array.isArray(formacionRows)?formacionRows:[]).forEach(x=>{
       formacion[x.expediente]={
@@ -480,6 +536,58 @@ function loadFicha(p){
     if(wrapEq) wrapEq.style.display='none';
     if(wrapEqCD) wrapEqCD.style.display='none';
   }
+
+  // Mapeo de Talento: ubicación en la ninebox + fortalezas/oportunidades,
+  // igual que en la Ficha Preliminar.
+  (function(){
+    const mapeoSection=document.getElementById('mapeoTalentoSection');
+    if(!mapeoSection) return;
+    mapeoSection.style.display='block';
+
+    for(let i=1;i<=9;i++){
+      const box=document.getElementById('mapeoNb'+i);
+      if(box){
+        box.style.border='none';
+        box.style.boxShadow='none';
+        box.style.transform='scale(1)';
+        box.style.zIndex='1';
+        box.innerHTML=i;
+      }
+    }
+    const caja=getCajaNum(info&&info.caja);
+    if(caja){
+      const box=document.getElementById('mapeoNb'+caja);
+      if(box){
+        const nArr=(info&&info.nombre?info.nombre:p.nombre||'XX').split(' ');
+        const ini=nArr.length>1?(nArr[0][0]+nArr[1][0]):(nArr[0][0]+(nArr[0][1]||'X'));
+        box.style.border='3px solid #1e293b';
+        box.style.boxShadow='0 8px 16px rgba(0,0,0,0.15)';
+        box.style.transform='scale(1.05)';
+        box.style.zIndex='10';
+        box.innerHTML=`<span style="position:absolute; top:6px; left:8px; opacity:0.7; font-size:11px;">Caja ${caja}</span> <div style="background:#ffffff; color:#1e293b; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:900; box-shadow:0 4px 6px rgba(0,0,0,0.1); border:2px solid #1e293b; margin:auto;">${ini}</div>`;
+        document.getElementById('mapeoNbText').innerText='Ubicación actual: Caja '+caja;
+      }
+    } else {
+      document.getElementById('mapeoNbText').innerText='Caja: -';
+    }
+
+    const hMapeo=DATA.hogan[p.exp];
+    const obsMapeo=DATA.observaciones[p.exp];
+    const formatBulletsMapeo=(txt)=>{
+      if(!txt||String(txt)==='nan') return 'Sin datos';
+      return String(txt).replace(/•/g,'<br><span style="color:var(--crimson);font-weight:bold;">•</span>');
+    };
+    const fortEl=document.getElementById('mapeoFortText');
+    if(obsMapeo&&obsMapeo.fortalezas) fortEl.innerHTML=formatBulletsMapeo(obsMapeo.fortalezas);
+    else if(hMapeo&&hMapeo.fortalezas) fortEl.innerHTML=formatBulletsMapeo(hMapeo.fortalezas);
+    else fortEl.innerHTML='Sin datos';
+
+    const oportEl=document.getElementById('mapeoOportText');
+    if(obsMapeo&&obsMapeo.oportunidades) oportEl.innerHTML=formatBulletsMapeo(obsMapeo.oportunidades);
+    else if(hMapeo&&hMapeo.descarriladores) oportEl.innerHTML=formatBulletsMapeo(hMapeo.descarriladores);
+    else if(hMapeo&&hMapeo.oportunidades) oportEl.innerHTML=formatBulletsMapeo(hMapeo.oportunidades);
+    else oportEl.innerHTML='Sin datos';
+  })();
 
   // Desempeño
   const d=DATA.desempeno[p.exp];
@@ -939,91 +1047,11 @@ function renderHogan(h, exp){
   // Competencias section (independent of HPI/HDS/MVPI)
   if(h&&h.competencias&&h.competencias.length>0){
     const compSection=document.getElementById('competenciasSection');
-    const compChart=document.getElementById('competenciasChart');
-    const compFortSection=document.getElementById('compFortalezasSection');
-    const compFort=document.getElementById('compFortalezas');
-    const compOportSection=document.getElementById('compOportunidadesSection');
-    const compOport=document.getElementById('compOportunidades');
     const compDesSection=document.getElementById('compDesarrolloSection');
     const compDes=document.getElementById('compDesarrollo');
-    
+
     compSection.style.display='block';
-    
-    // Sort competencias alphabetically like Excel
-    const sorted=[...h.competencias].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
-    
-    // Render bar chart like Image 2
-    let chartHtml = '<div style="border:1px solid #ddd; border-radius:6px; overflow:hidden; background:#fff;">';
-    chartHtml += '<div style="background:#333; color:#fff; padding:8px 16px; font-size:13px; font-weight:700; font-family:\'Space Grotesk\',sans-serif; display:flex; justify-content:space-between; align-items:center;">';
-    chartHtml += '<span>PERFIL DE COMPETENCIAS (HOGAN) — ESCALA 0 A 100</span><span style="font-size:10px;font-weight:500;opacity:0.8;">(Puntaje)</span></div>';
-    chartHtml += '<div style="padding:16px 20px 24px 16px;"><div style="display:flex; flex-direction:column; gap:10px;">';
-    
-    sorted.forEach(c=>{
-      chartHtml+='<div style="display:flex; align-items:center; gap:12px;">';
-      chartHtml+='<div style="width:180px; text-align:right; font-size:11.5px; font-weight:500; color:#333; flex-shrink:0;">'+c.nombre+'</div>';
-      chartHtml+='<div style="flex:1; position:relative; height:20px; border-left:1px solid #ddd; border-right:1px solid #ddd;">';
-      for(let g=0;g<=100;g+=10){
-        chartHtml+='<div style="position:absolute; left:'+g+'%; top:-5px; bottom:-5px; width:1px; background:#f0f0f0; z-index:1;"></div>';
-      }
-      chartHtml+='<div style="position:absolute; left:0; top:2px; bottom:2px; width:'+Math.min(100, c.puntaje)+'%; background:#c0392b; z-index:2;"></div>';
-      chartHtml+='</div>';
-      chartHtml+='</div>';
-    });
 
-    // Draw X-axis
-    chartHtml += '<div style="display:flex; align-items:center; gap:12px; margin-top:4px;">';
-    chartHtml += '<div style="width:180px; flex-shrink:0;"></div>';
-    chartHtml += '<div style="flex:1; position:relative; height:15px;">';
-    for(let g=0; g<=100; g+=10){
-      let align = g === 0 ? 'left' : (g === 100 ? 'right' : 'center');
-      let transform = g === 0 ? '' : (g === 100 ? 'transform:translateX(50%);' : 'transform:translateX(-50%);');
-      if (g === 100) transform = '';
-      let leftAdjust = g === 100 ? 'right:0;' : 'left:'+g+'%;';
-      chartHtml += '<div style="position:absolute; '+leftAdjust+' top:0; font-size:10px; color:#666; '+transform+'">'+g+'</div>';
-    }
-    chartHtml += '</div></div>';
-    chartHtml += '</div></div></div>';
-
-    compChart.innerHTML=chartHtml;
-    
-    // Render fortalezas (no scores, colored names)
-    if(h.fortalezas&&h.fortalezas.trim()){
-      const fortLines=h.fortalezas.split('•').map(s=>s.trim()).filter(Boolean);
-      let fortHtml='';
-      fortLines.forEach(line=>{
-        const match=line.match(/^(.+?)\s*\(\d+\)\s*[—–-]?\s*(.*)$/);
-        if(match){
-          fortHtml+='<div style="padding:8px 0;border-bottom:1px solid #eee;font-size:12px;color:#333;">';
-          fortHtml+='<span style="font-weight:700;color:#2d5a27;">'+match[1].trim()+'</span>';
-          if(match[2]) fortHtml+=' — '+match[2];
-          fortHtml+='</div>';
-        } else {
-          fortHtml+='<div style="padding:8px 0;border-bottom:1px solid #eee;font-size:12px;color:#333;">• '+line+'</div>';
-        }
-      });
-      compFort.innerHTML=fortHtml;
-      compFortSection.style.display='block';
-    }
-    
-    // Render oportunidades (no scores, colored names)
-    if(h.oportunidades&&h.oportunidades.trim()){
-      const oportLines=h.oportunidades.split('•').map(s=>s.trim()).filter(Boolean);
-      let oportHtml='';
-      oportLines.forEach(line=>{
-        const match=line.match(/^(.+?)\s*\(\d+\)\s*[—–-]?\s*(.*)$/);
-        if(match){
-          oportHtml+='<div style="padding:8px 0;border-bottom:1px solid #eee;font-size:12px;color:#333;">';
-          oportHtml+='<span style="font-weight:700;color:#8b2500;">'+match[1].trim()+'</span>';
-          if(match[2]) oportHtml+=' — '+match[2];
-          oportHtml+='</div>';
-        } else {
-          oportHtml+='<div style="padding:8px 0;border-bottom:1px solid #eee;font-size:12px;color:#333;">• '+line+'</div>';
-        }
-      });
-      compOport.innerHTML=oportHtml;
-      compOportSection.style.display='block';
-    }
-    
     // Render desarrollo
     if(h.desarrollo&&h.desarrollo.trim()){
       const desLines=h.desarrollo.split('•').map(s=>s.trim()).filter(Boolean);

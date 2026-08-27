@@ -1425,6 +1425,15 @@ function buildTeamHoganVertienteHtml(personas, etiqueta){
   return html;
 }
 
+// Vertiente Hogan activa en el consolidado de equipo del tablero. Solo se
+// muestra una a la vez; el botón la alterna.
+window.hoganVertienteActiva = window.hoganVertienteActiva || 'Estratégico';
+
+function toggleHoganVertiente(){
+  window.hoganVertienteActiva = window.hoganVertienteActiva === 'Estratégico' ? 'Gerencial' : 'Estratégico';
+  renderTeamHoganChart();
+}
+
 function renderTeamHoganChart() {
   const container = document.getElementById('teamHoganChartContainer');
   if(!container) return;
@@ -1437,21 +1446,27 @@ function renderTeamHoganChart() {
 
   // Las dos vertientes de Hogan usan sets de competencias distintos y no se
   // deben mezclar: Estratégico (Directores, Gerentes y Business Partners) y
-  // Operación/Gerencial (Jefes y Coordinadores).
+  // Operación/Gerencial (Jefes y Coordinadores). Se muestra una sola a la
+  // vez; el botón alterna entre ellas.
   const estrategicos = hev.filter(r => r.hogan_tipo === 'Estratégico');
   const operativos = hev.filter(r => r.hogan_tipo === 'Gerencial');
 
-  const estHtml = buildTeamHoganVertienteHtml(estrategicos, 'Estratégico');
-  const opHtml = buildTeamHoganVertienteHtml(operativos, 'Operación');
+  const activa = window.hoganVertienteActiva;
+  const personasActivas = activa === 'Estratégico' ? estrategicos : operativos;
+  const etiquetaActiva = activa === 'Estratégico' ? 'Estratégico' : 'Operación';
+  const vertienteHtml = buildTeamHoganVertienteHtml(personasActivas, etiquetaActiva);
 
-  if(!estHtml && !opHtml){
+  if(estrategicos.length === 0 && operativos.length === 0){
     container.style.display = 'none';
     return;
   }
   container.style.display = 'block';
 
-  let chartHtml = '<div style="background: #1e293b; color: #ffffff; padding: 14px 20px; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 8px; margin-bottom: 24px; margin-top: 40px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">RESULTADOS DE HOGAN</div>';
-  chartHtml += estHtml + opHtml;
+  let chartHtml = '<div style="background: #1e293b; color: #ffffff; padding: 14px 20px; display:flex; align-items:center; justify-content:center; gap:16px; border-radius: 8px; margin-bottom: 24px; margin-top: 40px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">';
+  chartHtml += '<span style="font-size: 16px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;">RESULTADOS DE HOGAN</span>';
+  chartHtml += '<button onclick="toggleHoganVertiente()" style="background:#ffffff20; border:1px solid #ffffff50; color:#fff; padding:6px 14px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer;">🔄 Ver '+(activa === 'Estratégico' ? 'Operación' : 'Estratégico')+'</button>';
+  chartHtml += '</div>';
+  chartHtml += vertienteHtml || '<div style="padding:20px; text-align:center; color:var(--text-dim); background:#fff; border-radius:8px;">Sin datos de Hogan '+etiquetaActiva+' en este filtro.</div>';
 
   container.innerHTML = chartHtml;
 }
