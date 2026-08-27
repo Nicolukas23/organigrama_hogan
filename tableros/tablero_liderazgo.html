@@ -816,6 +816,13 @@ function buildLeaders(){
   // 2b. Admins restringidos: ven todas las Direcciones EXCEPTO Gestión
   // Humana y los miembros del Comité Directivo (equipo de HRBP que
   // administra la herramienta pero no debe ver esa información propia).
+  // Cada BP tiene su propia contraseña, distinta entre sí y distinta de la
+  // de los admins que ven todo (Admin2026*Claro).
+  const RESTRICTED_ADMIN_PASSWORDS = {
+    'adriana.aranda@claro.com.co': 'Talento2026*Adriana',
+    'sebastian.vargasc@claro.com.co': 'Talento2026*Sebastian',
+    'juan.lesmesm@claro.com.co': 'Talento2026*Juan'
+  };
   RESTRICTED_ADMINS.forEach(email => {
     const r = ALL.find(x => (x.email || '').trim().toLowerCase() === email);
     map.set(email, {
@@ -826,7 +833,7 @@ function buildLeaders(){
       rol: 'admin_restricted',
       scope_dir: 'Todas las Direcciones (excepto Gestión Humana y Comité Directivo)',
       scope_ger: 'Todas las Gerencias',
-      password: 'Admin2026*Claro'
+      password: RESTRICTED_ADMIN_PASSWORDS[email]
     });
   });
 
@@ -948,8 +955,13 @@ function loginByEmail(){
     return;
   }
 
-  // Validate password if configured
-  if(user.password && pwd && pwd !== user.password && pwd !== 'Claro2026*' && pwd !== 'Admin2026*Claro'){
+  // Validate password if configured. Los admins restringidos (BP) no
+  // pueden entrar con las contraseñas genéricas de los demás roles: solo
+  // su propia contraseña individual sirve.
+  const passwordOk = user.rol === 'admin_restricted'
+    ? (pwd === user.password)
+    : (pwd === user.password || pwd === 'Claro2026*' || pwd === 'Admin2026*Claro');
+  if(user.password && pwd && !passwordOk){
     document.getElementById('loginErr').textContent = 'Contraseña incorrecta. Por favor verifica.';
     document.getElementById('loginErr').style.display = 'block';
     return;
