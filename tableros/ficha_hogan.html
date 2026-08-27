@@ -435,6 +435,16 @@ function buildHoganDetalleHtml(d){
   // COMPETENCIAS (con descripción)
   html += '<div style="background:var(--crimson); color:#fff; padding:14px 20px; text-align:center; font-size:16px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border-radius:8px 8px 0 0;">COMPETENCIAS</div>';
   html += '<div style="border:1px solid var(--border); border-top:none; border-radius:0 0 8px 8px; overflow:hidden; margin-bottom:24px;">';
+
+  // Perfil (Experto/Sólido/Versátil): promedio de las competencias de la
+  // tabla, con los mismos tres niveles que usa la ninebox del tablero.
+  const validPuntajes = d.competencias.map(c => c.puntaje).filter(p => typeof p === 'number');
+  if (validPuntajes.length > 0) {
+    const promedio = Math.round(validPuntajes.reduce((a,b) => a+b, 0) / validPuntajes.length);
+    const perfil = promedio < 50 ? 'Experto' : (promedio < 70 ? 'Sólido' : 'Versátil');
+    html += '<div style="padding:10px 14px; background:var(--panel-2); border-bottom:1px solid var(--border); text-align:center; font-size:12.5px; font-weight:700; color:var(--text);">Perfil: <span style="color:var(--crimson);">'+perfil.toUpperCase()+'</span> <span style="font-weight:500; color:var(--text-dim); text-transform:none;">(promedio de competencias: '+promedio+')</span></div>';
+  }
+
   html += '<table style="width:100%; border-collapse:collapse; font-size:12.5px;">';
   html += '<thead><tr style="background:var(--panel-2);">';
   html += '<th style="text-align:left; padding:10px 14px; width:180px; color:var(--text);">Competencia</th>';
