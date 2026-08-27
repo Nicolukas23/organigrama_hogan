@@ -480,6 +480,12 @@ const CD_EXPEDIENTES = ['52185300','79947402','80425417','1128466768','85467103'
 const DEMO_EMAIL = 'demo.director@claro.com.co';
 const DEMO_DIRECTOR_NAME = 'DIRECTOR DEMO';
 
+// Perfil de demostración nivel gerente: solo ve sus reportes directos (a
+// diferencia del demo director, que puede ver también su estructura
+// completa). Reutiliza a "Gerente Demo Uno" (TORRES) como su identidad.
+const DEMO_GERENTE_EMAIL = 'demo.gerente@claro.com.co';
+const DEMO_GERENTE_NAME = 'TORRES VELASQUEZ ANDREA CAROLINA';
+
 // Estratégico: Directores, Gerentes y Business Partners. Operación (antes
 // "Gerencial"): Jefes y Coordinadores. Cada vertiente tiene su propio set
 // de 10 competencias, tal como en los datos reales.
@@ -861,6 +867,18 @@ function buildLeaders(){
     password: 'Demo2026*Claro'
   });
 
+  // 2d. Perfil de demostración nivel gerente: solo reportes directos.
+  map.set(DEMO_GERENTE_EMAIL, {
+    nombre: DEMO_GERENTE_NAME,
+    cargo: 'Gerente Demo Uno (Perfil de Demostración)',
+    email: DEMO_GERENTE_EMAIL,
+    expediente: 'DEMO-GERENTE',
+    rol: 'gerente',
+    scope_dir: 'Dirección Demo (Datos de Prueba)',
+    scope_ger: 'Gerencia Demo Uno',
+    password: 'Demo2026*Claro'
+  });
+
   // 3. Detectar líderes desde la data (Directores y Gerentes)
   ALL.forEach(r => {
     const email = (r.email || '').trim().toLowerCase();
@@ -916,6 +934,7 @@ function findUserByInput(input){
   if(raw === 'nicolas.santos' || raw.startsWith('nicolas.santos@')) return LEADERS.find(u => u.email === 'nicolas.santos@claro.com.co');
   if(raw === 'laura.amado' || raw === 'laura.amadop' || raw.startsWith('laura.amado')) return LEADERS.find(u => u.email === 'laura.amadop@claro.com.co');
   if(raw === 'demo' || raw.startsWith('demo.director')) return LEADERS.find(u => u.email === DEMO_EMAIL);
+  if(raw.startsWith('demo.gerente')) return LEADERS.find(u => u.email === DEMO_GERENTE_EMAIL);
 
   // 2. Exact email match in LEADERS
   let u = LEADERS.find(l => l.email === raw || l.email === raw + '@claro.com.co');
@@ -1028,7 +1047,7 @@ function setSession(user){
   }
 
   const demoBanner = document.getElementById('demoBanner');
-  if(demoBanner) demoBanner.style.display = (user.email === DEMO_EMAIL) ? 'block' : 'none';
+  if(demoBanner) demoBanner.style.display = (user.email === DEMO_EMAIL || user.email === DEMO_GERENTE_EMAIL) ? 'block' : 'none';
 
   document.getElementById('lblUserName').textContent = user.nombre;
   document.getElementById('lblScope').textContent =
@@ -1064,6 +1083,12 @@ function getScopedData(){
     if(window.activeScope === 'DIRECT') return directos;
     const subTree = getSubordinates(DEMO_DIRECTOR_NAME, demo);
     return subTree.length ? subTree : demo;
+  }
+  if(CUR.email === DEMO_GERENTE_EMAIL){
+    // Nivel gerente: solo sus reportes directos, nunca la estructura
+    // completa (igual que un gerente real).
+    const demo = buildDemoData();
+    return demo.filter(r => normWords(r.jefe) === normWords(DEMO_GERENTE_NAME));
   }
 
   const curNameNorm = normWords(CUR.nombre);
@@ -1405,7 +1430,7 @@ function handleSort(key){
 // consolidado de equipo: cada vertiente tiene su propio set de 10
 // competencias y no deben mezclarse (Estratégico: Directores, Gerentes y
 // Business Partners · Operación: Jefes y Coordinadores).
-function buildTeamHoganVertienteHtml(personas, etiqueta){
+function buildTeamHoganVertienteHtml(personas, etiqueta, showToggle){
   const teamComps = {};
   personas.forEach(r => {
     if(!r.hogan_scores) return;
@@ -1424,8 +1449,15 @@ function buildTeamHoganVertienteHtml(personas, etiqueta){
 
   const sorted = [...comps].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
   let html = '<div style="border:1px solid #ddd; border-radius:6px; overflow:hidden; background:#fff; margin-bottom:24px;">';
-  html += '<div style="background:#333; color:#fff; padding:12px 16px; font-size:14px; font-weight:700; font-family:\'Space Grotesk\',sans-serif; display:flex; justify-content:space-between; align-items:center;">';
-  html += '<span>PERFIL DE COMPETENCIAS HOGAN CONSOLIDADO (EQUIPO) — '+etiqueta.toUpperCase()+'</span><span style="font-size:11px;font-weight:500;opacity:0.8;">PROMEDIO · n='+personas.length+'</span></div>';
+  html += '<div style="background:#333; color:#fff; padding:12px 16px; font-size:14px; font-weight:700; font-family:\'Space Grotesk\',sans-serif; display:flex; justify-content:space-between; align-items:center; gap:12px;">';
+  html += '<span>PERFIL DE COMPETENCIAS HOGAN CONSOLIDADO (EQUIPO) — '+etiqueta.toUpperCase()+'</span>';
+  html += '<div style="display:flex; align-items:center; gap:12px; flex-shrink:0;">';
+  if(showToggle){
+    html += '<button onclick="toggleHoganVertiente()" style="background:#ffffff20; border:1px solid #ffffff50; color:#fff; padding:5px 12px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; white-space:nowrap;">🔄 Ver '+(etiqueta === 'Estratégico' ? 'Operación' : 'Estratégico')+'</button>';
+  }
+  html += '<span style="font-size:11px;font-weight:500;opacity:0.8; white-space:nowrap;">PROMEDIO · n='+personas.length+'</span>';
+  html += '</div></div>';
+  html += '<div style="padding:10px 24px; font-size:11px; color:#666; background:#f8f9fa; border-bottom:1px solid #eee;"><strong>Estratégico</strong>: Directores, Gerentes y Business Partners. <strong>Operación</strong>: Jefes y Coordinadores. Cada vertiente evalúa un set distinto de 10 competencias.</div>';
   html += '<div style="padding:20px 24px 28px 20px;"><div style="display:flex; flex-direction:column; gap:12px;">';
 
   sorted.forEach(c=>{
@@ -1501,14 +1533,10 @@ function renderTeamHoganChart() {
   // Las dos vertientes de Hogan usan sets de competencias distintos y no se
   // deben mezclar: Estratégico (Directores, Gerentes y Business Partners) y
   // Operación/Gerencial (Jefes y Coordinadores). Se muestra una sola a la
-  // vez; el botón alterna entre ellas.
+  // vez; el botón alterna entre ellas, y solo se muestra si ambas
+  // vertientes tienen datos (si no, alternar solo generaría confusión).
   const estrategicos = hev.filter(r => r.hogan_tipo === 'Estratégico');
   const operativos = hev.filter(r => r.hogan_tipo === 'Gerencial');
-
-  const activa = window.hoganVertienteActiva;
-  const personasActivas = activa === 'Estratégico' ? estrategicos : operativos;
-  const etiquetaActiva = activa === 'Estratégico' ? 'Estratégico' : 'Operación';
-  const vertienteHtml = buildTeamHoganVertienteHtml(personasActivas, etiquetaActiva);
 
   if(estrategicos.length === 0 && operativos.length === 0){
     container.style.display = 'none';
@@ -1516,10 +1544,19 @@ function renderTeamHoganChart() {
   }
   container.style.display = 'block';
 
-  let chartHtml = '<div style="background: #1e293b; color: #ffffff; padding: 14px 20px; display:flex; align-items:center; justify-content:center; gap:16px; border-radius: 8px; margin-bottom: 24px; margin-top: 40px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">';
-  chartHtml += '<span style="font-size: 16px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;">RESULTADOS DE HOGAN</span>';
-  chartHtml += '<button onclick="toggleHoganVertiente()" style="background:#ffffff20; border:1px solid #ffffff50; color:#fff; padding:6px 14px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer;">🔄 Ver '+(activa === 'Estratégico' ? 'Operación' : 'Estratégico')+'</button>';
-  chartHtml += '</div>';
+  // Si la vertiente activa no tiene datos en este filtro pero la otra sí,
+  // cambia automáticamente a la que sí tiene.
+  let activa = window.hoganVertienteActiva;
+  if(activa === 'Estratégico' && estrategicos.length === 0 && operativos.length > 0) activa = 'Gerencial';
+  if(activa === 'Gerencial' && operativos.length === 0 && estrategicos.length > 0) activa = 'Estratégico';
+  window.hoganVertienteActiva = activa;
+
+  const showToggle = estrategicos.length > 0 && operativos.length > 0;
+  const personasActivas = activa === 'Estratégico' ? estrategicos : operativos;
+  const etiquetaActiva = activa === 'Estratégico' ? 'Estratégico' : 'Operación';
+  const vertienteHtml = buildTeamHoganVertienteHtml(personasActivas, etiquetaActiva, showToggle);
+
+  let chartHtml = '<div style="background: #1e293b; color: #ffffff; padding: 14px 20px; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 8px; margin-bottom: 24px; margin-top: 40px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">RESULTADOS DE HOGAN</div>';
   chartHtml += vertienteHtml || '<div style="padding:20px; text-align:center; color:var(--text-dim); background:#fff; border-radius:8px;">Sin datos de Hogan '+etiquetaActiva+' en este filtro.</div>';
 
   container.innerHTML = chartHtml;
