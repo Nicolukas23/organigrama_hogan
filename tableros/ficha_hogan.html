@@ -430,6 +430,8 @@ function buildHoganDetalleHtml(d){
   const esc = (s) => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   let html = '';
 
+  html += '<div style="background:#1a1a2e; color:#fff; padding:14px 20px; text-align:center; font-size:16px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; border-radius:8px; margin-bottom:24px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);">RESULTADOS PRUEBA POTENCIAL HOGAN</div>';
+
   // COMPETENCIAS (con descripción)
   html += '<div style="background:var(--crimson); color:#fff; padding:14px 20px; text-align:center; font-size:16px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border-radius:8px 8px 0 0;">COMPETENCIAS</div>';
   html += '<div style="border:1px solid var(--border); border-top:none; border-radius:0 0 8px 8px; overflow:hidden; margin-bottom:24px;">';

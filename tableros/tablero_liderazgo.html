@@ -774,15 +774,19 @@ function buildLeaders(){
   const map = new Map();
 
   // 1. Piloto Principal: Walter Javier Borda Ferro
+  // Walter Borda pertenece al Comité Directivo (expediente real 79947402,
+  // ya incluido en CD_EXPEDIENTES), así que igual que los demás miembros
+  // del Comité, tiene que poder ver tanto sus reportes directos como su
+  // estructura completa.
   map.set('walter.borda@claro.com.co', {
     nombre: 'BORDA FERRO WALTER JAVIER',
-    cargo: 'Director Corporativo Financiero',
+    cargo: 'Director(a) Corporativo Financiero',
     email: 'walter.borda@claro.com.co',
-    expediente: 'DIR-CORP-FIN',
+    expediente: '79947402',
     rol: 'director',
-    scope_dir: 'Dirección Corporativa Financiera',
-    scope_ger: 'Reportes Directos',
-    is_direct_reports_only: true,
+    scope_dir: 'Comité Directivo',
+    scope_ger: 'Dirección Corporativa Financiera',
+    is_direct_reports_only: false,
     password: 'Claro*WJ2026'
   });
 
@@ -1152,7 +1156,7 @@ function setupFilters(){
   } else {
     wrapDir.style.display = 'none';
     fDir.value = '';
-    if(CUR && (CUR.is_direct_reports_only || CUR.email === 'walter.borda@claro.com.co')){
+    if(CUR && CUR.is_direct_reports_only){
       wrapGer.style.display = 'none';
     } else {
       wrapGer.style.display = 'flex';
