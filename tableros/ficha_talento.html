@@ -530,6 +530,8 @@ function loadFicha(p){
     const m=hoy.getMonth()-fnac.getMonth();
     if(m<0||(m===0&&hoy.getDate()<fnac.getDate()))edad--;
     document.getElementById('iEdad').textContent=edad+' años';
+  }else if(info&&info.edad){
+    document.getElementById('iEdad').textContent=info.edad;
   }else{
     document.getElementById('iEdad').textContent='—';
   }

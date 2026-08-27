@@ -675,16 +675,16 @@ function injectDemoData(){
 
   const compNames = ['Liderar a otros','Responsabilidad','Escuchar a Otros','Impulsar el Cambio','Toma de Decisiones','Desarrollo de Otros','Influenciar a otros','Impulsar la Estrategia','Impulsar la Innovación','Comunicación de Impacto'];
 
-  demo.forEach(d => {
+  demo.forEach((d, i) => {
     window.DATA.informacion[d.exp] = {
       nombre: d.nombre,
       cargo: d.cargo,
       direccion_area: 'Dirección Demo (Datos de Prueba)',
       gerencia: 'Gerencia Demo',
       jefe: d.jefe,
-      antiguedad: '—',
+      antiguedad: (2 + i) + ' años',
       caja: d.caja,
-      edad: '—'
+      edad: (28 + i * 3) + ' años'
     };
     const potencial = d.comps[0];
     const competencias = compNames.map((nombre,i) => ({ nombre, puntaje: d.comps[i+1] }));
