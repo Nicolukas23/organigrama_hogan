@@ -35,6 +35,9 @@
   <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
 </div>
 <div class="main" id="fichaContent">
+  <div id="demoBanner" style="display:none; background:#fef3c7; color:#92400e; border:1px solid #f59e0b; border-radius:8px; padding:10px 16px; font-size:13px; font-weight:700; text-align:center; margin-bottom:16px;">
+    ⚠️ MODO DEMOSTRACIÓN — Todos los datos de esta ficha son ficticios, no corresponden a una persona real.
+  </div>
   <div class="info-header">
     <div class="ih-photo" id="ihPhoto">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
@@ -452,6 +455,8 @@ function searchPerson(){
 function loadFicha(p){
   const loadingOverlay = document.getElementById('loadingOverlay');
   if(loadingOverlay) loadingOverlay.style.display = 'none';
+  const demoBanner = document.getElementById('demoBanner');
+  if(demoBanner) demoBanner.style.display = String(p.exp || '').startsWith('DEMO-') ? 'block' : 'none';
   document.getElementById('iNombre').textContent=p.nombre;
   const isCDName=['52185300','79947402','80425417','1128466768','85467103','32781111','79516122','80150353','1138186','79577126','79695754','1020751309'].includes(p.exp);
   const nameEl=document.getElementById('iNombre');
@@ -1157,11 +1162,165 @@ function downloadPDF(){
   });
 }
 
+// Perfil de demostración: mismas 9 personas ficticias que en el tablero de
+// liderazgo y en ficha_hogan.html, con Ficha Completa 100% inventada
+// (experiencia, formación, valoraciones, 360, clima y Hogan) para poder
+// mostrarle a directores y gerentes cómo se ve la ficha completa sin
+// exponer información real.
+function buildDemoDetalle(nombreDemo, competencias){
+  const primerNombre = nombreDemo.split(' ').slice(-2, -1)[0] || nombreDemo.split(' ')[0];
+  const descAlto = (nombre) => `${primerNombre} muestra un desempeño sobresaliente en ${nombre.toLowerCase()}, siendo percibido como un referente confiable por su equipo. (Dato de demostración)`;
+  const descMedio = (nombre) => `${primerNombre} tiene un desempeño adecuado en ${nombre.toLowerCase()}, con espacio para seguir desarrollándose en escenarios de mayor exigencia. (Dato de demostración)`;
+  const descBajo = (nombre) => `${primerNombre} presenta una oportunidad de desarrollo clara en ${nombre.toLowerCase()}, especialmente bajo presión o alta ambigüedad. (Dato de demostración)`;
+
+  const withDesc = competencias.map(c => ({
+    nombre: c.nombre,
+    puntaje: c.puntaje,
+    descripcion: c.puntaje >= 70 ? descAlto(c.nombre) : (c.puntaje >= 50 ? descMedio(c.nombre) : descBajo(c.nombre))
+  }));
+
+  const sorted = [...withDesc].sort((a,b) => b.puntaje - a.puntaje);
+  const top3 = sorted.slice(0,3);
+  const bottom3 = sorted.slice().reverse().slice(0,3);
+
+  return {
+    competencias: withDesc,
+    fortalezas: `(Dato de demostración) ${primerNombre} se destaca principalmente en ${top3.map(c=>c.nombre.toLowerCase()).join(', ')}, lo que lo posiciona como un perfil sólido para asumir retos de mayor complejidad.`,
+    oportunidades: `(Dato de demostración) Las principales oportunidades de desarrollo de ${primerNombre} están en ${bottom3.map(c=>c.nombre.toLowerCase()).join(', ')}, especialmente en contextos de alta presión o incertidumbre.`,
+    recomendaciones: bottom3.slice(0,2).map(c => ({
+      competencia: c.nombre,
+      experiencias: [
+        `Participar en proyectos que exijan fortalecer ${c.nombre.toLowerCase()}. (Dato de demostración)`,
+        `Recibir mentoría de un líder reconocido en ${c.nombre.toLowerCase()}. (Dato de demostración)`,
+        `Coaching individual enfocado en ${c.nombre.toLowerCase()}. (Dato de demostración)`
+      ]
+    }))
+  };
+}
+
+function injectDemoDataCompleta(){
+  window.DATA = window.DATA || {};
+  window.DATA.informacion = window.DATA.informacion || {};
+  window.DATA.formacion = window.DATA.formacion || {};
+  window.DATA.desempeno = window.DATA.desempeno || {};
+  window.DATA.talentos = window.DATA.talentos || {};
+  window.DATA.objetivos = window.DATA.objetivos || {};
+  window.DATA.tres60 = window.DATA.tres60 || {};
+  window.DATA.clima = window.DATA.clima || {};
+  window.DATA.hogan = window.DATA.hogan || {};
+  window.DATA.observaciones = window.DATA.observaciones || {};
+
+  const DEMO_COMPS_EST = ['Liderar a otros','Responsabilidad','Escuchar a Otros','Impulsar el Cambio','Toma de Decisiones','Desarrollo de Otros','Influenciar a otros','Impulsar la Estrategia','Impulsar la Innovación','Comunicación de Impacto'];
+  const DEMO_COMPS_OP = ['Toma de Decisiones','Construcción de Equipos','Impulsar la Ejecución','Delegación','Visión del Negocio','Resolución de Problemas','Impulsar la Diversidad','Trabajo en Equipo','Responsabilidad','Manejo de la Ambigüedad'];
+
+  const empresasPool = ['Servicios Andinos S.A.','Tecnología Global Ltda.','Consultores Unidos S.A.S.','Grupo Corporativo Delta','Inversiones del Norte S.A.'];
+  const titulosPool = ['Administrador(a) de Empresas','Ingeniero(a) Industrial','Contador(a) Público(a)','Ingeniero(a) de Sistemas','Comunicador(a) Social','Economista'];
+  const especializacionesPool = ['Especialista en Gerencia de Proyectos','Especialista en Finanzas Corporativas','Especialista en Analítica de Datos','Especialista en Mercadeo Estratégico'];
+  const complementariasPool = ['Excel Avanzado','Power BI','Liderazgo de Equipos','Gestión del Cambio','Metodologías Ágiles (Scrum)','Comunicación Efectiva','Negociación Estratégica','Servicio al Cliente','Manejo de Indicadores de Gestión','Inglés Intermedio'];
+  const climaDims = ['Objetivos Y Procesos Organizacionales','Desarrollo Profesional Y Capacitacion','Orientación Al Servicio','Satisfaccion Y Compromiso Organizacional','Orientación A Resultados Y Logro De Objetivos','Trabajo En Equipo','Cultura, Equidad Y Código De Ética','Comunicación Organizacional','Administración De Recursos'];
+  const comp360 = ['1 Participa activamente como miembro del equipo','2 Comunica efectivamente','3 Soluciona problemas y toma decisiones adecuadas','4 Contribuye a la efectividad en el trabajo','5 Desarrolla y mantiene relaciones productivas en el trabajo','6 Mantiene su orientación al cliente de manera efectiva','7 Aplica adecuadamente los conocimientos requeridos','8 Promueve la mejora continua e innovación','9 Dirige adecuadamente a su equipo de trabajo','10 Promueve el desarrollo de sus colaboradores','11 Promueve el compromiso organizacional','12 Promueve el trato justo y de respeto a la persona','13 Promueve el cumplimiento del Código de Ética','14 Aplica la Inteligencia Emocional de forma adecuada','15 Gestiona de forma adecuada los recursos de su área de trabajo','16 Ownership'];
+
+  const demoPeople = [
+    { exp:'DEMO-001', nombre:'TORRES VELASQUEZ ANDREA CAROLINA', cargo:'Gerente Demo Uno', jefe:'DIRECTOR DEMO', caja:'8', tipo:'Estratégico', vals:[72,68,74,61,70,58,75,63,80,77,66],
+      fort:'• Impulsa la innovación y traduce la estrategia en planes concretos para su equipo.\n• Comunica con impacto en espacios directivos.\n• Genera confianza y compromiso en sus colaboradores.',
+      oport:'• Puede fortalecer el manejo de la ambigüedad en escenarios de alta incertidumbre.\n• Delegar más para liberar capacidad estratégica.' },
+    { exp:'DEMO-002', nombre:'MENDOZA CASTILLO FELIPE SANTIAGO', cargo:'Analista Demo Senior', jefe:'TORRES VELASQUEZ ANDREA CAROLINA', caja:'5', tipo:'Gerencial', vals:[55,60,58,52,49,63,47,55,60,52,58],
+      fort:'• Cumple de forma consistente con sus compromisos.\n• Buen manejo de relaciones dentro del equipo.',
+      oport:'• Oportunidad de fortalecer la toma de decisiones bajo presión.\n• Desarrollar mayor iniciativa para proponer cambios.' },
+    { exp:'DEMO-003', nombre:'ROJAS PARDO VALENTINA SOFIA', cargo:'Analista Demo Junior', jefe:'TORRES VELASQUEZ ANDREA CAROLINA', caja:'2', tipo:'Gerencial', vals:[38,42,45,40,35,48,33,41,44,39,37],
+      fort:'• Alta disposición para aprender y recibir retroalimentación.',
+      oport:'• Requiere acompañamiento cercano para fortalecer su desempeño.\n• Desarrollar habilidades de comunicación e influencia.' },
+    { exp:'DEMO-004', nombre:'CASTELLANOS RUIZ DIEGO ALEJANDRO', cargo:'Gerente Demo Dos', jefe:'DIRECTOR DEMO', caja:'9', tipo:'Estratégico', vals:[81,79,73,69,77,72,66,80,84,78,75],
+      fort:'• Visión estratégica sobresaliente y alta capacidad de influencia.\n• Lidera procesos de cambio con resultados consistentes.',
+      oport:'• Puede seguir desarrollando la escucha activa en contextos de conflicto.' },
+    { exp:'DEMO-005', nombre:'MORALES QUINTERO LAURA CAMILA', cargo:'Analista Demo Senior', jefe:'CASTELLANOS RUIZ DIEGO ALEJANDRO', caja:'6', tipo:'Gerencial', vals:[64,61,59,66,55,62,57,60,68,63,59],
+      fort:'• Sólido desempeño técnico y responsabilidad en la entrega de resultados.',
+      oport:'• Fortalecer la comunicación de impacto con públicos ejecutivos.' },
+    { exp:'DEMO-006', nombre:'HERRERA SALCEDO JUAN ESTEBAN', cargo:'Analista Demo Junior', jefe:'CASTELLANOS RUIZ DIEGO ALEJANDRO', caja:'3', tipo:'Gerencial', vals:[45,48,43,50,39,46,41,44,47,42,40],
+      fort:'• Buena disposición al trabajo en equipo.',
+      oport:'• Necesita desarrollar mayor autonomía en la toma de decisiones.\n• Fortalecer el impulso al cambio.' },
+    { exp:'DEMO-007', nombre:'VARGAS NIÑO CAMILA ANDREA', cargo:'Coordinadora Demo Tres', jefe:'DIRECTOR DEMO', caja:'7', tipo:'Gerencial', vals:[68,71,64,58,66,54,60,57,72,69,65],
+      fort:'• Alto potencial de crecimiento con fuerte orientación a resultados.',
+      oport:'• Desarrollar mayor tolerancia a la ambigüedad en proyectos nuevos.' },
+    { exp:'DEMO-008', nombre:'PATIÑO OSORIO SEBASTIAN DAVID', cargo:'Coordinador Demo Cuatro', jefe:'DIRECTOR DEMO', caja:'4', tipo:'Gerencial', vals:[58,55,60,53,57,65,51,54,59,56,52],
+      fort:'• Buen desarrollo de otros y trabajo colaborativo.',
+      oport:'• Fortalecer la visibilidad de sus logros ante la dirección.' },
+    { exp:'DEMO-009', nombre:'GUTIERREZ MONTOYA ISABELLA MARIA', cargo:'Especialista Demo Cinco', jefe:'DIRECTOR DEMO', caja:'1', tipo:'Gerencial', vals:[32,36,34,30,28,38,29,33,31,35,30],
+      fort:'• Cumple con las tareas asignadas dentro de los tiempos establecidos.',
+      oport:'• Requiere un plan de mejora activo y seguimiento cercano.\n• Fortalecer de forma integral las competencias de liderazgo.' }
+  ];
+
+  demoPeople.forEach((d, i) => {
+    window.DATA.informacion[d.exp] = {
+      nombre: d.nombre,
+      cargo: d.cargo,
+      direccion_area: 'Dirección Demo (Datos de Prueba)',
+      direccion_comite: '',
+      gerencia: 'Gerencia Demo',
+      jefe: d.jefe,
+      antiguedad: (2 + i) + ' años',
+      caja: d.caja,
+      edad: (28 + i * 3) + ' años'
+    };
+
+    window.DATA.formacion[d.exp] = {
+      cargos_int: [d.cargo + ' — Claro (Dato de demostración)'],
+      cargos_ext: [
+        'Analista — ' + empresasPool[i % empresasPool.length] + ' (Dato de demostración)',
+        'Coordinador(a) — ' + empresasPool[(i + 1) % empresasPool.length] + ' (Dato de demostración)'
+      ],
+      titulos: [titulosPool[i % titulosPool.length], especializacionesPool[i % especializacionesPool.length]],
+      formaciones: [
+        complementariasPool[i % complementariasPool.length],
+        complementariasPool[(i + 3) % complementariasPool.length],
+        complementariasPool[(i + 6) % complementariasPool.length]
+      ]
+    };
+
+    const base = d.vals[0]; // usa el "Potencial" del set de Hogan como base del resto de indicadores
+    window.DATA.desempeno[d.exp] = { y2024: Math.max(1, base - 3), y2025: base, y2026: base + 3 };
+
+    window.DATA.talentos[d.exp] = [
+      { talento: 'Soy Digital', score: Math.max(1, base - 5) },
+      { talento: 'Soy Dueño', score: base + 8 },
+      { talento: 'Soy Lider', score: base + 2 }
+    ];
+
+    window.DATA.objetivos[d.exp] = [
+      { talento: 'Soy Dueño', obj: '(Dato de demostración) Fortalecer la mentalidad de dueño, asumiendo retos propios y tomando decisiones alineadas a la estrategia para generar valor sostenible.', anio: 2026 }
+    ];
+
+    window.DATA.tres60[d.exp] = comp360.map((c, idx) => ({
+      dim: c, valor: c, num: idx + 1,
+      lider: (3 + (base / 100) * 2 + (idx % 3) * 0.1).toFixed(2),
+      propio: (3.5 + (base / 100) * 1.5).toFixed(2),
+      reporte: (3.2 + (base / 100) * 1.8).toFixed(2),
+      par: (3.3 + (base / 100) * 1.7).toFixed(2)
+    }));
+
+    window.DATA.clima[d.exp] = climaDims.map((dim, idx) => ({ dim, pct: 0.82 + (idx % 5) * 0.02 }));
+
+    const compNames = d.tipo === 'Estratégico' ? DEMO_COMPS_EST : DEMO_COMPS_OP;
+    const competencias = compNames.map((nombre, idx) => ({ nombre, puntaje: d.vals[idx + 1] }));
+    window.DATA.hogan[d.exp] = {
+      competencias,
+      potencial: base,
+      fortalezas: d.fort,
+      oportunidades: d.oport,
+      detalle: buildDemoDetalle(d.nombre, competencias)
+    };
+  });
+
+  window.SUCESORES = window.SUCESORES || [];
+  demoPeople.forEach(d => window.SUCESORES.push({ exp: d.exp, nombre: d.nombre }));
+}
+
 // Wait for the live Supabase data before the first render: window.DATA only
 // has `informacion`/`hogan` until then, so calling loadFicha() earlier threw
 // (e.g. DATA.desempeno[exp] on an object that doesn't exist yet) and left the
 // ficha stuck mid-render.
 supabaseReady.finally(() => {
+  injectDemoDataCompleta();
   const dl=document.getElementById('cedulas');
   dl.innerHTML='';
   SUCESORES.forEach(p=>{

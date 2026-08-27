@@ -312,13 +312,8 @@ function loadFicha(p) {
   const demoBanner = document.getElementById('demoBanner');
   if (demoBanner) demoBanner.style.display = isDemo ? 'block' : 'none';
   if (btnFull) {
-    if (isDemo) {
-      btnFull.onclick = (e) => { e.preventDefault(); alert('Este es un perfil de demostración. La Ficha Completa solo está disponible para colaboradores reales.'); };
-      btnFull.style.opacity = '0.6';
-    } else {
-      btnFull.onclick = () => window.location.href = 'ficha_talento.html?expediente=' + p.exp;
-      btnFull.style.opacity = '';
-    }
+    btnFull.onclick = () => window.location.href = 'ficha_talento.html?expediente=' + p.exp;
+    btnFull.style.opacity = '';
   }
 
   document.getElementById('iCargo').textContent = info.cargo || '—';
