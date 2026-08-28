@@ -741,6 +741,18 @@ async function loadSupabaseData(){
 
 /* ── INIT ──────────────────────────────────────────────────────────── */
 function init(){
+  // Migración de un solo uso: el tablero tuvo un bug donde, sin sesión
+  // guardada, entraba automáticamente como Walter Borda sin pasar por el
+  // login. A quien haya abierto el link mientras ese bug estaba activo le
+  // quedó esa sesión guardada en el navegador, y aunque el bug ya está
+  // arreglado, esa sesión vieja se seguía restaurando como si fuera
+  // legítima. Este bloque la borra una sola vez para forzar un login
+  // limpio; no se repite en las próximas cargas.
+  if(!localStorage.getItem('auth_fix_2026_08')){
+    localStorage.removeItem('lider_email');
+    localStorage.removeItem('talento_session');
+    localStorage.setItem('auth_fix_2026_08', '1');
+  }
   try{
     const el = document.getElementById('DS');
     const raw = el && el.textContent.trim() ? JSON.parse(el.textContent) : [];
@@ -1082,6 +1094,12 @@ function buildLeaders(){
 function showLoginOverlay(){
   CUR = null;
   localStorage.removeItem('talento_session');
+  // También hay que borrar esto: es lo que restaura la sesión en el
+  // próximo ingreso (buildLeaders/init lo lee). Antes de este arreglo
+  // solo se borraba talento_session, así que "· cambiar" no cerraba
+  // sesión de verdad: al recargar, volvía a entrar como el mismo
+  // usuario de siempre.
+  localStorage.removeItem('lider_email');
   document.getElementById('loginOverlay').style.display = 'flex';
   document.getElementById('mainContent').style.display = 'none';
   document.getElementById('loginErr').style.display = 'none';
