@@ -101,6 +101,7 @@ header.dash-hdr{
   text-transform:uppercase;letter-spacing:.05em;
 }
 .role-admin{background:var(--crimson-soft);color:var(--crimson)}
+.role-admin_restricted{background:var(--crimson-soft);color:var(--crimson)}
 .role-director{background:var(--gold-soft);color:var(--gold)}
 .role-gerente{background:var(--blue-soft);color:var(--blue)}
 
