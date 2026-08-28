@@ -295,11 +295,17 @@ async function loadOwn(session){
       return;
     }
 
-    const hgDetalleRows = await fetch(SUPABASE_URL+'/rest/v1/tableros_json?clave=eq.hogan_detalle&select=data', hdr).then(r=>r.json());
+    const [hgDetalleRows, nineboxRows] = await Promise.all([
+      fetch(SUPABASE_URL+'/rest/v1/tableros_json?clave=eq.hogan_detalle&select=data', hdr).then(r=>r.json()),
+      fetch(SUPABASE_URL+'/rest/v1/ninebox?select=direccion&expediente=eq.'+encodeURIComponent(session.expediente), hdr).then(r=>r.json())
+    ]);
     const hgDetalleMap = (Array.isArray(hgDetalleRows) && hgDetalleRows.length && hgDetalleRows[0].data) ? hgDetalleRows[0].data : {};
     const detalle = hgDetalleMap[normWords(persona.nombre)] || null;
+    // `personas.direccion_comite` está vacío para la mayoría; `ninebox.direccion`
+    // sí está completo, así que se usa como respaldo.
+    const nbDireccion = Array.isArray(nineboxRows) && nineboxRows.length ? nineboxRows[0].direccion : null;
 
-    const info = { nombre: persona.nombre, cargo: persona.cargo, direccion_comite: persona.direccion_comite, gerencia: persona.gerencia, jefe: persona.jefe, antiguedad: persona.antiguedad, fecha_nacimiento: persona.fecha_nacimiento, exp: session.expediente };
+    const info = { nombre: persona.nombre, cargo: persona.cargo, direccion_comite: persona.direccion_comite || nbDireccion, gerencia: persona.gerencia, jefe: persona.jefe, antiguedad: persona.antiguedad, fecha_nacimiento: persona.fecha_nacimiento, exp: session.expediente };
     render(info, detalle, false);
   }catch(err){
     console.warn('Error cargando mi Hogan', err);

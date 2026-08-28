@@ -359,6 +359,9 @@ async function loadSupabaseData(){
       if(nb && informacion[exp]){
         informacion[exp].caja=nb.caja;
         if(!informacion[exp].jefe) informacion[exp].jefe=nb.jefe;
+        // `personas.direccion_comite` está vacío para la mayoría; `ninebox.direccion`
+        // sí está completo, así que se usa como respaldo.
+        if(!informacion[exp].direccion_comite) informacion[exp].direccion_comite=nb.direccion;
       }
     });
     const parseArr=(s)=>{ try{ const a=JSON.parse(s); return Array.isArray(a)?a:[]; }catch(e){ return []; } };
