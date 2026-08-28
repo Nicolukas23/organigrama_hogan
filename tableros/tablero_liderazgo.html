@@ -937,7 +937,7 @@ function buildLeaders(){
 /* ── AUTH ──────────────────────────────────────────────────────────── */
 function showLoginOverlay(){
   CUR = null;
-  sessionStorage.removeItem('talento_session');
+  localStorage.removeItem('talento_session');
   document.getElementById('loginOverlay').style.display = 'flex';
   document.getElementById('mainContent').style.display = 'none';
   document.getElementById('loginErr').style.display = 'none';
@@ -948,7 +948,7 @@ function showLoginOverlay(){
 // desde este tablero) solo puedan mostrar fichas dentro del alcance de este
 // usuario, y no la de cualquier persona de la compañía.
 function persistSession(){
-  if(!CUR){ sessionStorage.removeItem('talento_session'); return; }
+  if(!CUR){ localStorage.removeItem('talento_session'); return; }
   let allowedExpedientes = null; // null = sin restricción (solo admin completo)
   if(CUR.rol !== 'admin'){
     const scoped = getScopedData();
@@ -956,7 +956,7 @@ function persistSession(){
     if(CUR.expediente) set.add(CUR.expediente);
     allowedExpedientes = Array.from(set);
   }
-  sessionStorage.setItem('talento_session', JSON.stringify({
+  localStorage.setItem('talento_session', JSON.stringify({
     email: CUR.email,
     nombre: CUR.nombre,
     rol: CUR.rol,

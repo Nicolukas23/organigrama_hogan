@@ -1325,7 +1325,7 @@ function injectDemoDataCompleta(){
 // cualquier persona de la compañía, no solo la de su equipo.
 function getTalentoSession(){
   try{
-    const raw = sessionStorage.getItem('talento_session');
+    const raw = localStorage.getItem('talento_session');
     if(!raw) return null;
     return JSON.parse(raw);
   }catch(e){ return null; }

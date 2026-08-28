@@ -285,7 +285,7 @@
   // Los usuarios autorizados de Nine Box ya están validados para ver a
   // toda la organización; propaga esa sesión para que ficha_hogan.html /
   // ficha_talento.html (abiertas desde aquí) no bloqueen el acceso.
-  sessionStorage.setItem('talento_session', JSON.stringify({email:obj.email, nombre:obj.email, rol:'admin_ninebox', activeScope:'FULL', allowedExpedientes:null}));
+  localStorage.setItem('talento_session', JSON.stringify({email:obj.email, nombre:obj.email, rol:'admin_ninebox', activeScope:'FULL', allowedExpedientes:null}));
 }}catch(e){}}})();
 /* ---------- Data & config ---------- */
 let RAW = JSON.parse(document.getElementById('dataStore').textContent);
@@ -1765,7 +1765,7 @@ function doLogin(){
   // Los usuarios autorizados de Nine Box ya están validados para ver a
   // toda la organización; propaga esa sesión para que ficha_hogan.html /
   // ficha_talento.html (abiertas desde aquí) no bloqueen el acceso.
-  sessionStorage.setItem('talento_session', JSON.stringify({email:email, nombre:email, rol:'admin_ninebox', activeScope:'FULL', allowedExpedientes:null}));
+  localStorage.setItem('talento_session', JSON.stringify({email:email, nombre:email, rol:'admin_ninebox', activeScope:'FULL', allowedExpedientes:null}));
   document.getElementById('mainWrap').style.display = '';
 }
 
