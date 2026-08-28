@@ -72,7 +72,7 @@
     </div>
     <div class="hdr-right">
       <div style="font-size:12px;color:var(--text-dim);margin-right:12px;display:flex;align-items:center;gap:8px;">
-        <span>📍 Estructura activa: <b id="lblScope" style="color:var(--text)">Todas las Direcciones</b></span>
+        <span id="wrapScope">📍 Estructura activa: <b id="lblScope" style="color:var(--text)">Todas las Direcciones</b></span>
         <button class="btn-icon" id="btnScopeToggle" style="display:none; border-color:var(--gold); color:var(--gold); padding:2px 8px; font-size:11px;" onclick="showScopeOverlay()">🔄 Cambiar</button>
       </div>
       <div class="user-badge">
@@ -1256,6 +1256,11 @@ function setSession(user){
     user.rol === 'admin_restricted' ? user.scope_dir :
     user.scope_ger ? `${user.scope_dir} (${user.scope_ger})` :
     user.scope_dir;
+  // Por políticas, a juan.lesmesm no se le muestra el detalle de su
+  // alcance (da a entender que ve todo salvo Gestión Humana y el Comité
+  // Directivo, algo que no se debe explicitar).
+  document.getElementById('wrapScope').style.display =
+    (user.email === 'juan.lesmesm@claro.com.co') ? 'none' : '';
 
   const badge = document.getElementById('lblRoleBadge');
   badge.textContent = user.rol === 'admin_restricted' ? 'BP' : user.rol.toUpperCase();
