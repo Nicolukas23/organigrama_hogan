@@ -878,11 +878,19 @@ function drawRadar360(data){
 
 function renderFormacion(p){
   const f=DATA.formacion[p.exp]||null;
-  if(!f){['tInterna','tExterna','fProfesional','fMedida'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML='';});return;}
+  // Experiencia interna: si no hay historial cargado, al menos se muestra
+  // el cargo actual (en vez de dejar la sección vacía).
+  const cargoActual=DATA.informacion&&DATA.informacion[p.exp]?DATA.informacion[p.exp].cargo:null;
+  if(!f){
+    ['tExterna','fProfesional','fMedida'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML='';});
+    const ti0=document.getElementById('tInterna');
+    if(ti0) ti0.innerHTML=cargoActual?'<tr><td>'+cargoActual+'</td></tr>':'';
+    return;
+  }
   // Experiencia interna
   const ti=document.getElementById('tInterna');
   if(f.cargos_int&&f.cargos_int.length)ti.innerHTML=f.cargos_int.map(c=>'<tr><td>'+c+'</td></tr>').join('');
-  else ti.innerHTML='';
+  else ti.innerHTML=cargoActual?'<tr><td>'+cargoActual+'</td></tr>':'';
   // Experiencia externa
   const te=document.getElementById('tExterna');
   if(f.cargos_ext&&f.cargos_ext.length)te.innerHTML=f.cargos_ext.map(c=>'<tr><td>'+c+'</td></tr>').join('');
