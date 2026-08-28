@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<title>Tablero Ejecutivo de Liderazgo · Nine Box & Hogan · Claro</title>
+<title>Mapeo de Talento · Claro</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👔</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +24,7 @@
 <div class="login-overlay" id="loginOverlay" style="display:none">
   <div class="login-card">
     <div class="login-logo">👔</div>
-    <h2>Tablero de Liderazgo</h2>
+    <h2>Mapeo de Talento</h2>
     <p>Acceso para Directores y Gerentes de Claro.<br>Ingresa con tu correo corporativo y contraseña.</p>
     
     <div class="login-err" id="loginErr">Datos de acceso incorrectos. Por favor verifica usuario y contraseña.</div>
@@ -759,13 +759,15 @@ function init(){
 
   buildLeaders();
 
+  // Solo se restaura sesión si YA existe una guardada de un login anterior
+  // en este navegador. Antes, si no había ninguna (primer ingreso, o
+  // alguien que nunca inició sesión), caía en un usuario por defecto
+  // (Walter Borda) sin pasar por el login — cualquiera que abriera el
+  // link por primera vez entraba directo con su acceso completo.
   const saved = localStorage.getItem('lider_email');
   let foundUser = null;
   if(saved){
     foundUser = findUserByInput(saved);
-  }
-  if(!foundUser && LEADERS.length > 0){
-    foundUser = LEADERS.find(l => l.email === 'walter.borda@claro.com.co') || LEADERS[0];
   }
 
   if(foundUser){
