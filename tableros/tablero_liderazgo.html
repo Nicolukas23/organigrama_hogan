@@ -638,8 +638,10 @@ function toggleTheme(){
 }
 
 function hoganAction(){
-  // Pendiente: falta definir la funcionalidad de este botón.
-  alert('Función Hogan próximamente.');
+  // Le permite a quien inició sesión ver SU PROPIO resultado de Hogan
+  // (ej. Walter, viendo el tablero de su equipo, no tiene otra forma de
+  // ver su propia ficha ya que solo ve fichas de sus reportes).
+  window.open('mi_hogan.html', '_blank');
 }
 if(localStorage.getItem('theme') === 'light'){
   document.documentElement.classList.add('light');
@@ -805,7 +807,7 @@ function buildLeaders(){
     scope_dir: 'Comité Directivo',
     scope_ger: 'Dirección Corporativa Financiera',
     is_direct_reports_only: false,
-    password: 'gMTdf$a2&JW*HW',
+    password: 'W9ps96%yu',
     requires_own_password: true
   });
 
@@ -907,115 +909,169 @@ function buildLeaders(){
   // distintas de la contraseña genérica 'Claro2026*', por seguridad. Quien
   // no esté en este mapa sigue entrando con la contraseña genérica.
   const JEFES_PASSWORDS = {
-    'diana.monsalve@claro.com.co': 'HpvsAuiC8=cQ6u',
-    '38518553@claro.com.co': 'n@rPstmn4X!aHj',
-    'sandra.hernandez@claro.com.co': 'u4Q$2Tc+fzTc!H',
-    'ana.sanabria@claro.com.co': 'V#gXM&5Gu@mJmF',
-    'pablo.trujillor@claro.com.co': '$#nE@UZ5gMHs9&',
-    'carlos.torres@claro.com.co': '=s727dCr%zw*V&',
-    'viviana.salas@claro.com.co': 'DVZf3cYVGuE9%+',
-    'luis.moralesc@claro.com.co': 'fwzK@n*24ES#rx',
-    'miguel.castellanosr@claro.com.co': '$Z9YCgem!9PzRd',
-    'german.bustos@claro.com.co': 'QS+tpaAi23aTyy',
-    'claudia.cardona@claro.com.co': '6g6eC2+b3#dEU@',
-    'mariapaula.lopez@claro.com.co': 'm7cHjTjeF!B$es',
-    'freddy.rodriguez@claro.com.co': 'J8Z*F4hipjWoiS',
-    'dario.diaz@claro.com.co': 'jGUHUL+es3P57!',
-    'sandra.moralesm@claro.com.co': '%FnkN8uiS9sQ$9',
-    'lina.garzon@claro.com.co': 'nmsnLL4%p!$=zZ',
-    'santiago.pardo@claro.com.co': '8k%ggxT!#G446p',
-    'maria.castaneda@claro.com.co': 'yuYt99Z*FzW9pb',
-    'juan.ojeda@claro.com.co': '3GxUWRmD$u3d$e',
-    'alejandro.joya@claro.com.co': 'wizPb%zkueC%9R',
-    'ingrid.torreso@claro.com.co': 'n%9@m@aLjAmZ2w',
-    'john.acosta@claro.com.co': 'Zv5*N3D@MQpNkJ',
-    'maria.castro@claro.com.co': '+5cANHPSC*uCPG',
-    'alejandro.baena@claro.com.co': 'e@Zohap7A+TNSV',
-    'myriam.chacon@claro.com.co': '&7XhM8Y*4WD9gr',
-    'daniel.guzman@claro.com.co': 'v8rxBF9+g9%K4D',
-    'andres.estupinan@claro.com.co': 'G6R#8&eU3NcBem',
-    'luis.sarmiento@claro.com.co': '*6vhQfvUNLFAWN',
-    'carlos.puertas@claro.com.co': 'A%x5Q$M$fqDV4t',
-    'iader.maldonado@claro.com.co': '6QKxib#bsuDY%%',
-    'oscar.avila@claro.com.co': 'Ar4Qv2bY@LAotu',
-    'carlos.donado@claro.com.co': 'R4tCRQ2a#s5wSj',
-    'carlos.quintero.l@claro.com.co': '9wU!V4Pc*%b4g=',
-    'miguel.cajigas@claro.com.co': 'XBi*+K2zc75AdR',
-    'hugo.salazar@claro.com.co': '75M5WkzxN9=5na',
-    'alvaro.otero@claro.com.co': 'MwoV7QY3!6iS4d',
-    'mauricio.bayona@claro.com.co': '5Lw%26RtZSxQn+',
-    'nayibe.castaneda@claro.com.co': '@q7!MLaEX7y!tx',
-    'freddy.vargas@claro.com.co': 'Aq94fbN$n+UE#F',
-    'carlos.castroc@claro.com.co': 'W!x6Bg@i2izQfM',
-    'johnathan.bohorquez@claro.com.co': 's*Jj3WKYo#xGh+',
-    'diego.gonzalezc@claro.com.co': 'mK7Y4%LFiD&Q&f',
-    'janeth.ibarra@claro.com.co': '8!@4XSyV=K+86d',
-    'carolina.casas@claro.com.co': 'i75hGq+wUtkBME',
-    'carlos.ramirez.r@claro.com.co': 'W5*w$xULr&&hE%',
-    'marialuisa.escolar@claro.com.co': 'SSvH3DcJ%ncd6t',
-    'luis.parra@claro.com.co': 'QD5r8+Pw!Q2nR%',
-    'maria.giraldo@claro.com.co': 'h!CCaH+5pP+&4x',
-    'pedro.montagut@claro.com.co': '3Gh%JtzA5y#S85',
-    'jaime.arias@claro.com.co': '=*gPsn673c8UdD',
-    'beatriz.zapata@claro.com.co': 'k4M%9qt#&fw!c2',
-    'sonia.delaroche@claro.com.co': '5@oNghG=&DpouL',
-    'jose.jimenez@claro.com.co': 'Mi5LwZ*PPMsWwp',
-    'patricia.pena@claro.com.co': '=ZohyM9&u*@Dim',
-    'adrian.vergarav@claro.com.co': 'C46UNPDTg#=4dp',
-    'daniel.dominguez@claro.com.co': 'vRLB4B2KMCY@aj',
-    'jose.vascog@claro.com.co': '4EYQG&*MS8V4*y',
-    'eliana.manotas@claro.com.co': 'QpAJyw&D=yZSZ4',
-    'diego.jaimes@claro.com.co': '5&Potf*8V@jT6#',
-    'julio.perezp@claro.com.co': '9++ofEhyt!KY+#',
-    'luis.porto@claro.com.co': 'VBa+EPoEqfhi9H',
-    'andres.carlesimo@claro.com.co': '%njQ3&qzu5Sn+Y',
-    'ivan.medina@claro.com.co': 'kH=um8S#6YB!uo',
-    'diego.martinez4@claro.com.co': 'Bob4!a4F8D$6!E',
-    'maria.ocampo@claro.com.co': '&yGCJNFxVKH3#j',
-    'federico.roca@claro.com.co': '8u%WCJQV2HHax$',
-    'luz.alvarez@claro.com.co': 'X5!vReX4o+s9Zx',
-    'luz.munozr@claro.com.co': '@=z9$Jf@GuUE2h',
-    'patricia.vargas@claro.com.co': 'icKb4GNMiVc*A=',
+    'diana.monsalve@claro.com.co': 'Ehd#65da9',
+    '38518553@claro.com.co': 'Ham766v*x',
+    'sandra.hernandez@claro.com.co': 'Rdfrk46#6',
+    'ana.sanabria@claro.com.co': 'Tt#wvr374',
+    'pablo.trujillor@claro.com.co': 'Wg5r8$7sf',
+    'carlos.torres@claro.com.co': 'K*6ugu6c2',
+    'viviana.salas@claro.com.co': 'K2#r6tuj6',
+    'luis.moralesc@claro.com.co': 'Ht5$7tkw4',
+    'miguel.castellanosr@claro.com.co': 'Q98m8*zir',
+    'german.bustos@claro.com.co': 'B9sc#qy83',
+    'claudia.cardona@claro.com.co': 'J7gm2dt6#',
+    'mariapaula.lopez@claro.com.co': 'M53dbc9d$',
+    'freddy.rodriguez@claro.com.co': 'H8n#ip4i6',
+    'dario.diaz@claro.com.co': 'Ktpi5%58o',
+    'sandra.moralesm@claro.com.co': 'Kr$3w4do8',
+    'lina.garzon@claro.com.co': 'Vi3*3grv6',
+    'santiago.pardo@claro.com.co': 'P89zj7na%',
+    'maria.castaneda@claro.com.co': 'Gu%53goy2',
+    'juan.ojeda@claro.com.co': 'T8$fgvb53',
+    'alejandro.joya@claro.com.co': 'Bf23f3m#t',
+    'ingrid.torreso@claro.com.co': 'V6o85oo$m',
+    'john.acosta@claro.com.co': 'Jqc8c4w6#',
+    'maria.castro@claro.com.co': 'Fr9$wt98k',
+    'alejandro.baena@claro.com.co': 'N8$sv4ci4',
+    'myriam.chacon@claro.com.co': 'Zn997bq*n',
+    'daniel.guzman@claro.com.co': 'R94ur$xv9',
+    'andres.estupinan@claro.com.co': 'K7q%r25hf',
+    'luis.sarmiento@claro.com.co': 'Ggij349x#',
+    'carlos.puertas@claro.com.co': 'Pzz9si*54',
+    'iader.maldonado@claro.com.co': 'Tixn438d*',
+    'oscar.avila@claro.com.co': 'Cc$22ef8b',
+    'carlos.donado@claro.com.co': 'R55$8hciw',
+    'carlos.quintero.l@claro.com.co': 'K$r4d43kg',
+    'miguel.cajigas@claro.com.co': 'K9tou2w8#',
+    'hugo.salazar@claro.com.co': 'Ki62v*im4',
+    'alvaro.otero@claro.com.co': 'F3cf39*xe',
+    'mauricio.bayona@claro.com.co': 'S#cxd59a6',
+    'nayibe.castaneda@claro.com.co': 'N%8so78dh',
+    'freddy.vargas@claro.com.co': 'Jc*38ng4g',
+    'carlos.castroc@claro.com.co': 'N%8s4cci9',
+    'johnathan.bohorquez@claro.com.co': 'Fd#4c2n8d',
+    'diego.gonzalezc@claro.com.co': 'Cmt*q7k76',
+    'janeth.ibarra@claro.com.co': 'Dw65iu#q2',
+    'carolina.casas@claro.com.co': 'U3f%gzo53',
+    'carlos.ramirez.r@claro.com.co': 'G82yxs5c#',
+    'marialuisa.escolar@claro.com.co': 'Bca94#k6y',
+    'luis.parra@claro.com.co': 'Em962f#ts',
+    'maria.giraldo@claro.com.co': 'F*cc44wt7',
+    'pedro.montagut@claro.com.co': 'Mv*yi875z',
+    'jaime.arias@claro.com.co': 'Kf7e*a8u8',
+    'beatriz.zapata@claro.com.co': 'D57fx*ho2',
+    'sonia.delaroche@claro.com.co': 'Xdb7*5p2j',
+    'jose.jimenez@claro.com.co': 'Vw46z#5kz',
+    'patricia.pena@claro.com.co': 'Fdq69k2*o',
+    'adrian.vergarav@claro.com.co': 'Hu8op2c*4',
+    'daniel.dominguez@claro.com.co': 'N7e#4vid8',
+    'jose.vascog@claro.com.co': 'Ty*9c5jz3',
+    'eliana.manotas@claro.com.co': 'Dm*6vj26r',
+    'diego.jaimes@claro.com.co': 'Gp2y$b45t',
+    'julio.perezp@claro.com.co': 'Tdvv62n$9',
+    'luis.porto@claro.com.co': 'Wvuz29a*7',
+    'andres.carlesimo@claro.com.co': 'Bo8i8m9%b',
+    'ivan.medina@claro.com.co': 'F8rogo9$6',
+    'diego.martinez4@claro.com.co': 'Q9ogzj74$',
+    'maria.ocampo@claro.com.co': 'Fcsgd336%',
+    'federico.roca@claro.com.co': 'K9h5j%ke4',
+    'luz.alvarez@claro.com.co': 'L3ar7p$v9',
+    'luz.munozr@claro.com.co': 'P3imu9i$8',
+    'patricia.vargas@claro.com.co': 'Dr4vh5f7#',
   };
 
-  // 3. Detectar líderes desde la data (Directores y Gerentes)
-  // mappedNames evita que alguien que ya tiene una entrada específica
-  // (ej. Walter Borda, con su propia contraseña) reciba además una segunda
-  // entrada automática bajo otro correo (ej. uno numérico de respaldo en la
-  // data), que quedaría con la contraseña genérica y abriría una puerta
-  // trasera para esa misma persona.
-  const mappedNames = new Set(Array.from(map.values()).map(u => normWords(u.nombre)));
-  ALL.forEach(r => {
-    const email = (r.email || '').trim().toLowerCase();
-    if(!email || ADMINS.includes(email) || map.has(email)) return;
-    if(mappedNames.has(normWords(r.nombre))) return;
+  // 3. Registrar a los 70 jefes del listado vigente (Comité Directivo,
+  // Director y Gerente). Ya no se detectan líderes automáticamente
+  // escaneando toda la base: solo puede iniciar sesión quien está en este
+  // listado explícito (más los admins y los perfiles demo).
+  const JEFES = [
+    { nombre: 'MONSALVE HERNANDEZ DIANA CAROLINA', cargo: 'Gerente Auditoria Operativa y Financiera', expediente: '53073416', email: 'diana.monsalve@claro.com.co', direccion: 'Direccion Auditoria', gerencia: 'Gerencia Auditoria Operativa y Financiera', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'MORENO MORENO ADRIANA', cargo: 'Gerente Auditoria Sistemas', expediente: '52492548', email: '38518553@claro.com.co', direccion: 'Direccion Auditoria', gerencia: 'Gerencia Auditoria Sistemas', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'HERNANDEZ HERNANDEZ SANDRA LILIANA', cargo: 'Director(a) Auditoria', expediente: '52185300', email: 'sandra.hernandez@claro.com.co', direccion: 'Comité Directivo', gerencia: 'Direccion Auditoria', rol: 'director', is_direct_reports_only: false },
+    { nombre: 'SANABRIA HIGUERA ANA PATRICIA', cargo: 'Director(a) Soporte a la Operacion', expediente: '46670410', email: 'ana.sanabria@claro.com.co', direccion: 'Direccion Corporativa Financiera', gerencia: 'Direccion Soporte a la Operacion', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'TRUJILLO REHBEIN PABLO', cargo: 'Director(a) Supply Chain', expediente: '80096815', email: 'pablo.trujillor@claro.com.co', direccion: 'Direccion Corporativa Financiera', gerencia: 'Direccion Supply Chain', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'TORRES RIVERA CARLOS ALBERTO', cargo: 'Director(a) Contraloria', expediente: '79576371', email: 'carlos.torres@claro.com.co', direccion: 'Direccion Corporativa Financiera', gerencia: 'Direccion Contraloria', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'SALAS MAHECHA VIVIANA ANDREA', cargo: 'Director(a) Planeacion Financiera y Tesoreria', expediente: '53120673', email: 'viviana.salas@claro.com.co', direccion: 'Direccion Corporativa Financiera', gerencia: 'Direccion Planeacion Financiera y Tesoreria', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'MORALES CLAVIJO LUIS GERMAN', cargo: 'Gerente Gestion Humana Negocio Y Transversales', expediente: '79297860', email: 'luis.moralesc@claro.com.co', direccion: 'Direccion Corporativa Gestion Humana y Administrativo', gerencia: 'Gerencia Gestion Humana Negocio y Transversales', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'CASTELLANOS RODRIGUEZ MIGUEL ANGEL', cargo: 'Gerente Universidad Claro', expediente: '79939609', email: 'miguel.castellanosr@claro.com.co', direccion: 'Direccion Corporativa Gestion Humana y Administrativo', gerencia: 'Gerencia Universidad Claro', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'BUSTOS SUAREZ GERMAN LEONARDO', cargo: 'Director(a) Corporativo Gestion Humana y Administrativo', expediente: '79516122', email: 'german.bustos@claro.com.co', direccion: 'Comité Directivo', gerencia: 'Direccion Corporativa Gestion Humana y Administrativo', rol: 'director', is_direct_reports_only: false },
+    { nombre: 'CARDONA TORRES CLAUDIA ISABEL', cargo: 'Gerente Servicios Administrativos', expediente: '60333937', email: 'claudia.cardona@claro.com.co', direccion: 'Direccion Corporativa Gestion Humana y Administrativo', gerencia: 'Gerencia Servicios Administrativos', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'LOPEZ TAVERA MARIA PAULA CATALINA', cargo: 'Gerente Talento Cultura y Comunicaciones', expediente: '52804512', email: 'mariapaula.lopez@claro.com.co', direccion: 'Direccion Corporativa Gestion Humana y Administrativo', gerencia: 'Gerencia Talento Cultura y Comunicaciones', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'RODRIGUEZ AFANADOR FREDY ENRIQUE', cargo: 'Gerente Plaza Claro', expediente: '79707735', email: 'freddy.rodriguez@claro.com.co', direccion: 'Direccion Corporativa Gestion Humana y Administrativo', gerencia: 'Gerencia Plaza Claro', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'DIAZ CLEVES DARIO', cargo: 'Gerente Seguridad Y Riesgo', expediente: '79313587', email: 'dario.diaz@claro.com.co', direccion: 'Direccion Corporativa Gestion Humana y Administrativo', gerencia: 'Gerencia Seguridad Y Riesgo', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'MORALES MOLANO SANDRA PATRICIA', cargo: 'Gerente Relaciones Laborales & SST', expediente: '52144444', email: 'sandra.moralesm@claro.com.co', direccion: 'Direccion Corporativa Gestion Humana y Administrativo', gerencia: 'Gerencia Relaciones Laborales & SST', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'GARZON MENDEZ LINA MARIA', cargo: 'Gerente Transformacion Y people Analytics', expediente: '52897880', email: 'lina.garzon@claro.com.co', direccion: 'Direccion Corporativa Gestion Humana y Administrativo', gerencia: 'Gerencia Transformacion Y people Analytics', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'PARDO FAJARDO SANTIAGO', cargo: 'Director(a) Corporativo Juridica y Sostenibilidad', expediente: '80425417', email: 'santiago.pardo@claro.com.co', direccion: 'Comité Directivo', gerencia: 'Direccion Corporativa Juridica y Sostenibilidad', rol: 'director', is_direct_reports_only: false },
+    { nombre: 'CASTAÑEDA GUERRERO MARIA TERESA DEL PILAR', cargo: 'Gerente Regulacion Y Relacion Con Operadores', expediente: '52709691', email: 'maria.castaneda@claro.com.co', direccion: 'Direccion Corporativa Juridica y Sostenibilidad', gerencia: 'Gerencia Regulacion y Relacion con Operadores', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'OJEDA LUNA JUAN MANUEL', cargo: 'Gerente Asuntos Contenciosos', expediente: '1085273858', email: 'juan.ojeda@claro.com.co', direccion: 'Direccion Corporativa Juridica y Sostenibilidad', gerencia: 'Gerencia Asuntos Contenciosos', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'JOYA APARICIO ALEJANDRO', cargo: 'Gerente Contratos Corporativos y Asuntos Societarios', expediente: '1010189106', email: 'alejandro.joya@claro.com.co', direccion: 'Direccion Corporativa Juridica y Sostenibilidad', gerencia: 'Gerencia Contratos Corporativos y Asuntos Societarios', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'TORRES OSPINA INGRID JULIET', cargo: 'Gerente Contratos Comerciales y Administrativos', expediente: '52818441', email: 'ingrid.torreso@claro.com.co', direccion: 'Direccion Corporativa Juridica y Sostenibilidad', gerencia: 'Gerencia Contratos Comerciales y Administrativos', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'ACOSTA BERNAL JOHN JAIRO', cargo: 'Gerente Cumplimiento', expediente: '80720654', email: 'john.acosta@claro.com.co', direccion: 'Direccion Corporativa Juridica y Sostenibilidad', gerencia: 'Gerencia Cumplimiento', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'CASTRO PINEDA MARIA CONSUELO', cargo: 'Gerente Sostenibilidad', expediente: '52047965', email: 'maria.castro@claro.com.co', direccion: 'Direccion Corporativa Juridica y Sostenibilidad', gerencia: 'Gerencia Sostenibilidad', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'BAENA JARAMILLO ALEJANDRO', cargo: 'Gerente Contratos Transparencia y Etica Empresarial', expediente: '80111618', email: 'alejandro.baena@claro.com.co', direccion: 'Direccion Corporativa Juridica y Sostenibilidad', gerencia: 'Gerencia Contratos Transparencia y Etica Empresarial', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'CHACON GOMEZ MYRIAM YOLANDA', cargo: 'Director(a) Experiencia del Cliente', expediente: '52912096', email: 'myriam.chacon@claro.com.co', direccion: 'Direccion Corporativa Financiera', gerencia: 'Direccion Experiencia A Clientes', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'GUZMAN FLOREZ DANIEL', cargo: 'Director(a) Corporativo Planeacion Estrategica e Innovacion', expediente: '1128466768', email: 'daniel.guzman@claro.com.co', direccion: 'Comité Directivo', gerencia: 'Direccion Corporativa Planeacion Estrategica e Innovacion', rol: 'director', is_direct_reports_only: false },
+    { nombre: 'ESTUPIÑAN LOPEZ ANDRES FERNANDO', cargo: 'Director(a) Datos y Analitica de Negocios', expediente: '4617732', email: 'andres.estupinan@claro.com.co', direccion: 'Direccion Corporativa Planeacion Estrategica e Innovacion', gerencia: 'Direccion Datos y Analitica de Negocios', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'SARMIENTO GONZALEZ LUIS ALEJANDRO', cargo: 'Gerente Gestion del Portafolio', expediente: '3216158', email: 'luis.sarmiento@claro.com.co', direccion: 'Direccion Corporativa Planeacion Estrategica e Innovacion', gerencia: 'Gerencia Gestion Portafolio Estrategico', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'PUERTAS OROZCO CARLOS ANDRES', cargo: 'Director(a) Planeacion', expediente: '94429618', email: 'carlos.puertas@claro.com.co', direccion: 'Direccion Corporativa Planeacion Estrategica e Innovacion', gerencia: 'Direccion Planeacion Estrategica', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'MALDONADO ROBLES IADER ALBERTO', cargo: 'Director(a) Corporativo Tecnologia', expediente: '85467103', email: 'iader.maldonado@claro.com.co', direccion: 'Comité Directivo', gerencia: 'Direccion Corporativa Tecnologia', rol: 'director', is_direct_reports_only: false },
+    { nombre: 'AVILA PLATA OSCAR MAURICIO', cargo: 'Director(a) Aseguramiento Calidad de Servicio', expediente: '80099040', email: 'oscar.avila@claro.com.co', direccion: 'Direccion Corporativa Tecnologia', gerencia: 'Direccion Aseguramiento Calidad de Servicio', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'DONADO ARENAS CARLOS EFREN', cargo: 'Director(a) Servicios TIC y Datacenter', expediente: '79277334', email: 'carlos.donado@claro.com.co', direccion: 'Direccion Corporativa Tecnologia', gerencia: 'Direccion Servicios TIC y Datacenter', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'QUINTERO LOPEZ CARLOS HUMBERTO', cargo: 'Director(a) Operaciones Tecnicas de Campo', expediente: '12193497', email: 'carlos.quintero.l@claro.com.co', direccion: 'Direccion Corporativa Tecnologia', gerencia: 'Direccion Operaciones Tecnicas de Campo', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'CAJIGAS SILVA MIGUEL EDUARDO', cargo: 'Director(a) Experiencia Soporte y Operacion IT', expediente: '19420900', email: 'miguel.cajigas@claro.com.co', direccion: 'Direccion Corporativa Tecnologia', gerencia: 'Direccion Experiencia Soporte y Operacion IT', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'SALAZAR BARON HUGO ALEXANDER', cargo: 'Director(a) Ingenieria', expediente: '79532521', email: 'hugo.salazar@claro.com.co', direccion: 'Direccion Corporativa Tecnologia', gerencia: 'Direccion Ingenieria', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'OTERO DUMAR ALVARO MIGUEL', cargo: 'Director(a) Implementacion', expediente: '78747249', email: 'alvaro.otero@claro.com.co', direccion: 'Direccion Corporativa Tecnologia', gerencia: 'Direccion Implementacion', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'BAYONA PORRAS JUAN MAURICIO', cargo: 'Gerente Planeacion Tecnologia', expediente: '79455718', email: 'mauricio.bayona@claro.com.co', direccion: 'Direccion Corporativa Tecnologia', gerencia: 'Gerencia Planeacion Tecnologia', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'CASTAÑEDA ALDANA NAYIBE ALCIRA', cargo: 'Director(a) de Administracion Recursos Tecnicos', expediente: '52809026', email: 'nayibe.castaneda@claro.com.co', direccion: 'Direccion Corporativa Tecnologia', gerencia: 'Direccion de Administracion Recursos Tecnicos', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'VARGAS BLANCO FREDDY ALEXANDER', cargo: 'Director(a) Gestion de Riesgo y Control Interno', expediente: '80150353', email: 'freddy.vargas@claro.com.co', direccion: 'Comité Directivo', gerencia: 'Direccion Gestion de Riesgo y Control Interno', rol: 'director', is_direct_reports_only: false },
+    { nombre: 'CASTRO CARDOZO CARLOS ANDRES', cargo: 'Gerente Seguridad Informacion', expediente: '80820898', email: 'carlos.castroc@claro.com.co', direccion: 'Direccion Gestion de Riesgo y Control Interno', gerencia: 'Gerencia Seguridad Informacion', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'BOHORQUEZ HERNANDEZ JOHNATHAN ERNESTO', cargo: 'Gerente Riesgo Tecnologico', expediente: '1129543149', email: 'johnathan.bohorquez@claro.com.co', direccion: 'Direccion Gestion de Riesgo y Control Interno', gerencia: 'Gerencia Riesgo Tecnologico', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'GONZALEZ CHAVES DIEGO MIGUEL', cargo: 'Gerente Riesgo Operativo y Control Interno', expediente: '79965710', email: 'diego.gonzalezc@claro.com.co', direccion: 'Direccion Gestion de Riesgo y Control Interno', gerencia: 'Gerencia Riesgo Operativo y Control Interno', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'IBARRA CERON JANETH CONSTANZA', cargo: 'Gerente Aseguramiento Ingresos', expediente: '55180918', email: 'janeth.ibarra@claro.com.co', direccion: 'Direccion Gestion de Riesgo y Control Interno', gerencia: 'Gerencia Aseguramiento Ingresos', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'CASAS SILVA CAROLINA', cargo: 'Gerente Riesgo Financiero', expediente: '53015362', email: 'carolina.casas@claro.com.co', direccion: 'Direccion Gestion de Riesgo y Control Interno', gerencia: 'Gerencia Riesgo Financiero', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'RAMIREZ RINCON CARLOS JULIO', cargo: 'Gerente Prevencion Fraude', expediente: '80004393', email: 'carlos.ramirez.r@claro.com.co', direccion: 'Direccion Gestion de Riesgo y Control Interno', gerencia: 'Gerencia Prevencion Fraude', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'ESCOLAR SUNDHEIM MARIA LUISA', cargo: 'Director(a) Ejecutivo Unidad Mercado Corporativo', expediente: '32781111', email: 'marialuisa.escolar@claro.com.co', direccion: 'Comité Directivo', gerencia: 'Unidad Negocio Empresas', rol: 'director', is_direct_reports_only: false },
+    { nombre: 'PARRA BELTRAN LUIS FERNANDO', cargo: 'Director(a) Comercial Pymes', expediente: '80418091', email: 'luis.parra@claro.com.co', direccion: 'Unidad Mercado Corporativo', gerencia: 'Direccion Comercial Pymes', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'GIRALDO SANTAFE MARIA DEL PILAR', cargo: 'Director(a) Cuentas Estrategicas', expediente: '30402310', email: 'maria.giraldo@claro.com.co', direccion: 'Unidad Mercado Corporativo', gerencia: 'Direccion Comercial Empresas Estrategicas', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'MONTAGUT MORALES PEDRO ANGEL', cargo: 'Director(a) Marketing Corporativo y Producto', expediente: '1032365189', email: 'pedro.montagut@claro.com.co', direccion: 'Unidad Mercado Corporativo', gerencia: 'Direccion Marketing Corporativo y Producto', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'ARIAS MORA JAIME ALBERTO', cargo: 'Director(a) Consultoria y Diseño', expediente: '79506436', email: 'jaime.arias@claro.com.co', direccion: 'Unidad Mercado Corporativo', gerencia: 'Direccion Consultoria y Diseño', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'ZAPATA ORTIZ BEATRIZ', cargo: 'Director(a) Grandes Cuentas', expediente: '66952849', email: 'beatriz.zapata@claro.com.co', direccion: 'Unidad Mercado Corporativo', gerencia: 'Direccion Comercial Grandes Empresas', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'DE LA ROCHE BENITEZ SONIA ANGELICA', cargo: 'Director(a) Servicio al Cliente Corporativo', expediente: '52153221', email: 'sonia.delaroche@claro.com.co', direccion: 'Unidad Mercado Corporativo', gerencia: 'Direccion Servicio A Clientes Corporativos', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'JIMENEZ MORALES JOSE JULIAN', cargo: 'Gerente Soluciones Cloud', expediente: '79999930', email: 'jose.jimenez@claro.com.co', direccion: 'Unidad Mercado Corporativo', gerencia: 'Gerencia Soluciones Cloud', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'PEÑA VEGA PATRICIA', cargo: 'Gerente Inteligencia Comercial', expediente: '33066693', email: 'patricia.pena@claro.com.co', direccion: 'Unidad Mercado Corporativo', gerencia: 'Gerencia Inteligencia Comercial', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'VERGARA VALENCIA ADRIAN ALFREDO', cargo: 'Director(a) Comercial Gobierno', expediente: '76320829', email: 'adrian.vergarav@claro.com.co', direccion: 'Unidad Mercado Corporativo', gerencia: 'Direccion Comercial Gobierno', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'DOMINGUEZ DANIEL ARNALDO', cargo: 'Director(a) Ejecutivo Unidad Mercado Masivo', expediente: '1138186', email: 'daniel.dominguez@claro.com.co', direccion: 'Comité Directivo', gerencia: 'Unidad Mercado Masivo', rol: 'director', is_direct_reports_only: false },
+    { nombre: 'VASCO GARCIA JOSE LUIS', cargo: 'Director(a) Region 4', expediente: '79861675', email: 'jose.vascog@claro.com.co', direccion: 'Unidad Mercado Masivo', gerencia: 'Direccion Region 4', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'MANOTAS SALCEDO ELIANA MARIA', cargo: 'Director(a) Canales de Venta Agentes', expediente: '32842621', email: 'eliana.manotas@claro.com.co', direccion: 'Unidad Mercado Masivo', gerencia: 'Direccion Canales de Venta Agentes', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'JAIMES VEGA DIEGO FERNANDO', cargo: 'Director(a) Region 5', expediente: '13871736', email: 'diego.jaimes@claro.com.co', direccion: 'Unidad Mercado Masivo', gerencia: 'Direccion Region 5', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'PEREZ PALMA JULIO CESAR', cargo: 'Director(a) Region 2', expediente: '8126425', email: 'julio.perezp@claro.com.co', direccion: 'Unidad Mercado Masivo', gerencia: 'Direccion Region 2', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'PORTO VELASQUEZ LUIS MIGUEL', cargo: 'Director(a) Region 1', expediente: '8533055', email: 'luis.porto@claro.com.co', direccion: 'Unidad Mercado Masivo', gerencia: 'Direccion Region 1', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'CARLESIMO REY ANDRES', cargo: 'Director(a) Producto Masivo', expediente: '79556029', email: 'andres.carlesimo@claro.com.co', direccion: 'Unidad Mercado Masivo', gerencia: 'Direccion Producto Masivo', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'MEDINA PEÑA IVAN RICARDO', cargo: 'Director(a) Ecommerce y Telemercadeo', expediente: '80471459', email: 'ivan.medina@claro.com.co', direccion: 'Unidad Mercado Masivo', gerencia: 'Direccion Ecommerce y Telemercadeo', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'MARTINEZ PINILLA DIEGO FELIPE', cargo: 'Director(a) Region 3', expediente: '1032396133', email: 'diego.martinez4@claro.com.co', direccion: 'Unidad Mercado Masivo', gerencia: 'Direccion Region 3', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'OCAMPO GIRON MARIA DEL PILAR', cargo: 'Director(a) Canales Atencion UMM', expediente: '66881732', email: 'maria.ocampo@claro.com.co', direccion: 'Unidad Mercado Masivo', gerencia: 'Direccion Canales Atencion UMM', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'ROCA ACEVEDO FEDERICO', cargo: 'Gerente Marketing Masivo', expediente: '79940951', email: 'federico.roca@claro.com.co', direccion: 'Unidad Mercado Masivo', gerencia: 'Gerencia Marketing Masivo', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'ALVAREZ ZULUAGA LUZ ASTRID', cargo: 'Gerente Nacional B2B2C y Proyectos Especiales', expediente: '52526001', email: 'luz.alvarez@claro.com.co', direccion: 'Unidad Mercado Masivo', gerencia: 'Gerencia Nacional B2B2C y Proyectos Especiales', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'MUÑOZ RONCANCIO LUZ NEILA', cargo: 'Director(a) Terminales y Equipos Hogar', expediente: '52534703', email: 'luz.munozr@claro.com.co', direccion: 'Unidad Mercado Masivo', gerencia: 'Direccion Negocio Terminales y Equipos Hogar', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'VARGAS ANGEL SANDRA PATRICIA', cargo: 'Gerente Inteligencia Comercial Personas', expediente: '51976159', email: 'patricia.vargas@claro.com.co', direccion: 'Unidad Mercado Masivo', gerencia: 'Gerencia Inteligencia Comercial Mercado Masivo', rol: 'gerente', is_direct_reports_only: true },
+  ];
 
-    const cargo = (r.cargo || '').toLowerCase();
-    const nivel = String(r.nivel_reporte || '');
-    const isDir = cargo.includes('director') || nivel === '1';
-    const isGer = cargo.includes('gerente') || nivel === '2';
-
-    if(isDir || isGer){
-      // Solo los directores de nivel Comité Directivo pueden alternar entre
-      // "Reportes Directos" y "Estructura Completa". El resto de directores
-      // (nivel de función directo, no CD) quedan igual que los gerentes:
-      // solamente ven sus reportes directos.
-      const isCDLevelDirector = isDir && CD_EXPEDIENTES.includes(r.expediente);
-      const individualPwd = JEFES_PASSWORDS[email];
-      map.set(email, {
-        nombre: r.nombre,
-        cargo: r.cargo,
-        email: email,
-        expediente: r.expediente,
-        rol: isDir ? 'director' : 'gerente',
-        scope_dir: r.direccion,
-        scope_ger: r.gerencia,
-        is_direct_reports_only: isDir && !isCDLevelDirector,
-        password: individualPwd || 'Claro2026*',
-        requires_own_password: !!individualPwd
-      });
-      mappedNames.add(normWords(r.nombre));
-    }
+  JEFES.forEach(j => {
+    const email = j.email.toLowerCase();
+    if(map.has(email)) return;
+    const individualPwd = JEFES_PASSWORDS[email];
+    map.set(email, {
+      nombre: j.nombre,
+      cargo: j.cargo,
+      email: email,
+      expediente: j.expediente,
+      rol: j.rol,
+      scope_dir: j.direccion,
+      scope_ger: j.gerencia,
+      is_direct_reports_only: j.is_direct_reports_only,
+      password: individualPwd || 'Claro2026*',
+      requires_own_password: !!individualPwd
+    });
   });
 
   LEADERS = Array.from(map.values());
@@ -1082,30 +1138,9 @@ function findUserByInput(input){
   u = LEADERS.find(l => normWords(l.nombre) === normInp || normWords(l.nombre).includes(normInp));
   if(u) return u;
 
-  // 5. Fallback check inside ALL dataset
-  const foundInAll = ALL.find(r => 
-    (r.email || '').trim().toLowerCase() === raw ||
-    (r.email || '').trim().toLowerCase() === raw + '@claro.com.co' ||
-    String(r.expediente || '').trim() === raw ||
-    normWords(r.nombre) === normInp
-  );
-
-  if(foundInAll){
-    const isDirFallback = (foundInAll.cargo || '').toLowerCase().includes('director');
-    const isCDLevelDirector = isDirFallback && CD_EXPEDIENTES.includes(foundInAll.expediente);
-    return {
-      nombre: foundInAll.nombre,
-      cargo: foundInAll.cargo,
-      email: foundInAll.email || raw,
-      expediente: foundInAll.expediente,
-      rol: isDirFallback ? 'director' : 'gerente',
-      scope_dir: foundInAll.direccion,
-      scope_ger: foundInAll.gerencia,
-      is_direct_reports_only: isDirFallback && !isCDLevelDirector,
-      password: 'Claro2026*'
-    };
-  }
-
+  // Ya no hay una búsqueda de respaldo sobre toda la base (ALL): solo puede
+  // iniciar sesión quien está explícitamente en LEADERS (los 70 jefes del
+  // listado vigente, los admins y los perfiles demo).
   return null;
 }
 
