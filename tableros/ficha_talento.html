@@ -188,7 +188,7 @@
 </footer>
 
 <script src="../data/ficha_data.js?v=202607302100"></script>
-<script src="../data/comite_hogan.js"></script>
+<script src="../data/comite_hogan.js?v=1787948117"></script>
 <script>
 // ── CARGADOR SUPABASE ────────────────────────────────────────────
 // Intenta cargar la data viva desde Supabase. Si falla, usa ficha_data.js estático.
@@ -436,6 +436,26 @@ async function loadSupabaseData(){
         if (exp) window.DATA.hogan[exp] = { ...window.DATA.hogan[exp], ...window.COMITE_HOGAN[name] };
       });
     }
+    // "Mapeo de Talento" muestra hogan[exp].fortalezas/oportunidades, que
+    // hasta ahora solo se llenaban para los ~9 del Comité (vía
+    // COMITE_HOGAN, arriba). Para todos los demás quedaba "Sin datos"
+    // aunque sí hubiera texto disponible. Se completa con, en orden: el
+    // detalle de Hogan de la persona (misma tabla que se usa en
+    // "Resultados Prueba Potencial Hogan") y, si tampoco hay eso, el
+    // texto de la calibración (personas.fortalezas/oportunidades).
+    Object.keys(informacion).forEach(exp=>{
+      const h=window.DATA.hogan[exp];
+      const det=h&&h.detalle;
+      const info=informacion[exp];
+      if(!h||!h.fortalezas){
+        const fort=(det&&det.fortalezas)||(info&&info.fortalezas);
+        if(fort) window.DATA.hogan[exp]={...(window.DATA.hogan[exp]||{}), fortalezas:fort};
+      }
+      if(!h||!h.oportunidades){
+        const oport=(det&&det.oportunidades)||(info&&info.oportunidades);
+        if(oport) window.DATA.hogan[exp]={...(window.DATA.hogan[exp]||{}), oportunidades:oport};
+      }
+    });
     window.SUCESORES=hijos.map(exp=>({exp,nombre:informacion[exp].nombre}));
     if(SUCESORES.length===0)SUCESORES.push(...hijos.map(exp=>({exp,nombre:informacion[exp].nombre})));
     console.log('Supabase: data viva cargada,',SUCESORES.length,'personas');
@@ -686,7 +706,13 @@ function loadFicha(p){
     }
   }
   const h=DATA.hogan[p.exp];
-  const showHogan=isCDOwn||reportsToCD||(h&&h.competencias&&h.competencias.length>0);
+  // Antes solo se fijaba en h.competencias (el puntaje consolidado del
+  // equipo, tableros_json.hogan). Alguien con detalle de Hogan propio
+  // (tableros_json.hogan_detalle, con sus 10 competencias y puntajes)
+  // pero sin ese puntaje consolidado se quedaba con la sección
+  // completamente oculta, aunque sí hubiera datos para mostrar.
+  const hasDetalle=h&&h.detalle&&h.detalle.competencias&&h.detalle.competencias.length>0;
+  const showHogan=isCDOwn||reportsToCD||(h&&h.competencias&&h.competencias.length>0)||hasDetalle;
   if(!showHogan){
     document.getElementById('hoganGrid').style.display='none';
     document.getElementById('competenciasSection').style.display='none';

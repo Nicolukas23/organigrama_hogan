@@ -138,7 +138,7 @@
 </footer>
 
 <script src="../data/ficha_data.js?v=1787685958"></script>
-<script src="../data/comite_hogan.js?v=1787677736"></script>
+<script src="../data/comite_hogan.js?v=1787948117"></script>
 <script>
 // ── CARGADOR SUPABASE ────────────────────────────────────────────
 // Intenta cargar la data viva desde Supabase. Si falla, usa ficha_data.js estático.
@@ -272,6 +272,26 @@ async function loadSupabaseData(){
         if (exp) window.DATA.hogan[exp] = { ...window.DATA.hogan[exp], ...window.COMITE_HOGAN[name] };
       });
     }
+    // "Mapeo de Talento" muestra hogan[exp].fortalezas/oportunidades, que
+    // hasta ahora solo se llenaban para los ~9 del Comité (vía
+    // COMITE_HOGAN, arriba). Para todos los demás quedaba "Sin datos"
+    // aunque sí hubiera texto disponible. Se completa con, en orden: el
+    // detalle de Hogan de la persona (misma tabla que se usa en
+    // "Resultados Prueba Potencial Hogan") y, si tampoco hay eso, el
+    // texto de la calibración (personas.fortalezas/oportunidades).
+    Object.keys(informacion).forEach(exp=>{
+      const h=window.DATA.hogan[exp];
+      const det=h&&h.detalle;
+      const info=informacion[exp];
+      if(!h||!h.fortalezas){
+        const fort=(det&&det.fortalezas)||(info&&info.fortalezas);
+        if(fort) window.DATA.hogan[exp]={...(window.DATA.hogan[exp]||{}), fortalezas:fort};
+      }
+      if(!h||!h.oportunidades){
+        const oport=(det&&det.oportunidades)||(info&&info.oportunidades);
+        if(oport) window.DATA.hogan[exp]={...(window.DATA.hogan[exp]||{}), oportunidades:oport};
+      }
+    });
     window.SUCESORES=hijos.map(exp=>({exp,nombre:informacion[exp].nombre}));
     if(window.SUCESORES.length===0)window.SUCESORES.push(...hijos.map(exp=>({exp,nombre:informacion[exp].nombre})));
     // Re-poblar el datalist de búsqueda con la data viva

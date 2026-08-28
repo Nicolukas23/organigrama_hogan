@@ -1481,7 +1481,7 @@ window.COMITE_HOGAN["PRADO MEJIA CAROL ALEXANDRA"].oportunidades = "Debe fortale
 
 window.COMITE_HOGAN["ALMARIO GALINDO LUIS CARLOS"] = window.COMITE_HOGAN["ALMARIO GALINDO LUIS CARLOS"] || {};
 window.COMITE_HOGAN["ALMARIO GALINDO LUIS CARLOS"].fortalezas = "Es un profesional con una s\u00f3lida capacidad de comunicaci\u00f3n y una alta habilidad para desenvolverse frente a diferentes audiencias. Se destaca por su enfoque comercial, su capacidad para influir y el liderazgo que ejerce en su \u00e1mbito de responsabilidad. Cuenta con un profundo conocimiento t\u00e9cnico.";
-window.COMITE_HOGAN["ALMARIO GALINDO LUIS CARLOS"].oportunidades = "Oportunidades de desarrollo\n\nPara asumir responsabilidades de mayor alcance, requiere fortalecer su versatilidad y ampliar su perspectiva m\u00e1s all\u00e1 de su \u00e1rea de expertise. Es importante que incremente su iniciativa y su involucramiento en la soluci\u00f3n de temas transversales,  evitando limitar su contribuci\u00f3n. Asimismo, necesita desarrollar mayores capacidades en la gesti\u00f3n de agentes y en el manejo corporativo de clientes, consolidando una visi\u00f3n m\u00e1s integral del negocio y una mayor corresponsabilidad frente a los retos de la organizaci\u00f3n.";
+window.COMITE_HOGAN["ALMARIO GALINDO LUIS CARLOS"].oportunidades = "Para asumir responsabilidades de mayor alcance, requiere fortalecer su versatilidad y ampliar su perspectiva m\u00e1s all\u00e1 de su \u00e1rea de expertise. Es importante que incremente su iniciativa y su involucramiento en la soluci\u00f3n de temas transversales, evitando limitar su contribuci\u00f3n. Asimismo, necesita desarrollar mayores capacidades en la gesti\u00f3n de agentes y en el manejo corporativo de clientes, consolidando una visi\u00f3n m\u00e1s integral del negocio y una mayor corresponsabilidad frente a los retos de la organizaci\u00f3n.";
 
 window.COMITE_HOGAN["CASTIBLANCO CLAVIJO JIMMY ANDERSON"] = window.COMITE_HOGAN["CASTIBLANCO CLAVIJO JIMMY ANDERSON"] || {};
 window.COMITE_HOGAN["CASTIBLANCO CLAVIJO JIMMY ANDERSON"].fortalezas = "Es un profesional con alto potencial,  Se destaca por su capacidad de comunicaci\u00f3n, su elocuencia y la facilidad para transmitir ideas e influir en diferentes audiencias. Cuenta con las capacidades necesarias para continuar creciendo dentro de la organizaci\u00f3n.";
@@ -1493,7 +1493,7 @@ window.COMITE_HOGAN["ARIAS ROJAS JENNY MILENA"].oportunidades = "Requiere fortal
 
 window.COMITE_HOGAN["VELEZ BARON HAROLD STEVEN"] = window.COMITE_HOGAN["VELEZ BARON HAROLD STEVEN"] || {};
 window.COMITE_HOGAN["VELEZ BARON HAROLD STEVEN"].fortalezas = "Se destaca por su  orientaci\u00f3n comercial y capacidad para autogestionarse de manera efectiva. Es una persona con iniciativa, autosuficiente y enfocada en el logro de resultados, que propone alternativas y acciones para alcanzar los objetivos del negocio.";
-window.COMITE_HOGAN["VELEZ BARON HAROLD STEVEN"].oportunidades = "Debe fortaler su confianza y owernship";
+window.COMITE_HOGAN["VELEZ BARON HAROLD STEVEN"].oportunidades = "Debe fortalecer su confianza y ownership.";
 
 window.COMITE_HOGAN["PARRA PINZON OSCAR IVAN"] = window.COMITE_HOGAN["PARRA PINZON OSCAR IVAN"] || {};
 window.COMITE_HOGAN["PARRA PINZON OSCAR IVAN"].fortalezas = "Se destaca por su alta versatilidad, capacidad de adaptaci\u00f3n y buen desempe\u00f1o en el corto tiempo que lleva en el rol. Ha mostrado una evoluci\u00f3n positiva, va por buen camino y cuenta con un potencial de desarrollo que le permitir\u00e1 asumir retos de mayor alcance.";
