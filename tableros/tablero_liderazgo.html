@@ -805,7 +805,8 @@ function buildLeaders(){
     scope_dir: 'Comité Directivo',
     scope_ger: 'Dirección Corporativa Financiera',
     is_direct_reports_only: false,
-    password: 'Claro*WJ2026'
+    password: 'gMTdf$a2&JW*HW',
+    requires_own_password: true
   });
 
   // 2. Admins fijos
@@ -901,11 +902,94 @@ function buildLeaders(){
     password: 'Demo2026*Claro'
   });
 
+  // 2e. Contraseñas individuales para los "jefes" del listado de hoy
+  // (Directores, Gerentes y Comité Directivo) — todas distintas entre sí y
+  // distintas de la contraseña genérica 'Claro2026*', por seguridad. Quien
+  // no esté en este mapa sigue entrando con la contraseña genérica.
+  const JEFES_PASSWORDS = {
+    'diana.monsalve@claro.com.co': 'HpvsAuiC8=cQ6u',
+    '38518553@claro.com.co': 'n@rPstmn4X!aHj',
+    'sandra.hernandez@claro.com.co': 'u4Q$2Tc+fzTc!H',
+    'ana.sanabria@claro.com.co': 'V#gXM&5Gu@mJmF',
+    'pablo.trujillor@claro.com.co': '$#nE@UZ5gMHs9&',
+    'carlos.torres@claro.com.co': '=s727dCr%zw*V&',
+    'viviana.salas@claro.com.co': 'DVZf3cYVGuE9%+',
+    'luis.moralesc@claro.com.co': 'fwzK@n*24ES#rx',
+    'miguel.castellanosr@claro.com.co': '$Z9YCgem!9PzRd',
+    'german.bustos@claro.com.co': 'QS+tpaAi23aTyy',
+    'claudia.cardona@claro.com.co': '6g6eC2+b3#dEU@',
+    'mariapaula.lopez@claro.com.co': 'm7cHjTjeF!B$es',
+    'freddy.rodriguez@claro.com.co': 'J8Z*F4hipjWoiS',
+    'dario.diaz@claro.com.co': 'jGUHUL+es3P57!',
+    'sandra.moralesm@claro.com.co': '%FnkN8uiS9sQ$9',
+    'lina.garzon@claro.com.co': 'nmsnLL4%p!$=zZ',
+    'santiago.pardo@claro.com.co': '8k%ggxT!#G446p',
+    'maria.castaneda@claro.com.co': 'yuYt99Z*FzW9pb',
+    'juan.ojeda@claro.com.co': '3GxUWRmD$u3d$e',
+    'alejandro.joya@claro.com.co': 'wizPb%zkueC%9R',
+    'ingrid.torreso@claro.com.co': 'n%9@m@aLjAmZ2w',
+    'john.acosta@claro.com.co': 'Zv5*N3D@MQpNkJ',
+    'maria.castro@claro.com.co': '+5cANHPSC*uCPG',
+    'alejandro.baena@claro.com.co': 'e@Zohap7A+TNSV',
+    'myriam.chacon@claro.com.co': '&7XhM8Y*4WD9gr',
+    'daniel.guzman@claro.com.co': 'v8rxBF9+g9%K4D',
+    'andres.estupinan@claro.com.co': 'G6R#8&eU3NcBem',
+    'luis.sarmiento@claro.com.co': '*6vhQfvUNLFAWN',
+    'carlos.puertas@claro.com.co': 'A%x5Q$M$fqDV4t',
+    'iader.maldonado@claro.com.co': '6QKxib#bsuDY%%',
+    'oscar.avila@claro.com.co': 'Ar4Qv2bY@LAotu',
+    'carlos.donado@claro.com.co': 'R4tCRQ2a#s5wSj',
+    'carlos.quintero.l@claro.com.co': '9wU!V4Pc*%b4g=',
+    'miguel.cajigas@claro.com.co': 'XBi*+K2zc75AdR',
+    'hugo.salazar@claro.com.co': '75M5WkzxN9=5na',
+    'alvaro.otero@claro.com.co': 'MwoV7QY3!6iS4d',
+    'mauricio.bayona@claro.com.co': '5Lw%26RtZSxQn+',
+    'nayibe.castaneda@claro.com.co': '@q7!MLaEX7y!tx',
+    'freddy.vargas@claro.com.co': 'Aq94fbN$n+UE#F',
+    'carlos.castroc@claro.com.co': 'W!x6Bg@i2izQfM',
+    'johnathan.bohorquez@claro.com.co': 's*Jj3WKYo#xGh+',
+    'diego.gonzalezc@claro.com.co': 'mK7Y4%LFiD&Q&f',
+    'janeth.ibarra@claro.com.co': '8!@4XSyV=K+86d',
+    'carolina.casas@claro.com.co': 'i75hGq+wUtkBME',
+    'carlos.ramirez.r@claro.com.co': 'W5*w$xULr&&hE%',
+    'marialuisa.escolar@claro.com.co': 'SSvH3DcJ%ncd6t',
+    'luis.parra@claro.com.co': 'QD5r8+Pw!Q2nR%',
+    'maria.giraldo@claro.com.co': 'h!CCaH+5pP+&4x',
+    'pedro.montagut@claro.com.co': '3Gh%JtzA5y#S85',
+    'jaime.arias@claro.com.co': '=*gPsn673c8UdD',
+    'beatriz.zapata@claro.com.co': 'k4M%9qt#&fw!c2',
+    'sonia.delaroche@claro.com.co': '5@oNghG=&DpouL',
+    'jose.jimenez@claro.com.co': 'Mi5LwZ*PPMsWwp',
+    'patricia.pena@claro.com.co': '=ZohyM9&u*@Dim',
+    'adrian.vergarav@claro.com.co': 'C46UNPDTg#=4dp',
+    'daniel.dominguez@claro.com.co': 'vRLB4B2KMCY@aj',
+    'jose.vascog@claro.com.co': '4EYQG&*MS8V4*y',
+    'eliana.manotas@claro.com.co': 'QpAJyw&D=yZSZ4',
+    'diego.jaimes@claro.com.co': '5&Potf*8V@jT6#',
+    'julio.perezp@claro.com.co': '9++ofEhyt!KY+#',
+    'luis.porto@claro.com.co': 'VBa+EPoEqfhi9H',
+    'andres.carlesimo@claro.com.co': '%njQ3&qzu5Sn+Y',
+    'ivan.medina@claro.com.co': 'kH=um8S#6YB!uo',
+    'diego.martinez4@claro.com.co': 'Bob4!a4F8D$6!E',
+    'maria.ocampo@claro.com.co': '&yGCJNFxVKH3#j',
+    'federico.roca@claro.com.co': '8u%WCJQV2HHax$',
+    'luz.alvarez@claro.com.co': 'X5!vReX4o+s9Zx',
+    'luz.munozr@claro.com.co': '@=z9$Jf@GuUE2h',
+    'patricia.vargas@claro.com.co': 'icKb4GNMiVc*A=',
+  };
+
   // 3. Detectar líderes desde la data (Directores y Gerentes)
+  // mappedNames evita que alguien que ya tiene una entrada específica
+  // (ej. Walter Borda, con su propia contraseña) reciba además una segunda
+  // entrada automática bajo otro correo (ej. uno numérico de respaldo en la
+  // data), que quedaría con la contraseña genérica y abriría una puerta
+  // trasera para esa misma persona.
+  const mappedNames = new Set(Array.from(map.values()).map(u => normWords(u.nombre)));
   ALL.forEach(r => {
     const email = (r.email || '').trim().toLowerCase();
     if(!email || ADMINS.includes(email) || map.has(email)) return;
-    
+    if(mappedNames.has(normWords(r.nombre))) return;
+
     const cargo = (r.cargo || '').toLowerCase();
     const nivel = String(r.nivel_reporte || '');
     const isDir = cargo.includes('director') || nivel === '1';
@@ -917,6 +1001,7 @@ function buildLeaders(){
       // (nivel de función directo, no CD) quedan igual que los gerentes:
       // solamente ven sus reportes directos.
       const isCDLevelDirector = isDir && CD_EXPEDIENTES.includes(r.expediente);
+      const individualPwd = JEFES_PASSWORDS[email];
       map.set(email, {
         nombre: r.nombre,
         cargo: r.cargo,
@@ -926,11 +1011,13 @@ function buildLeaders(){
         scope_dir: r.direccion,
         scope_ger: r.gerencia,
         is_direct_reports_only: isDir && !isCDLevelDirector,
-        password: 'Claro2026*'
+        password: individualPwd || 'Claro2026*',
+        requires_own_password: !!individualPwd
       });
+      mappedNames.add(normWords(r.nombre));
     }
   });
-  
+
   LEADERS = Array.from(map.values());
 }
 
@@ -1033,10 +1120,11 @@ function loginByEmail(){
     return;
   }
 
-  // Validate password if configured. Los admins restringidos (BP) no
-  // pueden entrar con las contraseñas genéricas de los demás roles: solo
-  // su propia contraseña individual sirve.
-  const passwordOk = user.rol === 'admin_restricted'
+  // Validate password if configured. Los admins restringidos (BP) y los
+  // jefes con contraseña individual asignada (JEFES_PASSWORDS) no pueden
+  // entrar con las contraseñas genéricas de los demás roles: solo su
+  // propia contraseña individual sirve.
+  const passwordOk = (user.rol === 'admin_restricted' || user.requires_own_password)
     ? (pwd === user.password)
     : (pwd === user.password || pwd === 'Claro2026*' || pwd === 'Admin2026*Claro');
   if(user.password && pwd && !passwordOk){
