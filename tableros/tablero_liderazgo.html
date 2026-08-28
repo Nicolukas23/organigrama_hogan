@@ -869,9 +869,11 @@ function buildLeaders(){
     password: 'Admin2026*Claro'
   });
 
-  // 2b. Admins restringidos: ven todas las Direcciones EXCEPTO Gestión
-  // Humana y los miembros del Comité Directivo (equipo de HRBP que
-  // administra la herramienta pero no debe ver esa información propia).
+  // 2b. Admins restringidos (BP de Gestión Humana): cada uno ve solo las
+  // Direcciones/Unidades que tiene asignadas (allowed_direcciones), y en
+  // ningún caso ve Gestión Humana ni a los miembros del Comité Directivo.
+  // juan.lesmesm no tiene lista asignada: ve todas las Direcciones EXCEPTO
+  // Gestión Humana y Comité Directivo (comportamiento previo, sin cambios).
   // Cada BP tiene su propia contraseña, distinta entre sí y distinta de la
   // de los admins que ven todo (Admin2026*Claro).
   const RESTRICTED_ADMIN_PASSWORDS = {
@@ -879,15 +881,24 @@ function buildLeaders(){
     'sebastian.vargasc@claro.com.co': 'Talento2026*Sebastian',
     'juan.lesmesm@claro.com.co': 'Talento2026*Juan'
   };
+  const RESTRICTED_ADMIN_DIRECCIONES = {
+    // TEC y UMC
+    'sebastian.vargasc@claro.com.co': ['Direccion Corporativa Tecnologia', 'Unidad Mercado Corporativo'],
+    // UMM y PRE
+    'adriana.aranda@claro.com.co': ['Unidad Mercado Masivo', 'Presidencia']
+    // juan.lesmesm@claro.com.co: sin entrada = ve todo (excepto Gestión Humana y Comité Directivo)
+  };
   RESTRICTED_ADMINS.forEach(email => {
     const r = ALL.find(x => (x.email || '').trim().toLowerCase() === email);
+    const allowedDir = RESTRICTED_ADMIN_DIRECCIONES[email] || null;
     map.set(email, {
       nombre: r ? r.nombre : email,
       cargo: r ? r.cargo : 'Administrador (Acceso Restringido)',
       email: email,
       expediente: r ? r.expediente : ('ADMIN-R-' + email),
       rol: 'admin_restricted',
-      scope_dir: 'Todas las Direcciones (excepto Gestión Humana y Comité Directivo)',
+      allowed_direcciones: allowedDir,
+      scope_dir: allowedDir ? allowedDir.join(' y ') : 'Todas las Direcciones (excepto Gestión Humana y Comité Directivo)',
       scope_ger: 'Todas las Gerencias',
       password: RESTRICTED_ADMIN_PASSWORDS[email]
     });
@@ -1266,6 +1277,9 @@ function getScopedData(){
   if(!CUR) return ALL;
   if(CUR.rol === 'admin') return ALL;
   if(CUR.rol === 'admin_restricted'){
+    if(CUR.allowed_direcciones){
+      return ALL.filter(r => CUR.allowed_direcciones.includes(r.direccion) && !CD_EXPEDIENTES.includes(r.expediente));
+    }
     return ALL.filter(r => r.direccion !== RESTRICTED_DIRECCION && !CD_EXPEDIENTES.includes(r.expediente));
   }
   if(CUR.email === DEMO_EMAIL){
