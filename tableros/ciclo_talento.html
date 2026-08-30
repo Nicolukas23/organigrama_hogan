@@ -7,9 +7,9 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
 <link rel="stylesheet" href="../data/theme.css">
 <link rel="stylesheet" href="../data/tableros.css">
-<link rel="stylesheet" href="../data/nav.css">
+<link rel="stylesheet" href="../data/nav.css?v=1788132157">
 
-<link rel="stylesheet" href="../data/ciclo_talento.css">
+<link rel="stylesheet" href="../data/ciclo_talento.css?v=1788132157">
   <link rel="manifest" href="../manifest.json">
   <script src="../data/global_search.js" defer></script>
 </head>
@@ -25,7 +25,7 @@
   <div class="sec" id="tableSection"></div>
 </div>
 
-<script src="../data/nav.js"></script>
+<script src="../data/nav.js?v=1788132157"></script>
 <script>
 var RAW=[];
 
@@ -122,7 +122,7 @@ function drawDonut(id,data,colors,size){
   ctx.font='bold '+size/6+'px Segoe UI,system-ui';ctx.textAlign='center';
   ctx.fillText(total,cx,cy+2);
   ctx.font=(size/11)+'px Segoe UI,system-ui';
-  ctx.fillStyle=cs.getPropertyValue('--text3')||'#6B7280';
+  ctx.fillStyle=cs.getPropertyValue('--text-dim')||'#6B7280';
   ctx.fillText('relaciones',cx,cy+size/12);
 }
 
@@ -141,7 +141,7 @@ var charts1HTML=
   '</div></div>';
 document.getElementById('charts1').innerHTML=charts1HTML;
 
-setTimeout(function(){
+function redrawDonuts(){
   drawDonut('donutMov',[{val:vertical,color:'#7C3AED'},{val:horizontal,color:'#2563EB'}],null,170);
   var dirArr=Object.entries(dirCount).sort(function(a,b){return b[1]-a[1]});
   var dirColors=['#7C1D24','#1E3A5F','#059669','#EA580C','#7C3AED','#0891B2'];
@@ -150,7 +150,12 @@ setTimeout(function(){
   document.getElementById('dirLegend').innerHTML=dirArr.map(function(d,i){
     return '<div class="dl-item"><div class="dl-dot" style="background:'+dirColors[i%dirColors.length]+'"></div>'+esc(d[0].replace('Direccion ','Dir. '))+'<div class="dl-val">'+d[1]+'</div></div>';
   }).join('');
-},100);
+}
+setTimeout(redrawDonuts,100);
+// El color del texto de las dádonas (--text/--text-dim) depende del tema;
+// si cambia (botón 🌓 de la barra de navegación), hay que repintar o
+// queda el texto del tema anterior "pegado" y puede volverse invisible.
+document.addEventListener('claro:theme-changed',redrawDonuts);
 
 /* ── MOBILITY CARDS ──────────────────────────────────────────────── */
 document.getElementById('mobSection').innerHTML=

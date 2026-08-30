@@ -57,6 +57,13 @@
   display:flex;align-items:center;gap:4px;
   color:rgba(255,255,255,.6);font-size:.65rem;white-space:nowrap;
 }
+.app-nav-theme{
+  display:flex;align-items:center;justify-content:center;
+  width:30px;height:30px;border-radius:8px;border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.1);color:#fff;font-size:.9rem;cursor:pointer;
+  transition:background .15s;flex-shrink:0;
+}
+.app-nav-theme:hover{background:rgba(255,255,255,.2)}
 
 /* ── SEARCH MODAL ────────────────────────────────────────────────────── */
 .app-search-modal{
@@ -69,7 +76,7 @@
 }
 .app-search-dialog{
   position:relative;width:560px;max-width:92vw;
-  background:var(--card-bg,#fff);border:1px solid var(--border,#E2E6EF);
+  background:var(--panel);border:1px solid var(--border,#E2E6EF);
   border-radius:16px;box-shadow:0 25px 60px rgba(0,0,0,.4);
   overflow:hidden;
 }
@@ -77,28 +84,28 @@
   display:flex;align-items:center;gap:10px;padding:14px 16px;
   border-bottom:1px solid var(--border,#E2E6EF);
 }
-.app-search-input-wrap svg{width:18px;height:18px;color:var(--text4,#9CA3AF);flex-shrink:0}
+.app-search-input-wrap svg{width:18px;height:18px;color:var(--text-faint);flex-shrink:0}
 .app-search-input-wrap input{
   flex:1;border:none;background:none;font-size:.9rem;color:var(--text,#111827);
   outline:none;
 }
-.app-search-input-wrap input::placeholder{color:var(--text4,#9CA3AF)}
+.app-search-input-wrap input::placeholder{color:var(--text-faint)}
 .app-search-input-wrap kbd{
-  background:var(--surface2,#F3F4F6);padding:2px 6px;border-radius:4px;
-  font-size:.65rem;color:var(--text4,#9CA3AF);border:1px solid var(--border,#E2E6EF);
+  background:var(--panel-2);padding:2px 6px;border-radius:4px;
+  font-size:.65rem;color:var(--text-faint);border:1px solid var(--border,#E2E6EF);
 }
 .app-search-results{
   max-height:360px;overflow-y:auto;padding:6px;
 }
 .app-search-empty{
-  padding:32px 16px;text-align:center;color:var(--text4,#9CA3AF);font-size:.82rem;
+  padding:32px 16px;text-align:center;color:var(--text-faint);font-size:.82rem;
 }
 .app-search-item{
   display:flex;align-items:center;gap:10px;padding:10px 12px;
   border-radius:10px;text-decoration:none;color:inherit;
   transition:background .12s;cursor:pointer;
 }
-.app-search-item:hover{background:var(--hover,#F8FAFF)}
+.app-search-item:hover{background:var(--panel-hover)}
 .app-search-avatar{
   width:36px;height:36px;border-radius:10px;
   background:linear-gradient(135deg,#7C1D24,#9F1239);
@@ -107,23 +114,23 @@
 }
 .app-search-info{flex:1;min-width:0}
 .app-search-name{font-size:.82rem;font-weight:600;color:var(--text,#111827);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.app-search-meta{font-size:.7rem;color:var(--text4,#9CA3AF);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.app-search-meta{font-size:.7rem;color:var(--text-faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .app-search-badge{
   width:22px;height:22px;border-radius:6px;font-size:.6rem;font-weight:700;
   display:grid;place-items:center;flex-shrink:0;
-  background:var(--surface2,#F3F4F6);color:var(--text3,#6B7280);
+  background:var(--panel-2);color:var(--text-dim);
 }
 
 /* ── PROGRESS BAR (para informes bulk) ───────────────────────────────── */
 .app-progress{
   position:fixed;bottom:0;left:0;right:0;z-index:800;
-  background:var(--card-bg,#fff);border-top:1px solid var(--border,#E2E6EF);
+  background:var(--panel);border-top:1px solid var(--border,#E2E6EF);
   padding:12px 20px;display:none;
   box-shadow:0 -4px 20px rgba(0,0,0,.1);
 }
 .app-progress.show{display:block}
 .app-progress-bar{
-  height:6px;background:var(--surface2,#F3F4F6);border-radius:10px;
+  height:6px;background:var(--panel-2);border-radius:10px;
   overflow:hidden;margin-bottom:6px;
 }
 .app-progress-fill{
@@ -132,14 +139,14 @@
   transition:width .3s ease;
 }
 .app-progress-text{
-  font-size:.75rem;color:var(--text3,#6B7280);text-align:center;
+  font-size:.75rem;color:var(--text-dim);text-align:center;
 }
 
 /* ── LAST UPDATED BADGE ──────────────────────────────────────────────── */
 .app-updated-badge{
   display:inline-flex;align-items:center;gap:4px;
   padding:4px 10px;border-radius:20px;font-size:.68rem;
-  background:var(--surface2,#F3F4F6);color:var(--text4,#9CA3AF);
+  background:var(--panel-2);color:var(--text-faint);
 }
 
 /* ── RESPONSIVE ──────────────────────────────────────────────────────── */

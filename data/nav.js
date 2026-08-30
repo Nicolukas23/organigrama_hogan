@@ -5,6 +5,25 @@
 (function(){
 'use strict';
 
+/* ── TEMA (oscuro/claro) ─────────────────────────────────────────────── */
+/* Se aplica lo antes posible (antes de construir la barra) para evitar un
+   parpadeo del tema equivocado. Usa la misma clave de localStorage
+   ('theme') y la misma clase ('light' en <html>) que las páginas que ya
+   traen su propio botón de tema (ficha_talento, ficha_hogan, hogan,
+   organigrama, mi_hogan), así que quedan sincronizadas entre sí. */
+if(localStorage.getItem('theme') === 'light'){
+  document.documentElement.classList.add('light');
+}
+window.toggleTheme = window.toggleTheme || function(){
+  document.documentElement.classList.toggle('light');
+  var theme = document.documentElement.classList.contains('light') ? 'light' : 'dark';
+  localStorage.setItem('theme', theme);
+  /* Páginas con gráficas dibujadas en <canvas> (ej. ciclo_talento.html)
+     fijan sus colores al momento de pintar y no se actualizan solas al
+     cambiar de tema. Este evento les avisa para que se vuelvan a dibujar. */
+  document.dispatchEvent(new CustomEvent('claro:theme-changed', {detail:{theme:theme}}));
+};
+
 /* ── CONFIG ──────────────────────────────────────────────────────────── */
 var TABLEROS=[
   {id:'index',       label:'Portal',       icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>'},
@@ -56,6 +75,7 @@ function buildNav(){
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>'+
         '<span></span>'+
       '</div>'+
+      '<button class="app-nav-theme" id="appNavThemeBtn" title="Cambiar modo oscuro/claro" onclick="toggleTheme()">🌓</button>'+
     '</div>'+
   '</div>';
   return nav;
