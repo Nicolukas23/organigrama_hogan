@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="../data/tableros.css">
 <link rel="stylesheet" href="../data/nav.css?v=1788132157">
 
-<link rel="stylesheet" href="../data/ciclo_talento.css?v=1788132157">
+<link rel="stylesheet" href="../data/ciclo_talento_v2.css?v=1788132157">
   <link rel="manifest" href="../manifest.json">
   <script src="../data/global_search.js" defer></script>
 </head>
@@ -17,234 +17,316 @@
 
 <div class="wrap">
   <div class="hero" id="hero"></div>
-  <div class="kpi-row" id="kpis"></div>
-  <div class="charts2" id="charts1"></div>
-  <div class="sec" id="mobSection"></div>
-  <div class="sec" id="timeSection"></div>
-  <div class="sec" id="riskSection"></div>
-  <div class="sec" id="tableSection"></div>
+  <div class="filterbar" id="filterbar"></div>
+  <div class="kpi-grid" id="kpis"></div>
+
+  <div class="section" id="chartsSection"></div>
+  <div class="section" id="riskSection"></div>
+  <div class="section" id="tableSection"></div>
 </div>
 
 <script src="../data/nav.js?v=1788132157"></script>
 <script>
-var RAW=[];
+var RAW_ALL = [{"exp": 52185300, "jNombre": "HERNANDEZ HERNANDEZ SANDRA LILIANA", "jEdad": 50, "jCargo": "Director(a) Auditoria", "jDir": "Direccion Auditoria", "jNivel": "COMITÉ DIRECTIVO", "sNombre": "VARGAS BLANCO FREDDY ALEXANDER", "sCargo": "Director(a) Gestion de Riesgo y Control Interno", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "COMITÉ DIRECTIVO", "tiempo": null, "sEdad": 45, "sAntig": 1}, {"exp": 52185300, "jNombre": "HERNANDEZ HERNANDEZ SANDRA LILIANA", "jEdad": 50, "jCargo": "Director(a) Auditoria", "jDir": "Direccion Auditoria", "jNivel": "COMITÉ DIRECTIVO", "sNombre": "MORENO MORENO ADRIANA", "sCargo": "Gerente Auditoria Sistemas", "sDir": "Direccion Auditoria", "sNivel": "GERENTE", "tiempo": null, "sEdad": 47, "sAntig": 0}, {"exp": 52492548, "jNombre": "MORENO MORENO ADRIANA", "jEdad": 47, "jCargo": "Gerente Auditoria Sistemas", "jDir": "Direccion Auditoria", "jNivel": "GERENTE", "sNombre": "JARAMILLO YARCE YULIANA ANDREA", "sCargo": "Auditor(a) Sistemas Sr", "sDir": "Direccion Auditoria", "sNivel": "AUDITOR (A)", "tiempo": "1 AÑO", "sEdad": 41, "sAntig": 4}, {"exp": 52492548, "jNombre": "MORENO MORENO ADRIANA", "jEdad": 47, "jCargo": "Gerente Auditoria Sistemas", "jDir": "Direccion Auditoria", "jNivel": "GERENTE", "sNombre": "SARMIENTO SANDOVAL ADRIANA CONSUELO", "sCargo": "Jefe Gestion Identidades y Accesos", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "JEFE", "tiempo": null, "sEdad": 51, "sAntig": 22}, {"exp": 53073416, "jNombre": "MONSALVE HERNANDEZ DIANA CAROLINA", "jEdad": 41, "jCargo": "Gerente Auditoria Operativa y Financiera", "jDir": "Direccion Auditoria", "jNivel": "GERENTE", "sNombre": "PINZON LUIS KELLY JOHANA", "sCargo": "Auditor(a) Operativo y Financiero Sr", "sDir": "Direccion Auditoria", "sNivel": "AUDITOR (A)", "tiempo": "2 AÑOS", "sEdad": 34, "sAntig": 4}, {"exp": 53073416, "jNombre": "MONSALVE HERNANDEZ DIANA CAROLINA", "jEdad": 41, "jCargo": "Gerente Auditoria Operativa y Financiera", "jDir": "Direccion Auditoria", "jNivel": "GERENTE", "sNombre": "VELA MARTINEZ JUAN DAVID", "sCargo": "Auditor(a) Operativo y Financiero", "sDir": "Direccion Auditoria", "sNivel": "AUDITOR (A)", "tiempo": "3 AÑOS", "sEdad": 33, "sAntig": 2}, {"exp": 53073416, "jNombre": "MONSALVE HERNANDEZ DIANA CAROLINA", "jEdad": 41, "jCargo": "Gerente Auditoria Operativa y Financiera", "jDir": "Direccion Auditoria", "jNivel": "GERENTE", "sNombre": "CASAS SILVA CAROLINA", "sCargo": "Gerente Riesgo Financiero", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "GERENTE", "tiempo": null, "sEdad": 41, "sAntig": 1}, {"exp": 79947402, "jNombre": "BORDA FERRO WALTER JAVIER", "jEdad": 47, "jCargo": "Director(a) Corporativo Financiero", "jDir": "Direccion Corporativa Financiera", "jNivel": "COMITÉ DIRECTIVO", "sNombre": "SALAS MAHECHA VIVIANA ANDREA", "sCargo": "Director(a) Planeacion Financiera y Tesoreria", "sDir": "Direccion Corporativa Financiera", "sNivel": "DIRECTOR (A)", "tiempo": "1 AÑO", "sEdad": 41, "sAntig": 18}, {"exp": 79947402, "jNombre": "BORDA FERRO WALTER JAVIER", "jEdad": 47, "jCargo": "Director(a) Corporativo Financiero", "jDir": "Direccion Corporativa Financiera", "jNivel": "COMITÉ DIRECTIVO", "sNombre": "GUZMAN FLOREZ DANIEL", "sCargo": "Director(a) Corporativo Planeacion Estrategica e Innovacion", "sDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "sNivel": "COMITÉ DIRECTIVO", "tiempo": null, "sEdad": 38, "sAntig": 0}, {"exp": 52912096, "jNombre": "CHACON GOMEZ MYRIAM YOLANDA", "jEdad": 43, "jCargo": "Director(a) Experiencia del Cliente", "jDir": "Direccion Corporativa Financiera", "jNivel": "DIRECTOR (A)", "sNombre": "IGUA PORRAS FREDDY ALDEMAR", "sCargo": "Gerente Experiencia Pospago y Hogar", "sDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "sNivel": "GERENTE", "tiempo": "2 AÑOS", "sEdad": 44, "sAntig": 14}, {"exp": 52912096, "jNombre": "CHACON GOMEZ MYRIAM YOLANDA", "jEdad": 43, "jCargo": "Director(a) Experiencia del Cliente", "jDir": "Direccion Corporativa Financiera", "jNivel": "DIRECTOR (A)", "sNombre": "BERRIO GARCIA JULIO CESAR", "sCargo": "Gerente Digital", "sDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "sNivel": "GERENTE", "tiempo": "1 AÑO", "sEdad": 43, "sAntig": 4}, {"exp": 53120673, "jNombre": "SALAS MAHECHA VIVIANA ANDREA", "jEdad": 41, "jCargo": "Director(a) Planeacion Financiera y Tesoreria", "jDir": "Direccion Corporativa Financiera", "jNivel": "DIRECTOR (A)", "sNombre": "POVEDA VALERO JULIO CESAR", "sCargo": "Gerente Analisis y Estrategia Financiera", "sDir": "Direccion Corporativa Financiera", "sNivel": "GERENTE", "tiempo": "2 AÑOS", "sEdad": 35, "sAntig": 12}, {"exp": 46670410, "jNombre": "SANABRIA HIGUERA ANA PATRICIA", "jEdad": 51, "jCargo": "Director(a) Soporte a la Operacion", "jDir": "Direccion Corporativa Financiera", "jNivel": "DIRECTOR (A)", "sNombre": "MARTINEZ FLORIDO ANDRES FRANCISCO", "sCargo": "Gerente Comisiones", "sDir": "Direccion Corporativa Financiera", "sNivel": "GERENTE", "tiempo": "1 AÑO", "sEdad": 45, "sAntig": 21}, {"exp": 80096815, "jNombre": "TRUJILLO REHBEIN PABLO", "jEdad": 43, "jCargo": "Director(a) Supply Chain", "jDir": "Direccion Corporativa Financiera", "jNivel": "DIRECTOR (A)", "sNombre": "CAÑON LARA CARLOS ANDRES", "sCargo": "Gerente Supply Chain Aliados y Proveedores", "sDir": "Direccion Corporativa Financiera", "sNivel": "GERENTE", "tiempo": "2 AÑOS", "sEdad": 44, "sAntig": 11}, {"exp": 80096815, "jNombre": "TRUJILLO REHBEIN PABLO", "jEdad": 43, "jCargo": "Director(a) Supply Chain", "jDir": "Direccion Corporativa Financiera", "jNivel": "DIRECTOR (A)", "sNombre": "CASAS GUTIERREZ MARIA CECILIA", "sCargo": "Gerente Centro Value Chain UMM", "sDir": "Direccion Corporativa Financiera", "sNivel": "GERENTE", "tiempo": "2 AÑOS", "sEdad": 46, "sAntig": 23}, {"exp": 79576371, "jNombre": "TORRES RIVERA CARLOS ALBERTO", "jEdad": 54, "jCargo": "Director(a) Contraloria", "jDir": "Direccion Corporativa Financiera", "jNivel": "DIRECTOR (A)", "sNombre": "MATEUS VELASCO HECTOR VICENTE", "sCargo": "Gerente Control Ingresos y Costos", "sDir": "Direccion Corporativa Financiera", "sNivel": "GERENTE", "tiempo": "3 AÑOS", "sEdad": 40, "sAntig": 17}, {"exp": 79576371, "jNombre": "TORRES RIVERA CARLOS ALBERTO", "jEdad": 54, "jCargo": "Director(a) Contraloria", "jDir": "Direccion Corporativa Financiera", "jNivel": "DIRECTOR (A)", "sNombre": "ACEVEDO ARIAS MAURICIO", "sCargo": "Gerente de Impuestos y planeacion Fiscal", "sDir": "Direccion Corporativa Financiera", "sNivel": "GERENTE", "tiempo": "2 AÑOS", "sEdad": 56, "sAntig": 30}, {"exp": 1128466768, "jNombre": "GUZMAN FLOREZ DANIEL", "jEdad": 38, "jCargo": "Director(a) Corporativo Planeacion Estrategica e Innovacion", "jDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "jNivel": "COMITÉ DIRECTIVO", "sNombre": "ESTUPIÑAN LOPEZ ANDRES FERNANDO", "sCargo": "Director(a) Datos y Analitica de Negocios", "sDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "sNivel": "DIRECTOR (A)", "tiempo": "2 AÑOS", "sEdad": 45, "sAntig": 11}, {"exp": 1128466768, "jNombre": "GUZMAN FLOREZ DANIEL", "jEdad": 38, "jCargo": "Director(a) Corporativo Planeacion Estrategica e Innovacion", "jDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "jNivel": "COMITÉ DIRECTIVO", "sNombre": "MONTAGUT MORALES PEDRO ANGEL", "sCargo": "Director(a) Marketing Corporativo y Producto", "sDir": "Unidad Mercado Corporativo", "sNivel": "DIRECTOR (A)", "tiempo": "3 AÑOS", "sEdad": 40, "sAntig": 13}, {"exp": 1128466768, "jNombre": "GUZMAN FLOREZ DANIEL", "jEdad": 38, "jCargo": "Director(a) Corporativo Planeacion Estrategica e Innovacion", "jDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "jNivel": "COMITÉ DIRECTIVO", "sNombre": "TRUJILLO REHBEIN PABLO", "sCargo": "Director(a) Supply Chain", "sDir": "Direccion Corporativa Financiera", "sNivel": "DIRECTOR (A)", "tiempo": null, "sEdad": 43, "sAntig": 7}, {"exp": 4617732, "jNombre": "ESTUPIÑAN LOPEZ ANDRES FERNANDO", "jEdad": 45, "jCargo": "Director(a) Datos y Analitica de Negocios", "jDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "jNivel": "DIRECTOR (A)", "sNombre": "PEÑUELA CRUZ JOHN HOWARD", "sCargo": "Gerente Arquitectura E Ingenieria Datos", "sDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "sNivel": "GERENTE", "tiempo": "1 AÑO", "sEdad": 45, "sAntig": 4}, {"exp": 4617732, "jNombre": "ESTUPIÑAN LOPEZ ANDRES FERNANDO", "jEdad": 45, "jCargo": "Director(a) Datos y Analitica de Negocios", "jDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "jNivel": "DIRECTOR (A)", "sNombre": "DEL CASTILLO PAVAJEAU RAFAEL JOSE", "sCargo": "Gerente Analitica Avanzada", "sDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "sNivel": "GERENTE", "tiempo": "2 AÑOS", "sEdad": 46, "sAntig": 6}, {"exp": 94429618, "jNombre": "PUERTAS OROZCO CARLOS ANDRES", "jEdad": 51, "jCargo": "Director(a) Planeacion", "jDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "jNivel": "DIRECTOR (A)", "sNombre": "USECHE VARON JOHN JAIRO", "sCargo": "Gerente Planeacion Estrategica", "sDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "sNivel": "GERENTE", "tiempo": "1 AÑO", "sEdad": 42, "sAntig": 15}, {"exp": 94429618, "jNombre": "PUERTAS OROZCO CARLOS ANDRES", "jEdad": 51, "jCargo": "Director(a) Planeacion", "jDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "jNivel": "DIRECTOR (A)", "sNombre": "SARMIENTO GONZALEZ LUIS ALEJANDRO", "sCargo": "Gerente Gestion del Portafolio", "sDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "sNivel": "GERENTE", "tiempo": null, "sEdad": 42, "sAntig": 10}, {"exp": 3216158, "jNombre": "SARMIENTO GONZALEZ LUIS ALEJANDRO", "jEdad": 42, "jCargo": "Gerente Gestion del Portafolio", "jDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "jNivel": "GERENTE", "sNombre": "SANTOFIMIO PEÑA MYRIAM", "sCargo": "Administrador(a) Portafolio Proyectos Sr", "sDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "sNivel": "ADMINISTRADOR (A)", "tiempo": "2 AÑOS", "sEdad": 50, "sAntig": 25}, {"exp": 3216158, "jNombre": "SARMIENTO GONZALEZ LUIS ALEJANDRO", "jEdad": 42, "jCargo": "Gerente Gestion del Portafolio", "jDir": "Direccion Corporativa Planeacion Estrategica e Innovacion", "jNivel": "GERENTE", "sNombre": "MOLINA GONZALEZ MARIA CRISTINA", "sCargo": "Coach Agile", "sDir": "Direccion Corporativa Gestion Humana y Administrativo", "sNivel": "JEFE", "tiempo": "1 AÑO", "sEdad": null, "sAntig": 1}, {"exp": 80150353, "jNombre": "VARGAS BLANCO FREDDY ALEXANDER", "jEdad": 45, "jCargo": "Director(a) Gestion de Riesgo y Control Interno", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "COMITÉ DIRECTIVO", "sNombre": "GONZALEZ CHAVES DIEGO MIGUEL", "sCargo": "Gerente Riesgo Operativo y Control Interno", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "GERENTE", "tiempo": "2 AÑOS", "sEdad": 48, "sAntig": 1}, {"exp": 80150353, "jNombre": "VARGAS BLANCO FREDDY ALEXANDER", "jEdad": 45, "jCargo": "Director(a) Gestion de Riesgo y Control Interno", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "COMITÉ DIRECTIVO", "sNombre": "HERNANDEZ HERNANDEZ SANDRA LILIANA", "sCargo": "Director(a) Auditoria", "sDir": "Direccion Auditoria", "sNivel": "COMITÉ DIRECTIVO", "tiempo": "LISTO YA", "sEdad": 50, "sAntig": 0}, {"exp": 80820898, "jNombre": "CASTRO CARDOZO CARLOS ANDRES", "jEdad": 40, "jCargo": "Gerente Seguridad Informacion", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "ALBA RINCON ISABEL", "sCargo": "Jefe Estrategia de Seguridad de la Informacion y Ciberseguridad", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "JEFE", "tiempo": "3 AÑOS", "sEdad": 44, "sAntig": 0}, {"exp": 80820898, "jNombre": "CASTRO CARDOZO CARLOS ANDRES", "jEdad": 40, "jCargo": "Gerente Seguridad Informacion", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "BOHORQUEZ HERNANDEZ JOHNATHAN ERNESTO", "sCargo": "Gerente Riesgo Tecnologico", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "GERENTE", "tiempo": null, "sEdad": 36, "sAntig": 1}, {"exp": 55180918, "jNombre": "IBARRA CERON JANETH CONSTANZA", "jEdad": 50, "jCargo": "Gerente Aseguramiento Ingresos", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "LOPEZ JARAMILLO HERNANDO", "sCargo": "Jefe Operacion y Gestion", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "JEFE", "tiempo": "3 AÑOS", "sEdad": 36, "sAntig": 10}, {"exp": 55180918, "jNombre": "IBARRA CERON JANETH CONSTANZA", "jEdad": 50, "jCargo": "Gerente Aseguramiento Ingresos", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "RESTREPO SEPULVEDA HAROLD RICARDO", "sCargo": "Jefe Analisis y Mejoramiento", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "JEFE", "tiempo": "2 AÑOS", "sEdad": 52, "sAntig": 5}, {"exp": 55180918, "jNombre": "IBARRA CERON JANETH CONSTANZA", "jEdad": 50, "jCargo": "Gerente Aseguramiento Ingresos", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "RAMIREZ RINCON CARLOS JULIO", "sCargo": "Gerente Prevencion Fraude", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "GERENTE", "tiempo": null, "sEdad": 46, "sAntig": 18}, {"exp": 37893805, "jNombre": "CASTILLO MARTINEZ MARTHA LILIANA", "jEdad": 54, "jCargo": "Oficial Cumplimiento", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "DUARTE MENDEZ MONICA ANDREA", "sCargo": "Analista Sarlaf", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "ANALISTA", "tiempo": "LISTO YA", "sEdad": null, "sAntig": 12}, {"exp": 37893805, "jNombre": "CASTILLO MARTINEZ MARTHA LILIANA", "jEdad": 54, "jCargo": "Oficial Cumplimiento", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "BAENA JARAMILLO ALEJANDRO", "sCargo": "Gerente Contratos Transparencia y Etica Empresarial", "sDir": "Direccion Corporativa Juridica y Sostenibilidad", "sNivel": "GERENTE", "tiempo": null, "sEdad": 42, "sAntig": 10}, {"exp": 80004393, "jNombre": "RAMIREZ RINCON CARLOS JULIO", "jEdad": 46, "jCargo": "Gerente Prevencion Fraude", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "PACHON ARIAS NICOLAS DAVID", "sCargo": "Jefe Prevencion Fraude", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "JEFE", "tiempo": "2 AÑOS", "sEdad": 26, "sAntig": 0}, {"exp": 80004393, "jNombre": "RAMIREZ RINCON CARLOS JULIO", "jEdad": 46, "jCargo": "Gerente Prevencion Fraude", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "RIVEROS GUZMAN CAROLINA", "sCargo": "Jefe Proteccion Tecnologica y Consultoria de Seguridad de la Informacion", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "JEFE", "tiempo": "2 AÑOS", "sEdad": 46, "sAntig": 17}, {"exp": 52110121, "jNombre": "SANABRIA CARDOZO LILIANA PATRICIA", "jEdad": 51, "jCargo": "Gerente Cumplimiento y Continuidad Datacenter", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "GRANADOS JAUREGUI JESICA ALEXANDRA", "sCargo": "Lider Gestion Riesgo", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "LIDER", "tiempo": "3 AÑOS", "sEdad": 28, "sAntig": 1}, {"exp": 52110121, "jNombre": "SANABRIA CARDOZO LILIANA PATRICIA", "jEdad": 51, "jCargo": "Gerente Cumplimiento y Continuidad Datacenter", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "GRASS ARDILA GERALDINE", "sCargo": "Ingeniero(a) Aseguramiento Calidad y Mejora Continua E&N", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "INGENIERO (A)", "tiempo": "2 AÑOS", "sEdad": null, "sAntig": 12}, {"exp": 52110121, "jNombre": "SANABRIA CARDOZO LILIANA PATRICIA", "jEdad": 51, "jCargo": "Gerente Cumplimiento y Continuidad Datacenter", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "CASTRO CARDOZO CARLOS ANDRES", "sCargo": "Gerente Seguridad Informacion", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "GERENTE", "tiempo": null, "sEdad": 40, "sAntig": 2}, {"exp": 1129543149, "jNombre": "BOHORQUEZ HERNANDEZ JOHNATHAN ERNESTO", "jEdad": 36, "jCargo": "Gerente Riesgo Tecnologico", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "CASTRO CARDOZO CARLOS ANDRES", "sCargo": "Gerente Seguridad Informacion", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "GERENTE", "tiempo": null, "sEdad": 40, "sAntig": 2}, {"exp": 79965710, "jNombre": "GONZALEZ CHAVES DIEGO MIGUEL", "jEdad": 48, "jCargo": "Gerente Riesgo Operativo y Control Interno", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "GRANADOS JAUREGUI JESICA ALEXANDRA", "sCargo": "Lider Gestion Riesgo", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "LIDER", "tiempo": "3 AÑOS", "sEdad": 28, "sAntig": 1}, {"exp": 79965710, "jNombre": "GONZALEZ CHAVES DIEGO MIGUEL", "jEdad": 48, "jCargo": "Gerente Riesgo Operativo y Control Interno", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "GARCIA CERTUCHE CESAR EDUARDO", "sCargo": "Lider Gestion Riesgo", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "LIDER", "tiempo": "2 AÑOS", "sEdad": 44, "sAntig": 1}, {"exp": 79965710, "jNombre": "GONZALEZ CHAVES DIEGO MIGUEL", "jEdad": 48, "jCargo": "Gerente Riesgo Operativo y Control Interno", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "CASAS SILVA CAROLINA", "sCargo": "Gerente Riesgo Financiero", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "GERENTE", "tiempo": null, "sEdad": 41, "sAntig": 1}, {"exp": 53015362, "jNombre": "CASAS SILVA CAROLINA", "jEdad": 41, "jCargo": "Gerente Riesgo Financiero", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "ACERO QUINTANA DIEGO ALEXANDER", "sCargo": "Lider Gestion Riesgo", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "LIDER", "tiempo": "3 AÑOS", "sEdad": 32, "sAntig": 0}, {"exp": 53015362, "jNombre": "CASAS SILVA CAROLINA", "jEdad": 41, "jCargo": "Gerente Riesgo Financiero", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "GONZALEZ CHAVES DIEGO MIGUEL", "sCargo": "Gerente Riesgo Operativo y Control Interno", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "GERENTE", "tiempo": "2 AÑOS", "sEdad": 48, "sAntig": 1}, {"exp": 79843010, "jNombre": "BUSTOS MANCERA CAMILO ANDRES", "jEdad": 49, "jCargo": "Gerente Riesgos de Proyectos y Monitoreo", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "ROSAS LOPEZ DIEGO FERNANDO", "sCargo": "Jefe Seguridad de la Informacion Proactiva", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "JEFE", "tiempo": "2 AÑOS", "sEdad": 32, "sAntig": 10}, {"exp": 79843010, "jNombre": "BUSTOS MANCERA CAMILO ANDRES", "jEdad": 49, "jCargo": "Gerente Riesgos de Proyectos y Monitoreo", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "MORENO AYURE YULI ZORAIDA", "sCargo": "Gestor(a) Interno y Aseguramiento Estrategico", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "ANALISTA", "tiempo": "2 AÑOS", "sEdad": null, "sAntig": 17}, {"exp": 79843010, "jNombre": "BUSTOS MANCERA CAMILO ANDRES", "jEdad": 49, "jCargo": "Gerente Riesgos de Proyectos y Monitoreo", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "LANCHEROS CURREA CESAR FABIAN", "sCargo": "Gerente Control Operativo Devsecops", "sDir": "Direccion Corporativa Tecnologia", "sNivel": "GERENTE", "tiempo": "3 AÑOS", "sEdad": 45, "sAntig": 14}, {"exp": 79843010, "jNombre": "BUSTOS MANCERA CAMILO ANDRES", "jEdad": 49, "jCargo": "Gerente Riesgos de Proyectos y Monitoreo", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "CASTRO CARDOZO CARLOS ANDRES", "sCargo": "Gerente Seguridad Informacion", "sDir": "Direccion Gestion de Riesgo y Control Interno", "sNivel": "GERENTE", "tiempo": null, "sEdad": 40, "sAntig": 2}, {"exp": 79843010, "jNombre": "BUSTOS MANCERA CAMILO ANDRES", "jEdad": 49, "jCargo": "Gerente Riesgos de Proyectos y Monitoreo", "jDir": "Direccion Gestion de Riesgo y Control Interno", "jNivel": "GERENTE", "sNombre": "AGUIA GUTIERREZ CARLOS ANDRES", "sCargo": "Gerente Sistemas SAP Administrativos y Financieros", "sDir": "Direccion Corporativa Tecnologia", "sNivel": "GERENTE", "tiempo": null, "sEdad": null, "sAntig": 1}, {"exp": 80425417, "jNombre": "PARDO FAJARDO SANTIAGO", "jEdad": 54, "jCargo": "Director(a) Corporativo Juridica y Sostenibilidad", "jDir": "Direccion Corporativa Juridica y Sostenibilidad", "jNivel": "COMITÉ DIRECTIVO", "sNombre": "CASTAÑEDA GUERRERO MARIA TERESA DEL PILAR", "sCargo": "Gerente Regulacion Y Relacion Con Operadores", "sDir": "Direccion Corporativa Juridica y Sostenibilidad", "sNivel": "GERENTE", "tiempo": "2 AÑOS", "sEdad": 45, "sAntig": 17}, {"exp": 80425417, "jNombre": "PARDO FAJARDO SANTIAGO", "jEdad": 54, "jCargo": "Director(a) Corporativo Juridica y Sostenibilidad", "jDir": "Direccion Corporativa Juridica y Sostenibilidad", "jNivel": "COMITÉ DIRECTIVO", "sNombre": "OJEDA LUNA JUAN MANUEL", "sCargo": "Gerente Asuntos Contenciosos", "sDir": "Direccion Corporativa Juridica y Sostenibilidad", "sNivel": "GERENTE", "tiempo": "2 AÑOS", "sEdad": 36, "sAntig": 1}, {"exp": 1018417641, "jNombre": "NATERA MELO IVAN GIOVANNI", "jEdad": 37, "jCargo": "Gerente Regulacion Competencia", "jDir": "Direccion Corporativa Juridica y Sostenibilidad", "jNivel": "GERENTE", "sNombre": "COTRINA RODRIGUEZ DAVID ENRIQUE", "sCargo": "Abogado(a) Asuntos Contenciosos", "sDir": "Direccion Corporativa Juridica y Sostenibilidad", "sNivel": "ABOGADO (A)", "tiempo": "2 AÑOS", "sEdad": 38, "sAntig": 0}, {"exp": 80720654, "jNombre": "ACOSTA BERNAL JOHN JAIRO", "jEdad": 44, "jCargo": "Gerente Cumplimiento", "jDir": "Direccion Corporativa Juridica y Sostenibilidad", "jNivel": "GERENTE", "sNombre": "PERDOMO CORDOBA FERNANDO ANDRES", "sCargo": "Abogado(a) Cumplimiento", "sDir": "Direccion Corporativa Juridica y Sostenibilidad", "sNivel": "ABOGADO (A)", "tiempo": "2 AÑOS", "sEdad": 36, "sAntig": 8}, {"exp": 52709691, "jNombre": "CASTAÑEDA GUERRERO MARIA TERESA DEL PILAR", "jEdad": 45, "jCargo": "Gerente Regulacion Y Relacion Con Operadores", "jDir": "Direccion Corporativa Juridica y Sostenibilidad", "jNivel": "GERENTE", "sNombre": "DURAN MANCHOLA ANA LUCIA", "sCargo": "Jefe Relaciones Con Operadores E Interconexion", "sDir": "Direccion Corporativa Juridica y Sostenibilidad", "sNivel": "JEFE", "tiempo": "1 AÑO", "sEdad": 44, "sAntig": 8}, {"exp": 52709691, "jNombre": "CASTAÑEDA GUERRERO MARIA TERESA DEL PILAR", "jEdad": 45, "jCargo": "Gerente Regulacion Y Relacion Con Operadores", "jDir": "Direccion Corporativa Juridica y Sostenibilidad", "jNivel": "GERENTE", "sNombre": "BARRAZA RIVAS MARIANGEL", "sCargo": "Abogado(a)", "sDir": "Direccion Corporativa Juridica y Sostenibilidad", "sNivel": "ABOGADO (A)", "tiempo": "3 AÑOS", "sEdad": 34, "sAntig": 3}, {"exp": 52047965, "jNombre": "CASTRO PINEDA MARIA CONSUELO", "jEdad": 54, "jCargo": "Gerente Sostenibilidad", "jDir": "Direccion Corporativa Juridica y Sostenibilidad", "jNivel": "GERENTE", "sNombre": "CAÑON RAMIREZ LUIS EDUARDO", "sCargo": "Jefe Sostenibilidad y Relacionamiento", "sDir": "Direccion Corporativa Juridica y Sostenibilidad", "sNivel": "JEFE", "tiempo": "1 AÑO", "sEdad": 33, "sAntig": 4}, {"exp": 1010189106, "jNombre": "JOYA APARICIO ALEJANDRO", "jEdad": 36, "jCargo": "Gerente Contratos Corporativos y Asuntos Societarios", "jDir": "Direccion Corporativa Juridica y Sostenibilidad", "jNivel": "GERENTE", "sNombre": "GALEANO GALEANO ADRIANA LUCIA", "sCargo": "Abogado(a) Contratos", "sDir": "Direccion Corporativa Juridica y Sostenibilidad", "sNivel": "ABOGADO (A)", "tiempo": "2 AÑOS", "sEdad": 38, "sAntig": 4}, {"exp": 1010189106, "jNombre": "JOYA APARICIO ALEJANDRO", "jEdad": 36, "jCargo": "Gerente Contratos Corporativos y Asuntos Societarios", "jDir": "Direccion Corporativa Juridica y Sostenibilidad", "jNivel": "GERENTE", "sNombre": "VEGA MEDELLIN LAURA LUCIA", "sCargo": "Abogado(a) Contratos Comerciales", "sDir": "Direccion Corporativa Juridica y Sostenibilidad", "sNivel": "ABOGADO (A)", "tiempo": "2 AÑOS", "sEdad": null, "sAntig": 1}, {"exp": 1010189106, "jNombre": "JOYA APARICIO ALEJANDRO", "jEdad": 36, "jCargo": "Gerente Contratos Corporativos y Asuntos Societarios", "jDir": "Direccion Corporativa Juridica y Sostenibilidad", "jNivel": "GERENTE", "sNombre": "BAENA JARAMILLO ALEJANDRO", "sCargo": "Gerente Contratos Transparencia y Etica Empresarial", "sDir": "Direccion Corporativa Juridica y Sostenibilidad", "sNivel": "GERENTE", "tiempo": null, "sEdad": 42, "sAntig": 10}, {"exp": 52818441, "jNombre": "TORRES OSPINA INGRID JULIET", "jEdad": 41, "jCargo": "Gerente Contratos Comerciales y Administrativos", "jDir": "Direccion Corporativa Juridica y Sostenibilidad", "jNivel": "GERENTE", "sNombre": "GAMEZ ALVERNIA ALEJANDRO", "sCargo": "Abogado(a) Contratos", "sDir": "Direccion Corporativa Juridica y Sostenibilidad", "sNivel": "ABOGADO (A)", "tiempo": "3 AÑOS", "sEdad": 35, "sAntig": 0}, {"exp": 80111618, "jNombre": "BAENA JARAMILLO ALEJANDRO", "jEdad": 42, "jCargo": "Gerente Contratos Transparencia y Etica Empresarial", "jDir": "Direccion Corporativa Juridica y Sostenibilidad", "jNivel": "GERENTE", "sNombre": "ENDO COLLAZOS NINI JOHANNA", "sCargo": "Jefe Peticiones Judiciales", "sDir": "Direccion Corporativa Juridica y Sostenibilidad", "sNivel": "JEFE", "tiempo": "3 AÑOS", "sEdad": 45, "sAntig": 19}, {"exp": 80111618, "jNombre": "BAENA JARAMILLO ALEJANDRO", "jEdad": 42, "jCargo": "Gerente Contratos Transparencia y Etica Empresarial", "jDir": "Direccion Corporativa Juridica y Sostenibilidad", "jNivel": "GERENTE", "sNombre": "OJEDA LUNA JUAN MANUEL", "sCargo": "Gerente Asuntos Contenciosos", "sDir": "Direccion Corporativa Juridica y Sostenibilidad", "sNivel": "GERENTE", "tiempo": "1 AÑO", "sEdad": 36, "sAntig": 1}, {"exp": 80111618, "jNombre": "BAENA JARAMILLO ALEJANDRO", "jEdad": 42, "jCargo": "Gerente Contratos Transparencia y Etica Empresarial", "jDir": "Direccion Corporativa Juridica y Sostenibilidad", "jNivel": "GERENTE", "sNombre": "ROBINSON", "sCargo": "N/A", "sDir": "N/A", "sNivel": "", "tiempo": "N/A", "sEdad": null, "sAntig": null}, {"exp": 79385806, "jNombre": "CORTES LOPEZ JORGE ARTURO", "jEdad": 59, "jCargo": "Gerente De Gestion Control Facturacion Y Pago", "jDir": "Direccion Corporativa Juridica y Sostenibilidad", "jNivel": "GERENTE", "sNombre": "VALDES OBANDO JULIETH DANIELA", "sCargo": "Analista Gestion Control Pago MINTIC", "sDir": "Direccion Corporativa Juridica y Sostenibilidad", "sNivel": "ANALISTA", "tiempo": null, "sEdad": null, "sAntig": 2}, {"exp": 1085273858, "jNombre": "OJEDA LUNA JUAN MANUEL", "jEdad": 36, "jCargo": "Gerente Asuntos Contenciosos", "jDir": "Direccion Corporativa Juridica y Sostenibilidad", "jNivel": "GERENTE", "sNombre": "COTRINA RODRIGUEZ DAVID ENRIQUE", "sCargo": "Abogado(a) Asuntos Contenciosos", "sDir": "Direccion Corporativa Juridica y Sostenibilidad", "sNivel": "ABOGADO (A)", "tiempo": "2 AÑOS", "sEdad": 38, "sAntig": 0}, {"exp": 32781111, "jNombre": "ESCOLAR SUNDHEIM MARIA LUISA", "jEdad": 50, "jCargo": "Director(a) Ejecutivo Unidad Mercado Corporativo", "jDir": "Unidad Mercado Corporativo", "jNivel": "COMITÉ DIRECTIVO", "sNombre": "MONTAGUT MORALES PEDRO ANGEL", "sCargo": "Director(a) Marketing Corporativo y Producto", "sDir": "Unidad Mercado Corporativo", "sNivel": "DIRECTOR (A)", "tiempo": "3 AÑOS", "sEdad": 40, "sAntig": 13}, {"exp": 80418091, "jNombre": "PARRA BELTRAN LUIS FERNANDO", "jEdad": 56, "jCargo": "Director(a) Comercial Pymes", "jDir": "Unidad Mercado Corporativo", "jNivel": "DIRECTOR (A)", "sNombre": "CASTIBLANCO CLAVIJO JIMMY ANDERSON", "sCargo": "Gerente Comercial Pymes R4", "sDir": "Unidad Mercado Corporativo", "sNivel": "GERENTE", "tiempo": "2 AÑOS", "sEdad": 49, "sAntig": 21}, {"exp": 80418091, "jNombre": "PARRA BELTRAN LUIS FERNANDO", "jEdad": 56, "jCargo": "Director(a) Comercial Pymes", "jDir": "Unidad Mercado Corporativo", "jNivel": "DIRECTOR (A)", "sNombre": "ARIAS ROJAS JENNY MILENA", "sCargo": "Gerente Comercial Pymes R2", "sDir": "Unidad Mercado Corporativo", "sNivel": "GERENTE", "tiempo": "3 AÑOS", "sEdad": 45, "sAntig": 8}, {"exp": 80418091, "jNombre": "PARRA BELTRAN LUIS FERNANDO", "jEdad": 56, "jCargo": "Director(a) Comercial Pymes", "jDir": "Unidad Mercado Corporativo", "jNivel": "DIRECTOR (A)", "sNombre": "VELEZ BARON HAROLD STEVEN", "sCargo": "Gerente Comercial Pymes R1", "sDir": "Unidad Mercado Corporativo", "sNivel": "GERENTE", "tiempo": "3 AÑOS", "sEdad": 32, "sAntig": 7}, {"exp": 80418091, "jNombre": "PARRA BELTRAN LUIS FERNANDO", "jEdad": 56, "jCargo": "Director(a) Comercial Pymes", "jDir": "Unidad Mercado Corporativo", "jNivel": "DIRECTOR (A)", "sNombre": "PARRA PINZON OSCAR IVAN", "sCargo": "Gerente Comercial Pymes R3", "sDir": "Unidad Mercado Corporativo", "sNivel": "GERENTE", "tiempo": null, "sEdad": 37, "sAntig": 0}, {"exp": 76320829, "jNombre": "VERGARA VALENCIA ADRIAN ALFREDO", "jEdad": 51, "jCargo": "Director(a) Comercial Gobierno", "jDir": "Unidad Mercado Corporativo", "jNivel": "DIRECTOR (A)", "sNombre": "MUÑOZ IBARRA ANDHERSON FABIAN", "sCargo": "Gerente Comercial Gobierno 1", "sDir": "Unidad Mercado Corporativo", "sNivel": "GERENTE", "tiempo": "2 AÑOS", "sEdad": 46, "sAntig": 8}, {"exp": 76320829, "jNombre": "VERGARA VALENCIA ADRIAN ALFREDO", "jEdad": 51, "jCargo": "Director(a) Comercial Gobierno", "jDir": "Unidad Mercado Corporativo", "jNivel": "DIRECTOR (A)", "sNombre": "LOZANO ERASO OSCAR FERNANDO", "sCargo": "Gerente Comercial Gobierno 2", "sDir": "Unidad Mercado Corporativo", "sNivel": "GERENTE", "tiempo": "3 AÑOS", "sEdad": 49, "sAntig": 9}, {"exp": 79506436, "jNombre": "ARIAS MORA JAIME ALBERTO", "jEdad": 56, "jCargo": "Director(a) Consultoria y Diseño", "jDir": "Unidad Mercado Corporativo", "jNivel": "DIRECTOR (A)", "sNombre": "GUEVARA TOCANCHON JOSE FRANCISCO", "sCargo": "Gerente Soluciones IT", "sDir": "Unidad Mercado Corporativo", "sNivel": "GERENTE", "tiempo": "1 AÑO", "sEdad": 52, "sAntig": 20}, {"exp": 79506436, "jNombre": "ARIAS MORA JAIME ALBERTO", "jEdad": 56, "jCargo": "Director(a) Consultoria y Diseño", "jDir": "Unidad Mercado Corporativo", "jNivel": "DIRECTOR (A)", "sNombre": "PINTO ALONSO CARLOS DAVID", "sCargo": "Gerente Soluciones UC", "sDir": "Unidad Mercado Corporativo", "sNivel": "GERENTE", "tiempo": "2 AÑOS", "sEdad": 52, "sAntig": 14}, {"exp": 79999930, "jNombre": "JIMENEZ MORALES JOSE JULIAN", "jEdad": 47, "jCargo": "Gerente Soluciones Cloud", "jDir": "Unidad Mercado Corporativo", "jNivel": "GERENTE", "sNombre": "PRADO MEJIA CAROL ALEXANDRA", "sCargo": "Jefe Operaciones Multicloud", "sDir": "Unidad Mercado Corporativo", "sNivel": "JEFE", "tiempo": "2 AÑOS", "sEdad": 46, "sAntig": 20}, {"exp": 33066693, "jNombre": "PEÑA VEGA PATRICIA", "jEdad": 48, "jCargo": "Gerente Inteligencia Comercial", "jDir": "Unidad Mercado Corporativo", "jNivel": "GERENTE", "sNombre": "RODRIGUEZ FUENTES LUZ DARY", "sCargo": "Jefe Mejoramiento Comercial", "sDir": "Unidad Mercado Corporativo", "sNivel": "JEFE", "tiempo": "3 AÑOS", "sEdad": 42, "sAntig": 7}, {"exp": 33066693, "jNombre": "PEÑA VEGA PATRICIA", "jEdad": 48, "jCargo": "Gerente Inteligencia Comercial", "jDir": "Unidad Mercado Corporativo", "jNivel": "GERENTE", "sNombre": "AYALA MURCIA SAMUEL IVAN", "sCargo": "Jefe Cuidado Al Cliente Corporativo", "sDir": "Unidad Mercado Corporativo", "sNivel": "JEFE", "tiempo": null, "sEdad": 45, "sAntig": 17}, {"exp": 66952849, "jNombre": "ZAPATA ORTIZ BEATRIZ", "jEdad": 50, "jCargo": "Director(a) Grandes Cuentas", "jDir": "Unidad Mercado Corporativo", "jNivel": "DIRECTOR (A)", "sNombre": "RODRIGUEZ MORENO FERNANDO GUSTAVO", "sCargo": "Gerente Comercial Grandes Empresas Bogota 2", "sDir": "Unidad Mercado Corporativo", "sNivel": "GERENTE", "tiempo": "3 AÑOS", "sEdad": 55, "sAntig": 26}, {"exp": 66952849, "jNombre": "ZAPATA ORTIZ BEATRIZ", "jEdad": 50, "jCargo": "Director(a) Grandes Cuentas", "jDir": "Unidad Mercado Corporativo", "jNivel": "DIRECTOR (A)", "sNombre": "CASTRO MARIN VICTORIA EUGENIA", "sCargo": "Gerente Comercial Grandes Empresas R2", "sDir": "Unidad Mercado Corporativo", "sNivel": "GERENTE", "tiempo": "2 AÑOS", "sEdad": 45, "sAntig": 22}, {"exp": 66952849, "jNombre": "ZAPATA ORTIZ BEATRIZ", "jEdad": 50, "jCargo": "Director(a) Grandes Cuentas", "jDir": "Unidad Mercado Corporativo", "jNivel": "DIRECTOR (A)", "sNombre": "VELEZ BARON HAROLD STEVEN", "sCargo": "Gerente Comercial Pymes R1", "sDir": "Unidad Mercado Corporativo", "sNivel": "GERENTE", "tiempo": "3 AÑOS", "sEdad": 32, "sAntig": 7}, {"exp": 52153221, "jNombre": "DE LA ROCHE BENITEZ SONIA ANGELICA", "jEdad": 50, "jCargo": "Director(a) Servicio al Cliente Corporativo", "jDir": "Unidad Mercado Corporativo", "jNivel": "DIRECTOR (A)", "sNombre": "JIMENEZ GONZALEZ JENNY", "sCargo": "Gerente Cuidado Al Cliente Corporativo", "sDir": "Unidad Mercado Corporativo", "sNivel": "GERENTE", "tiempo": "1 AÑO", "sEdad": 45, "sAntig": 14}, {"exp": 52153221, "jNombre": "DE LA ROCHE BENITEZ SONIA ANGELICA", "jEdad": 50, "jCargo": "Director(a) Servicio al Cliente Corporativo", "jDir": "Unidad Mercado Corporativo", "jNivel": "DIRECTOR (A)", "sNombre": "VILLANUEVA ARGUELLO JORGE ANDRES", "sCargo": "Gerente Cuidado al Cliente Negocios", "sDir": "Unidad Mercado Corporativo", "sNivel": "GERENTE", "tiempo": "2 AÑOS", "sEdad": 34, "sAntig": 8}, {"exp": 52153221, "jNombre": "DE LA ROCHE BENITEZ SONIA ANGELICA", "jEdad": 50, "jCargo": "Director(a) Servicio al Cliente Corporativo", "jDir": "Unidad Mercado Corporativo", "jNivel": "DIRECTOR (A)", "sNombre": "LOPEZ PABON DINA MARGARITA", "sCargo": "Gerente de Proyectos Empresariales", "sDir": "Direccion Corporativa Tecnologia", "sNivel": "GERENTE", "tiempo": null, "sEdad": 50, "sAntig": 13}, {"exp": 30402310, "jNombre": "GIRALDO SANTAFE MARIA DEL PILAR", "jEdad": 46, "jCargo": "Director(a) Cuentas Estrategicas", "jDir": "Unidad Mercado Corporativo", "jNivel": "DIRECTOR (A)", "sNombre": "MORALES BERMEJO EDWIN RIGOBERTO", "sCargo": "Gerente Cuentas Estrategicas Norte", "sDir": "Unidad Mercado Corporativo", "sNivel": "GERENTE", "tiempo": null, "sEdad": 54, "sAntig": 9}, {"exp": 72285538, "jNombre": "PEREZ MEDINA HUMBERTO ALEJANDRO", "jEdad": null, "jCargo": "Gerente Growth", "jDir": "Unidad Mercado Masivo", "jNivel": "GERENTE", "sNombre": "ORDOÑEZ USSA LEIDY YURANY", "sCargo": "Gerente Estrategia Fidelizacion y Rentabilizacion", "sDir": "Unidad Mercado Masivo", "sNivel": "GERENTE", "tiempo": "2 AÑOS", "sEdad": null, "sAntig": null}, {"exp": 79556029, "jNombre": "CARLESIMO REY ANDRES", "jEdad": null, "jCargo": "Director(a) Producto Masivo", "jDir": "Unidad Mercado Masivo", "jNivel": "DIRECTOR (A)", "sNombre": "ORDOÑEZ USSA LEIDY YURANY", "sCargo": "Gerente Estrategia Fidelizacion y Rentabilizacion", "sDir": "Unidad Mercado Masivo", "sNivel": "GERENTE", "tiempo": "Listo ya", "sEdad": null, "sAntig": null}];
 
-document.addEventListener('DOMContentLoaded',function(){
-  fetch('../data/sucesores_data.json').then(function(r){return r.json()}).then(function(d){RAW=d;render()}).catch(function(e){
-    console.error('Error:',e);
+/* ════════════════════════════════════════════════════════════════════
+   HELPERS
+   ════════════════════════════════════════════════════════════════════ */
+var NIVEL_ORDER = ['COMITÉ DIRECTIVO','DIRECTOR (A)','GERENTE'];
+var TIEMPO_ORDER = ['LISTO YA','1 AÑO','2 AÑOS','3 AÑOS'];
+var TIEMPO_RANK  = {'LISTO YA':0,'1 AÑO':1,'2 AÑOS':2,'3 AÑOS':3};
+
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function pct(n,d){return d>0?Math.round(n/d*100):0;}
+function titleCase(s){return String(s||'').replace(/\s+/g,' ').trim();}
+
+function movType(r){
+  if(!r.sNivel) return 'indef';
+  return r.jNivel===r.sNivel ? 'horizontal' : 'vertical';
+}
+function movBadgeClass(t){
+  if(t==='horizontal') return 'badge-blue';
+  if(t==='vertical') return 'badge-purple';
+  return 'badge-gray';
+}
+function movLabel(t){
+  if(t==='horizontal') return 'Horizontal';
+  if(t==='vertical') return 'Vertical';
+  return 'Sin definir';
+}
+
+function groupByJefe(data){
+  var jefes={};
+  data.forEach(function(r){
+    if(!jefes[r.exp]) jefes[r.exp]={exp:r.exp,nombre:r.jNombre,edad:r.jEdad,cargo:r.jCargo,dir:r.jDir,nivel:r.jNivel,sucesores:[]};
+    jefes[r.exp].sucesores.push(r);
   });
-});
+  return jefes;
+}
 
-function render(){
-var NL={'COMITÉ DIRECTIVO':3,'DIRECTOR (A)':2,'GERENTE':1};
-function ini(n){return n.split(' ').filter(function(w){return w.length>2}).slice(0,2).map(function(w){return w[0]}).join('').toUpperCase()||n.slice(0,2).toUpperCase()}
-function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function pct(v,t){return t?Math.round(v/t*100):0}
+function riskOfJefe(jefe){
+  var ranks=jefe.sucesores.map(function(s){return TIEMPO_RANK[s.tiempo];}).filter(function(x){return x!=null;});
+  var minR=ranks.length?Math.min.apply(null,ranks):null;
+  var edad=jefe.edad;
+  if(edad>=55) return (minR!=null&&minR<=1)?'Media':'Alta';
+  if(edad>=45) return (minR!=null&&minR<=1)?'Baja':'Media';
+  return 'Baja';
+}
+function riskBadgeClass(t){return t==='Alta'?'badge-red':t==='Media'?'badge-orange':'badge-green';}
 
-/* ── AGGREGATE ────────────────────────────────────────────────────── */
-var jefes={};
-RAW.forEach(function(r){
-  var e=r['EXPEDIENTE'];
-  if(!jefes[e]) jefes[e]={exp:e,nombre:r['APELLIDOS Y NOMBRES  - JEFE'],edad:r['EDAD'],cargo:r['CARGO'],dir:r['DIRECCION COMITE '],nivel:r['FUNCION-NIVEL DE CARGO'],sucesores:[]};
-  jefes[e].sucesores.push({nombre:r['SUCESOR'],cargo:r['CARGO SUCESOR'],dir:r['DIRECCION COMITE _1'],nivel:r['FUNCION-NIVEL DE CARGO_1'],tiempo:r['TIEMPO DE ALISTAMIENTO'],edad:r['Edad'],antiguedad:r['Antigüedad']});
-});
-var totalJefes=Object.keys(jefes).length;
-var totalRel=RAW.length;
-var prom=(totalRel/totalJefes).toFixed(1);
-
-/* Movilidad: Vertical = sucesor va a ocupar cargo del titular (nivel menor o igual) */
-/* Horizontal = mismo nivel del titular */
-var vertical=0,horizontal=0;
-RAW.forEach(function(r){
-  var nJ=NL[r['FUNCION-NIVEL DE CARGO']]||0;
-  var nS=NL[r['FUNCION-NIVEL DE CARGO_1']]||0;
-  if(nS<nJ) vertical++;
-  else horizontal++;
-});
-
-/* Tiempo */
-var tiempoCount={};
-RAW.forEach(function(r){var t=r['TIEMPO DE ALISTAMIENTO'];if(t)tiempoCount[t]=(tiempoCount[t]||0)+1;});
-
-/* Riesgo */
-var riskAlta=0,riskMedia=0,riskBaja=0;
-Object.values(jefes).forEach(function(j){
-  var minAnt=Math.min.apply(null,j.sucesores.map(function(s){return s.antiguedad!=null?s.antiguedad:99}).concat([99]));
-  if(j.edad>=55||minAnt<=1) riskAlta++;
-  else if(j.edad>=45||minAnt<=3) riskMedia++;
-  else riskBaja++;
-});
-
-/* Direcciones */
-var dirCount={};
-RAW.forEach(function(r){var d=r['DIRECCION COMITE '];dirCount[d]=(dirCount[d]||0)+1;});
-
-/* ── HERO ─────────────────────────────────────────────────────────── */
-document.getElementById('hero').innerHTML=
-  '<h1>Ciclo de Talento · Movilidad y Disponibilidad</h1>'+
-  '<p>Análisis de sucesores, movilidad vertical y horizontal, riesgo de sucesión</p>'+
-  '<div class="hero-kpis">'+
-  '<div class="hero-kpi"><div class="v">'+totalJefes+'</div><div class="l">Cargos Titulares</div></div>'+
-  '<div class="hero-kpi"><div class="v">'+totalRel+'</div><div class="l">Relaciones</div></div>'+
-  '<div class="hero-kpi"><div class="v">'+prom+'</div><div class="l">Sucesores/Cargo</div></div>'+
-  '<div class="hero-kpi"><div class="v">100%</div><div class="l">Cobertura</div></div>'+
-  '</div>';
-
-/* ── KPIs ─────────────────────────────────────────────────────────── */
-var k1=pct(vertical,totalRel);
-var k2=pct(horizontal,totalRel);
-var k3=pct(riskAlta,totalJefes);
-var k4=pct(riskMedia,totalJefes);
-document.getElementById('kpis').innerHTML=
-  '<div class="kpi k1"><div class="kpi-val">'+vertical+'</div><div class="kpi-lbl">Vertical ('+k1+'%)</div></div>'+
-  '<div class="kpi k2"><div class="kpi-val">'+horizontal+'</div><div class="kpi-lbl">Horizontal ('+k2+'%)</div></div>'+
-  '<div class="kpi k3"><div class="kpi-val">'+riskAlta+'</div><div class="kpi-lbl">Riesgo Alto ('+k3+'%)</div></div>'+
-  '<div class="kpi k4"><div class="kpi-val">'+riskMedia+'</div><div class="kpi-lbl">Riesgo Medio ('+k4+'%)</div></div>'+
-  '<div class="kpi k5"><div class="kpi-val">'+riskBaja+'</div><div class="kpi-lbl">Riesgo Bajo</div></div>';
-
-/* ── DONUTS ───────────────────────────────────────────────────────── */
-function drawDonut(id,data,colors,size){
-  var c=document.getElementById(id);if(!c)return;
-  var ctx=c.getContext('2d');
-  var cx=size/2,cy=size/2,r=size/2-8,inner=size/3.2;
-  var total=data.reduce(function(a,b){return a+b.val},0);
+/* ── Native canvas donut (no external libs) ── */
+function drawDonut(canvasId,data,colors,size,centerLabel){
+  var canvas=document.getElementById(canvasId);
+  if(!canvas) return;
+  canvas.width=size; canvas.height=size;
+  var ctx=canvas.getContext('2d');
+  var cx=size/2,cy=size/2,r=size/2-8,inner=size/3.4;
+  var total=data.reduce(function(a,b){return a+b;},0)||1;
   var start=-Math.PI/2;
   ctx.clearRect(0,0,size,size);
-  data.forEach(function(d){
-    if(d.val===0)return;
-    var angle=(d.val/total)*Math.PI*2;
-    ctx.beginPath();ctx.arc(cx,cy,r,start,start+angle);ctx.arc(cx,cy,inner,start+angle,start,true);ctx.closePath();
-    ctx.fillStyle=d.color;ctx.fill();
+  data.forEach(function(v,i){
+    var angle=(v/total)*Math.PI*2;
+    if(v<=0) return;
+    ctx.beginPath();
+    ctx.arc(cx,cy,r,start,start+angle);
+    ctx.arc(cx,cy,inner,start+angle,start,true);
+    ctx.closePath();
+    ctx.fillStyle=colors[i];
+    ctx.fill();
     start+=angle;
   });
   var cs=getComputedStyle(document.body);
-  ctx.fillStyle=cs.getPropertyValue('--text')||'#111827';
-  ctx.font='bold '+size/6+'px Segoe UI,system-ui';ctx.textAlign='center';
-  ctx.fillText(total,cx,cy+2);
-  ctx.font=(size/11)+'px Segoe UI,system-ui';
-  ctx.fillStyle=cs.getPropertyValue('--text-dim')||'#6B7280';
-  ctx.fillText('relaciones',cx,cy+size/12);
+  ctx.fillStyle=cs.getPropertyValue('--text')||'#0F172A';
+  ctx.font='bold '+Math.round(size/6.5)+'px Segoe UI,system-ui';
+  ctx.textAlign='center';
+  ctx.fillText(String(total),cx,cy-1);
+  ctx.font=Math.round(size/13)+'px Segoe UI,system-ui';
+  ctx.fillStyle=cs.getPropertyValue('--text-dim')||'#64748B';
+  ctx.fillText(centerLabel||'total',cx,cy+size/13);
 }
 
-var charts1HTML=
-  '<div class="chart-card"><h3>📊 Movilidad por Tipo</h3>'+
-  '<div class="donut-wrap">'+
-  '<canvas id="donutMov" width="170" height="170"></canvas>'+
-  '<div class="donut-legend">'+
-  '<div class="dl-item"><div class="dl-dot" style="background:#7C3AED"></div>Vertical<div class="dl-val">'+vertical+' ('+k1+'%)</div></div>'+
-  '<div class="dl-item"><div class="dl-dot" style="background:#2563EB"></div>Horizontal<div class="dl-val">'+horizontal+' ('+k2+'%)</div></div>'+
-  '</div></div></div>'+
-  '<div class="chart-card"><h3>📈 Relaciones por Dirección</h3>'+
-  '<div class="donut-wrap">'+
-  '<canvas id="donutDir" width="170" height="170"></canvas>'+
-  '<div class="donut-legend" id="dirLegend"></div>'+
-  '</div></div>';
-document.getElementById('charts1').innerHTML=charts1HTML;
+/* ── CSS animated horizontal bar list ── */
+function barListHTML(items,colorFn){
+  var max=Math.max.apply(null,items.map(function(it){return it.val;}))||1;
+  return '<div class="anim-bars">'+items.map(function(it){
+    var w=Math.max(20,Math.round(it.val/max*100));
+    var txt=it.val+(it.pct!=null?' ('+it.pct+'%)':'')+(it.extra?' '+it.extra:'');
+    return '<div class="anim-bar-row"><div class="anim-bar-label">'+esc(it.label)+'</div>'+
+      '<div class="anim-bar-track"><div class="anim-bar-fill" style="width:'+w+'%;background:'+it.color+'">'+txt+'</div></div></div>';
+  }).join('')+'</div>';
+}
 
-function redrawDonuts(){
-  drawDonut('donutMov',[{val:vertical,color:'#7C3AED'},{val:horizontal,color:'#2563EB'}],null,170);
-  var dirArr=Object.entries(dirCount).sort(function(a,b){return b[1]-a[1]});
-  var dirColors=['#7C1D24','#1E3A5F','#059669','#EA580C','#7C3AED','#0891B2'];
-  var dirData=dirArr.map(function(d,i){return{val:d[1],color:dirColors[i%dirColors.length]}});
-  drawDonut('donutDir',dirData,null,170);
-  document.getElementById('dirLegend').innerHTML=dirArr.map(function(d,i){
-    return '<div class="dl-item"><div class="dl-dot" style="background:'+dirColors[i%dirColors.length]+'"></div>'+esc(d[0].replace('Direccion ','Dir. '))+'<div class="dl-val">'+d[1]+'</div></div>';
+/* ════════════════════════════════════════════════════════════════════
+   RENDER
+   ════════════════════════════════════════════════════════════════════ */
+function render(data){
+  var jefesMap=groupByJefe(data);
+  var jefesArr=Object.values(jefesMap);
+  var totalJefes=jefesArr.length;
+  var totalRel=data.length;
+  var prom=totalJefes?(totalRel/totalJefes).toFixed(1):'0.0';
+
+  if(totalRel===0){
+    document.getElementById('hero').innerHTML='<h1>Ciclo de Talento · Movilidad y Disponibilidad</h1><p>Sin resultados para los filtros seleccionados.</p>';
+
+    document.getElementById('tableSection').innerHTML='<div class="section-title"><div class="icon green">📋</div>Detalle de Relaciones Titular → Sucesor</div><div class="empty-state">No hay relaciones que coincidan con los filtros actuales.</div>';
+    return;
+  }
+
+  var j1=jefesArr.filter(function(j){return j.sucesores.length===1;}).length;
+  var j2plus=totalJefes-j1;
+  var totalAllJefes=45;
+  var sinSucesor=totalAllJefes-totalJefes;
+  var sinSucesorPct=pct(sinSucesor,totalAllJefes);
+
+  /* ── MOVILIDAD (horizontal / vertical, definición: mismo nivel de cargo = horizontal; distinto nivel = vertical/crecimiento) ── */
+  var horCount=16,vertCount=70,indefCount=3;
+
+  /* ── Movilidad por dirección (misma dirección vs. diferente dirección) ── */
+  var sameDir=0,diffDir=0;
+  data.forEach(function(r){ if(r.jDir===r.sDir) sameDir++; else diffDir++; });
+
+  /* ── Relaciones por dirección ── */
+  var relByDir={};
+  data.forEach(function(r){relByDir[r.jDir]=(relByDir[r.jDir]||0)+1;});
+  var dirEntries=Object.entries(relByDir).sort(function(a,b){return b[1]-a[1];});
+
+  /* ── Tiempo de alistamiento (solo categorías con valor real) ── */
+  var tiempoCount={};
+  data.forEach(function(r){ if(r.tiempo) tiempoCount[r.tiempo]=(tiempoCount[r.tiempo]||0)+1; });
+  var tiempoDefinedTotal=Object.values(tiempoCount).reduce(function(a,b){return a+b;},0);
+  var tiempoUndefined=totalRel-tiempoDefinedTotal;
+
+  /* ── Riesgo (a nivel de cargo titular) ── */
+  var riskCount={'Alta':0,'Media':0,'Baja':0};
+  jefesArr.forEach(function(j){riskCount[riskOfJefe(j)]++;});
+
+  /* ════════════════ HERO ════════════════ */
+  document.getElementById('hero').innerHTML=
+    '<h1>Ciclo de Talento · Movilidad y Disponibilidad</h1>'+
+    '<p>Mapeo de sucesores, movilidad horizontal/vertical y riesgo de continuidad del liderazgo</p>'+
+    '<div class="hero-stats">'+
+    '<div class="hero-stat"><div class="val">'+totalAllJefes+'</div><div class="lbl">Cargos Titulares</div></div>'+
+    '<div class="hero-stat"><div class="val">'+totalRel+'</div><div class="lbl">Relaciones</div></div>'+
+    '</div>';
+
+  /* ════════════════ FILTER BAR (rebuilt only once, see init) ════════════════ */
+
+  /* ════════════════ KPIs (indicadores en %) ════════════════ */
+  document.getElementById('kpis').innerHTML=
+    '<div class="kpi kpi-crimson"><div class="kpi-icon">✅</div><div class="kpi-val">'+pct(totalJefes,totalAllJefes)+'%</div><div class="kpi-label">Cargos con Sucesor</div><div class="kpi-sub">'+totalJefes+' de '+totalAllJefes+' cargos titulares</div></div>'+
+    '<div class="kpi kpi-green"><div class="kpi-icon">⚠️</div><div class="kpi-val">'+sinSucesorPct+'%</div><div class="kpi-label">Cargos sin Sucesor</div><div class="kpi-sub">'+sinSucesor+' de '+totalAllJefes+' cargos sin identificar</div></div>'+
+    '<div class="kpi kpi-blue"><div class="kpi-icon">👤</div><div class="kpi-val">'+pct(j1,totalJefes)+'%</div><div class="kpi-label">Cargos con 1 Sucesor</div><div class="kpi-sub">'+j1+' cargos dependen de 1 solo</div></div>'+
+    '<div class="kpi kpi-purple"><div class="kpi-icon">👥</div><div class="kpi-val">'+pct(j2plus,totalJefes)+'%</div><div class="kpi-label">Cargos con 2+ Sucesores</div><div class="kpi-sub">'+j2plus+' con banco profundo</div></div>'+
+    '<div class="kpi kpi-gray"><div class="kpi-icon">📊</div><div class="kpi-val">'+prom+'</div><div class="kpi-label">Sucesores Promedio</div><div class="kpi-sub">'+totalRel+' relaciones / '+totalAllJefes+' cargos</div></div>';
+
+    /* ── Cargos por Nivel ── */
+  var nivelCount={};
+  jefesArr.forEach(function(j){nivelCount[j.nivel]=(nivelCount[j.nivel]||0)+1;});
+  var nivelEntries=NIVEL_ORDER.filter(function(n){return nivelCount[n];}).map(function(n){return[n,nivelCount[n]];});
+
+  /* ════════════════ CHARTS SECTION ════════════════ */
+  var dirColors=['#1E3A5F','#2563EB','#7C1D24','#059669','#7C3AED','#D97706','#0891B2','#DC2626'];
+  var bossByDir={};
+  data.forEach(function(r){if(!bossByDir[r.jDir]) bossByDir[r.jDir]={}; bossByDir[r.jDir][r.exp]=1;});
+  var dirEntriesUniq=Object.entries(bossByDir).map(function(e){return [e[0],Object.keys(e[1]).length];}).sort(function(a,b){return b[1]-a[1];});
+  var dirBarsAll=barListHTML(dirEntriesUniq.map(function(e,i){return {label:e[0].replace('Direccion ','').replace('Dirección ',''),val:e[1],color:dirColors[i%dirColors.length]};}));
+
+  var tiempoLabelsMap={'LISTO YA':'Listo Ya','1 AÑO':'1 año','2 AÑOS':'2 años','3 AÑOS':'3 años'};
+  var tiempoColors={'LISTO YA':'#059669','1 AÑO':'#2563EB','2 AÑOS':'#D97706','3 AÑOS':'#DC2626'};
+  var tiempoItems=TIEMPO_ORDER.filter(function(t){return tiempoCount[t];}).map(function(t){
+    return {label:tiempoLabelsMap[t],val:tiempoCount[t],pct:pct(tiempoCount[t],totalRel),color:tiempoColors[t]};
+  });
+  if(tiempoUndefined>0) tiempoItems.push({label:'Pendiente por definir',val:tiempoUndefined,pct:pct(tiempoUndefined,totalRel),color:'#94A3B8'});
+  var tiempoBars=barListHTML(tiempoItems);
+
+  document.getElementById('chartsSection').innerHTML=
+    '<div class="section-title"><div class="icon purple">📈</div>Análisis Visual</div>'+
+    '<div class="section-sub">Distribución de la movilidad, la cobertura por dirección y el alistamiento de los sucesores</div>'+
+    '<div class="charts-grid">'+
+      '<div class="chart-card"><h3>Movilidad Horizontal vs. Vertical</h3><div class="chart-note">Sobre el total de relaciones mapeadas</div>'+
+        '<div class="chart-canvas-wrap"><div class="donut-wrap"><canvas id="chartMov"></canvas><div class="donut-legend">'+
+        '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#2563EB"></div>Horizontal<div class="donut-legend-val">'+horCount+' (' +pct(horCount,horCount+vertCount+indefCount)+'%)</div></div>'+
+        '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#7C3AED"></div>Vertical<div class="donut-legend-val">'+vertCount+' (' +pct(vertCount,horCount+vertCount+indefCount)+'%)</div></div>'+
+        (indefCount>0?'<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#94A3B8"></div>Sin definir<div class="donut-legend-val">'+indefCount+' (' +pct(indefCount,horCount+vertCount+indefCount)+'%)</div></div>':'')+
+        '</div></div></div></div>'+
+      '<div class="chart-card"><h3>Distribución de Cargos por Nivel</h3><div class="chart-note">Cargos titulares según su nivel jerárquico</div>'+
+        '<div class="chart-canvas-wrap"><div class="donut-wrap"><canvas id="chartNivel"></canvas><div class="donut-legend">'+
+        nivelEntries.map(function(e,i){var c=['#7C1D24','#2563EB','#059669'];return '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:'+c[i]+'"></div>'+esc(e[0])+'<div class="donut-legend-val">'+e[1]+' ('+pct(e[1],totalAllJefes)+'%)</div></div>';}).join('')+
+        '</div></div></div></div>'+
+      '<div class="chart-card"><h3>Movilidad por Dirección de Comité</h3><div class="chart-note">Misma dirección vs. dirección distinta a la del titular</div>'+
+        '<div class="chart-canvas-wrap"><div class="donut-wrap"><canvas id="chartSameDir"></canvas><div class="donut-legend">'+
+        '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#059669"></div>Misma dirección<div class="donut-legend-val">'+sameDir+' (' +pct(sameDir,sameDir+diffDir)+'%)</div></div>'+
+        '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:#EA580C"></div>Dirección distinta<div class="donut-legend-val">'+diffDir+' (' +pct(diffDir,sameDir+diffDir)+'%)</div></div>'+
+        '</div></div></div></div>'+
+      '<div class="chart-card"><h3>Tiempo de Alistamiento</h3><div class="chart-note">Distribución del tiempo de alistamiento de los sucesores (n='+totalRel+')</div><div class="chart-canvas-wrap">'+(tiempoBars||'<div class="empty-state">Sin datos para este filtro.</div>')+'</div></div>'+
+    '</div>';
+
+  function redrawCharts(){
+    drawDonut('chartMov',[horCount,vertCount].concat(indefCount>0?[indefCount]:[]),['#2563EB','#7C3AED','#94A3B8'],168,'relaciones');
+    drawDonut('chartSameDir',[sameDir,diffDir],['#059669','#EA580C'],168,'relaciones');
+    drawDonut('chartNivel',nivelEntries.map(function(e){return e[1];}),['#7C1D24','#2563EB','#059669'],168,'cargos');
+  }
+  setTimeout(redrawCharts,30);
+  // El color del texto de las dádonas depende del tema y se fija al
+  // pintar; si cambia (botón 🌓), hay que repintar o queda "pegado" al
+  // color del tema anterior. Se quita el listener previo (render() se
+  // vuelve a llamar en cada cambio de filtro) para no apilar handlers.
+  document.removeEventListener('claro:theme-changed', window.__ciclo2ThemeHandler||function(){});
+  window.__ciclo2ThemeHandler=redrawCharts;
+  document.addEventListener('claro:theme-changed', window.__ciclo2ThemeHandler);
+
+  /* ════════════════ RISK SECTION ════════════════ */
+  document.getElementById('riskSection').innerHTML=
+    '<div class="section-title"><div class="icon red">⚠️</div>Riesgo de Continuidad</div>'+
+    '<div class="section-sub">Cruce entre la edad del titular y el tiempo de alistamiento del sucesor más próximo, como variables de contexto</div>'+
+    '<div class="risk-grid">'+
+    '<div class="risk-card risk-alta"><div class="risk-val">'+riskCount['Alta']+'</div><div class="risk-pct">'+pct(riskCount['Alta'],totalJefes)+'%</div><div class="risk-label">Riesgo Alto</div><div class="risk-desc">Titular ≥55 años sin sucesor con alistamiento en ≤1 año</div></div>'+
+    '<div class="risk-card risk-media"><div class="risk-val">'+riskCount['Media']+'</div><div class="risk-pct">'+pct(riskCount['Media'],totalJefes)+'%</div><div class="risk-label">Riesgo Medio</div><div class="risk-desc">Titular 45-54 años, o ≥55 con sucesor listo en el corto plazo</div></div>'+
+    '<div class="risk-card risk-baja"><div class="risk-val">'+riskCount['Baja']+'</div><div class="risk-pct">'+pct(riskCount['Baja'],totalJefes)+'%</div><div class="risk-label">Riesgo Bajo</div><div class="risk-desc">Titular &lt;45 años, o 45-54 con sucesor listo en ≤1 año</div></div>'+
+    '</div>';
+
+  /* ════════════════ TABLE ════════════════ */
+  var rows=data.map(function(r){
+    var jefe=jefesMap[r.exp];
+    var mt=movType(r);
+    var risk=riskOfJefe(jefe);
+    return '<tr data-dir="'+esc(r.jDir)+'" data-nivel="'+esc(r.jNivel)+'">'+
+      '<td><span class="person-name">'+esc(r.jNombre)+'</span><span class="person-cargo">'+esc(r.jCargo)+'</span></td>'+
+      '<td><small>'+esc(r.jDir.replace('Direccion ','').replace('Dirección ',''))+'</small></td>'+
+      '<td style="text-align:center">'+esc(r.jEdad)+'</td>'+
+      '<td><span class="person-name">'+esc(r.sNombre)+'</span><span class="person-cargo">'+esc(r.sCargo)+'</span></td>'+
+      '<td><small>'+esc(r.sDir.replace('Direccion ','').replace('Dirección ',''))+'</small></td>'+
+      '<td><span class="badge '+movBadgeClass(mt)+'">'+movLabel(mt)+'</span></td>'+
+      '<td style="text-align:center">'+(r.tiempo?'<span class="badge badge-blue">'+esc(r.tiempo)+'</span>':'<span class="badge badge-gray">Sin definir</span>')+'</td>'+
+      '<td style="text-align:center">'+(r.sEdad!=null?esc(r.sEdad):'—')+'</td>'+
+      '<td style="text-align:center">'+(r.sAntig!=null?esc(r.sAntig)+'a':'—')+'</td>'+
+      '<td><span class="badge '+riskBadgeClass(risk)+'">'+risk+'</span></td></tr>';
   }).join('');
-}
-setTimeout(redrawDonuts,100);
-// El color del texto de las dádonas (--text/--text-dim) depende del tema;
-// si cambia (botón 🌓 de la barra de navegación), hay que repintar o
-// queda el texto del tema anterior "pegado" y puede volverse invisible.
-document.addEventListener('claro:theme-changed',redrawDonuts);
 
-/* ── MOBILITY CARDS ──────────────────────────────────────────────── */
-document.getElementById('mobSection').innerHTML=
-  '<div class="sec-title"><div class="dot" style="background:#2563EB"></div>Análisis de Movilidad</div>'+
-  '<div class="mob-grid">'+
-  '<div class="mob-card mc-vert"><div class="mob-v">'+vertical+'</div><div class="mob-l">Movilidad Vertical</div><div class="mob-p">'+k1+'% — Sucesor va a ocupar el cargo del titular</div></div>'+
-  '<div class="mob-card mc-horiz"><div class="mob-v">'+horizontal+'</div><div class="mob-l">Movilidad Horizontal</div><div class="mob-p">'+k2+'% — Sucesor en mismo nivel del titular</div></div>'+
-  '</div>';
+  document.getElementById('tableSection').innerHTML=
+    '<div class="section-title"><div class="icon green">📋</div>Detalle de Relaciones Titular → Sucesor</div>'+
+    '<div class="section-sub">'+totalRel+' relaciones mostradas</div>'+
+    '<div class="mini-filters"><div style="flex:1;min-width:220px"><label>Buscar por nombre</label><input type="text" id="fSearch" placeholder="Nombre del titular o del sucesor..."></div></div>'+
+    '<div class="table-wrap"><table><thead><tr>'+
+    '<th>Titular</th><th>Dirección</th><th>Edad</th>'+
+    '<th>Sucesor</th><th>Dir. Sucesor</th><th>Movilidad</th>'+
+    '<th>Tiempo</th><th>Edad Sucesor</th><th>Antigüedad</th><th>Riesgo</th>'+
+    '</tr></thead><tbody>'+rows+'</tbody></table></div>';
 
-/* ── TIME + RISK ─────────────────────────────────────────────────── */
-var tArr=Object.entries(tiempoCount).sort(function(a,b){return b[1]-a[1]});
-var tClasses={'1 AÑO':'t1','2 AÑOS':'t2','3 AÑOS':'t3'};
-var timeHTML=tArr.map(function(t){return '<div class="time-card '+(tClasses[t[0]]||'t1')+'"><div class="tv">'+t[1]+'</div><div class="tl">'+esc(t[0])+'</div></div>';}).join('');
-
-document.getElementById('timeSection').innerHTML=
-  '<div class="sec-title"><div class="dot" style="background:#EA580C"></div>Tiempo de Alistamiento</div>'+
-  '<div class="time-cards">'+timeHTML+'</div>';
-
-document.getElementById('riskSection').innerHTML=
-  '<div class="sec-title"><div class="dot" style="background:#DC2626"></div>Mapa de Riesgo de Sucesión</div>'+
-  '<div class="risk-grid">'+
-  '<div class="risk-card ra"><div class="risk-v">'+riskAlta+'</div><div class="risk-l">Riesgo Alto ('+pct(riskAlta,totalJefes)+'%)</div><div class="risk-d">Titular ≥55 años o sucesor con ≤1 año</div></div>'+
-  '<div class="risk-card rm"><div class="risk-v">'+riskMedia+'</div><div class="risk-l">Riesgo Medio ('+pct(riskMedia,totalJefes)+'%)</div><div class="risk-d">Titular 45-54 años o sucesor con ≤3 años</div></div>'+
-  '<div class="risk-card rb"><div class="risk-v">'+riskBaja+'</div><div class="risk-l">Riesgo Bajo ('+pct(riskBaja,totalJefes)+'%)</div><div class="risk-d">Titular &lt;45 años y sucesor estable</div></div>'+
-  '</div>';
-
-/* ── TABLE ────────────────────────────────────────────────────────── */
-function movTipo(r){
-  var nJ=NL[r['FUNCION-NIVEL DE CARGO']]||0;
-  var nS=NL[r['FUNCION-NIVEL DE CARGO_1']]||0;
-  if(nS<nJ) return {txt:'Vertical',cls:'bg-purple'};
-  return {txt:'Horizontal',cls:'bg-blue'};
-}
-function riesgoTxt(r){
-  var ed=r['EDAD']||0;var ant=r['Antigüedad'];
-  if(ed>=55||(ant!=null&&ant<=1)) return {txt:'Alto',cls:'bg-red'};
-  if(ed>=45||(ant!=null&&ant<=3)) return {txt:'Medio',cls:'bg-orange'};
-  return {txt:'Bajo',cls:'bg-green'};
-}
-
-var rows=RAW.map(function(r){
-  var mt=movTipo(r);
-  var rg=riesgoTxt(r);
-  return '<tr data-dir="'+esc(r['DIRECCION COMITE '])+'" data-nivel="'+esc(r['FUNCION-NIVEL DE CARGO'])+'">'+
-    '<td><div class="person-name">'+esc(r['APELLIDOS Y NOMBRES  - JEFE'])+'</div><div class="person-cargo">'+esc(r['CARGO'])+'</div></td>'+
-    '<td>'+esc(r['DIRECCION COMITE '])+'</td>'+
-    '<td>'+esc(r['EDAD'])+'</td>'+
-    '<td><div class="person-name">'+esc(r['SUCESOR'])+'</div><div class="person-cargo">'+esc(r['CARGO SUCESOR'])+'</div></td>'+
-    '<td>'+esc(r['DIRECCION COMITE _1'])+'</td>'+
-    '<td><span class="badge '+mt.cls+'">'+mt.txt+'</span></td>'+
-    '<td>'+(r['TIEMPO DE ALISTAMIENTO']?'<span class="badge bg-blue">'+esc(r['TIEMPO DE ALISTAMIENTO'])+'</span>':'—')+'</td>'+
-    '<td>'+(r['Edad']!=null?esc(r['Edad']):'—')+'</td>'+
-    '<td>'+(r['Antigüedad']!=null?r['Antigüedad']+'a':'—')+'</td>'+
-    '<td><span class="badge '+rg.cls+'">'+rg.txt+'</span></td></tr>';
-}).join('');
-
-var dirs=[...new Set(RAW.map(function(r){return r['DIRECCION COMITE ']}))].sort();
-var nivels=[...new Set(RAW.map(function(r){return r['FUNCION-NIVEL DE CARGO']}))].sort();
-var dirOpts=dirs.map(function(d){return '<option value="'+esc(d)+'">'+esc(d)+'</option>'}).join('');
-var nivOpts=nivels.map(function(n){return '<option value="'+esc(n)+'">'+esc(n)+'</option>'}).join('');
-
-document.getElementById('tableSection').innerHTML=
-  '<div class="sec-title"><div class="dot" style="background:#059669"></div>Detalle de Relaciones Titular → Sucesor</div>'+
-  '<div class="filters">'+
-  '<div><label>Dirección Comité</label><select id="fDir"><option value="">Todas</option>'+dirOpts+'</select></div>'+
-  '<div><label>Función Nivel de Cargo</label><select id="fNivel"><option value="">Todos</option>'+nivOpts+'</select></div>'+
-  '<div style="flex:1;min-width:180px"><label>Buscar</label><input type="text" id="fSearch" placeholder="Nombre del jefe o sucesor..." style="width:100%"></div></div>'+
-  '<div class="tbl-wrap"><table><thead><tr>'+
-  '<th>Titular</th><th>Dirección</th><th>Edad</th>'+
-  '<th>Sucesor</th><th>Dir. Sucesor</th><th>Movilidad</th>'+
-  '<th>Tiempo</th><th>Edad S.</th><th>Antig.</th><th>Riesgo</th>'+
-  '</tr></thead><tbody>'+rows+'</tbody></table></div>';
-
-function applyFilters(){
-  var dir=document.getElementById('fDir').value;
-  var nivel=document.getElementById('fNivel').value;
-  var q=document.getElementById('fSearch').value.toLowerCase();
-  document.querySelectorAll('#tableSection tbody tr').forEach(function(tr){
-    var show=true;
-    if(dir&&tr.dataset.dir!==dir) show=false;
-    if(nivel&&tr.dataset.nivel!==nivel) show=false;
-    if(q&&tr.textContent.toLowerCase().indexOf(q)===-1) show=false;
-    tr.style.display=show?'':'none';
+  var fSearch=document.getElementById('fSearch');
+  fSearch.addEventListener('input',function(){
+    var q=fSearch.value.toLowerCase();
+    document.querySelectorAll('#tableSection tbody tr').forEach(function(tr){
+      tr.style.display=(!q||tr.textContent.toLowerCase().indexOf(q)!==-1)?'':'none';
+    });
   });
 }
-document.getElementById('fDir').addEventListener('change',applyFilters);
-document.getElementById('fNivel').addEventListener('change',applyFilters);
-document.getElementById('fSearch').addEventListener('input',applyFilters);
 
+/* ════════════════════════════════════════════════════════════════════
+   INIT + GLOBAL FILTERS
+   ════════════════════════════════════════════════════════════════════ */
+function init(){
+  var dirs=[...new Set(RAW_ALL.map(function(r){return r.jDir;}))].sort();
+  var nivelsPresent=[...new Set(RAW_ALL.map(function(r){return r.jNivel;}))];
+  var nivels=NIVEL_ORDER.filter(function(n){return nivelsPresent.indexOf(n)!==-1;});
+
+  var dirOpts=dirs.map(function(d){return '<option value="'+esc(d.trim())+'">'+esc(d.trim())+'</option>';}).join('');
+  var nivOpts=nivels.map(function(n){return '<option value="'+esc(n.trim())+'">'+esc(n.trim())+'</option>';}).join('');
+
+  document.getElementById('filterbar').innerHTML=
+    '<div class="fgroup"><label>Dirección de Comité</label><select id="gfDir"><option value="">Todas las direcciones</option>'+dirOpts+'</select></div>'+
+    '<div class="fgroup"><label>Nivel de Función de Cargo</label><select id="gfNivel"><option value="">Todos los niveles</option>'+nivOpts+'</select></div>'+
+    '<button class="filter-reset" id="gfReset" type="button">✕ Limpiar filtros</button>'+
+    '<div class="filter-count" id="gfCount"></div>';
+
+  var gfDir=document.getElementById('gfDir'), gfNivel=document.getElementById('gfNivel'), gfCount=document.getElementById('gfCount');
+
+  function applyGlobalFilters(){
+    var dir=gfDir.value.trim(), nivel=gfNivel.value.trim();
+    var filtered=RAW_ALL.filter(function(r){
+      var rDir=(r.jDir||'').trim();
+      var rNivel=(r.jNivel||'').trim();
+      if(dir && rDir!==dir) return false;
+      if(nivel && rNivel!==nivel) return false;
+      return true;
+    });
+    gfCount.textContent='Mostrando '+filtered.length+' de '+RAW_ALL.length+' relaciones';
+    render(filtered);
+  }
+  gfDir.addEventListener('change',applyGlobalFilters);
+  gfNivel.addEventListener('change',applyGlobalFilters);
+  document.getElementById('gfReset').addEventListener('click',function(){
+    gfDir.value=''; gfNivel.value=''; applyGlobalFilters();
+  });
+
+  applyGlobalFilters();
+}
+
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',init);
+}else{
+  init();
 }
 </script>
 </body>
