@@ -145,6 +145,12 @@
 
   <!-- NINEBOX VIEW -->
   <section id="viewNB">
+    <!-- Resumen Ejecutivo + Matriz 9-Box: se ocultan por completo cuando el
+         jefe en sesión no tiene equipo propio en la ninebox (ej. jefes que
+         solo tienen sucesores mapeados, sin reportes directos) — no tiene
+         sentido mostrar un resumen/matriz vacíos; sus sucesores igual
+         aparecen abajo en "Otros posibles sucesores". -->
+    <div id="nineboxVisualBlock">
     <!-- RESUMEN EJECUTIVO (EXPERTO, SÓLIDO, VERSÁTIL) -->
     <section class="exec-summary" id="execSummary">
       <div class="exec-head">
@@ -303,6 +309,7 @@
         </div>
       </div>
     </div>
+    </div><!-- /nineboxVisualBlock -->
 
     <!-- TEAM HOGAN CHART -->
     <div id="teamHoganChartContainer" style="margin-top:24px; margin-bottom:24px; display:none;"></div>
@@ -1036,6 +1043,14 @@ function buildLeaders(){
     'luz.alvarez@claro.com.co': 'LuzA001*',
     'luz.munozr@claro.com.co': 'LuzM703*',
     'patricia.vargas@claro.com.co': 'SandraV159*',
+    'ivan.natera@claro.com.co': 'Ivann641*',
+    'jorge.cortesl@claro.com.co': 'Jorgec806*',
+    'martha.castillo@claro.com.co': 'Marthac805*',
+    'liliana.sanabriac@claro.com.co': 'Lilianas121*',
+    'camilo.bustos@claro.com.co': 'Camilob010*',
+    'sonia.pena@claro.com.co': 'Soniap813*',
+    'miguel.cendales@claro.com.co': 'Miguelc701*',
+    'humberto.perezm@claro.com.co': 'Humbertop538*',
   };
 
   // 3. Registrar a los 70 jefes del listado vigente (Comité Directivo,
@@ -1112,6 +1127,19 @@ function buildLeaders(){
     { nombre: 'ALVAREZ ZULUAGA LUZ ASTRID', cargo: 'Gerente Nacional B2B2C y Proyectos Especiales', expediente: '52526001', email: 'luz.alvarez@claro.com.co', direccion: 'Unidad Mercado Masivo', gerencia: 'Gerencia Nacional B2B2C y Proyectos Especiales', rol: 'gerente', is_direct_reports_only: true },
     { nombre: 'MUÑOZ RONCANCIO LUZ NEILA', cargo: 'Director(a) Terminales y Equipos Hogar', expediente: '52534703', email: 'luz.munozr@claro.com.co', direccion: 'Unidad Mercado Masivo', gerencia: 'Direccion Negocio Terminales y Equipos Hogar', rol: 'director', is_direct_reports_only: true },
     { nombre: 'VARGAS ANGEL SANDRA PATRICIA', cargo: 'Gerente Inteligencia Comercial Personas', expediente: '51976159', email: 'patricia.vargas@claro.com.co', direccion: 'Unidad Mercado Masivo', gerencia: 'Gerencia Inteligencia Comercial Mercado Masivo', rol: 'gerente', is_direct_reports_only: true },
+    // Sin equipo propio en la ninebox (no tienen reportes directos), pero
+    // sí tienen sucesores mapeados en "Consolidado de sucesores" — la
+    // Matriz 9-Box/Resumen Ejecutivo se les oculta automáticamente
+    // (nineboxVisualBlock, ver renderAll) y solo ven "Otros posibles
+    // sucesores".
+    { nombre: 'NATERA MELO IVAN GIOVANNI', cargo: 'Gerente Regulacion Competencia', expediente: '1018417641', email: 'ivan.natera@claro.com.co', direccion: 'Direccion Corporativa Juridica y Sostenibilidad', gerencia: 'Gerencia Regulacion Competencia', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'CORTES LOPEZ JORGE ARTURO', cargo: 'Gerente De Gestion Control Facturacion Y Pago', expediente: '79385806', email: 'jorge.cortesl@claro.com.co', direccion: 'Direccion Corporativa Juridica y Sostenibilidad', gerencia: 'Gerencia De Gestion Control Facturacion Y Pago', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'CASTILLO MARTINEZ MARTHA LILIANA', cargo: 'Oficial Cumplimiento', expediente: '37893805', email: 'martha.castillo@claro.com.co', direccion: 'Direccion Gestion de Riesgo y Control Interno', gerencia: 'Direccion Gestion de Riesgo y Control Interno', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'SANABRIA CARDOZO LILIANA PATRICIA', cargo: 'Gerente Cumplimiento y Continuidad Datacenter', expediente: '52110121', email: 'liliana.sanabriac@claro.com.co', direccion: 'Direccion Gestion de Riesgo y Control Interno', gerencia: 'Gerencia Cumplimiento y Continuidad Datacenter', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'BUSTOS MANCERA CAMILO ANDRES', cargo: 'Gerente Riesgos de Proyectos y Monitoreo', expediente: '79843010', email: 'camilo.bustos@claro.com.co', direccion: 'Direccion Gestion de Riesgo y Control Interno', gerencia: 'Gerencia Riesgos de Proyectos y Monitoreo', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'PEÑA ESPITIA SONIA', cargo: 'Director(a) Estrategia Comercial', expediente: '39781813', email: 'sonia.pena@claro.com.co', direccion: 'Unidad Mercado Corporativo', gerencia: 'Direccion Estrategia Comercial', rol: 'director', is_direct_reports_only: true },
+    { nombre: 'CENDALES LARA MIGUEL ANTONIO', cargo: 'Gerente Ciberseguridad', expediente: '80801701', email: 'miguel.cendales@claro.com.co', direccion: 'Unidad Mercado Corporativo', gerencia: 'Gerencia Ciberseguridad', rol: 'gerente', is_direct_reports_only: true },
+    { nombre: 'PEREZ MEDINA HUMBERTO ALEJANDRO', cargo: 'Gerente Growth', expediente: '72285538', email: 'humberto.perezm@claro.com.co', direccion: 'Unidad Mercado Masivo', gerencia: 'Gerencia Growth', rol: 'gerente', is_direct_reports_only: true },
   ];
 
   JEFES.forEach(j => {
@@ -1550,6 +1578,12 @@ function resetFilters(){
 
 /* ── RENDER ────────────────────────────────────────────────────────── */
 function renderAll(){
+  // Resumen Ejecutivo + Matriz 9-Box no tienen sentido para un jefe sin
+  // equipo propio en la ninebox (ej. jefes que solo tienen sucesores
+  // mapeados, sin reportes directos) — se ocultan por completo; sus
+  // sucesores siguen apareciendo en "Otros posibles sucesores" más abajo.
+  const nineboxVisualBlock = document.getElementById('nineboxVisualBlock');
+  if(nineboxVisualBlock) nineboxVisualBlock.style.display = FILTERED.length ? '' : 'none';
   renderStats();
   renderExecSummary();
   renderNinebox();
