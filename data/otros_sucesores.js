@@ -5,14 +5,18 @@
    tabla principal de equipo de ese jefe. Se usa en ninebox.html y en
    tablero_liderazgo.html.
 
-   Generado cruzando las 88 relaciones Titular→Sucesor de
-   ciclo_talento.html (RAW_ALL) contra el jefe real de cada sucesor en la
-   tabla `ninebox` de Supabase: si el jefe real coincide con quien lo
-   mapeó, la relación ya sale sola en la tabla principal (no se repite
-   aquí); si no coincide, es "otro sucesor" y sale aquí bajo el jefe que
-   lo mapeó. Pendiente: VEGA MEDELLIN LAURA LUCIA (mapeada por JOYA
-   APARICIO ALEJANDRO) no tiene expediente en personas/ninebox — falta
-   dato para poder incluirla.
+   Generado cruzando las 129 relaciones Titular→Sucesor de la hoja
+   "Consolidado de sucesores" de Calibraciones.xlsx (fuente completa;
+   excluye las filas "NO CUENTA CON SUCESOR IDENTIFICADO", que no son
+   sucesores reales) contra el jefe real de cada sucesor en la tabla
+   `ninebox` de Supabase: si el jefe real coincide con quien lo mapeó, la
+   relación ya sale sola en la tabla principal (no se repite aquí); si no
+   coincide, es "otro sucesor" y sale aquí bajo el jefe que lo mapeó.
+
+   Pendiente (sin expediente en personas/ninebox, no se pudieron incluir):
+   - VEGA MEDELLIN LAURA LUCIA (mapeada por JOYA APARICIO ALEJANDRO)
+   - HEREDIA GAONA HECTOR ENRIQUE (mapeado por CARDONA TORRES CLAUDIA ISABEL)
+   - ARCHILA SAA KAREN DANIELA (mapeada por GARZON MENDEZ LINA MARIA)
    ═══════════════════════════════════════════════════════════════════════ */
 window.OTROS_SUCESORES = [
   {exp:"80150353",nombre:"VARGAS BLANCO FREDDY ALEXANDER",cargo:"Director(a) Gestion de Riesgo y Control Interno",region:"Transversal",direccion:"Comité Directivo",direccion_area:"Comité Directivo",gerencia:"Direccion Gestion de Riesgo y Control Interno",ciudad:"Bogotá, D.C.",jefe:"HERNANDEZ HERNANDEZ SANDRA LILIANA",caja:4,sucesor:"Si",tiempo:""},
@@ -46,5 +50,16 @@ window.OTROS_SUCESORES = [
   {exp:"80229765",nombre:"AYALA MURCIA SAMUEL IVAN",cargo:"Jefe Cuidado Al Cliente Corporativo",region:"Transversal",direccion:"Unidad Mercado Corporativo",direccion_area:"Unidad Mercado Corporativo",gerencia:"Gerencia Cuidado Al Cliente Negocios",ciudad:"Bogotá, D.C.",jefe:"PEÑA VEGA PATRICIA",caja:6,sucesor:"Si",tiempo:""},
   {exp:"1036648287",nombre:"VELEZ BARON HAROLD STEVEN",cargo:"Gerente Comercial Pymes R1",region:"Region 1",direccion:"Unidad Mercado Corporativo",direccion_area:"Unidad Mercado Corporativo",gerencia:"Gerencia Comercial Pymes R1",ciudad:"Barranquilla",jefe:"ZAPATA ORTIZ BEATRIZ",caja:6,sucesor:"Si",tiempo:"3 Años"},
   {exp:"52196323",nombre:"LOPEZ PABON DINA MARGARITA",cargo:"Gerente de Proyectos Empresariales",region:"Transversal",direccion:"Direccion Corporativa Tecnologia",direccion_area:"Direccion Corporativa Tecnologia",gerencia:"Gerencia de Proyectos Empresariales",ciudad:"Bogotá, D.C.",jefe:"DE LA ROCHE BENITEZ SONIA ANGELICA",caja:5,sucesor:"Si",tiempo:""},
-  {exp:"34327674",nombre:"ORDOÑEZ USSA LEIDY YURANY",cargo:"Gerente Estrategia Fidelizacion y Rentabilizacion",region:"Transversal",direccion:"Unidad Mercado Masivo",direccion_area:"Unidad Mercado Masivo",gerencia:"Gerencia Estrategia Fidelizacion",ciudad:"Bogotá, D.C.",jefe:"CARLESIMO REY ANDRES",caja:6,sucesor:"Si",tiempo:"Listo ya"}
+  {exp:"79897183",nombre:"SANCHEZ DIEZ MAURICIO ALBERTO",cargo:"Gerente Ingenieria y Arquitectura Servicio Movil",region:"Transversal",direccion:"Direccion Corporativa Tecnologia",direccion_area:"Direccion Corporativa Tecnologia",gerencia:"Gerencia Ingenieria y Arquitectura Servicio Movil",ciudad:"Bogotá, D.C.",jefe:"BAYONA PORRAS JUAN MAURICIO",caja:9,sucesor:"Si",tiempo:"Listo ya"},
+  {exp:"79455718",nombre:"BAYONA PORRAS JUAN MAURICIO",cargo:"Gerente Planeacion Tecnologia",region:"Transversal",direccion:"Direccion Corporativa Tecnologia",direccion_area:"Direccion Corporativa Tecnologia",gerencia:"Gerencia Planeacion Tecnologia",ciudad:"Bogotá, D.C.",jefe:"SALAZAR BARON HUGO ALEXANDER",caja:8,sucesor:"Si",tiempo:""},
+  {exp:"79996518",nombre:"BEJARANO ACOSTA JOSE MARIO",cargo:"Jefe Operativo Centro Comercial",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Direccion Corporativa Gestion Humana y Administrativo",gerencia:"Gerencia Plaza Claro",ciudad:"Bogotá, D.C.",jefe:"CARDONA TORRES CLAUDIA ISABEL",caja:8,sucesor:"Si",tiempo:"2 Años"},
+  {exp:"30335904",nombre:"MENDEZ CANO ELIANA MARCELA",cargo:"Business Partner Gestion Humana R2",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Direccion Corporativa Gestion Humana y Administrativo",gerencia:"Gerencia Gestion Humana Regional R2",ciudad:"Medellín",jefe:"MORALES MOLANO SANDRA PATRICIA",caja:6,sucesor:"Si",tiempo:""},
+  {exp:"52392875",nombre:"RODRIGUEZ ALFARO ANGIE MARCELA",cargo:"Jefe Atraccion y Planeacion de Talento",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Direccion Corporativa Gestion Humana y Administrativo",gerencia:"Gerencia Gestion Humana Negocio y Transversales",ciudad:"Bogotá, D.C.",jefe:"LOPEZ TAVERA MARIA PAULA CATALINA",caja:7,sucesor:"Si",tiempo:""},
+  {exp:"38600645",nombre:"CASTRO RAMIREZ ANGELICA MARIA",cargo:"Business Partner Gestion Humana R3",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Direccion Corporativa Gestion Humana y Administrativo",gerencia:"Gerencia Gestion Humana Regional R3",ciudad:"Cali",jefe:"LOPEZ TAVERA MARIA PAULA CATALINA",caja:8,sucesor:"Si",tiempo:""},
+  {exp:"52804512",nombre:"LOPEZ TAVERA MARIA PAULA CATALINA",cargo:"Gerente Talento Cultura y Comunicaciones",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Direccion Corporativa Gestion Humana y Administrativo",gerencia:"Gerencia Talento Cultura y Comunicaciones",ciudad:"Bogotá, D.C.",jefe:"MORALES CLAVIJO LUIS GERMAN",caja:5,sucesor:"Si",tiempo:"3 Años"},
+  {exp:"52144444",nombre:"MORALES MOLANO SANDRA PATRICIA",cargo:"Gerente Relaciones Laborales & SST",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Direccion Corporativa Gestion Humana y Administrativo",gerencia:"Gerencia Relaciones Laborales & SST",ciudad:"Bogotá, D.C.",jefe:"MORALES CLAVIJO LUIS GERMAN",caja:5,sucesor:"Si",tiempo:""},
+  {exp:"29683064",nombre:"ABADIA BOLAÑOS PAOLA ANDREA",cargo:"Jefe Regional B2B2C y Constructoras",region:"Transversal",direccion:"Unidad Mercado Masivo",direccion_area:"Unidad Mercado Masivo",gerencia:"Unidad Mercado Masivo",ciudad:"Bogotá, D.C.",jefe:"CASTELLANOS RODRIGUEZ MIGUEL ANGEL",caja:0,sucesor:"Si",tiempo:""},
+  {exp:"38600645",nombre:"CASTRO RAMIREZ ANGELICA MARIA",cargo:"Business Partner Gestion Humana R3",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Direccion Corporativa Gestion Humana y Administrativo",gerencia:"Gerencia Gestion Humana Regional R3",ciudad:"Cali",jefe:"CASTELLANOS RODRIGUEZ MIGUEL ANGEL",caja:8,sucesor:"Si",tiempo:""},
+  {exp:"1031122523",nombre:"MARTINEZ LANCHEROS WILLIAM ANDRES",cargo:"Gerente Data Growth Corporativo",region:"Transversal",direccion:"Unidad Mercado Corporativo",direccion_area:"Unidad Mercado Corporativo",gerencia:"Gerencia Data Growth Corporativo",ciudad:"Bogotá, D.C.",jefe:"GARZON MENDEZ LINA MARIA",caja:7,sucesor:"Si",tiempo:""},
+  {exp:"1014182084",nombre:"RODRIGUEZ BERNAL EDICSON",cargo:"Gerente Mejora Continua Procesos Corporativos",region:"Transversal",direccion:"Direccion Corporativa Financiera",direccion_area:"Direccion Corporativa Financiera",gerencia:"Gerencia Mejora Continua Procesos Corporativos",ciudad:"Bogotá, D.C.",jefe:"GARZON MENDEZ LINA MARIA",caja:5,sucesor:"Si",tiempo:""}
 ];
