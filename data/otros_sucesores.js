@@ -13,8 +13,14 @@
    relación ya sale sola en la tabla principal (no se repite aquí); si no
    coincide, es "otro sucesor" y sale aquí bajo el jefe que lo mapeó.
 
-   Pendiente (sin expediente en personas/ninebox, no se pudieron incluir):
-   - VEGA MEDELLIN LAURA LUCIA (mapeada por JOYA APARICIO ALEJANDRO)
+   VEGA MEDELLIN LAURA LUCIA (mapeada por JOYA APARICIO ALEJANDRO) no tiene
+   expediente en personas/ninebox/Base General — no está en ninguna hoja del
+   excel con cédula. Se incluye igual, con un expediente provisional
+   "PENDIENTE-..." (ya no hay botón de ficha en esta tabla, así que no rompe
+   nada), para que al menos aparezca por nombre. Falta su cédula real.
+
+   Sin incluir por falta de expediente Y porque su fila en "Consolidado de
+   sucesores" tiene Observaciones="CONFIRMAR" (aún no confirmados):
    - HEREDIA GAONA HECTOR ENRIQUE (mapeado por CARDONA TORRES CLAUDIA ISABEL)
    - ARCHILA SAA KAREN DANIELA (mapeada por GARZON MENDEZ LINA MARIA)
    ═══════════════════════════════════════════════════════════════════════ */
@@ -45,6 +51,7 @@ window.OTROS_SUCESORES = [
   {exp:"79650698",nombre:"AGUIA GUTIERREZ CARLOS ANDRES",cargo:"Gerente Sistemas SAP Administrativos y Financieros",region:"Transversal",direccion:"Direccion Corporativa Tecnologia",direccion_area:"Direccion Corporativa Tecnologia",gerencia:"Direccion Corporativa Tecnologia",ciudad:"Bogotá, D.C.",jefe:"BUSTOS MANCERA CAMILO ANDRES",caja:0,sucesor:"Si",tiempo:""},
   {exp:"1018414804",nombre:"COTRINA RODRIGUEZ DAVID ENRIQUE",cargo:"Abogado(a) Asuntos Contenciosos",region:"Transversal",direccion:"Direccion Corporativa Juridica y Sostenibilidad",direccion_area:"Direccion Corporativa Juridica y Sostenibilidad",gerencia:"Gerencia Asuntos Contenciosos",ciudad:"Bogotá, D.C.",jefe:"NATERA MELO IVAN GIOVANNI",caja:2,sucesor:"Si",tiempo:"2 Años"},
   {exp:"80111618",nombre:"BAENA JARAMILLO ALEJANDRO",cargo:"Gerente Contratos Transparencia y Etica Empresarial",region:"Transversal",direccion:"Direccion Corporativa Juridica y Sostenibilidad",direccion_area:"Direccion Corporativa Juridica y Sostenibilidad",gerencia:"Gerencia Contratos Transparencia y Etica Empresarial",ciudad:"Bogotá, D.C.",jefe:"JOYA APARICIO ALEJANDRO",caja:2,sucesor:"Si",tiempo:""},
+  {exp:"PENDIENTE-VEGA-MEDELLIN",nombre:"VEGA MEDELLIN LAURA LUCIA",cargo:"Abogado(a) Contratos Comerciales",region:"Transversal",direccion:"Direccion Corporativa Juridica y Sostenibilidad",direccion_area:"Direccion Corporativa Juridica y Sostenibilidad",gerencia:"Direccion Corporativa Juridica y Sostenibilidad",ciudad:"Bogotá, D.C.",jefe:"JOYA APARICIO ALEJANDRO",caja:0,sucesor:"Si",tiempo:"2 Años"},
   {exp:"1085273858",nombre:"OJEDA LUNA JUAN MANUEL",cargo:"Gerente Asuntos Contenciosos",region:"Transversal",direccion:"Direccion Corporativa Juridica y Sostenibilidad",direccion_area:"Direccion Corporativa Juridica y Sostenibilidad",gerencia:"Gerencia Asuntos Contenciosos",ciudad:"Bogotá, D.C.",jefe:"BAENA JARAMILLO ALEJANDRO",caja:5,sucesor:"Si",tiempo:"1 Año"},
   {exp:"1018503004",nombre:"VALDES OBANDO JULIETH DANIELA",cargo:"Analista Gestion Control Pago MINTIC",region:"Transversal",direccion:"Direccion Corporativa Juridica y Sostenibilidad",direccion_area:"Direccion Corporativa Juridica y Sostenibilidad",gerencia:"Direccion Corporativa Juridica y Sostenibilidad",ciudad:"Bogotá, D.C.",jefe:"CORTES LOPEZ JORGE ARTURO",caja:0,sucesor:"Si",tiempo:""},
   {exp:"80229765",nombre:"AYALA MURCIA SAMUEL IVAN",cargo:"Jefe Cuidado Al Cliente Corporativo",region:"Transversal",direccion:"Unidad Mercado Corporativo",direccion_area:"Unidad Mercado Corporativo",gerencia:"Gerencia Cuidado Al Cliente Negocios",ciudad:"Bogotá, D.C.",jefe:"PEÑA VEGA PATRICIA",caja:6,sucesor:"Si",tiempo:""},
