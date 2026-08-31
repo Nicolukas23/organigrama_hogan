@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="../data/nav.css">
 <script src="../data/ficha_data.js?v=1787685958"></script>
 <script src="../data/otros_sucesores.js?v=1788198181"></script>
+<script src="../data/sucesor_pairs.js?v=1788208000"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
@@ -651,8 +652,26 @@ function normWords(s){
     .sort().join(' ');
 }
 
-function isSuc(v){
-  return ['si','sí'].includes(String(v || '').toLowerCase().trim());
+// ninebox.sucesor (Sí/No) es un atributo genérico por persona ("¿es
+// candidata a sucesión?", de Base General) — no dice de QUIÉN es
+// sucesora. Sin esta validación, alguien identificado como sucesor de
+// OTRA persona (o de nadie en particular) salía "Sí" en la tabla de
+// CUALQUIER jefe bajo el que estuviera, aunque ese jefe nunca lo hubiera
+// mapeado (ej. José Mario Bejarano, sucesor real de Cardona Torres
+// Claudia Isabel, salía "Sí" también en el equipo de Rodriguez Afanador
+// Fredy Enrique, su jefe actual, que nunca lo identificó como tal).
+// Ahora se exige que la pareja (jefe actual, persona) exista en
+// data/sucesor_pairs.js (Consolidado de sucesores) para mostrar "Sí" —
+// si la persona sí es sucesora pero de alguien más, ese "Sí" sale donde
+// corresponde (tabla principal de su verdadero jefe, u "Otros posibles
+// sucesores"), no aquí.
+const SUCESOR_PAIRS_SET = new Set(window.SUCESOR_PAIRS || []);
+function isSuc(p){
+  if(!p) return false;
+  const raw = ['si','sí'].includes(String(p.sucesor || '').toLowerCase().trim());
+  if(!raw) return false;
+  if(!SUCESOR_PAIRS_SET.size) return raw; // si el archivo no cargó, no rompemos el flag original
+  return SUCESOR_PAIRS_SET.has(normWords(p.jefe) + '|' + normWords(p.nombre));
 }
 
 function hasFichaData(p){
@@ -1608,7 +1627,7 @@ function renderStats(){
   });
   const avgPot = countAños > 0 ? (totalAños / countAños).toFixed(1) : 0;
   const hEv = FILTERED.filter(r => r.hogan_versatilidad);
-  const suc = FILTERED.filter(r => isSuc(r.sucesor)).length;
+  const suc = FILTERED.filter(r => isSuc(r)).length;
 
   document.getElementById('kpiTotal').textContent = n;
   let el_kpiTop = document.getElementById('kpiTop'); if(el_kpiTop) el_kpiTop.textContent = top;
@@ -1859,16 +1878,16 @@ function renderNineboxTable(){
       const cb = getCajaNum(b.caja) || 0;
       return (ca - cb) * tableState.sortDir;
     } else if(tableState.sortKey === 'sucesor'){
-      const sa = isSuc(a.sucesor) ? 1 : 0;
-      const sb = isSuc(b.sucesor) ? 1 : 0;
+      const sa = isSuc(a) ? 1 : 0;
+      const sb = isSuc(b) ? 1 : 0;
       return (sb - sa) * tableState.sortDir;
     } else if(tableState.sortKey === 'tiempo'){
       return (a.tiempo || '').localeCompare(b.tiempo || '', 'es') * tableState.sortDir;
     } else {
       // Default sort exact to ninebox.html:
       // 1. Sucesores first
-      const sa = isSuc(a.sucesor) ? 0 : 1;
-      const sb = isSuc(b.sucesor) ? 0 : 1;
+      const sa = isSuc(a) ? 0 : 1;
+      const sb = isSuc(b) ? 0 : 1;
       if(sa !== sb) return sa - sb;
       // 2. Box number (9 -> 1)
       const oa = BOX_SORT[getCajaNum(a.caja)] ?? 9;
@@ -1908,7 +1927,7 @@ function renderNineboxTable(){
       const cNum = getCajaNum(p.caja);
       const boxColor = BOX_COLORS[cNum] || '#47505c';
       const boxName = cNum ? `${cNum} · ${BOX_NAMES[cNum] || ''}` : '0 · Sin ubicación';
-      const isS = isSuc(p.sucesor);
+      const isS = isSuc(p);
       const hasFicha = hasFichaData(p);
 
       const tr = document.createElement('tr');
@@ -1986,7 +2005,7 @@ function renderOtrosTable(){
   tbody.innerHTML = '';
   data.forEach(raw => {
     const p = {...raw, expediente: raw.exp};
-    const isS = isSuc(p.sucesor);
+    const isS = isSuc(p);
 
     const tr = document.createElement('tr');
     tr.onclick = () => openModal(p);
@@ -2234,8 +2253,8 @@ function renderTable(){
   
   // Sort FILTERED: first sucesores, then name
   const sorted = [...FILTERED].sort((a,b) => {
-    const sA = isSuc(a.sucesor) ? 0 : 1;
-    const sB = isSuc(b.sucesor) ? 0 : 1;
+    const sA = isSuc(a) ? 0 : 1;
+    const sB = isSuc(b) ? 0 : 1;
     if (sA !== sB) return sA - sB;
     return (a.nombre || '').localeCompare(b.nombre || '');
   });
@@ -2259,7 +2278,7 @@ function renderTable(){
     }
     
     // Pill badge for Sucesor
-    let sucBadge = isSuc(p.sucesor) ? `<span class="badge-suc-si">Sí</span>` : '<span class="badge-suc-no">No</span>';
+    let sucBadge = isSuc(p) ? `<span class="badge-suc-si">Sí</span>` : '<span class="badge-suc-no">No</span>';
     
     // Hogan
     let hPot = p.hogan_potencial !== null && p.hogan_potencial !== undefined ? `<span style="font-weight:700;font-family:var(--font-display);font-size:13px">${p.hogan_potencial}</span>` : '<span class="badge-suc-no">-</span>';
@@ -2323,7 +2342,7 @@ function openModal(p){
     badgesHTML += `<div style="background:${meta ? meta.color : '#6b7280'};padding:6px 12px;border-radius:12px;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center">Ninebox: ${cNum} - ${meta ? meta.short : ''}</div>`;
   }
   
-  if(isSuc(p.sucesor)){
+  if(isSuc(p)){
     badgesHTML += `<div style="background:#059669;padding:6px 12px;border-radius:12px;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center">Posible Sucesor</div>`;
   }
   
@@ -2342,7 +2361,7 @@ function openModal(p){
     ['Gerencia', p.gerencia],
     ['Desempeño', p.desempeno],
     ['Potencial 9-Box', p.potencial],
-    ['Sucesor', isSuc(p.sucesor) ? 'Sí' : 'No'],
+    ['Sucesor', isSuc(p) ? 'Sí' : 'No'],
     ['Tiempo Sucesión', p.tiempo || '—'],
     ['Ciudad', p.ciudad]
   ];
