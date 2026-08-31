@@ -782,7 +782,20 @@ async function loadSupabaseData(){
     }
 
     buildLeaders();
-    if(currentUser){
+    // BUG: esta variable se llamaba "currentUser", que no existe en ningún
+    // otro lugar del archivo (la sesión activa se guarda en "CUR", ver
+    // setSession()). Como estaba dentro del try, cada carga tiraba un
+    // ReferenceError aquí SIEMPRE, se iba silenciosamente al catch (que
+    // registra "Supabase no disponible" aunque el fetch sí hubiera
+    // funcionado y "ALL" ya se hubiera actualizado arriba), y por eso
+    // applyFilters() nunca se volvía a ejecutar con los datos en vivo: la
+    // pantalla se quedaba con el snapshot estático embebido (<script
+    // id="DS">) del último deploy, que puede no incluir jefes o personas
+    // agregadas a la base después. Esto explicaba, por ejemplo, que a
+    // Rodriguez Afanador Fredy Enrique le saliera la tabla vacía pese a
+    // tener 4 personas a cargo en Supabase: el snapshot embebido no las
+    // tenía y el refresco en vivo nunca llegaba a pintarse.
+    if(CUR){
       applyFilters();
     }
     console.log('Supabase: Tablero de Liderazgo actualizado en vivo con', ALL.length, 'registros.');
