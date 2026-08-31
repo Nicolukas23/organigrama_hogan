@@ -347,10 +347,8 @@
               <tr>
                 <th>NOMBRE</th>
                 <th>CARGO</th>
-                <th>UBICACIÓN</th>
                 <th>POSIBLE SUCESOR</th>
                 <th>TIEMPO</th>
-                <th>FICHA</th>
               </tr>
             </thead>
             <tbody id="otrosTableBody"></tbody>
@@ -1947,28 +1945,22 @@ function renderOtrosTable(){
     : list.filter(p => (p.jefe || '').toLowerCase().includes(search));
 
   if(!data.length){
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:28px;color:var(--text-faint)">No se encontraron otros sucesores.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:28px;color:var(--text-faint)">No se encontraron otros sucesores.</td></tr>';
     return;
   }
 
   tbody.innerHTML = '';
   data.forEach(raw => {
     const p = {...raw, expediente: raw.exp};
-    const cNum = getCajaNum(p.caja);
-    const boxColor = BOX_COLORS[cNum] || '#47505c';
-    const boxName = cNum ? `${cNum} · ${BOX_NAMES[cNum] || ''}` : '0 · Sin ubicación';
     const isS = isSuc(p.sucesor);
-    const hasFicha = hasFichaData(p);
 
     const tr = document.createElement('tr');
     tr.onclick = () => openModal(p);
     tr.innerHTML = `
       <td class="name">${p.nombre}</td>
       <td>${p.cargo || '—'}</td>
-      <td><span class="chip-caja" style="background:${boxColor}">${boxName}</span></td>
       <td><span class="chip-sucesor ${isS ? 'si' : 'no'}">${isS ? 'Sí' : 'No'}</span></td>
       <td style="font-size:13px">${p.tiempo && p.tiempo !== 'N/A' ? p.tiempo : '—'}</td>
-      <td>${hasFicha ? `<a href="ficha_talento.html?expediente=${p.expediente}" target="_blank" onclick="event.stopPropagation()" class="btn-ficha">Ver Reporte</a>` : `<a href="ficha_hogan.html?exp=${p.expediente}" target="_blank" onclick="event.stopPropagation()" class="btn-ficha" style="background:#f1f5f9;color:var(--crimson);border:1px solid #cbd5e1;">Ver Reporte</a>`}</td>
     `;
     tbody.appendChild(tr);
   });

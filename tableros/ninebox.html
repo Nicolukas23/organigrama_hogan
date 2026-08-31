@@ -240,10 +240,8 @@
           <tr>
             <th>NOMBRE</th>
             <th>CARGO</th>
-            <th>UBICACIÓN</th>
             <th>POSIBLE SUCESOR</th>
             <th>TIEMPO</th>
-            <th>FICHA</th>
           </tr>
         </thead>
         <tbody id="otrosTableBody"></tbody>
@@ -1832,40 +1830,23 @@ function renderOtrosTable(){
   if(search) data = data.filter(p => p.nombre.toLowerCase().includes(search) || p.exp.includes(search));
 
   if(data.length === 0){
-    tbody.innerHTML = `<tr class="empty-row"><td colspan="6">No se encontraron otros sucesores para este jefe.</td></tr>`;
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="4">No se encontraron otros sucesores para este jefe.</td></tr>`;
     return;
   }
 
   tbody.innerHTML = data.map(p => {
-    const caja = p.caja || 0;
-    const meta = BOX_META[caja] || BOX_FALLBACK;
     const sucesorVal = (p.sucesor || '').toLowerCase();
-    const cajaOpts = '<option value="0" '+(caja===0?'selected':'')+'>0 · Sin ubicación</option>' + Object.entries(BOX_META).map(([k,v]) => `<option value="${k}" ${parseInt(k)===caja?'selected':''}>${k} · ${v.short}</option>`).join('');
-    const fichaExp2 = p.fichaExp || p.exp;
-    const fichaLink = (sucesorVal==='si' && (FICHA_IDS.has(fichaExp2) || FICHA_IDS.has(p.exp)))
-      ? `<a href="ficha_talento.html?expediente=${fichaExp2}" target="_blank" onclick="event.stopPropagation()" style="color:#fff;background:var(--crimson);padding:4px 10px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600;white-space:nowrap;">Ver Ficha</a>`
-      : '—';
     return `<tr data-exp="${p.exp}">
       <td class="name">${p.nombre}</td>
       <td>${p.cargo || '—'}</td>
-      <td><select class="edit-caja" style="background:${meta.color}" data-exp="${p.exp}">${cajaOpts}</select></td>
       <td><span class="edit-sucesor ${sucesorVal==='si'?'si':'no'}" data-exp="${p.exp}">${sucesorVal==='si'?'Sí':'No'}</span></td>
       <td><select class="edit-tiempo" data-exp="${p.exp}" style="background:var(--card-bg);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:3px 6px;font-size:11px;cursor:pointer;">
         ${['N/A','Listo ya','1 Año','2 Años','3 Años','4 Años'].map(opt => `<option value="${opt}" ${(p.tiempo||'N/A')===opt?'selected':''}>${opt}</option>`).join('')}
       </select></td>
-      <td>${fichaLink}</td>
     </tr>`;
   }).join('');
 
   // Inline edit handlers
-  tbody.querySelectorAll('.edit-caja').forEach(sel => {
-    sel.addEventListener('change', e => {
-      e.stopPropagation();
-      const exp = sel.dataset.exp;
-      const person = OTROS_SUCESORES.find(d => d.exp === exp);
-      if(person){ person.caja = parseInt(sel.value); renderOtrosTable(); }
-    });
-  });
   tbody.querySelectorAll('.edit-sucesor').forEach(btn => {
     btn.addEventListener('click', e => {
       e.stopPropagation();
