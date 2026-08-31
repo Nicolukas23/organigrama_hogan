@@ -88,6 +88,22 @@
     </div>
   </header>
 
+  <!-- Aviso de mantenimiento de Netlify: solo se muestra cuando el dominio
+       activo es *.netlify.app (mapeodetalento.netlify.app), que se quedó
+       congelado sin recibir los últimos deploys. Se oculta solo en
+       GitHub Pages, que sí está al día. Se puede cerrar con la X; queda
+       cerrado para esa pestaña hasta que se recargue. -->
+  <div id="netlifyMaintBanner" style="display:none; background:#fee2e2; color:#991b1b; border:1px solid #ef4444; border-radius:8px; padding:10px 16px; font-size:13px; font-weight:700; text-align:center; margin:0 24px 16px; position:relative;">
+    🛠️ Los servidores de Netlify están temporalmente en mantenimiento. Mientras se resuelve, usa este enlace alterno, con los mismos usuarios y contraseñas:
+    <a href="https://nicolukas23.github.io/organigrama_hogan/tableros/tablero_liderazgo.html" style="color:#991b1b; text-decoration:underline;">nicolukas23.github.io/organigrama_hogan</a>
+    <button onclick="document.getElementById('netlifyMaintBanner').style.display='none'" style="position:absolute; right:10px; top:8px; background:none; border:none; color:#991b1b; font-weight:800; font-size:15px; cursor:pointer; line-height:1;" title="Cerrar aviso">✕</button>
+  </div>
+  <script>
+    if(window.location.hostname.endsWith('netlify.app')){
+      document.getElementById('netlifyMaintBanner').style.display = 'block';
+    }
+  </script>
+
   <div id="demoBanner" style="display:none; background:#fef3c7; color:#92400e; border:1px solid #f59e0b; border-radius:8px; padding:10px 16px; font-size:13px; font-weight:700; text-align:center; margin:0 24px 16px;">
     ⚠️ MODO DEMOSTRACIÓN — Toda la información mostrada (nombres, ubicación en la ninebox y resultados Hogan) es ficticia. Este perfil es solo para fines de capacitación.
   </div>
