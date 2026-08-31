@@ -438,21 +438,24 @@ async function loadSupabaseData(){
     }
     // "Mapeo de Talento" muestra hogan[exp].fortalezas/oportunidades, que
     // hasta ahora solo se llenaban para los ~9 del Comité (vía
-    // COMITE_HOGAN, arriba). Para todos los demás quedaba "Sin datos"
-    // aunque sí hubiera texto disponible. Se completa con, en orden: el
-    // detalle de Hogan de la persona (misma tabla que se usa en
-    // "Resultados Prueba Potencial Hogan") y, si tampoco hay eso, el
-    // texto de la calibración (personas.fortalezas/oportunidades).
+    // COMITE_HOGAN, arriba). Para todos los demás se completa con la
+    // calibración (personas.fortalezas/oportunidades = "Base General" del
+    // excel de Calibraciones), que es la única fuente autorizada para esta
+    // sección. Ya NO se usa el detalle de Hogan como respaldo aquí: mezclar
+    // ambas fuentes hacía que a alguien sin fortalezas/oportunidades en
+    // Base General le apareciera texto igual (tomado del reporte de Hogan,
+    // un origen distinto). Cada campo es independiente: si Base General no
+    // tiene fortalezas pero sí oportunidades (o viceversa), solo se muestra
+    // el que sí tiene dato.
     Object.keys(informacion).forEach(exp=>{
       const h=window.DATA.hogan[exp];
-      const det=h&&h.detalle;
       const info=informacion[exp];
       if(!h||!h.fortalezas){
-        const fort=(det&&det.fortalezas)||(info&&info.fortalezas);
+        const fort=info&&info.fortalezas;
         if(fort) window.DATA.hogan[exp]={...(window.DATA.hogan[exp]||{}), fortalezas:fort};
       }
       if(!h||!h.oportunidades){
-        const oport=(det&&det.oportunidades)||(info&&info.oportunidades);
+        const oport=info&&info.oportunidades;
         if(oport) window.DATA.hogan[exp]={...(window.DATA.hogan[exp]||{}), oportunidades:oport};
       }
     });
