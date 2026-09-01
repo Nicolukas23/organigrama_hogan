@@ -1640,7 +1640,22 @@ function renderStats(){
   });
   const avgPot = countAños > 0 ? (totalAños / countAños).toFixed(1) : 0;
   const hEv = FILTERED.filter(r => r.hogan_versatilidad);
-  const suc = FILTERED.filter(r => isSuc(r)).length;
+  // El KPI de "Sucesores Identificados" solo contaba isSuc() sobre FILTERED
+  // (el equipo propio en la ninebox). A los jefes sin equipo propio
+  // (is_direct_reports_only con FILTERED vacío) les salía siempre 0 aunque
+  // sí tuvieran sucesores mapeados en "Otros posibles sucesores" — misma
+  // lista que ve el jefe abajo (ver renderOtrosTable). Se suman aquí para
+  // que el KPI refleje lo mismo que ve en pantalla.
+  const otrosList = window.OTROS_SUCESORES || [];
+  const selJefeFilter = document.getElementById('fJefe') ? document.getElementById('fJefe').value : '';
+  let jefeNormStats = '';
+  if(selJefeFilter){
+    jefeNormStats = normWords(selJefeFilter);
+  } else if(CUR && (CUR.rol === 'gerente' || CUR.rol === 'director')){
+    jefeNormStats = normWords(CUR.nombre);
+  }
+  const otrosSucCount = jefeNormStats ? otrosList.filter(p => normWords(p.jefe) === jefeNormStats).length : 0;
+  const suc = FILTERED.filter(r => isSuc(r)).length + otrosSucCount;
 
   document.getElementById('kpiTotal').textContent = n;
   let el_kpiTop = document.getElementById('kpiTop'); if(el_kpiTop) el_kpiTop.textContent = top;
