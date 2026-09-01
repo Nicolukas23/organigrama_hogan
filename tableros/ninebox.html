@@ -58,6 +58,24 @@
     <div class="stats-row" id="statsRow"></div>
   </header>
 
+  <!-- APARTADO ADMIN: solo interfaz por ahora, sin conectar todavía. Se
+       muestra solo a los 4 administradores (EXCEL_UPLOAD_ADMINS, abajo),
+       no a todos los que tienen acceso a ninebox.html (AUTHORIZED_EMAILS
+       es una lista más amplia). El botón "Actualizar Tablero" no escribe
+       nada aún — solo confirma el archivo seleccionado. -->
+  <div class="panel" id="adminUploadSection" style="display:none; border:1px dashed var(--crimson);">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+      <h3 style="margin:0;font-size:15px;font-weight:700;color:var(--text)">⚙️ Actualizar datos del tablero (Admin)</h3>
+      <span style="font-size:11px;font-weight:700;color:var(--crimson);background:rgba(220,38,38,0.1);padding:3px 10px;border-radius:10px">EN CONSTRUCCIÓN</span>
+    </div>
+    <p style="margin:0 0 14px;font-size:13px;color:var(--text-dim)">Sube el Excel de Calibraciones actualizado para refrescar la información de este tablero.</p>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <input type="file" id="adminExcelInput" accept=".xlsx">
+      <button class="btn-icon" id="adminExcelBtn" onclick="adminUploadPlaceholder()">📤 Actualizar Tablero</button>
+    </div>
+    <div id="adminExcelStatus" style="margin-top:10px;font-size:12px;color:var(--text-dim)"></div>
+  </div>
+
   <section class="filters panel">
     <div class="filters-head">
       <h3>
@@ -285,6 +303,11 @@
   // toda la organización; propaga esa sesión para que ficha_hogan.html /
   // ficha_talento.html (abiertas desde aquí) no bloqueen el acceso.
   localStorage.setItem('talento_session', JSON.stringify({email:obj.email, nombre:obj.email, rol:'admin_ninebox', activeScope:'FULL', allowedExpedientes:null}));
+  var sec=document.getElementById('adminUploadSection');
+  if(sec){
+    var admins=['nicolas.santos@claro.com.co','laura.amadop@claro.com.co','edespitia@overlap.net.co','angie.rodriguez@claro.com.co'];
+    sec.style.display = admins.includes((obj.email||'').toLowerCase()) ? '' : 'none';
+  }
 }}catch(e){}}})();
 /* ---------- Data & config ---------- */
 let RAW = JSON.parse(document.getElementById('dataStore').textContent);
@@ -1723,6 +1746,26 @@ const AUTHORIZED_EMAILS = [
 ];
 const AUTHORIZED_PASS = '1234';
 
+// Los únicos 4 que ven el apartado "Actualizar datos del tablero" (Excel).
+// Distinto de AUTHORIZED_EMAILS: esa lista también deja entrar a otras
+// personas (luis.moralesc, valentina.campos) que no deben ver este
+// apartado.
+const EXCEL_UPLOAD_ADMINS = ['nicolas.santos@claro.com.co', 'laura.amadop@claro.com.co', 'edespitia@overlap.net.co', 'angie.rodriguez@claro.com.co'];
+
+// Placeholder del apartado "Actualizar datos del tablero" (admin): por
+// ahora solo confirma el archivo elegido, no lee ni escribe nada todavía.
+function adminUploadPlaceholder(){
+  const status = document.getElementById('adminExcelStatus');
+  const file = document.getElementById('adminExcelInput').files[0];
+  if(!file){
+    status.textContent = 'Selecciona un archivo .xlsx primero.';
+    status.style.color = 'var(--crimson)';
+    return;
+  }
+  status.textContent = `"${file.name}" seleccionado — la actualización automática todavía no está conectada.`;
+  status.style.color = 'var(--text-dim)';
+}
+
 let isLoggedIn = false;
 let loggedInUser = '';
 
@@ -1745,6 +1788,8 @@ function doLogin(){
   // ficha_talento.html (abiertas desde aquí) no bloqueen el acceso.
   localStorage.setItem('talento_session', JSON.stringify({email:email, nombre:email, rol:'admin_ninebox', activeScope:'FULL', allowedExpedientes:null}));
   document.getElementById('mainWrap').style.display = '';
+  const adminUploadSection = document.getElementById('adminUploadSection');
+  if(adminUploadSection) adminUploadSection.style.display = EXCEL_UPLOAD_ADMINS.includes(email) ? '' : 'none';
 }
 
 function doLogout(){

@@ -16,6 +16,26 @@
 <body>
 
 <div class="wrap">
+  <!-- APARTADO ADMIN: solo interfaz por ahora, sin conectar todavía. Esta
+       página no tiene login propio, así que se apoya en "talento_session"
+       (localStorage, mismo dominio) que dejan tablero_liderazgo.html o
+       ninebox.html al iniciar sesión — si el admin ya entró a alguno de
+       esos dos en este navegador, acá también le aparece. El botón
+       "Actualizar Tablero" no escribe nada aún — solo confirma el
+       archivo seleccionado. -->
+  <div class="section" id="adminUploadSection" style="display:none; border:1px dashed var(--crimson);">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+      <h3 style="margin:0;font-size:15px;font-weight:700;color:var(--text)">⚙️ Actualizar datos del tablero (Admin)</h3>
+      <span style="font-size:11px;font-weight:700;color:var(--crimson);background:rgba(220,38,38,0.1);padding:3px 10px;border-radius:10px">EN CONSTRUCCIÓN</span>
+    </div>
+    <p style="margin:0 0 14px;font-size:13px;color:var(--text-dim)">Sube el Excel de Calibraciones actualizado para refrescar la información de este tablero.</p>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <input type="file" id="adminExcelInput" accept=".xlsx">
+      <button class="btn-icon" id="adminExcelBtn" onclick="adminUploadPlaceholder()">📤 Actualizar Tablero</button>
+    </div>
+    <div id="adminExcelStatus" style="margin-top:10px;font-size:12px;color:var(--text-dim)"></div>
+  </div>
+
   <div class="hero" id="hero"></div>
   <div class="filterbar" id="filterbar"></div>
   <div class="kpi-grid" id="kpis"></div>
@@ -308,7 +328,35 @@ function render(data){
 /* ════════════════════════════════════════════════════════════════════
    INIT + GLOBAL FILTERS
    ════════════════════════════════════════════════════════════════════ */
+// Los únicos 4 que ven el apartado "Actualizar datos del tablero" (Excel).
+var EXCEL_UPLOAD_ADMINS=['nicolas.santos@claro.com.co','laura.amadop@claro.com.co','edespitia@overlap.net.co','angie.rodriguez@claro.com.co'];
+
+// Placeholder del apartado "Actualizar datos del tablero" (admin): por
+// ahora solo confirma el archivo elegido, no lee ni escribe nada todavía.
+function adminUploadPlaceholder(){
+  var status=document.getElementById('adminExcelStatus');
+  var file=document.getElementById('adminExcelInput').files[0];
+  if(!file){
+    status.textContent='Selecciona un archivo .xlsx primero.';
+    status.style.color='var(--crimson)';
+    return;
+  }
+  status.textContent='"'+file.name+'" seleccionado — la actualización automática todavía no está conectada.';
+  status.style.color='var(--text-dim)';
+}
+
+function updateAdminUploadVisibility(){
+  var sec=document.getElementById('adminUploadSection');
+  if(!sec) return;
+  try{
+    var raw=localStorage.getItem('talento_session');
+    var email=raw?(JSON.parse(raw).email||'').toLowerCase():'';
+    sec.style.display=EXCEL_UPLOAD_ADMINS.includes(email)?'':'none';
+  }catch(e){ sec.style.display='none'; }
+}
+
 function init(){
+  updateAdminUploadVisibility();
   var dirs=[...new Set(RAW_ALL.map(function(r){return r.jDir;}))].sort();
   var nivelsPresent=[...new Set(RAW_ALL.map(function(r){return r.jNivel;}))];
   var nivels=NIVEL_ORDER.filter(function(n){return nivelsPresent.indexOf(n)!==-1;});

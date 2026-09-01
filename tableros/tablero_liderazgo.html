@@ -92,6 +92,23 @@
     ⚠️ MODO DEMOSTRACIÓN — Toda la información mostrada (nombres, ubicación en la ninebox y resultados Hogan) es ficticia. Este perfil es solo para fines de capacitación.
   </div>
 
+  <!-- APARTADO ADMIN: solo interfaz por ahora, sin conectar todavía. Se
+       muestra solo a los 4 administradores (EXCEL_UPLOAD_ADMINS, abajo).
+       El botón "Actualizar Tablero" no escribe nada aún — solo confirma
+       el archivo seleccionado. -->
+  <div class="table-section" id="adminUploadSection" style="display:none; margin:0 24px 16px; border:1px dashed var(--crimson); background:var(--card-bg);">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+      <h3 style="margin:0;font-size:15px;font-weight:700;color:var(--text)">⚙️ Actualizar datos del tablero (Admin)</h3>
+      <span style="font-size:11px;font-weight:700;color:var(--crimson);background:rgba(220,38,38,0.1);padding:3px 10px;border-radius:10px">EN CONSTRUCCIÓN</span>
+    </div>
+    <p style="margin:0 0 14px;font-size:13px;color:var(--text-dim)">Sube el Excel de Calibraciones actualizado para refrescar la información de este tablero.</p>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <input type="file" id="adminExcelInput" accept=".xlsx">
+      <button class="btn-icon" id="adminExcelBtn" onclick="adminUploadPlaceholder()">📤 Actualizar Tablero</button>
+    </div>
+    <div id="adminExcelStatus" style="margin-top:10px;font-size:12px;color:var(--text-dim)"></div>
+  </div>
+
   <!-- STATS -->
   <div class="stats-grid">
     <div class="stat-card">
@@ -518,6 +535,11 @@ const DEMO_DIRECTOR_NAME = 'DIRECTOR DEMO';
 // completa). Reutiliza a "Gerente Demo Uno" (TORRES) como su identidad.
 const DEMO_GERENTE_EMAIL = 'demo.gerente@claro.com.co';
 const DEMO_GERENTE_NAME = 'TORRES VELASQUEZ ANDREA CAROLINA';
+
+// Los únicos 4 que ven el apartado "Actualizar datos del tablero" (Excel).
+// Distinto de rol==='admin': ese rol también lo tienen otras cuentas
+// (admin_restricted, etc.) que no deben ver este apartado.
+const EXCEL_UPLOAD_ADMINS = ['nicolas.santos@claro.com.co', 'laura.amadop@claro.com.co', 'edespitia@overlap.net.co', 'angie.rodriguez@claro.com.co'];
 
 // Estratégico: Directores, Gerentes y Business Partners. Operación (antes
 // "Gerencial"): Jefes y Coordinadores. Cada vertiente tiene su propio set
@@ -1343,6 +1365,9 @@ function setSession(user){
 
   const demoBanner = document.getElementById('demoBanner');
   if(demoBanner) demoBanner.style.display = (user.email === DEMO_EMAIL || user.email === DEMO_GERENTE_EMAIL) ? 'block' : 'none';
+
+  const adminUploadSection = document.getElementById('adminUploadSection');
+  if(adminUploadSection) adminUploadSection.style.display = EXCEL_UPLOAD_ADMINS.includes((user.email || '').toLowerCase()) ? '' : 'none';
 
   document.getElementById('lblUserName').textContent = user.nombre;
   document.getElementById('lblScope').textContent =
@@ -2357,6 +2382,20 @@ function switchView(v){
 }
 
 /* ── MODAL ─────────────────────────────────────────────────────────── */
+// Placeholder del apartado "Actualizar datos del tablero" (admin): por
+// ahora solo confirma el archivo elegido, no lee ni escribe nada todavía.
+function adminUploadPlaceholder(){
+  const status = document.getElementById('adminExcelStatus');
+  const file = document.getElementById('adminExcelInput').files[0];
+  if(!file){
+    status.textContent = 'Selecciona un archivo .xlsx primero.';
+    status.style.color = 'var(--crimson)';
+    return;
+  }
+  status.textContent = `"${file.name}" seleccionado — la actualización automática todavía no está conectada.`;
+  status.style.color = 'var(--text-dim)';
+}
+
 function openModal(p, hideFicha){
   document.getElementById('mAv').textContent = p.nombre.charAt(0);
   document.getElementById('mNombre').textContent = p.nombre;
