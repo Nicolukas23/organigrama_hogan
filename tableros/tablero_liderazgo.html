@@ -1959,7 +1959,7 @@ function renderNineboxTable(){
           </span>
         </td>
         <td style="font-size:13px">
-          ${p.tiempo && p.tiempo !== 'N/A' ? p.tiempo : '—'}
+          ${isS && p.tiempo && p.tiempo !== 'N/A' ? p.tiempo : '—'}
         </td>
         <td>
           ${hasFicha ? `<a href="ficha_talento.html?expediente=${p.expediente}" target="_blank" onclick="event.stopPropagation()" class="btn-ficha">Ver Reporte</a>` : `<a href="ficha_hogan.html?exp=${p.expediente}" target="_blank" onclick="event.stopPropagation()" class="btn-ficha" style="background:#f1f5f9;color:var(--crimson);border:1px solid #cbd5e1;">Ver Reporte</a>`}
@@ -2026,7 +2026,7 @@ function renderOtrosTable(){
       <td class="name">${p.nombre}</td>
       <td>${p.cargo || '—'}</td>
       <td><span class="chip-sucesor ${isS ? 'si' : 'no'}">${isS ? 'Sí' : 'No'}</span></td>
-      <td style="font-size:13px">${p.tiempo && p.tiempo !== 'N/A' ? p.tiempo : '—'}</td>
+      <td style="font-size:13px">${isS && p.tiempo && p.tiempo !== 'N/A' ? p.tiempo : '—'}</td>
     `;
     tbody.appendChild(tr);
   });
@@ -2291,7 +2291,8 @@ function renderTable(){
     }
     
     // Pill badge for Sucesor
-    let sucBadge = isSuc(p) ? `<span class="badge-suc-si">Sí</span>` : '<span class="badge-suc-no">No</span>';
+    const isSucP = isSuc(p);
+    let sucBadge = isSucP ? `<span class="badge-suc-si">Sí</span>` : '<span class="badge-suc-no">No</span>';
     
     // Hogan
     let hPot = p.hogan_potencial !== null && p.hogan_potencial !== undefined ? `<span style="font-weight:700;font-family:var(--font-display);font-size:13px">${p.hogan_potencial}</span>` : '<span class="badge-suc-no">-</span>';
@@ -2304,7 +2305,7 @@ function renderTable(){
       <td class="col-cargo" title="${p.cargo || ''}">${p.cargo || '-'}</td>
       <td>${cajaBadge}</td>
       <td>${sucBadge}</td>
-      <td class="col-dim">${p.tiempo || '—'}</td>
+      <td class="col-dim">${isSucP && p.tiempo && p.tiempo !== 'N/A' ? p.tiempo : '—'}</td>
       <td class="col-center">${hPot}</td>
       <td class="col-center">${hVers}</td>
       <td class="col-center"></td>`;
@@ -2375,7 +2376,7 @@ function openModal(p){
     ['Desempeño', p.desempeno],
     ['Potencial 9-Box', p.potencial],
     ['Sucesor', isSuc(p) ? 'Sí' : 'No'],
-    ['Tiempo Sucesión', p.tiempo || '—'],
+    ['Tiempo Sucesión', isSuc(p) && p.tiempo && p.tiempo !== 'N/A' ? p.tiempo : '—'],
     ['Ciudad', p.ciudad]
   ];
   
