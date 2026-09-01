@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../data/theme.css">
-<link rel="stylesheet" href="../data/tableros.css?v=1787948117">
+<link rel="stylesheet" href="../data/tableros.css?v=1788700000">
   <link rel="stylesheet" href="../data/print_onepager.css">
   <link rel="manifest" href="../manifest.json">
   <script src="../data/global_search.js" defer></script>
@@ -82,8 +82,8 @@
         <b id="lblUserName">NICOLAS SANTOS</b>
         <a href="javascript:void(0)" onclick="showLoginOverlay()" style="color:var(--text-dim);font-size:11px;margin-left:4px;text-decoration:none">· cerrar sesión</a>
       </div>
-      <button class="btn-icon" onclick="hoganAction()" title="Consulta tu resultado de Hogan">🎯 Consulta tu resultado de Hogan</button>
-      <button class="btn-icon" onclick="exportExcel()">📥 Descargar Excel</button>
+      <button class="btn-icon" id="btnHoganHeader" onclick="hoganAction()" title="Consulta tu resultado de Hogan">🎯 Consulta tu resultado de Hogan</button>
+      <button class="btn-icon" id="btnDescargarExcel" onclick="exportExcel()">📥 Descargar Excel</button>
       <button class="btn-icon" onclick="toggleTheme()">🌓</button>
     </div>
   </header>
@@ -110,8 +110,8 @@
   </div>
 
   <!-- STATS -->
-  <div class="stats-grid">
-    <div class="stat-card">
+  <div class="stats-grid" id="statsGrid">
+    <div class="stat-card" id="statColaboradores">
       <div class="stat-lbl">Colaboradores en Estructura</div>
       <div class="stat-val" id="kpiTotal">0</div>
       <div class="stat-sub">Registros activos evaluados</div>
@@ -130,7 +130,7 @@
   </div>
 
   <!-- INSTRUCCIONES FILTROS -->
-  <div style="background: #f0fdf4; border-left: 4px solid #166534; padding: 12px 16px; margin-bottom: 16px; border-radius: 4px; font-size: 13px; color: #14532d; display: flex; align-items: center; gap: 10px; line-height: 1.5; max-width: 1200px; margin: 0 auto 16px auto;">
+  <div id="instructionsBanner" style="background: #f0fdf4; border-left: 4px solid #166534; padding: 12px 16px; margin-bottom: 16px; border-radius: 4px; font-size: 13px; color: #14532d; display: flex; align-items: center; gap: 10px; line-height: 1.5; max-width: 1200px; margin: 0 auto 16px auto;">
     <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20" style="flex-shrink:0"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
     <div>
       <strong>Instrucciones de uso:</strong> Utiliza los filtros para explorar el talento. Puedes buscar un colaborador específico por nombre o cédula, o filtrar por Jefe Directo. Selecciona una persona en la matriz para ver su Ficha Preliminar.
@@ -138,7 +138,7 @@
   </div>
 
   <!-- FILTERS -->
-  <section class="filters-bar">
+  <section class="filters-bar" id="filtersBar">
     <div class="f-group" style="flex:2;min-width:200px">
       <label>🔍 Búsqueda</label>
       <input type="text" id="fSearch" placeholder="Nombre, cargo, cédula..." oninput="applyFilters()">
@@ -333,7 +333,7 @@
     <div id="teamHoganChartContainer" style="margin-top:24px; margin-bottom:24px; display:none;"></div>
 
     <!-- TABLA DE DETALLE EXACTA A NINEBOX.HTML -->
-    <div class="table-section">
+    <div class="table-section" id="mainNineboxTableSection">
       <div class="table-wrap">
         <div style="overflow-x:auto">
           <table class="nb-table">
@@ -380,6 +380,19 @@
           </table>
         </div>
       </div>
+    </div>
+
+    <!-- RESULTADOS DE HOGAN (perfil propio): reemplaza, solo para los
+         jefes sin equipo propio (NO_TEAM_PROFILE_EMAILS), al gráfico de
+         equipo (teamHoganChartContainer) y a la tabla principal, que para
+         ellos siempre están vacíos. Solo ofrece consultar su propio
+         resultado. -->
+    <div class="table-section" id="hoganSelfSection" style="display:none; text-align:center;">
+      <h3 style="margin:0 0 10px;font-size:15px;font-weight:700;color:var(--text)">Resultados de Hogan</h3>
+      <p style="margin:0 auto 18px;font-size:13px;color:var(--text-dim);max-width:520px;line-height:1.5">
+        Aquí podrás consultar los resultados de Hogan de tu propio perfil.
+      </p>
+      <button class="btn-icon" style="font-size:15px;padding:14px 28px" onclick="hoganAction()">🎯 Consulta tu resultado de Hogan</button>
     </div>
   </section>
 
@@ -540,6 +553,14 @@ const DEMO_GERENTE_NAME = 'TORRES VELASQUEZ ANDREA CAROLINA';
 // Distinto de rol==='admin': ese rol también lo tienen otras cuentas
 // (admin_restricted, etc.) que no deben ver este apartado.
 const EXCEL_UPLOAD_ADMINS = ['nicolas.santos@claro.com.co', 'laura.amadop@claro.com.co', 'edespitia@overlap.net.co', 'angie.rodriguez@claro.com.co'];
+
+// Los 8 jefes sin equipo propio (solo tienen sucesores mapeados, ver
+// nineboxVisualBlock/renderAll): en su perfil se oculta todo lo que
+// siempre les sale vacío (Descargar Excel, la tarjeta "Colaboradores en
+// Estructura", instrucciones/filtros y la tabla principal de ninebox) y
+// se reemplaza el gráfico de Hogan del equipo por un acceso directo a su
+// propio resultado de Hogan.
+const NO_TEAM_PROFILE_EMAILS = ['ivan.natera@claro.com.co', 'jorge.cortesl@claro.com.co', 'martha.castillo@claro.com.co', 'liliana.sanabriac@claro.com.co', 'camilo.bustos@claro.com.co', 'sonia.pena@claro.com.co', 'miguel.cendales@claro.com.co', 'humberto.perezm@claro.com.co'];
 
 // Estratégico: Directores, Gerentes y Business Partners. Operación (antes
 // "Gerencial"): Jefes y Coordinadores. Cada vertiente tiene su propio set
@@ -1368,6 +1389,21 @@ function setSession(user){
 
   const adminUploadSection = document.getElementById('adminUploadSection');
   if(adminUploadSection) adminUploadSection.style.display = EXCEL_UPLOAD_ADMINS.includes((user.email || '').toLowerCase()) ? '' : 'none';
+
+  const isNoTeamProfile = NO_TEAM_PROFILE_EMAILS.includes((user.email || '').toLowerCase());
+  const setDisp = (id, show) => { const el = document.getElementById(id); if(el) el.style.display = show ? '' : 'none'; };
+  setDisp('btnDescargarExcel', !isNoTeamProfile);
+  setDisp('btnHoganHeader', !isNoTeamProfile);
+  setDisp('statColaboradores', !isNoTeamProfile);
+  // instructionsBanner trae "display: flex" como parte de su style inline
+  // original (icono + texto en fila); "" lo dejaría en block por defecto.
+  const instructionsBanner = document.getElementById('instructionsBanner');
+  if(instructionsBanner) instructionsBanner.style.display = isNoTeamProfile ? 'none' : 'flex';
+  setDisp('filtersBar', !isNoTeamProfile);
+  setDisp('mainNineboxTableSection', !isNoTeamProfile);
+  setDisp('hoganSelfSection', isNoTeamProfile);
+  const statsGrid = document.getElementById('statsGrid');
+  if(statsGrid) statsGrid.classList.toggle('single-stat', isNoTeamProfile);
 
   document.getElementById('lblUserName').textContent = user.nombre;
   document.getElementById('lblScope').textContent =

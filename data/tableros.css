@@ -118,6 +118,10 @@ header.dash-hdr{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:16px;margin-bottom:24px;
 }
+/* Jefes sin equipo propio (solo ven "Sucesores Identificados", se oculta
+   "Colaboradores en Estructura"): centra la única tarjeta que queda en
+   vez de dejarla estirada a todo el ancho. */
+.stats-grid.single-stat{grid-template-columns:minmax(240px,360px);justify-content:center}
 .stat-card{
   background:var(--panel);border:1px solid var(--border);
   border-radius:var(--radius);padding:18px 20px;position:relative;
