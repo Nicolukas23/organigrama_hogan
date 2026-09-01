@@ -2036,7 +2036,7 @@ function renderOtrosTable(){
     const isS = isSuc(p);
 
     const tr = document.createElement('tr');
-    tr.onclick = () => openModal(p);
+    tr.onclick = () => openModal(p, true);
     tr.innerHTML = `
       <td class="name">${p.nombre}</td>
       <td>${p.cargo || '—'}</td>
@@ -2357,7 +2357,7 @@ function switchView(v){
 }
 
 /* ── MODAL ─────────────────────────────────────────────────────────── */
-function openModal(p){
+function openModal(p, hideFicha){
   document.getElementById('mAv').textContent = p.nombre.charAt(0);
   document.getElementById('mNombre').textContent = p.nombre;
   document.getElementById('mCargo').textContent = p.cargo || '-';
@@ -2405,7 +2405,12 @@ function openModal(p){
   const hasFicha = hasFichaData(p);
   const btnContainer = document.getElementById('mBtnFichaContainer');
   const btnEnlace = document.getElementById('btnFichaEnlace');
-  if(hasFicha) {
+  // "Otros posibles sucesores" ya no muestra el botón "Ver Reporte" en la
+  // tabla (pedido anterior); el modal de detalle igual lo mostraba porque
+  // no sabía desde dónde se había abierto. hideFicha lo oculta también acá.
+  if(hideFicha){
+    btnContainer.style.display = 'none';
+  } else if(hasFicha) {
     btnContainer.style.display = 'block';
     btnEnlace.href = `ficha_talento.html?expediente=${p.expediente}`;
     btnEnlace.innerHTML = 'Abrir Ficha de Talento Completa ↗';
