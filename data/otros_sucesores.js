@@ -23,6 +23,9 @@
    sucesores" tiene Observaciones="CONFIRMAR" (aún no confirmados):
    - HEREDIA GAONA HECTOR ENRIQUE (mapeado por CARDONA TORRES CLAUDIA ISABEL)
    - ARCHILA SAA KAREN DANIELA (mapeada por GARZON MENDEZ LINA MARIA)
+
+   A solicitud, se quitaron los sucesores mapeados por GARZON MENDEZ LINA
+   MARIA (MARTINEZ LANCHEROS WILLIAM ANDRES y RODRIGUEZ BERNAL EDICSON).
    ═══════════════════════════════════════════════════════════════════════ */
 window.OTROS_SUCESORES = [
   {exp:"80150353",nombre:"VARGAS BLANCO FREDDY ALEXANDER",cargo:"Director(a) Gestion de Riesgo y Control Interno",region:"Transversal",direccion:"Comité Directivo",direccion_area:"Comité Directivo",gerencia:"Direccion Gestion de Riesgo y Control Interno",ciudad:"Bogotá, D.C.",jefe:"HERNANDEZ HERNANDEZ SANDRA LILIANA",caja:4,sucesor:"Si",tiempo:""},
@@ -66,7 +69,5 @@ window.OTROS_SUCESORES = [
   {exp:"52804512",nombre:"LOPEZ TAVERA MARIA PAULA CATALINA",cargo:"Gerente Talento Cultura y Comunicaciones",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Direccion Corporativa Gestion Humana y Administrativo",gerencia:"Gerencia Talento Cultura y Comunicaciones",ciudad:"Bogotá, D.C.",jefe:"MORALES CLAVIJO LUIS GERMAN",caja:5,sucesor:"Si",tiempo:"3 Años"},
   {exp:"52144444",nombre:"MORALES MOLANO SANDRA PATRICIA",cargo:"Gerente Relaciones Laborales & SST",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Direccion Corporativa Gestion Humana y Administrativo",gerencia:"Gerencia Relaciones Laborales & SST",ciudad:"Bogotá, D.C.",jefe:"MORALES CLAVIJO LUIS GERMAN",caja:5,sucesor:"Si",tiempo:""},
   {exp:"29683064",nombre:"ABADIA BOLAÑOS PAOLA ANDREA",cargo:"Jefe Regional B2B2C y Constructoras",region:"Transversal",direccion:"Unidad Mercado Masivo",direccion_area:"Unidad Mercado Masivo",gerencia:"Unidad Mercado Masivo",ciudad:"Bogotá, D.C.",jefe:"CASTELLANOS RODRIGUEZ MIGUEL ANGEL",caja:0,sucesor:"Si",tiempo:""},
-  {exp:"38600645",nombre:"CASTRO RAMIREZ ANGELICA MARIA",cargo:"Business Partner Gestion Humana R3",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Direccion Corporativa Gestion Humana y Administrativo",gerencia:"Gerencia Gestion Humana Regional R3",ciudad:"Cali",jefe:"CASTELLANOS RODRIGUEZ MIGUEL ANGEL",caja:8,sucesor:"Si",tiempo:""},
-  {exp:"1031122523",nombre:"MARTINEZ LANCHEROS WILLIAM ANDRES",cargo:"Gerente Data Growth Corporativo",region:"Transversal",direccion:"Unidad Mercado Corporativo",direccion_area:"Unidad Mercado Corporativo",gerencia:"Gerencia Data Growth Corporativo",ciudad:"Bogotá, D.C.",jefe:"GARZON MENDEZ LINA MARIA",caja:7,sucesor:"Si",tiempo:""},
-  {exp:"1014182084",nombre:"RODRIGUEZ BERNAL EDICSON",cargo:"Gerente Mejora Continua Procesos Corporativos",region:"Transversal",direccion:"Direccion Corporativa Financiera",direccion_area:"Direccion Corporativa Financiera",gerencia:"Gerencia Mejora Continua Procesos Corporativos",ciudad:"Bogotá, D.C.",jefe:"GARZON MENDEZ LINA MARIA",caja:5,sucesor:"Si",tiempo:""}
+  {exp:"38600645",nombre:"CASTRO RAMIREZ ANGELICA MARIA",cargo:"Business Partner Gestion Humana R3",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Direccion Corporativa Gestion Humana y Administrativo",gerencia:"Gerencia Gestion Humana Regional R3",ciudad:"Cali",jefe:"CASTELLANOS RODRIGUEZ MIGUEL ANGEL",caja:8,sucesor:"Si",tiempo:""}
 ];
