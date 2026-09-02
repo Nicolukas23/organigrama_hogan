@@ -843,6 +843,17 @@ async function loadSupabaseData(){
     // tenía y el refresco en vivo nunca llegaba a pintarse.
     if(CUR){
       applyFilters();
+      // persistSession() se llamaba una sola vez, en el login, con el
+      // scope calculado sobre el snapshot estático (<script id="DS">).
+      // Si alguien de tu equipo solo existe en la data en vivo de
+      // Supabase (agregado después del último deploy, como pasaba con
+      // Rodriguez Afanador Fredy Enrique arriba), su expediente no
+      // quedaba en "allowedExpedientes" de talento_session aunque sí
+      // apareciera en tu tabla: al abrir su Ficha Preliminar/Completa en
+      // otra pestaña, ficha_hogan.html / ficha_talento.html la rechazaban
+      // como "Acceso no autorizado". Se vuelve a llamar aquí para que el
+      // scope guardado incluya también lo que llegó en vivo.
+      persistSession();
     }
     console.log('Supabase: Tablero de Liderazgo actualizado en vivo con', ALL.length, 'registros.');
   }catch(err){
