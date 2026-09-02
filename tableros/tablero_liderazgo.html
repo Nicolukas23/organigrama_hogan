@@ -16,8 +16,8 @@
   <script src="../data/global_search.js" defer></script>
 <link rel="stylesheet" href="../data/nav.css">
 <script src="../data/ficha_data.js?v=1787685958"></script>
-<script src="../data/otros_sucesores.js?v=1788198181"></script>
-<script src="../data/sucesor_pairs.js?v=1788208000"></script>
+<script src="../data/otros_sucesores.js?v=1788363504"></script>
+<script src="../data/sucesor_pairs.js?v=1788363504"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
@@ -1720,6 +1720,13 @@ function renderStats(){
   }
   const otrosSucCount = jefeNormStats ? otrosList.filter(p => normWords(p.jefe) === jefeNormStats).length : 0;
   const suc = FILTERED.filter(r => isSuc(r)).length + otrosSucCount;
+  // El % se calculaba como suc/n, pero "suc" incluye los sucesores de
+  // "Otros posibles sucesores" (otrosSucCount), que NO están en FILTERED
+  // (son gente con jefe real distinto al jefe en sesión). Eso podía dar
+  // más sucesores que colaboradores en FILTERED y un % > 100 (ej. jefes
+  // con 1 solo reporte directo pero 2 "otros sucesores" mapeados: 3/1 =
+  // 300%). El universo real sobre el que se calcula el % es n + otrosSucCount.
+  const sucUniverso = n + otrosSucCount;
 
   document.getElementById('kpiTotal').textContent = n;
   let el_kpiTop = document.getElementById('kpiTop'); if(el_kpiTop) el_kpiTop.textContent = top;
@@ -1727,7 +1734,7 @@ function renderStats(){
   let el_kpiHogan = document.getElementById('kpiHogan'); if(el_kpiHogan) el_kpiHogan.textContent = avgPot;
   let el_chipHG = document.getElementById('chipHG'); if(el_chipHG) el_chipHG.textContent = hEv.length;
   document.getElementById('kpiSuc').textContent = suc;
-  document.getElementById('kpiSucPct').textContent = n > 0 ? ` (${Math.round(suc/n*100)}%)` : ' (0%)';
+  document.getElementById('kpiSucPct').textContent = sucUniverso > 0 ? ` (${Math.round(suc/sucUniverso*100)}%)` : ' (0%)';
 }
 
 function renderExecSummary(){
