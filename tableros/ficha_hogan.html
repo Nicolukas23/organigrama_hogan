@@ -461,6 +461,23 @@ function loadFicha(p) {
   }
 }
 
+// Nota de lectura que se muestra entre el título "RESULTADOS PRUEBA
+// POTENCIAL HOGAN" y el título "COMPETENCIAS", en las tres fichas
+// (preliminar, de talento y Mi Resultado Hogan del líder).
+function buildHoganDisclaimerHtml(){
+  return '<div style="background:var(--panel-2); border:1px solid var(--border); border-left:4px solid var(--crimson); border-radius:8px; padding:16px 20px; margin-bottom:24px; font-size:12.5px; line-height:1.7; color:var(--text);">'
+    + '<div style="font-weight:800; color:var(--crimson); margin-bottom:8px;">Antes de leer este perfil, ten en cuenta:</div>'
+    + '<ul style="margin:0; padding-left:18px; font-style:italic;">'
+    + '<li style="margin-bottom:6px;">Este perfil se lee en clave de predicción a roles de liderazgo FUTUROS, de mayor reto — no como un diagnóstico del desempeño actual.</li>'
+    + '<li style="margin-bottom:6px;">Cada competencia tiene un impulsor natural y un riesgo que puede activarse bajo presión.</li>'
+    + '<li style="margin-bottom:6px;">Ningún resultado es bueno o malo por sí solo: depende del rol y la situación en que se use.</li>'
+    + '<li style="margin-bottom:6px;">Es una tendencia probable de comportamiento, no una etiqueta fija — cobra sentido real cuando se compara con lo que otros observan en el día a día.</li>'
+    + '<li style="margin-bottom:6px;">Sirve como predictor, no como diagnóstico: anticipa cómo alguien podría desempeñarse en un rol que aún no domina, más que confirmar experiencia pasada.</li>'
+    + '<li>No mide desempeño actual ni resultados logrados — mide tendencias de personalidad, no logros. El desempeño real depende también de la experiencia, las habilidades técnicas y el contexto, por lo que siempre debe contrastarse con evidencia real (evaluaciones, 360°, resultados de negocio).</li>'
+    + '</ul>'
+    + '</div>';
+}
+
 // Construye el HTML de la segunda tabla de Hogan: competencias con
 // descripción, fortalezas, oportunidades y recomendaciones de desarrollo
 // por competencia, tal como viene en la hoja individual de cada persona.
@@ -469,6 +486,9 @@ function buildHoganDetalleHtml(d){
   let html = '';
 
   html += '<div style="background:#1a1a2e; color:#fff; padding:14px 20px; text-align:center; font-size:16px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; border-radius:8px; margin-bottom:24px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);">RESULTADOS PRUEBA POTENCIAL HOGAN</div>';
+
+  // Nota de lectura del perfil (entre los dos títulos)
+  html += buildHoganDisclaimerHtml();
 
   // COMPETENCIAS (con descripción)
   html += '<div style="background:var(--crimson); color:#fff; padding:14px 20px; text-align:center; font-size:16px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border-radius:8px 8px 0 0;">COMPETENCIAS</div>';
