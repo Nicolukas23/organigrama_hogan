@@ -1703,7 +1703,10 @@ function renderAll(){
   // mapeados, sin reportes directos) — se ocultan por completo; sus
   // sucesores siguen apareciendo en "Otros posibles sucesores" más abajo.
   const nineboxVisualBlock = document.getElementById('nineboxVisualBlock');
-  if(nineboxVisualBlock) nineboxVisualBlock.style.display = FILTERED.length ? '' : 'none';
+  // Jefes sin equipo propio (NO_TEAM_PROFILE_EMAILS): se oculta siempre,
+  // aunque FILTERED traiga a sus sucesores — su tablero no muestra ninebox.
+  const curIsNoTeamProfile = CUR && NO_TEAM_PROFILE_EMAILS.includes((CUR.email || '').toLowerCase());
+  if(nineboxVisualBlock) nineboxVisualBlock.style.display = (!curIsNoTeamProfile && FILTERED.length) ? '' : 'none';
   renderStats();
   renderExecSummary();
   renderNinebox();
