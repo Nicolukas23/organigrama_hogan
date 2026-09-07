@@ -568,7 +568,7 @@ const NO_TEAM_PROFILE_EMAILS = ['ivan.natera@claro.com.co', 'jorge.cortesl@claro
 // Subconjunto de NO_TEAM_PROFILE_EMAILS al que además se le ocultan la
 // tarjeta "Sucesores Identificados" y la tabla "Otros posibles
 // sucesores": su tablero queda reducido solo a "Resultados de Hogan".
-const HOGAN_ONLY_PROFILE_EMAILS = ['jorge.cortesl@claro.com.co'];
+const HOGAN_ONLY_PROFILE_EMAILS = ['jorge.cortesl@claro.com.co', 'humberto.perezm@claro.com.co'];
 
 // Estratégico: Directores, Gerentes y Business Partners. Operación (antes
 // "Gerencial"): Jefes y Coordinadores. Cada vertiente tiene su propio set
@@ -1425,7 +1425,7 @@ function setSession(user){
   const statsGrid = document.getElementById('statsGrid');
   if(statsGrid){
     statsGrid.classList.toggle('single-stat', isNoTeamProfile);
-    // jorge.cortesl: sin tarjetas de KPI; su tablero queda solo con Hogan.
+    // HOGAN_ONLY_PROFILE_EMAILS: sin tarjetas de KPI; el tablero queda solo con Hogan.
     statsGrid.style.display = isHoganOnlyProfile ? 'none' : '';
   }
   // ...y sin la tabla "Otros posibles sucesores" (renderOtrosTable la
@@ -2095,8 +2095,8 @@ function renderOtrosTable(){
   const tbody = document.getElementById('otrosTableBody');
   if(!section || !tbody) return;
 
-  // jorge.cortesl (HOGAN_ONLY_PROFILE_EMAILS): su tablero se reduce a
-  // "Resultados de Hogan"; nunca mostrar "Otros posibles sucesores".
+  // HOGAN_ONLY_PROFILE_EMAILS: el tablero se reduce a "Resultados de
+  // Hogan"; nunca mostrar "Otros posibles sucesores".
   if(CUR && HOGAN_ONLY_PROFILE_EMAILS.includes((CUR.email || '').toLowerCase())){
     section.style.display = 'none';
     tbody.innerHTML = '';
