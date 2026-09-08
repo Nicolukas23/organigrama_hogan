@@ -20,6 +20,12 @@
 
    A solicitud, se quitaron las 4 parejas mapeadas por GARZON MENDEZ LINA
    MARIA (incluida DAVID LEONARDO MARTINEZ REYES, su reporte directo real).
+
+   Sincronizado con Calibraciones  (1).xlsx (Consolidado de sucesores):
+   - Agregada la pareja DOMINGUEZ DANIEL ARNALDO -> PEREZ PALMA JULIO CESAR.
+   - Se conserva VASCO GARCIA JOSE LUIS -> URDANETA RINCON JOHN ALEJANDRO
+     (viene de "Base General" y de un pedido explícito previo; no está en la
+     hoja "Consolidado de sucesores").
    ═══════════════════════════════════════════════════════════════════════ */
 window.SUCESOR_PAIRS = [
   "ACOSTA BERNAL JAIRO JOHN|ANDRES CORDOBA FERNANDO PERDOMO",
@@ -147,5 +153,6 @@ window.SUCESOR_PAIRS = [
   "PABLO REHBEIN TRUJILLO|ANDRES CANON CARLOS LARA",
   "PABLO REHBEIN TRUJILLO|CASAS CECILIA GUTIERREZ MARIA",
   "PATRICIA PENA VEGA|AYALA IVAN MURCIA SAMUEL",
-  "PATRICIA PENA VEGA|DARY FUENTES LUZ RODRIGUEZ"
+  "PATRICIA PENA VEGA|DARY FUENTES LUZ RODRIGUEZ",
+  "ARNALDO DANIEL DOMINGUEZ|CESAR JULIO PALMA PEREZ"
 ];
