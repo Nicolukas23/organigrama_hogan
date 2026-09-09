@@ -82,5 +82,16 @@ window.OTROS_SUCESORES = [
   {exp:"52804512",nombre:"LOPEZ TAVERA MARIA PAULA CATALINA",cargo:"Gerente Talento Cultura y Comunicaciones",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Direccion Corporativa Gestion Humana y Administrativo",gerencia:"Gerencia Talento Cultura y Comunicaciones",ciudad:"Bogotá, D.C.",jefe:"MORALES CLAVIJO LUIS GERMAN",caja:5,sucesor:"Si",tiempo:"3 Años"},
   {exp:"52144444",nombre:"MORALES MOLANO SANDRA PATRICIA",cargo:"Gerente Relaciones Laborales & SST",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Direccion Corporativa Gestion Humana y Administrativo",gerencia:"Gerencia Relaciones Laborales & SST",ciudad:"Bogotá, D.C.",jefe:"MORALES CLAVIJO LUIS GERMAN",caja:5,sucesor:"Si",tiempo:""},
   {exp:"38600645",nombre:"CASTRO RAMIREZ ANGELICA MARIA",cargo:"Business Partner Gestion Humana R3",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Direccion Corporativa Gestion Humana y Administrativo",gerencia:"Gerencia Gestion Humana Regional R3",ciudad:"Cali",jefe:"CASTELLANOS RODRIGUEZ MIGUEL ANGEL",caja:8,sucesor:"Si",tiempo:""},
-  {exp:"34327674",nombre:"ORDOÑEZ USSA LEIDY YURANY",cargo:"Gerente Estrategia Fidelizacion y Rentabilizacion",region:"Transversal",direccion:"Unidad Mercado Masivo",direccion_area:"Direccion Producto Masivo",gerencia:"Gerencia Estrategia Fidelizacion",ciudad:"Bogotá, D.C.",jefe:"PEREZ MEDINA HUMBERTO ALEJANDRO",caja:0,sucesor:"Si",tiempo:"Listo ya"}
+  {exp:"34327674",nombre:"ORDOÑEZ USSA LEIDY YURANY",cargo:"Gerente Estrategia Fidelizacion y Rentabilizacion",region:"Transversal",direccion:"Unidad Mercado Masivo",direccion_area:"Direccion Producto Masivo",gerencia:"Gerencia Estrategia Fidelizacion",ciudad:"Bogotá, D.C.",jefe:"PEREZ MEDINA HUMBERTO ALEJANDRO",caja:0,sucesor:"Si",tiempo:"1 Año"},
+
+  // ─── Sucesores UMM 1.xlsx (2026-09-09) ───
+  // Identificados por un líder de Unidad Mercado Masivo cuyo jefe real en
+  // `ninebox` es otra persona. No se tocaron las filas "DIRECTOR REGIONAL".
+  //  - GALVIS CLARO (jefe real PEREZ PALMA JULIO CESAR) y CORREA PELAEZ
+  //    (jefe real MARTINEZ PINILLA DIEGO FELIPE): identificados por OCAMPO GIRON.
+  //  - MANRIQUE JUAN ANYELO (jefe real MUÑOZ RONCANCIO LUZ NEILA):
+  //    identificado por VARGAS ANGEL SANDRA PATRICIA.
+  {exp:"88227648",nombre:"GALVIS CLARO JOSE LUIS",cargo:"Gerente Regional CAVS",region:"Region 2",direccion:"Unidad Mercado Masivo",direccion_area:"Unidad Mercado Masivo Regiones",gerencia:"Direccion Region 2",ciudad:"Medellín",jefe:"OCAMPO GIRON MARIA DEL PILAR",caja:9,sucesor:"Si",tiempo:"2 Años"},
+  {exp:"29284580",nombre:"CORREA PELAEZ TATIANA",cargo:"Gerente Regional Cavs",region:"Region 3",direccion:"Unidad Mercado Masivo",direccion_area:"Unidad Mercado Masivo Regiones",gerencia:"Direccion Region 3",ciudad:"Cali",jefe:"OCAMPO GIRON MARIA DEL PILAR",caja:9,sucesor:"Si",tiempo:"1 Año"},
+  {exp:"80013914",nombre:"MANRIQUE JUAN ANYELO",cargo:"Jefe Inteligencia Terminales Y Tecnologia",region:"Transversal",direccion:"Unidad Mercado Masivo",direccion_area:"Direccion Negocio Terminales y Equipos Hogar",gerencia:"Direccion Negocio Terminales y Equipos Hogar",ciudad:"Bogotá, D.C.",jefe:"VARGAS ANGEL SANDRA PATRICIA",caja:8,sucesor:"Si",tiempo:"1 Año"}
 ];
