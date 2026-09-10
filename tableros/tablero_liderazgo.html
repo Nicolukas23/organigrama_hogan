@@ -856,18 +856,14 @@ async function loadSupabaseData(){
 
 /* ── INIT ──────────────────────────────────────────────────────────── */
 function init(){
-  // Migración de un solo uso: el tablero tuvo un bug donde, sin sesión
-  // guardada, entraba automáticamente como Walter Borda sin pasar por el
-  // login. A quien haya abierto el link mientras ese bug estaba activo le
-  // quedó esa sesión guardada en el navegador, y aunque el bug ya está
-  // arreglado, esa sesión vieja se seguía restaurando como si fuera
-  // legítima. Este bloque la borra una sola vez para forzar un login
-  // limpio; no se repite en las próximas cargas.
-  if(!localStorage.getItem('auth_fix_2026_08')){
-    localStorage.removeItem('lider_email');
-    localStorage.removeItem('talento_session');
-    localStorage.setItem('auth_fix_2026_08', '1');
-  }
+  // El Tablero de Liderazgo exige iniciar sesión en CADA carga de la
+  // página, incluso al recargar (F5): nunca se restaura una sesión
+  // guardada. Antes se leía 'lider_email' de localStorage y quien hubiera
+  // entrado una vez en este navegador no volvía a ver la pantalla de
+  // acceso. Se borra cualquier rastro de un login anterior antes de
+  // mostrar nada.
+  localStorage.removeItem('lider_email');
+  localStorage.removeItem('talento_session');
   try{
     const el = document.getElementById('DS');
     const raw = el && el.textContent.trim() ? JSON.parse(el.textContent) : [];
@@ -886,35 +882,11 @@ function init(){
 
   buildLeaders();
 
-  // Solo se restaura sesión si YA existe una guardada de un login anterior
-  // en este navegador. Antes, si no había ninguna (primer ingreso, o
-  // alguien que nunca inició sesión), caía en un usuario por defecto
-  // (Walter Borda) sin pasar por el login — cualquiera que abriera el
-  // link por primera vez entraba directo con su acceso completo.
-  const saved = localStorage.getItem('lider_email');
-  let foundUser = null;
-  if(saved){
-    foundUser = findUserByInput(saved);
-  }
-
-  if(foundUser){
-    // Igual que en loginByEmail(): hay que fijar el alcance ANTES de
-    // setSession(), porque getScopedData() depende de window.activeScope.
-    // Sin esto, al recargar la página (sesión restaurada desde
-    // localStorage) un gerente o director de reportes directos podía
-    // terminar viendo su estructura completa en vez de solo sus reportes
-    // directos.
-    if(foundUser.rol === 'admin' || foundUser.rol === 'admin_restricted'){
-      window.activeScope = 'FULL';
-    } else if(foundUser.rol === 'gerente' || foundUser.is_direct_reports_only){
-      window.activeScope = 'DIRECT';
-    } else if(!window.activeScope){
-      window.activeScope = 'FULL';
-    }
-    setSession(foundUser);
-  } else {
-    showLoginOverlay();
-  }
+  // Sin restauración de sesión: siempre se muestra la pantalla de acceso,
+  // aunque el usuario ya haya iniciado sesión antes en este navegador y
+  // aunque solo esté recargando (F5). El alcance (FULL/DIRECT) se fija en
+  // loginByEmail()/selectScope() al momento de entrar.
+  showLoginOverlay();
   loadSupabaseData();
 }
 
@@ -1383,7 +1355,9 @@ function showScopeOverlay() {
 
 function setSession(user){
   CUR = user;
-  localStorage.setItem('lider_email', user.email);
+  // No se guarda quién inició sesión: init() siempre vuelve a pedir login.
+  // (talento_session sí se escribe en persistSession() porque lo leen
+  //  ficha_hogan.html / ficha_talento.html abiertas en otra pestaña.)
 
   if(user.rol === 'admin' || user.rol === 'admin_restricted' || user.rol === 'gerente' || user.is_direct_reports_only){
     document.getElementById('btnScopeToggle').style.display = 'none';
