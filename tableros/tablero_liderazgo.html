@@ -16,8 +16,8 @@
   <script src="../data/global_search.js" defer></script>
 <link rel="stylesheet" href="../data/nav.css">
 <script src="../data/ficha_data.js?v=1787685958"></script>
-<script src="../data/otros_sucesores.js?v=1788994008"></script>
-<script src="../data/sucesor_pairs.js?v=1788994008"></script>
+<script src="../data/otros_sucesores.js?v=1789078813"></script>
+<script src="../data/sucesor_pairs.js?v=1789078813"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
@@ -1701,15 +1701,7 @@ function renderStats(){
   // sí tuvieran sucesores mapeados en "Otros posibles sucesores" — misma
   // lista que ve el jefe abajo (ver renderOtrosTable). Se suman aquí para
   // que el KPI refleje lo mismo que ve en pantalla.
-  const otrosList = window.OTROS_SUCESORES || [];
-  const selJefeFilter = document.getElementById('fJefe') ? document.getElementById('fJefe').value : '';
-  let jefeNormStats = '';
-  if(selJefeFilter){
-    jefeNormStats = normWords(selJefeFilter);
-  } else if(CUR && (CUR.rol === 'gerente' || CUR.rol === 'director')){
-    jefeNormStats = normWords(CUR.nombre);
-  }
-  const otrosSucCount = jefeNormStats ? otrosList.filter(p => normWords(p.jefe) === jefeNormStats).length : 0;
+  const otrosSucCount = computeOtrosSucesores().length;
   const suc = FILTERED.filter(r => isSuc(r)).length + otrosSucCount;
   // El % se calculaba como suc/n, pero "suc" incluye los sucesores de
   // "Otros posibles sucesores" (otrosSucCount), que NO están en FILTERED
@@ -2051,58 +2043,101 @@ function renderNineboxTable(){
 }
 
 // "Otros posibles sucesores": personas que un jefe mapeó como sucesor pero
-// que pertenecen a una Dirección/Gerencia distinta a la suya (por eso no
-// salen en la tabla principal de su equipo). Misma data y misma lógica que
-// en ninebox.html (data/otros_sucesores.js). Se muestra cuando: (a) hay un
-// jefe seleccionado en el filtro "Jefe" y ese jefe tiene otros sucesores,
-// (b) no hay filtro pero quien inició sesión ES un jefe (gerente/director)
-// con otros sucesores propios, o (c) la búsqueda coincide con un jefe.
+// que NO están apareciendo en la tabla principal de ese jefe. Dos orígenes:
+//  (1) data/otros_sucesores.js — lista curada de sucesores cuyo jefe REAL
+//      (según ninebox) es otra persona distinta de quien los mapeó.
+//  (2) Dinámico desde data/sucesor_pairs.js — cualquier persona que un jefe
+//      "en foco" mapeó como sucesor (pareja jefe|persona) y que quedó fuera
+//      de la tabla principal tal como está filtrada ahora (p. ej. la ocultó
+//      el filtro de Gerencia/Dirección/Caja porque el sucesor está en otra
+//      Gerencia). Red de seguridad: un sucesor mapeado nunca queda invisible.
+// "Jefe en foco" = el del filtro "Jefe", o quien inició sesión si ES jefe
+// (gerente/director), o —cuando hay un filtro activo que acota la vista—
+// cualquier jefe que aparezca como fila en la tabla principal filtrada.
+function computeOtrosSucesores(){
+  if(CUR && HOGAN_ONLY_PROFILE_EMAILS.includes((CUR.email || '').toLowerCase())) return [];
+
+  const staticList = window.OTROS_SUCESORES || [];
+  const fJefeEl = document.getElementById('fJefe');
+  const fGerEl = document.getElementById('fGer');
+  const fDirEl = document.getElementById('fDir');
+  const fSearchEl = document.getElementById('fSearch');
+  const selJefe = fJefeEl ? fJefeEl.value : '';
+  const search = ((fSearchEl && fSearchEl.value) || '').toLowerCase().trim();
+  const narrowing = !!((fGerEl && fGerEl.value) || (fDirEl && fDirEl.value) || search || window.selectedCaja);
+
+  // Jefes "en foco": norm -> nombre para mostrar.
+  const focoJefes = new Map();
+  if(selJefe){
+    focoJefes.set(normWords(selJefe), selJefe);
+  } else {
+    if(CUR && (CUR.rol === 'gerente' || CUR.rol === 'director')){
+      focoJefes.set(normWords(CUR.nombre), CUR.nombre);
+    }
+    if(narrowing){
+      const esJefe = new Set((ALL || []).map(r => normWords(r.jefe)).filter(Boolean));
+      (FILTERED || []).forEach(p => {
+        const nn = normWords(p.nombre);
+        if(esJefe.has(nn) && !focoJefes.has(nn)) focoJefes.set(nn, p.nombre);
+      });
+    }
+  }
+  if(!focoJefes.size) return [];
+
+  const visibleNorm = new Set((FILTERED || []).map(r => normWords(r.nombre)));
+  const byName = new Map();
+  (ALL || []).forEach(r => { const k = normWords(r.nombre); if(k && !byName.has(k)) byName.set(k, r); });
+
+  const out = [];
+  const seen = new Set();
+
+  // (1) Entradas curadas de otros_sucesores.js del/los jefe(s) en foco.
+  staticList.forEach(p => {
+    const jn = normWords(p.jefe);
+    if(!focoJefes.has(jn)) return;
+    const key = normWords(p.nombre) + '|' + jn;
+    if(seen.has(key)) return;
+    seen.add(key);
+    out.push({ ...p, expediente: p.exp });
+  });
+
+  // (2) Sucesores mapeados en sucesor_pairs.js de un jefe en foco que NO
+  //     están saliendo en la tabla principal filtrada.
+  (window.SUCESOR_PAIRS || []).forEach(pairKey => {
+    const sep = pairKey.indexOf('|');
+    if(sep < 0) return;
+    const jn = pairKey.slice(0, sep);
+    const pn = pairKey.slice(sep + 1);
+    if(!focoJefes.has(jn)) return;
+    if(visibleNorm.has(pn)) return;
+    const rec = byName.get(pn);
+    if(!rec) return;
+    const key = pn + '|' + jn;
+    if(seen.has(key)) return;
+    seen.add(key);
+    // jefe = quien lo mapeó (para isSuc y para que agrupe bajo ese jefe).
+    out.push({ ...rec, jefe: focoJefes.get(jn) });
+  });
+
+  return out;
+}
+
 function renderOtrosTable(){
   const section = document.getElementById('otrosSection');
   const tbody = document.getElementById('otrosTableBody');
   if(!section || !tbody) return;
 
-  // HOGAN_ONLY_PROFILE_EMAILS: el tablero se reduce a "Resultados de
-  // Hogan"; nunca mostrar "Otros posibles sucesores".
-  if(CUR && HOGAN_ONLY_PROFILE_EMAILS.includes((CUR.email || '').toLowerCase())){
-    section.style.display = 'none';
-    tbody.innerHTML = '';
-    return;
-  }
-
-  const list = window.OTROS_SUCESORES || [];
-  const search = (document.getElementById('fSearch').value || '').toLowerCase().trim();
-  const selJefeFilter = document.getElementById('fJefe').value;
-  const otrosJefesSet = new Set(list.filter(p => p.jefe).map(p => normWords(p.jefe)));
-
-  let jefeNorm = '';
-  if(selJefeFilter){
-    jefeNorm = normWords(selJefeFilter);
-  } else if(CUR && (CUR.rol === 'gerente' || CUR.rol === 'director')){
-    jefeNorm = normWords(CUR.nombre);
-  }
-  const jefeHasOtros = !!jefeNorm && otrosJefesSet.has(jefeNorm);
-  const searchMatchesJefe = !!search && list.some(p => (p.jefe || '').toLowerCase().includes(search));
-
-  if(!jefeHasOtros && !searchMatchesJefe){
+  const data = computeOtrosSucesores();
+  if(!data.length){
     section.style.display = 'none';
     tbody.innerHTML = '';
     return;
   }
   section.style.display = '';
 
-  const data = jefeHasOtros
-    ? list.filter(p => normWords(p.jefe) === jefeNorm)
-    : list.filter(p => (p.jefe || '').toLowerCase().includes(search));
-
-  if(!data.length){
-    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:28px;color:var(--text-faint)">No se encontraron otros sucesores.</td></tr>';
-    return;
-  }
-
   tbody.innerHTML = '';
   data.forEach(raw => {
-    const p = {...raw, expediente: raw.exp};
+    const p = { ...raw, expediente: raw.expediente || raw.exp };
     const isS = isSuc(p);
 
     const tr = document.createElement('tr');
