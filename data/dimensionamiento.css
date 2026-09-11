@@ -2,7 +2,8 @@
  * dimensionamiento.css — Componentes específicos del tablero
  */
 
-
+/* Modo claro (por defecto) */
+:root{--bg:#f1f5f9;--surface:#ffffff;--surface2:#f8fafc;--border:#cbd5e1;--text:#0f172a;--text2:#475569;--text3:#64748b;--blue:#2563eb;--green:#059669;--red:#dc2626;--orange:#d97706;--crimson:#e11d48;--shadow:0 4px 14px rgba(0,0,0,.06);--green-bg:#dcfce7;--orange-bg:#fef3c7;--red-bg:#fee2e2}
 
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
@@ -87,7 +88,7 @@ canvas{width:100%!important}
 .text-red{color:var(--red)}
 .text-orange{color:var(--orange)}
 .font-mono{font-family:'Space Grotesk',sans-serif;font-weight:600}
-body.dark{--bg:#0f172a;--surface:#1e293b;--surface2:#334155;--border:#475569;--text:#f1f5f9;--text2:#94a3b8;--text3:#64748b}
+body.dark{--bg:#0f172a;--surface:#1e293b;--surface2:#334155;--border:#475569;--text:#f1f5f9;--text2:#94a3b8;--text3:#64748b;--blue:#3b82f6;--green:#10b981;--red:#ef4444;--orange:#f59e0b;--crimson:#e11d48;--shadow:0 4px 14px rgba(0,0,0,.35);--green-bg:rgba(16,185,129,.18);--orange-bg:rgba(245,158,11,.18);--red-bg:rgba(239,68,68,.18)}
 body.dark .topbar{background:#1e293b}
 body.dark thead th{background:#1e293b}
 @media(max-width:768px){.kpi-row{grid-template-columns:1fr 1fr}.charts-grid{grid-template-columns:1fr}.filters{flex-direction:column}.filter-group select,.filter-group input{min-width:100%}}
