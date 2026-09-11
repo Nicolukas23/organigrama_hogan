@@ -346,10 +346,28 @@
       </div>
     </div>
 
+    <!-- RESULTADOS DE HOGAN (perfil propio): reemplaza, solo para los
+         jefes sin equipo propio (NO_TEAM_PROFILE_EMAILS), al gráfico de
+         equipo (teamHoganChartContainer) y a la tabla principal, que para
+         ellos siempre están vacíos. Solo ofrece consultar su propio
+         resultado. -->
+    <div class="table-section" id="hoganSelfSection" style="display:none; text-align:center;">
+      <div style="background:#1e293b;color:#fff;padding:14px 20px;text-align:center;font-size:16px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border-radius:8px;margin-bottom:18px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1)">Resultados de Hogan</div>
+      <p style="margin:0 auto 18px;font-size:13px;color:var(--text-dim);max-width:560px;line-height:1.6">
+        🔒 Este es tu resultado personal de la Prueba de Potencial Hogan. Es información confidencial, de uso exclusivo para tu propio desarrollo: solo tú puedes verla al ingresar con tu usuario y contraseña.
+      </p>
+      <button onclick="hoganAction()" style="display:inline-flex; align-items:center; gap:10px; background:var(--crimson); color:#fff; padding:12px 28px; border-radius:8px; font-weight:700; font-size:14px; border:none; cursor:pointer; box-shadow:var(--crimson-glow);">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+        Consulta tu resultado de Hogan
+      </button>
+    </div>
+
     <!-- OTROS POSIBLES SUCESORES: personas que un jefe mapeó como sucesor
          pero que pertenecen a una Dirección/Gerencia distinta a la suya,
          por lo que no aparecen en la tabla principal de su equipo. Misma
-         data y misma lógica que en ninebox.html (data/otros_sucesores.js). -->
+         data y misma lógica que en ninebox.html (data/otros_sucesores.js).
+         Va después de hoganSelfSection a propósito: para los perfiles sin
+         equipo propio (Humberto incluido) queda debajo del botón de Hogan. -->
     <div class="table-section" id="otrosSection" style="display:none">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
         <h3 style="margin:0;font-size:15px;font-weight:700;color:var(--text)">Otros posibles sucesores</h3>
@@ -369,22 +387,6 @@
           </table>
         </div>
       </div>
-    </div>
-
-    <!-- RESULTADOS DE HOGAN (perfil propio): reemplaza, solo para los
-         jefes sin equipo propio (NO_TEAM_PROFILE_EMAILS), al gráfico de
-         equipo (teamHoganChartContainer) y a la tabla principal, que para
-         ellos siempre están vacíos. Solo ofrece consultar su propio
-         resultado. -->
-    <div class="table-section" id="hoganSelfSection" style="display:none; text-align:center;">
-      <div style="background:#1e293b;color:#fff;padding:14px 20px;text-align:center;font-size:16px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border-radius:8px;margin-bottom:18px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1)">Resultados de Hogan</div>
-      <p style="margin:0 auto 18px;font-size:13px;color:var(--text-dim);max-width:560px;line-height:1.6">
-        🔒 Este es tu resultado personal de la Prueba de Potencial Hogan. Es información confidencial, de uso exclusivo para tu propio desarrollo: solo tú puedes verla al ingresar con tu usuario y contraseña.
-      </p>
-      <button onclick="hoganAction()" style="display:inline-flex; align-items:center; gap:10px; background:var(--crimson); color:#fff; padding:12px 28px; border-radius:8px; font-weight:700; font-size:14px; border:none; cursor:pointer; box-shadow:var(--crimson-glow);">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
-        Consulta tu resultado de Hogan
-      </button>
     </div>
   </section>
 
