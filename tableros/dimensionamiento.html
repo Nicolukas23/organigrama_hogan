@@ -49,7 +49,7 @@
     <div class="filter-group">
       <label>Mes</label>
       <select id="fMes">
-        <option value="">Todos (Ene-Ago)</option>
+        <option value="">Todas (corte Agosto)</option>
         <option value="0">Enero</option>
         <option value="1">Febrero</option>
         <option value="2">Marzo</option>
@@ -378,8 +378,8 @@ function renderKPIs(data){
   const mi=state.mes!==''?parseInt(state.mes):null;
   let totalDir=0,totalTemp=0,totalDic=0,totalMetaDir=0;
   data.forEach(d=>{
-    if(mi!==null){totalDir+=d.directos[mi]||0;totalTemp+=d.temporales[mi]||0;}
-    else{totalDir+=Math.round(d.directos.reduce((a,b)=>a+b,0)/7);totalTemp+=Math.round(d.temporales.reduce((a,b)=>a+b,0)/7);}
+    const idx=mi!==null?mi:d.directos.length-1; /* sin filtro de mes = último corte real (Agosto) */
+    totalDir+=d.directos[idx]||0;totalTemp+=d.temporales[idx]||0;
     totalDic+=d.dic||0;
     totalMetaDir+=d.metaDir||0;
   });
@@ -401,10 +401,11 @@ function renderKPIs(data){
 // ─── TABLE ───────────────────────────────────────────────────────────
 function renderTable(data){
   const mi=state.mes!==''?parseInt(state.mes):null;
+  const lastIdx=BASE[0].directos.length-1;
+  const idx=mi!==null?mi:lastIdx; /* sin filtro de mes = último corte real (Agosto), no promedio */
   const thD=document.getElementById('thDirectos');
   const thT=document.getElementById('thTemporales');
-  if(mi!==null){thD.textContent='Directos '+MONTHS[mi];thT.textContent='Temporales '+MONTHS[mi];}
-  else{thD.textContent='Directos (prom)';thT.textContent='Temporales (prom)';}
+  thD.textContent='Directos '+MONTHS[idx];thT.textContent='Temporales '+MONTHS[idx];
 
   let html='';
   let count=0;
@@ -413,8 +414,7 @@ function renderTable(data){
     if(!cities.length)return;
     let rDir=0,rTemp=0,rDim=0,rMeta=0;
     cities.forEach(c=>{
-      if(mi!==null){rDir+=c.directos[mi]||0;rTemp+=c.temporales[mi]||0;}
-      else{rDir+=Math.round(c.directos.reduce((a,b)=>a+b,0)/7);rTemp+=Math.round(c.temporales.reduce((a,b)=>a+b,0)/7);}
+      rDir+=c.directos[idx]||0;rTemp+=c.temporales[idx]||0;
       rDim+=c.dim;
       rMeta+=c.metaDir||0;
     });
@@ -423,8 +423,8 @@ function renderTable(data){
     const rBrecha=rDir-rMeta;
     html+='<tr class="region-row"><td>'+REGION_NAMES[r]+'</td><td></td><td class="text-right font-mono">'+fmt(rDim)+'</td><td class="text-right font-mono">'+fmt(rDir)+'</td><td class="text-right font-mono">'+fmt(rTemp)+'</td><td class="text-right font-mono">'+fmt(rTotal)+'</td><td class="text-right"><span class="chip '+chipColor(rPct*100)+'">'+fmtPct(rPct)+'</span></td><td class="text-right font-mono '+(rBrecha>=0?'text-green':'text-red')+'">'+(rBrecha>=0?'+':'')+fmt(rBrecha)+'</td></tr>';
     cities.sort((a,b)=>b.dim-a.dim).forEach(c=>{
-      const dir=mi!==null?c.directos[mi]:Math.round(c.directos.reduce((a,b)=>a+b,0)/7);
-      const temp=mi!==null?c.temporales[mi]:Math.round(c.temporales.reduce((a,b)=>a+b,0)/7);
+      const dir=c.directos[idx]||0;
+      const temp=c.temporales[idx]||0;
       const tot=dir+temp;
       const pct=tot?dir/tot:0;
       const brecha=dir-(c.metaDir||0);
@@ -520,12 +520,10 @@ function renderRegionalChart(data){
 
 function renderTopDir(data){
   const ctx=document.getElementById('chartTopDir').getContext('2d');
-  const sorted=[...data].sort((a,b)=>{
-    const avgA=a.directos.reduce((s,v)=>s+v,0)/7/(a.directos.reduce((s,v)=>s+v,0)/7+a.temporales.reduce((s,v)=>s+v,0)/7);
-    const avgB=b.directos.reduce((s,v)=>s+v,0)/7/(b.directos.reduce((s,v)=>s+v,0)/7+b.temporales.reduce((s,v)=>s+v,0)/7);
-    return avgB-avgA;
-  }).slice(0,10);
-  charts.topDir=new Chart(ctx,{type:'bar',data:{labels:sorted.map(d=>d.label),datasets:[{data:sorted.map(d=>{const t=d.directos.reduce((s,v)=>s+v,0)/7;const tt=t+d.temporales.reduce((s,v)=>s+v,0)/7;return tt?(t/tt*100).toFixed(1):0;}),backgroundColor:sorted.map(d=>{const t=d.directos.reduce((s,v)=>s+v,0)/7;const tt=t+d.temporales.reduce((s,v)=>s+v,0)/7;const pct=tt?t/tt:0;return pct>=.7?'#059669':pct>=.5?'#d97706':'#dc2626';}),borderRadius:4}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{max:100,grid:{color:'#e2e6eb'}}}}});
+  const last=BASE[0].directos.length-1; /* Agosto: último corte real, no promedio */
+  const pctOf=d=>{const t=d.directos[last],tt=t+d.temporales[last];return tt?t/tt:0;};
+  const sorted=[...data].sort((a,b)=>pctOf(b)-pctOf(a)).slice(0,10);
+  charts.topDir=new Chart(ctx,{type:'bar',data:{labels:sorted.map(d=>d.label),datasets:[{data:sorted.map(d=>(pctOf(d)*100).toFixed(1)),backgroundColor:sorted.map(d=>{const pct=pctOf(d);return pct>=.7?'#059669':pct>=.5?'#d97706':'#dc2626';}),borderRadius:4}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{max:100,grid:{color:'#e2e6eb'}}}}});
 }
 
 function renderBrechaChart(data){
