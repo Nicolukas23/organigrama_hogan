@@ -684,6 +684,21 @@ function getCajaNum(c){
   return isNaN(n) ? null : n;
 }
 
+// Jefes que no tienen reporte directo en `ninebox` (no salen como r.jefe de
+// nadie) pero sí mapearon un sucesor en otros_sucesores.js (ej. PEREZ MEDINA
+// HUMBERTO ALEJANDRO) quedaban sin forma de seleccionarse en el filtro
+// "Jefe", así que su "Otros posibles sucesores" nunca se podía ver (el
+// dropdown solo listaba jefes con >=1 reporte). Se agregan igual, con 0
+// reportes, siempre que la persona exista en el scope actual (evita colar
+// nombres fuera del alcance del usuario logueado).
+function addOrphanJefesFromOtros(jefesCounts, data){
+  const dataNames = new Set(data.map(r => normWords(r.nombre)));
+  (window.OTROS_SUCESORES || []).forEach(p => {
+    if(!p.jefe || jefesCounts.has(p.jefe)) return;
+    if(dataNames.has(normWords(p.jefe))) jefesCounts.set(p.jefe, 0);
+  });
+}
+
 function normWords(s){
   if(!s) return '';
   return s.normalize('NFKD').replace(/[̀-ͯ]/g,'')
@@ -1563,6 +1578,7 @@ function populateSecondaryFilters(data, isReset = false){
       jefesCounts.set(r.jefe, (jefesCounts.get(r.jefe) || 0) + 1);
     }
   });
+  addOrphanJefesFromOtros(jefesCounts, data);
 
   const jefes = Array.from(jefesCounts.keys()).sort((a,b) => a.localeCompare(b, 'es'));
   fJefe.innerHTML = '<option value="">Todos los Jefes</option>';
@@ -1599,6 +1615,7 @@ function onGerChange(){
   base.forEach(r => {
     if(r.jefe) jefesCounts.set(r.jefe, (jefesCounts.get(r.jefe) || 0) + 1);
   });
+  addOrphanJefesFromOtros(jefesCounts, base);
   const jefes = Array.from(jefesCounts.keys()).sort((a,b) => a.localeCompare(b, 'es'));
   fJefe.innerHTML = '<option value="">Todos los Jefes</option>';
   jefes.forEach(j => {
