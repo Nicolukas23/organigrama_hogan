@@ -19,18 +19,33 @@
    "PENDIENTE-..." (ya no hay botón de ficha en esta tabla, así que no rompe
    nada), para que al menos aparezca por nombre. Falta su cédula real.
 
-   Sin incluir por falta de expediente Y porque su fila en "Consolidado de
-   sucesores" tiene Observaciones="CONFIRMAR" (aún no confirmados):
-   - HEREDIA GAONA HECTOR ENRIQUE (mapeado por CARDONA TORRES CLAUDIA ISABEL)
-   - ARCHILA SAA KAREN DANIELA (mapeada por GARZON MENDEZ LINA MARIA)
-
-   A solicitud, se quitaron los sucesores mapeados por GARZON MENDEZ LINA
-   MARIA (MARTINEZ LANCHEROS WILLIAM ANDRES y RODRIGUEZ BERNAL EDICSON).
-
-   A solicitud, se quitó ABADIA BOLAÑOS PAOLA ANDREA (mapeada por
-   CASTELLANOS RODRIGUEZ MIGUEL ANGEL): era el único vínculo que hacía
-   aparecer a Miguel Ángel Castellanos (Gerencia Universidad Claro, Gestión
-   Humana) como Jefe dentro de la Dirección "Unidad Mercado Masivo".
+   ── Actualización 2026-09-11 (Calibraciones  (2).xlsx, 22 filas resaltadas
+   en rojo en "Consolidado de sucesores", pendientes de confirmar) ──
+   A solicitud, se revierten las dos exclusiones anteriores y se agregan
+   estas parejas de vuelta, todas marcadas "Por Confirmar" en vez de "Sí"
+   (ver data/sucesor_pendientes.js):
+   - Los 4 sucesores mapeados por GARZON MENDEZ LINA MARIA (antes excluidos
+     "a solicitud"): MARTINEZ LANCHEROS WILLIAM ANDRES, ARCHILA SAA KAREN
+     DANIELA, MARTINEZ REYES DAVID LEONARDO, RODRIGUEZ BERNAL EDICSON.
+   - ABADIA BOLAÑOS PAOLA ANDREA (mapeada por CASTELLANOS RODRIGUEZ MIGUEL
+     ANGEL), antes quitada porque era el único vínculo que hacía aparecer a
+     Miguel Ángel Castellanos como Jefe dentro de "Unidad Mercado Masivo" —
+     a solicitud, se acepta que reaparezca ese efecto.
+   MARTINEZ LANCHEROS, MARTINEZ REYES, RODRIGUEZ BERNAL y AMAYA BONILLA
+   (nueva, mapeada por LOPEZ TAVERA MARIA PAULA CATALINA) y CHACON GONZALEZ
+   LILIANA PATRICIA (nueva, mapeada por SALAZAR BARON HUGO ALEXANDER) no
+   tienen entrada aquí: SÍ tienen expediente en `ninebox`, así que salen
+   solos vía el mecanismo (2) de abajo en cuanto su pareja está en
+   sucesor_pairs.js — no hace falta curarlos a mano.
+   ARCHILA SAA KAREN DANIELA y HEREDIA GAONA HECTOR ENRIQUE (mapeado por
+   CARDONA TORRES CLAUDIA ISABEL) siguen sin expediente en ninguna hoja —
+   igual que VEGA MEDELLIN, se agregan con expediente provisional
+   "PENDIENTE-...".
+   GRANADOS JAUREGUI JESICA ALEXANDRA: su entrada vieja aquí decía que la
+   mapeaba SANABRIA CARDOZO LILIANA PATRICIA — desactualizado. El archivo
+   nuevo (y su jefe real en `ninebox`) coinciden en que es GONZALEZ CHAVES
+   DIEGO MIGUEL, así que ya sale sola en la tabla principal de él (jefe
+   real = jefe que la mapea); se quitó la entrada vieja de aquí.
 
    ORDOÑEZ USSA LEIDY YURANY (exp 34327674) se movió aquí, bajo PEREZ
    MEDINA HUMBERTO ALEJANDRO: Humberto no tiene equipo propio en la
@@ -54,7 +69,6 @@ window.OTROS_SUCESORES = [
   {exp:"80004393",nombre:"RAMIREZ RINCON CARLOS JULIO",cargo:"Gerente Prevencion Fraude",region:"Transversal",direccion:"Direccion Gestion de Riesgo y Control Interno",direccion_area:"Direccion Gestion de Riesgo y Control Interno",gerencia:"Gerencia Prevencion Fraude",ciudad:"Bogotá, D.C.",jefe:"IBARRA CERON JANETH CONSTANZA",caja:7,sucesor:"Si",tiempo:""},
   {exp:"1024519211",nombre:"DUARTE MENDEZ MONICA ANDREA",cargo:"Analista Sarlaf",region:"Transversal",direccion:"Direccion Gestion de Riesgo y Control Interno",direccion_area:"Direccion Gestion de Riesgo y Control Interno",gerencia:"Direccion Gestion de Riesgo y Control Interno",ciudad:"Bogotá, D.C.",jefe:"CASTILLO MARTINEZ MARTHA LILIANA",caja:0,sucesor:"Si",tiempo:"Listo ya"},
   {exp:"80111618",nombre:"BAENA JARAMILLO ALEJANDRO",cargo:"Gerente Contratos Transparencia y Etica Empresarial",region:"Transversal",direccion:"Direccion Corporativa Juridica y Sostenibilidad",direccion_area:"Direccion Corporativa Juridica y Sostenibilidad",gerencia:"Gerencia Contratos Transparencia y Etica Empresarial",ciudad:"Bogotá, D.C.",jefe:"CASTILLO MARTINEZ MARTHA LILIANA",caja:2,sucesor:"Si",tiempo:""},
-  {exp:"1026593032",nombre:"GRANADOS JAUREGUI JESICA ALEXANDRA",cargo:"Lider Gestion Riesgo",region:"Transversal",direccion:"Direccion Gestion de Riesgo y Control Interno",direccion_area:"Direccion Gestion de Riesgo y Control Interno",gerencia:"Gerencia Riesgo Operativo y Control Interno",ciudad:"Bogotá, D.C.",jefe:"SANABRIA CARDOZO LILIANA PATRICIA",caja:5,sucesor:"Si",tiempo:"3 Años"},
   {exp:"37620782",nombre:"GRASS ARDILA GERALDINE",cargo:"Ingeniero(a) Aseguramiento Calidad y Mejora Continua E&N",region:"Transversal",direccion:"Direccion Gestion de Riesgo y Control Interno",direccion_area:"Direccion Gestion de Riesgo y Control Interno",gerencia:"Direccion Gestion de Riesgo y Control Interno",ciudad:"Bogotá, D.C.",jefe:"SANABRIA CARDOZO LILIANA PATRICIA",caja:0,sucesor:"Si",tiempo:"2 Años"},
   {exp:"80820898",nombre:"CASTRO CARDOZO CARLOS ANDRES",cargo:"Gerente Seguridad Informacion",region:"Transversal",direccion:"Direccion Gestion de Riesgo y Control Interno",direccion_area:"Direccion Gestion de Riesgo y Control Interno",gerencia:"Gerencia Seguridad Informacion",ciudad:"Bogotá, D.C.",jefe:"SANABRIA CARDOZO LILIANA PATRICIA",caja:6,sucesor:"Si",tiempo:""},
   {exp:"80820898",nombre:"CASTRO CARDOZO CARLOS ANDRES",cargo:"Gerente Seguridad Informacion",region:"Transversal",direccion:"Direccion Gestion de Riesgo y Control Interno",direccion_area:"Direccion Gestion de Riesgo y Control Interno",gerencia:"Gerencia Seguridad Informacion",ciudad:"Bogotá, D.C.",jefe:"BOHORQUEZ HERNANDEZ JOHNATHAN ERNESTO",caja:6,sucesor:"Si",tiempo:""},
@@ -93,5 +107,16 @@ window.OTROS_SUCESORES = [
   //    identificado por VARGAS ANGEL SANDRA PATRICIA.
   {exp:"88227648",nombre:"GALVIS CLARO JOSE LUIS",cargo:"Gerente Regional CAVS",region:"Region 2",direccion:"Unidad Mercado Masivo",direccion_area:"Unidad Mercado Masivo Regiones",gerencia:"Direccion Region 2",ciudad:"Medellín",jefe:"OCAMPO GIRON MARIA DEL PILAR",caja:9,sucesor:"Si",tiempo:"2 Años"},
   {exp:"29284580",nombre:"CORREA PELAEZ TATIANA",cargo:"Gerente Regional Cavs",region:"Region 3",direccion:"Unidad Mercado Masivo",direccion_area:"Unidad Mercado Masivo Regiones",gerencia:"Direccion Region 3",ciudad:"Cali",jefe:"OCAMPO GIRON MARIA DEL PILAR",caja:9,sucesor:"Si",tiempo:"1 Año"},
-  {exp:"80013914",nombre:"MANRIQUE JUAN ANYELO",cargo:"Jefe Inteligencia Terminales Y Tecnologia",region:"Transversal",direccion:"Unidad Mercado Masivo",direccion_area:"Direccion Negocio Terminales y Equipos Hogar",gerencia:"Direccion Negocio Terminales y Equipos Hogar",ciudad:"Bogotá, D.C.",jefe:"VARGAS ANGEL SANDRA PATRICIA",caja:8,sucesor:"Si",tiempo:"1 Año"}
+  {exp:"80013914",nombre:"MANRIQUE JUAN ANYELO",cargo:"Jefe Inteligencia Terminales Y Tecnologia",region:"Transversal",direccion:"Unidad Mercado Masivo",direccion_area:"Direccion Negocio Terminales y Equipos Hogar",gerencia:"Direccion Negocio Terminales y Equipos Hogar",ciudad:"Bogotá, D.C.",jefe:"VARGAS ANGEL SANDRA PATRICIA",caja:8,sucesor:"Si",tiempo:"1 Año"},
+
+  // ─── Calibraciones  (2).xlsx (2026-09-11), 22 filas resaltadas en rojo ───
+  // Todas marcadas "Por Confirmar" en vez de "Sí" (data/sucesor_pendientes.js).
+  // ABADIA BOLAÑOS: dato real de la tabla `personas` (no está en `ninebox`),
+  // su jefe real es DIEGO FELIPE MARTINEZ PINILLA (Unidad Mercado Masivo,
+  // Region 3) — CASTELLANOS RODRIGUEZ MIGUEL ANGEL la mapeó como sucesora.
+  {exp:"29683064",nombre:"ABADIA BOLAÑOS PAOLA ANDREA",cargo:"Coordinador(a) Formacion Regional",region:"R3",direccion:"Unidad Mercado Masivo",direccion_area:"Unidad Mercado Masivo Regiones",gerencia:"Direccion Region 3",ciudad:"Cali",jefe:"CASTELLANOS RODRIGUEZ MIGUEL ANGEL",caja:0,sucesor:"Si",tiempo:""},
+  // HEREDIA GAONA y ARCHILA SAA: sin expediente en personas/ninebox/Base
+  // General (igual que VEGA MEDELLIN, ver nota arriba) — expediente provisional.
+  {exp:"PENDIENTE-HEREDIA-GAONA",nombre:"HEREDIA GAONA HECTOR ENRIQUE",cargo:"Especialista Procurement Value Chain TEC",region:"Transversal",direccion:"Direccion Corporativa Financiera",direccion_area:"Direccion Corporativa Financiera",gerencia:"Direccion Corporativa Financiera",ciudad:"Bogotá, D.C.",jefe:"CARDONA TORRES CLAUDIA ISABEL",caja:0,sucesor:"Si",tiempo:""},
+  {exp:"PENDIENTE-ARCHILA-SAA",nombre:"ARCHILA SAA KAREN DANIELA",cargo:"Coach Agile Hitss",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Direccion Corporativa Gestion Humana y Administrativo",gerencia:"Direccion Corporativa Gestion Humana y Administrativo",ciudad:"Bogotá, D.C.",jefe:"GARZON MENDEZ LINA MARIA",caja:0,sucesor:"Si",tiempo:""}
 ];

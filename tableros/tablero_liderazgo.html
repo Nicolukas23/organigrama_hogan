@@ -16,8 +16,9 @@
   <script src="../data/global_search.js" defer></script>
 <link rel="stylesheet" href="../data/nav.css">
 <script src="../data/ficha_data.js?v=1787685958"></script>
-<script src="../data/otros_sucesores.js?v=1789078813"></script>
-<script src="../data/sucesor_pairs.js?v=1789078813"></script>
+<script src="../data/otros_sucesores.js?v=1789144585"></script>
+<script src="../data/sucesor_pairs.js?v=1789144585"></script>
+<script src="../data/sucesor_pendientes.js?v=1789144585"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
@@ -711,6 +712,20 @@ function isSuc(p){
   if(!raw) return false;
   if(!SUCESOR_PAIRS_SET.size) return raw; // si el archivo no cargó, no rompemos el flag original
   return SUCESOR_PAIRS_SET.has(normWords(p.jefe) + '|' + normWords(p.nombre));
+}
+
+// Parejas Jefe|Sucesor aún sin confirmar (data/sucesor_pendientes.js): el
+// badge de sucesor muestra "Por Confirmar" en vez de "Sí" para estas.
+const SUCESOR_PENDIENTES_SET = new Set(window.SUCESOR_PENDIENTES || []);
+function isSucPendiente(p){
+  if(!isSuc(p)) return false;
+  return SUCESOR_PENDIENTES_SET.has(normWords(p.jefe) + '|' + normWords(p.nombre));
+}
+function sucBadgeLabel(p){
+  return isSucPendiente(p) ? 'Por Confirmar' : (isSuc(p) ? 'Sí' : 'No');
+}
+function sucBadgeClass(p){
+  return isSucPendiente(p) ? 'pendiente' : (isSuc(p) ? 'si' : 'no');
 }
 
 function hasFichaData(p){
@@ -2023,8 +2038,8 @@ function renderNineboxTable(){
           </span>
         </td>
         <td>
-          <span class="chip-sucesor ${isS ? 'si' : 'no'}">
-            ${isS ? 'Sí' : 'No'}
+          <span class="chip-sucesor ${sucBadgeClass(p)}">
+            ${sucBadgeLabel(p)}
           </span>
         </td>
         <td style="font-size:13px">
@@ -2145,7 +2160,7 @@ function renderOtrosTable(){
     tr.innerHTML = `
       <td class="name">${p.nombre}</td>
       <td>${p.cargo || '—'}</td>
-      <td><span class="chip-sucesor ${isS ? 'si' : 'no'}">${isS ? 'Sí' : 'No'}</span></td>
+      <td><span class="chip-sucesor ${sucBadgeClass(p)}">${sucBadgeLabel(p)}</span></td>
       <td style="font-size:13px">${isS && p.tiempo && p.tiempo !== 'N/A' ? p.tiempo : '—'}</td>
     `;
     tbody.appendChild(tr);
@@ -2491,7 +2506,8 @@ function openModal(p, hideFicha){
   }
   
   if(isSuc(p)){
-    badgesHTML += `<div style="background:#059669;padding:6px 12px;border-radius:12px;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center">Posible Sucesor</div>`;
+    const sucBg = isSucPendiente(p) ? '#b45309' : '#059669';
+    badgesHTML += `<div style="background:${sucBg};padding:6px 12px;border-radius:12px;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center">${isSucPendiente(p) ? 'Posible Sucesor (Por Confirmar)' : 'Posible Sucesor'}</div>`;
   }
   
   if(p.hogan_potencial !== null && p.hogan_potencial !== undefined){
@@ -2509,7 +2525,7 @@ function openModal(p, hideFicha){
     ['Gerencia', p.gerencia],
     ['Desempeño', p.desempeno],
     ['Potencial 9-Box', p.potencial],
-    ['Sucesor', isSuc(p) ? 'Sí' : 'No'],
+    ['Sucesor', sucBadgeLabel(p)],
     ['Tiempo Sucesión', isSuc(p) && p.tiempo && p.tiempo !== 'N/A' ? p.tiempo : '—'],
     ['Ciudad', p.ciudad]
   ];
