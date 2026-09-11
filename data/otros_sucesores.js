@@ -31,12 +31,12 @@
      ANGEL), antes quitada porque era el único vínculo que hacía aparecer a
      Miguel Ángel Castellanos como Jefe dentro de "Unidad Mercado Masivo" —
      a solicitud, se acepta que reaparezca ese efecto.
-   CHACON GONZALEZ LILIANA PATRICIA (SALAZAR BARON HUGO ALEXANDER) y
-   MARTINEZ REYES DAVID LEONARDO (GARZON MENDEZ LINA MARIA) sí tienen
-   entrada curada aquí aunque su jefe real en `ninebox` coincida con quien
-   los mapeó (el mecanismo (2) de abajo no los repite en esta tabla si ya
-   salen en la tabla principal de ese jefe — a solicitud, se agregan a
-   mano para que también salgan aquí).
+   Regla acordada: si el sucesor es reporte directo (en `ninebox`) de quien
+   lo mapeó, sale solo en la tabla principal (no se duplica aquí); si no lo
+   es, sale aquí. CHACON GONZALEZ LILIANA PATRICIA (jefe real SALAZAR BARON
+   HUGO ALEXANDER, igual al que la mapea) y MARTINEZ REYES DAVID LEONARDO
+   (jefe real GARZON MENDEZ LINA MARIA, igual) SON reporte directo → sin
+   entrada aquí, solo en la tabla principal.
    ARCHILA SAA KAREN DANIELA y HEREDIA GAONA HECTOR ENRIQUE (mapeado por
    CARDONA TORRES CLAUDIA ISABEL) siguen sin expediente en ninguna hoja —
    igual que VEGA MEDELLIN, se agregan con expediente provisional
@@ -119,15 +119,19 @@ window.OTROS_SUCESORES = [
   // General (igual que VEGA MEDELLIN, ver nota arriba) — expediente provisional.
   {exp:"PENDIENTE-HEREDIA-GAONA",nombre:"HEREDIA GAONA HECTOR ENRIQUE",cargo:"Especialista Procurement Value Chain TEC",region:"Transversal",direccion:"Direccion Corporativa Financiera",direccion_area:"Direccion Corporativa Financiera",gerencia:"Direccion Corporativa Financiera",ciudad:"Bogotá, D.C.",jefe:"CARDONA TORRES CLAUDIA ISABEL",caja:0,sucesor:"Si",tiempo:""},
   {exp:"PENDIENTE-ARCHILA-SAA",nombre:"ARCHILA SAA KAREN DANIELA",cargo:"Coach Agile Hitss",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Direccion Corporativa Gestion Humana y Administrativo",gerencia:"Direccion Corporativa Gestion Humana y Administrativo",ciudad:"Bogotá, D.C.",jefe:"GARZON MENDEZ LINA MARIA",caja:0,sucesor:"Si",tiempo:""},
-  // Estos 6 sí tienen expediente en `ninebox`, pero su jefe real coincide
-  // con quien los mapeó (ya salen en la tabla principal de ese jefe) — se
-  // agregan aquí a mano, a solicitud, para que también salgan en "Otros
-  // posibles sucesores". GRANADOS JAUREGUI reemplaza la entrada vieja que
-  // decía SANABRIA CARDOZO (desactualizada, ver nota arriba).
-  {exp:"1026593032",nombre:"GRANADOS JAUREGUI JESICA ALEXANDRA",cargo:"Lider Gestion Riesgo",region:"Transversal",direccion:"Direccion Gestion de Riesgo y Control Interno",direccion_area:"Direccion Gestion de Riesgo y Control Interno",gerencia:"Gerencia Riesgo Operativo y Control Interno",ciudad:"Bogotá, D.C.",jefe:"GONZALEZ CHAVES DIEGO MIGUEL",caja:5,sucesor:"Si",tiempo:"3 Años"},
-  {exp:"52009864",nombre:"CHACON GONZALEZ LILIANA PATRICIA",cargo:"Gerente Ingenieria Red IP Transmision & Infraestructura",region:"Transversal",direccion:"Direccion Corporativa Tecnologia",direccion_area:"Direccion Ingenieria",gerencia:"Gerencia Ingenieria Red IP Transmision & Infraestructura",ciudad:"Bogotá, D.C.",jefe:"SALAZAR BARON HUGO ALEXANDER",caja:8,sucesor:"Si",tiempo:"2 Años"},
+  // Regla: reporte directo del jefe que lo mapea -> solo tabla principal
+  // (no se duplica aquí). No lo es -> "Otros posibles sucesores". Se
+  // verificó cada uno contra el jefe real en `ninebox`:
+  //  - GRANADOS JAUREGUI (jefe real GONZALEZ CHAVES, igual al que la mapea),
+  //    CHACON GONZALEZ (jefe real SALAZAR BARON, igual) y MARTINEZ REYES
+  //    (jefe real GARZON MENDEZ, igual) SON reporte directo -> solo tabla
+  //    principal, sin entrada aquí (siguen "Por Confirmar" allá vía
+  //    sucesor_pairs.js + sucesor_pendientes.js).
+  //  - AMAYA BONILLA (jefe real CASTELLANOS RODRIGUEZ, no LOPEZ TAVERA),
+  //    MARTINEZ LANCHEROS y RODRIGUEZ BERNAL (jefe real MONTAGUT MORALES /
+  //    CHACON GOMEZ, no GARZON MENDEZ) NO son reporte directo de quien los
+  //    mapeó -> sí van aquí.
   {exp:"53128730",nombre:"AMAYA BONILLA MILEIDY",cargo:"Jefe Investigacion y Desarrollo Contenidos",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Universidad Claro",gerencia:"Gerencia Universidad Claro",ciudad:"Bogotá, D.C.",jefe:"LOPEZ TAVERA MARIA PAULA CATALINA",caja:5,sucesor:"Si",tiempo:""},
   {exp:"1031122523",nombre:"MARTINEZ LANCHEROS WILLIAM ANDRES",cargo:"Gerente Data Growth Corporativo",region:"Transversal",direccion:"Unidad Mercado Corporativo",direccion_area:"Direccion Marketing Corporativo y Producto",gerencia:"Gerencia Data Growth Corporativo",ciudad:"Bogotá, D.C.",jefe:"GARZON MENDEZ LINA MARIA",caja:7,sucesor:"Si",tiempo:""},
-  {exp:"1013667889",nombre:"MARTINEZ REYES DAVID LEONARDO",cargo:"Jefe Transformacion Organizacional",region:"Transversal",direccion:"Direccion Corporativa Gestion Humana y Administrativo",direccion_area:"Transformacion Y people Analytics",gerencia:"Gerencia Transformacion Y people Analytics",ciudad:"Bogotá, D.C.",jefe:"GARZON MENDEZ LINA MARIA",caja:5,sucesor:"Si",tiempo:""},
   {exp:"1014182084",nombre:"RODRIGUEZ BERNAL EDICSON",cargo:"Gerente Mejora Continua Procesos Corporativos",region:"Transversal",direccion:"Direccion Corporativa Financiera",direccion_area:"Direccion Experiencia del Cliente",gerencia:"Gerencia Mejora Continua Procesos Corporativos",ciudad:"Bogotá, D.C.",jefe:"GARZON MENDEZ LINA MARIA",caja:5,sucesor:"Si",tiempo:""}
 ];
