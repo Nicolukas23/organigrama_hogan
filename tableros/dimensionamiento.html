@@ -95,7 +95,7 @@
   <div class="tab-nav">
     <button class="tab-btn active" data-tab="tabTabla">Tabla Detallada</button>
     <button class="tab-btn" data-tab="tabGraficas">Gráficas</button>
-    <button class="tab-btn" data-tab="tabResumen">Resumen Junio</button>
+    <button class="tab-btn" data-tab="tabResumen">Resumen Agosto</button>
     <button class="tab-btn" data-tab="tabRotacion">Rotación</button>
     <button class="tab-btn" data-tab="tabAprendices">Aprendices</button>
   </div>
@@ -146,8 +146,8 @@
 
   <div class="tab-panel" id="tabResumen">
     <div class="section">
-      <div class="section-title">Resumen Ejecutivo — Junio 2025</div>
-      <p style="font-size:12px;color:var(--text3);margin-bottom:12px">Corte junio comparado contra meta/proyección de cierre diciembre (dimensionamiento con aprendices).</p>
+      <div class="section-title">Resumen Ejecutivo — Agosto 2026</div>
+      <p style="font-size:12px;color:var(--text3);margin-bottom:12px">Corte agosto comparado contra meta/proyección de cierre diciembre (dimensionamiento con aprendices).</p>
       <div class="table-scroll">
         <table>
           <thead>
@@ -155,11 +155,11 @@
               <th>Regional</th>
               <th class="text-right">Proy. Dim. Dic</th>
               <th class="text-right">Meta Directos Dic</th>
-              <th class="text-right">Total Junio</th>
-              <th class="text-right">Directos Junio</th>
-              <th class="text-right">Temporales Junio</th>
-              <th class="text-right">% Directos Junio</th>
-              <th class="text-right">Brecha Junio</th>
+              <th class="text-right">Total Agosto</th>
+              <th class="text-right">Directos Agosto</th>
+              <th class="text-right">Temporales Agosto</th>
+              <th class="text-right">% Directos Agosto</th>
+              <th class="text-right">Brecha Agosto</th>
               <th>Estado</th>
             </tr>
           </thead>
@@ -218,7 +218,7 @@
               <th class="text-right">Disminución</th>
               <th class="text-right">Total Final</th>
               <th class="text-right">Directos c/ Aprendices</th>
-              <th class="text-right">Directos Junio</th>
+              <th class="text-right">Directos Agosto</th>
               <th class="text-right">% Directos</th>
               <th class="text-right">Diferencia</th>
             </tr>
@@ -299,12 +299,12 @@ const BASE=[
 ];
 
 const RESUMEN=[
-{r:"R1",dim:381,meta:278.13,total:404,dir:303,temp:101,pct:.75,brecha:24.87,estado:"Cumple / supera meta"},
-{r:"R2",dim:477,meta:348.21,total:512,dir:339,temp:173,pct:.662,brecha:-9.21,estado:"Por debajo de meta"},
-{r:"R3",dim:515,meta:375.95,total:539,dir:383,temp:156,pct:.711,brecha:7.05,estado:"Cumple / supera meta"},
-{r:"R4",dim:822,meta:600.06,total:854,dir:614,temp:240,pct:.719,brecha:13.94,estado:"Cumple / supera meta"},
-{r:"R5",dim:401,meta:292.73,total:410,dir:305,temp:105,pct:.744,brecha:12.27,estado:"Cumple / supera meta"},
-{r:"TOTAL",dim:2596,meta:1895.08,total:2719,dir:1944,temp:775,pct:.715,brecha:48.92,estado:"Cumple / supera meta"}
+{r:"R1",dim:381,meta:278.13,total:408,dir:304,temp:104,pct:.745,brecha:25.87,estado:"Cumple / supera meta"},
+{r:"R2",dim:477,meta:348.21,total:508,dir:346,temp:162,pct:.681,brecha:-2.21,estado:"Por debajo de meta"},
+{r:"R3",dim:515,meta:375.95,total:531,dir:385,temp:146,pct:.725,brecha:9.05,estado:"Cumple / supera meta"},
+{r:"R4",dim:822,meta:600.06,total:836,dir:610,temp:226,pct:.73,brecha:9.94,estado:"Cumple / supera meta"},
+{r:"R5",dim:401,meta:292.73,total:408,dir:306,temp:102,pct:.75,brecha:13.27,estado:"Cumple / supera meta"},
+{r:"TOTAL",dim:2596,meta:1895.08,total:2691,dir:1951,temp:740,pct:.725,brecha:55.92,estado:"Cumple / supera meta"}
 ];
 
 const ROTACION=[
@@ -316,11 +316,11 @@ const ROTACION=[
 ];
 
 const APRENDICES=[
-{r:"R1",consult:390,dir2026:284.7,aprend:12,dism:9,total:381,dirAp:278.13,dirJun:303,pct:.795,dif:24.87},
-{r:"R2",consult:492,dir2026:359.16,aprend:20,dism:15,total:477,dirAp:348.21,dirJun:340,pct:.713,dif:-8.21},
-{r:"R3",consult:530,dir2026:386.9,aprend:20,dism:15,total:515,dirAp:375.95,dirJun:383,pct:.744,dif:7.05},
-{r:"R4",consult:897,dir2026:654.81,aprend:100,dism:75,total:822,dirAp:600.06,dirJun:615,pct:.748,dif:14.94},
-{r:"R5",consult:407,dir2026:297.11,aprend:8,dism:6,total:401,dirAp:292.73,dirJun:306,pct:.763,dif:13.27}
+{r:"R1",consult:390,dir2026:284.7,aprend:12,dism:9,total:381,dirAp:278.13,dirAgo:304,pct:.798,dif:25.87},
+{r:"R2",consult:492,dir2026:359.16,aprend:20,dism:15,total:477,dirAp:348.21,dirAgo:346,pct:.725,dif:-2.21},
+{r:"R3",consult:530,dir2026:386.9,aprend:20,dism:15,total:515,dirAp:375.95,dirAgo:385,pct:.748,dif:9.05},
+{r:"R4",consult:897,dir2026:654.81,aprend:100,dism:75,total:822,dirAp:600.06,dirAgo:610,pct:.742,dif:9.94},
+{r:"R5",consult:407,dir2026:297.11,aprend:8,dism:6,total:401,dirAp:292.73,dirAgo:306,pct:.763,dif:13.27}
 ];
 
 // Assign regions to R4 cities
@@ -484,7 +484,7 @@ function renderAprendices(){
       <td class="text-right font-mono">${fmt(a.dism)}</td>
       <td class="text-right font-mono">${fmt(a.total)}</td>
       <td class="text-right font-mono">${fmt(a.dirAp)}</td>
-      <td class="text-right font-mono">${fmt(a.dirJun)}</td>
+      <td class="text-right font-mono">${fmt(a.dirAgo)}</td>
       <td class="text-right"><span class="chip ${chipColor(a.pct*100)}">${fmtPct(a.pct)}</span></td>
       <td class="text-right font-mono ${a.dif>=0?'text-green':'text-red'}">${a.dif>=0?'+':''}${fmt(a.dif)}</td>
     </tr>`;
