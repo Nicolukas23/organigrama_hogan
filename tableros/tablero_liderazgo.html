@@ -385,6 +385,12 @@
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
         Consulta tu resultado de Hogan
       </button>
+      <!-- Solo el nombre, sin botón de ficha ni caja/ninebox — a propósito,
+           para no darle a este perfil nada del resto del tablero de equipo. -->
+      <div id="hoganSelfSucesor" style="display:none;margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.08)">
+        <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px">Posible Sucesor</div>
+        <div id="hoganSelfSucesorNombre" style="font-size:15px;font-weight:700;color:var(--text)"></div>
+      </div>
     </div>
   </section>
 
@@ -1425,6 +1431,20 @@ function setSession(user){
   // ...y sin la tabla "Otros posibles sucesores" (renderOtrosTable la
   // vuelve a ocultar en cada render).
   if(isHoganOnlyProfile) setDisp('otrosSection', false);
+
+  // Excepción puntual a solicitud: a Humberto (Hogan-only, sin equipo) SÍ
+  // se le muestra el nombre de su propio sucesor mapeado (ORDOÑEZ USSA
+  // LEIDY YURANY) debajo del botón de Hogan — sin botón de ficha ni caja/
+  // ninebox, para no darle nada más del resto del tablero.
+  if((user.email || '').toLowerCase() === 'humberto.perezm@claro.com.co'){
+    const match = (window.OTROS_SUCESORES || []).find(p => normWords(p.jefe) === normWords(user.nombre || ''));
+    const sucDiv = document.getElementById('hoganSelfSucesor');
+    const sucNombre = document.getElementById('hoganSelfSucesorNombre');
+    if(match && sucDiv && sucNombre){
+      sucNombre.textContent = match.nombre;
+      sucDiv.style.display = '';
+    }
+  }
 
   document.getElementById('lblUserName').textContent = user.nombre;
   document.getElementById('lblScope').textContent =
