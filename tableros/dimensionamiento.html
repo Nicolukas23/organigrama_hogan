@@ -168,11 +168,12 @@
   <div class="tab-panel" id="tabRotacion">
     <div class="charts-grid">
       <div class="chart-card">
-        <div class="section-title">Rotación Mensual por Regional</div>
+        <div class="section-title">Rotación Mensual por Regional — 2025</div>
+        <p style="font-size:12px;color:var(--text3);margin-bottom:8px">Número de personas retiradas por mes (no es %). Último dato disponible: noviembre 2025.</p>
         <div class="chart-container"><canvas id="chartRotacion"></canvas></div>
       </div>
       <div class="chart-card">
-        <div class="section-title">Detalle Rotación</div>
+        <div class="section-title">Detalle Rotación — 2025</div>
         <div class="table-scroll">
           <table>
             <thead>
@@ -300,7 +301,7 @@ const RESUMEN=[
 {r:"R3",dim:515,meta:375.95,total:531,dir:385,temp:146,pct:.725,brecha:9.05,estado:"Cumple / supera meta"},
 {r:"R4",dim:822,meta:600.06,total:836,dir:610,temp:226,pct:.73,brecha:9.94,estado:"Cumple / supera meta"},
 {r:"R5",dim:401,meta:292.73,total:408,dir:306,temp:102,pct:.75,brecha:13.27,estado:"Cumple / supera meta"},
-{r:"TOTAL",dim:2596,meta:1895.08,total:2691,dir:1951,temp:740,pct:.725,brecha:55.92,estado:"Cumple / supera meta"}
+{r:"TOTAL",dim:2596,meta:1895.08,total:2692,dir:1951,temp:741,pct:.725,brecha:55.92,estado:"Cumple / supera meta"}
 ];
 
 const ROTACION=[
@@ -376,13 +377,18 @@ function applyFilters(){
 // ─── KPIs ────────────────────────────────────────────────────────────
 function renderKPIs(data){
   const mi=state.mes!==''?parseInt(state.mes):null;
-  let totalDir=0,totalTemp=0,totalDic=0,totalMetaDir=0;
+  let totalDir=0,totalTemp=0,totalDic=0,totalMetaDir=0,idx=0;
   data.forEach(d=>{
-    const idx=mi!==null?mi:d.directos.length-1; /* sin filtro de mes = último corte real (Agosto) */
+    idx=mi!==null?mi:d.directos.length-1; /* sin filtro de mes = último corte real (Agosto) */
     totalDir+=d.directos[idx]||0;totalTemp+=d.temporales[idx]||0;
     totalDic+=d.dic||0;
     totalMetaDir+=d.metaDir||0;
   });
+  /* El Excel fuente trae 1 temporal de Agosto en su fila "Total general" que
+     no aparece en ninguna de las 48 ciudades (dato sin ciudad asignada en el
+     archivo original). Se suma aquí solo en la vista completa para cuadrar
+     con el cierre oficial (2.692); la tabla por ciudad sigue sumando 2.691. */
+  if(idx===6 && data.length===BASE.length) totalTemp+=1;
   const total=totalDir+totalTemp;
   const pctDir=total?totalDir/total:0;
   document.getElementById('kpiTotal').textContent=fmt(total);
