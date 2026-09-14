@@ -2,7 +2,7 @@
  * sw.js — Service Worker de Claro Talento Ejecutivo (PWA & Offline Cache)
  */
 
-const CACHE_NAME = 'claro-talento-v7';
+const CACHE_NAME = 'claro-talento-v8';
 const STATIC_ASSETS = [
   './data/theme.css',
   './data/tableros.css',
