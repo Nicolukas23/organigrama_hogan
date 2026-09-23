@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>Tablero Ejecutivo de Liderazgo · Nine Box & Hogan · Claro</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👔</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../data/theme.css">
+<link rel="stylesheet" href="../data/tableros.css">
+  <link rel="stylesheet" href="../data/print_onepager.css">
+  <link rel="manifest" href="../manifest.json">
+  <script src="../data/global_search.js" defer></script>
+<link rel="stylesheet" href="../data/nav.css">
+<script src="../data/ficha_data.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+<!-- LOGIN OVERLAY -->
+<div class="login-overlay" id="loginOverlay" style="display:none">
+  <div class="login-card">
+    <div class="login-logo">👔</div>
+    <h2>Tablero de Liderazgo</h2>
+    <p>Acceso para Directores y Gerentes de Claro.<br>Ingresa con tu correo corporativo y contraseña.</p>
+    
+    <div class="login-err" id="loginErr">Datos de acceso incorrectos. Por favor verifica usuario y contraseña.</div>
+    
+    <div class="login-field">
+      <label>Correo Corporativo o Cédula</label>
+      <input type="text" id="txtEmail" placeholder="ej: walter.borda@claro.com.co" onkeydown="if(event.key==='Enter') document.getElementById('txtPassword').focus()">
+    </div>
+
+    <div class="login-field">
+      <label>Contraseña</label>
+      <input type="password" id="txtPassword" placeholder="Ingresa tu contraseña" onkeydown="if(event.key==='Enter') loginByEmail()">
+    </div>
+
+    <button class="btn-login" onclick="loginByEmail()">Ingresar al Tablero →</button>
+  </div>
+</div>
+
+<!-- SCOPE OVERLAY -->
+<div class="login-overlay" id="scopeOverlay" style="display:none;z-index:9999;">
+  <div class="login-card" style="text-align:center">
+    <div style="width:56px;height:56px;background:var(--bg-2);border-radius:28px;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--gold)"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+    </div>
+    <h2 style="margin:0 0 12px 0;font-size:24px;font-weight:600">Seleccionar Alcance</h2>
+    <p style="color:var(--text-dim);font-size:14px;margin:0 0 32px 0">Por favor seleccione la profundidad de talento que desea visualizar en el tablero.</p>
+    
+    <button class="btn-login" onclick="selectScope('FULL')" style="margin-bottom:12px;background:var(--gold);">Estructura Completa <span style="font-size:12px;opacity:0.8;display:block;font-weight:400;margin-top:2px">Mi equipo directo + sus respectivos equipos</span></button>
+    <button class="btn-login" onclick="selectScope('DIRECT')" style="background:var(--bg-2);color:var(--text);border:1px solid var(--border);">Reportes Directos <span style="font-size:12px;opacity:0.6;display:block;font-weight:400;margin-top:2px">Únicamente mis colaboradores a cargo directo</span></button>
+  </div>
+</div>
+
+<div class="wrap" id="mainContent">
+  <!-- HEADER -->
+  <header class="dash-hdr">
+    <div class="hdr-left">
+      <div class="hdr-icon">📊</div>
+      <div class="hdr-titles">
+        <div style="font-size:10px;font-weight:800;color:var(--crimson);letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:6px">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--crimson);display:inline-block"></span>
+          Planificación de Talento &amp; Liderazgo Ejecutivo
+        </div>
+        <h1>Tablero Ejecutivo de Liderazgo <span>· Nine Box &amp; Hogan</span></h1>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <div style="font-size:12px;color:var(--text-dim);margin-right:12px;display:flex;align-items:center;gap:8px;">
+        <span>📍 Estructura activa: <b id="lblScope" style="color:var(--text)">Todas las Direcciones</b></span>
+        <button class="btn-icon" id="btnScopeToggle" style="display:none; border-color:var(--gold); color:var(--gold); padding:2px 8px; font-size:11px;" onclick="showScopeOverlay()">🔄 Cambiar</button>
+      </div>
+      <div class="user-badge">
+        <span class="role-tag role-admin" id="lblRoleBadge">ADMIN</span>
+        <b id="lblUserName">NICOLAS SANTOS</b>
+        <a href="javascript:void(0)" onclick="showLoginOverlay()" style="color:var(--text-dim);font-size:11px;margin-left:4px;text-decoration:none">· cambiar</a>
+      </div>
+      <button class="btn-icon" onclick="window.GlobalSearch && window.GlobalSearch.open()" title="Buscar colaborador (Cmd+K)">🔍 Buscar <kbd style="font-size:10px;opacity:0.7;background:rgba(255,255,255,0.1);padding:1px 4px;border-radius:3px">⌘K</kbd></button>
+      <button class="btn-icon" onclick="window.print()" title="Exportar reporte ejecutivo">📄 PDF One-Pager</button>
+      <button class="btn-icon" onclick="exportExcel()">📥 Descargar Excel</button>
+      <button class="btn-icon" onclick="toggleTheme()">🌓</button>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-lbl">Colaboradores en Estructura</div>
+      <div class="stat-val" id="kpiTotal">0</div>
+      <div class="stat-sub">Registros activos evaluados</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-lbl">Talento Crítico (Cajas 7, 8, 9)</div>
+      <div class="stat-val" style="color:var(--green)" id="kpiTop">0</div>
+      <div class="stat-sub"><b id="kpiTopPct">0%</b> del total evaluado</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-lbl">Permanencia Promedio</div>
+      <div class="stat-val" style="color:var(--gold)"><span id="kpiHogan">0</span> <span style="font-size:14px;font-weight:500;color:var(--text-dim)">pts</span></div>
+      <div class="stat-sub">Años en el cargo</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-lbl">Sucesores Identificados</div>
+      <div class="stat-val" style="color:#60a5fa" id="kpiSuc">0</div>
+      <div class="stat-sub"><b id="kpiSucPct">0%</b> listos para sucesión</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <button class="tab-btn active" id="tabNB" onclick="switchView('ninebox')">📊 Matriz 9-Box &amp; Talento</button>
+    <button class="tab-btn" id="tabHG" onclick="switchView('hogan')">🎯 Evaluación Hogan <span class="tab-chip" id="chipHG">0</span></button>
+    <button class="tab-btn" id="tabTB" onclick="switchView('table')">📋 Listado Consolidado</button>
+  </div>
+
+  <!-- FILTERS -->
+  <section class="filters-bar">
+    <div class="f-group" style="flex:2;min-width:200px">
+      <label>🔍 Búsqueda</label>
+      <input type="text" id="fSearch" placeholder="Nombre, cargo, cédula..." oninput="applyFilters()">
+    </div>
+    <div class="f-group" id="wrapDir">
+      <label>Dirección</label>
+      <select id="fDir" onchange="onDirChange()"></select>
+    </div>
+    <div class="f-group" id="wrapGer">
+      <label>Gerencia</label>
+      <select id="fGer" onchange="onGerChange()"></select>
+    </div>
+    <div class="f-group">
+      <label>Jefe Directo (Subordinados)</label>
+      <select id="fJefe" onchange="applyFilters()"></select>
+    </div>
+    <div class="f-group" style="max-width:140px">
+      <label>Caja 9-Box</label>
+      <select id="fCaja" onchange="applyFilters()">
+        <option value="">Todas las Cajas</option>
+        <option value="9">Caja 9 · Alto Potencial</option>
+        <option value="8">Caja 8 · Sólido</option>
+        <option value="7">Caja 7 · Experto</option>
+        <option value="6">Caja 6 · Alto Pot. Desarr.</option>
+        <option value="5">Caja 5 · Sólido Desarr.</option>
+        <option value="4">Caja 4 · Experto Desarr.</option>
+        <option value="3">Caja 3 · A Gestionar</option>
+        <option value="2">Caja 2 · En Revisión</option>
+        <option value="1">Caja 1 · En Riesgo</option>
+      </select>
+    </div>
+    <div style="display:flex;align-items:flex-end">
+      <button class="btn-outline" style="padding:8px 12px" onclick="resetFilters()">↺ Limpiar</button>
+    </div>
+    <div style="width:100%;font-size:11px;color:var(--text-faint);text-align:right" id="resultCount"></div>
+  </section>
+
+  <!-- NINEBOX VIEW -->
+  <section id="viewNB">
+    <!-- RESUMEN EJECUTIVO (EXPERTO, SÓLIDO, VERSÁTIL) -->
+    <section class="exec-summary" id="execSummary">
+      <div class="exec-head">
+        <h3>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          Resumen Ejecutivo
+        </h3>
+      </div>
+      <div class="exec-grid" id="execGrid"></div>
+    </section>
+
+    <!-- MATRIZ 9-BOX -->
+    <div class="matrix-wrap">
+      <div class="matrix-yaxis">
+        <div class="yspacer"></div>
+        <div class="ylabel">Alto<br>desempeño</div>
+        <div class="ylabel">Desempeño<br>consistente</div>
+        <div class="ylabel">Bajo<br>desempeño</div>
+      </div>
+      <div class="matrix-main">
+        <div class="matrix-xaxis">
+          <div class="xlabel">Experto</div>
+          <div class="xlabel">Sólido</div>
+          <div class="xlabel">Versátil</div>
+        </div>
+        <div class="matrix-cells">
+          <!-- Fila 1 (Alto Desempeño): Cajas 7, 8, 9 -->
+          <div class="cell" data-box="7" onclick="clickBox(7)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">Experto</div>
+              <div class="badge">7</div>
+            </div>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt7">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names7"></div>
+            </div>
+          </div>
+          
+          <div class="cell" data-box="8" onclick="clickBox(8)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">Sólido</div>
+              <div class="badge">8</div>
+            </div>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt8">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names8"></div>
+            </div>
+          </div>
+          
+          <div class="cell" data-box="9" onclick="clickBox(9)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">Alto potencial</div>
+              <div class="badge">9</div>
+            </div>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt9">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names9"></div>
+            </div>
+          </div>
+          
+          <!-- Fila 2 (Desempeño Consistente): Cajas 4, 5, 6 -->
+          <div class="cell" data-box="4" onclick="clickBox(4)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">Experto en desarrollo</div>
+              <div class="badge">4</div>
+            </div>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt4">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names4"></div>
+            </div>
+          </div>
+          
+          <div class="cell" data-box="5" onclick="clickBox(5)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">Sólido en desarrollo</div>
+              <div class="badge">5</div>
+            </div>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt5">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names5"></div>
+            </div>
+          </div>
+          
+          <div class="cell" data-box="6" onclick="clickBox(6)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">Alto pot. en desarrollo</div>
+              <div class="badge">6</div>
+            </div>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt6">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names6"></div>
+            </div>
+          </div>
+          
+          <!-- Fila 3 (Bajo Desempeño): Cajas 1, 2, 3 -->
+          <div class="cell" data-box="1" onclick="clickBox(1)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">En riesgo</div>
+              <div class="badge">1</div>
+            </div>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt1">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names1"></div>
+            </div>
+          </div>
+          
+          <div class="cell" data-box="2" onclick="clickBox(2)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">En revisión</div>
+              <div class="badge">2</div>
+            </div>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt2">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names2"></div>
+            </div>
+          </div>
+          
+          <div class="cell" data-box="3" onclick="clickBox(3)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div class="cellname">A gestionar</div>
+              <div class="badge">3</div>
+            </div>
+            <div>
+              <div class="count-row">
+                <span class="count" id="cnt3">0</span>
+                <span class="count-lbl">personas</span>
+              </div>
+              <div class="cell-names" id="names3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLA DE DETALLE EXACTA A NINEBOX.HTML -->
+    <div class="table-section">
+      <div class="table-wrap">
+        <div style="overflow-x:auto">
+          <table class="nb-table">
+            <thead>
+              <tr id="nbTableHead">
+                <th data-key="nombre" onclick="handleSort('nombre')">NOMBRE <span class="arrow" id="arr_nombre">▲</span></th>
+                <th data-key="cargo" onclick="handleSort('cargo')">CARGO <span class="arrow" id="arr_cargo">▲</span></th>
+                <th data-key="caja" onclick="handleSort('caja')">UBICACIÓN <span class="arrow" id="arr_caja">▲</span></th>
+                <th data-key="sucesor" onclick="handleSort('sucesor')">POSIBLE SUCESOR <span class="arrow" id="arr_sucesor">▲</span></th>
+                <th data-key="tiempo" onclick="handleSort('tiempo')">TIEMPO <span class="arrow" id="arr_tiempo">▲</span></th>
+                <th>FICHA</th>
+              </tr>
+            </thead>
+            <tbody id="nbTableBody"></tbody>
+          </table>
+        </div>
+        <div class="table-foot">
+          <span id="nbPageInfo">Página 1 de 1</span>
+          <div class="pager" id="nbPager"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOGAN VIEW -->
+  <section id="viewHG" style="display:none">
+    <div class="hogan-team-card">
+      <div style="display:flex;align-items:center;gap:12px"><h3 style="font-family:'Space Grotesk',sans-serif;font-size:15px;margin:0">Promedio Equipo — Competencias Hogan</h3><div id="hgTeamSummary" style="display:flex;gap:8px"></div></div>
+      <p style="font-size:12.5px;color:var(--text-dim);margin:4px 0">Consolidado de evaluados en tu estructura jerárquica.</p>
+      <div  id="teamCompGrid"></div>
+    </div>
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;margin:24px 0 12px">Evaluaciones Individuales</h3>
+    <div class="hogan-grid" id="hoganGrid"></div>
+  </section>
+
+  <!-- TABLE VIEW -->
+  <section id="viewTB" style="display:none">
+    <div class="table-section" style="margin-top:0">
+      <div class="table-wrap">
+        <div style="overflow-x:auto">
+          <table class="nb-table" style="width:100%;border-collapse:separate;border-spacing:0;background:var(--panel)">
+            <thead>
+              <tr>
+                <th style="width:25%">NOMBRE ▲</th>
+                <th style="width:20%">CARGO ▲</th>
+                <th>UBICACIÓN ▲</th>
+                <th>POSIBLE SUCESOR ▲</th>
+                <th>TIEMPO ▲</th>
+                <th class="th-center">POTENCIAL HOGAN</th>
+                <th class="th-center">VERSATILIDAD</th>
+                <th class="th-center">FICHA</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- MODAL PERFIL -->
+<div class="modal-overlay" id="profileModal" onclick="if(event.target===this) closeModal()">
+  <div class="modal-card">
+    
+    <!-- HEADER -->
+    <div class="modal-profile-header">
+      
+      <!-- Top buttons -->
+      <div style="display:flex;gap:10px;margin-bottom:16px">
+        <button onclick="closeModal()" class="modal-close-btn">←</button>
+        <button onclick="closeModal()" class="modal-close-btn">✕</button>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div style="display:flex;gap:16px;align-items:center">
+          <div id="mAv" style="width:64px;height:64px;background:#e11d48;border-radius:32px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:white;box-shadow:0 4px 10px rgba(0,0,0,0.2)">U</div>
+          <div>
+            <h2 id="mNombre" style="margin:0;font-size:24px;font-weight:900;letter-spacing:-0.02em;text-transform:uppercase">NOMBRE</h2>
+            <div id="mCargo" style="font-size:14px;color:#9ca3af;margin-top:2px">Cargo</div>
+            <div id="mJefe" style="font-size:12px;color:#6b7280;margin-top:2px">Jefe: -</div>
+            
+            <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap" id="mTopBadges">
+              <!-- JS will fill this with badges (Caja, Sucesor, Versatilidad, Potencial) -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BODY PROFILE -->
+    <div style="padding:32px;background:var(--bg-1);display:flex;flex-direction:column;gap:24px">
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0;color:#f3f4f6;border-bottom:1px solid #374151;padding-bottom:12px">Detalle del Perfil</h3>
+      <div id="mProfileGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:20px">
+        <!-- JS will fill this with profile details -->
+      </div>
+      
+      <div id="mBtnFichaContainer" style="margin-top:16px;text-align:right;display:none">
+        <a id="btnFichaEnlace" href="#" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#e11d48;color:white;padding:10px 20px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none">
+          Abrir Ficha de Talento Completa ↗
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- MODAL HOGAN -->
+<div class="modal-overlay" id="hoganModal" onclick="if(event.target===this) closeHoganModal()">
+  <div class="modal-card">
+    
+    <!-- HEADER HOGAN (Purple) -->
+    <div class="modal-hogan-header">
+      <div style="display:flex;gap:10px;margin-bottom:16px">
+        <button onclick="closeHoganModal()" class="modal-close-btn">←</button>
+        <button onclick="closeHoganModal()" class="modal-close-btn">✕</button>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div style="display:flex;gap:16px;align-items:center">
+          <div id="mHoganAv" style="width:56px;height:56px;background:#1e3a8a;border-radius:28px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:white;box-shadow:0 4px 10px rgba(0,0,0,0.2)">U</div>
+          <div>
+            <h2 id="mHoganNombre" style="margin:0;font-size:24px;font-weight:900;letter-spacing:-0.02em;text-transform:uppercase">NOMBRE</h2>
+            <div id="mHoganCargo" style="font-size:13px;opacity:0.9;margin-top:2px">Cargo</div>
+            <div id="mHoganJefe" style="font-size:12px;opacity:0.7;margin-top:2px">Jefe: -</div>
+            <div style="display:flex;gap:12px;margin-top:12px" id="mHoganBadges">
+              <div style="background:rgba(255,255,255,0.15);padding:6px 12px;border-radius:8px;display:flex;flex-direction:column;min-width:100px">
+                <span id="mHoganVers" style="font-size:15px;font-weight:800;color:#34d399">Alta Versatilidad</span>
+                <span style="font-size:10px;opacity:0.7;text-transform:uppercase;letter-spacing:1px;margin-top:2px">Versatilidad</span>
+              </div>
+              <div style="background:rgba(255,255,255,0.15);padding:6px 12px;border-radius:8px;display:flex;flex-direction:column;min-width:80px">
+                <span id="mHoganPot" style="font-size:18px;font-weight:800;color:#fff">80</span>
+                <span style="font-size:10px;opacity:0.7;text-transform:uppercase;letter-spacing:1px;margin-top:2px">Potencial</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BODY HOGAN -->
+    <div id="mHoganBody" style="padding:24px 32px;background:var(--bg-1);display:flex;flex-direction:column;gap:10px">
+    </div>
+  </div>
+</div>
+
+<!-- DATASTORE EMBEBIDO -->
+<script id="DS" type="application/json">{{JSON_DATA}}</script>
+<script>
+{{JS_CODE}}
+</script>
+</body>
+</html>

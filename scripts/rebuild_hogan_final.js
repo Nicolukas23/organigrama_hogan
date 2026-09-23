@@ -2,7 +2,7 @@ const fs = require('fs');
 const XLSX = require('xlsx');
 
 // Read Excel
-const wb = XLSX.readFile('/Users/nicolassantos/Desktop/Proyectos/reporte_sucesores (3).xlsx');
+const wb = XLSX.readFile('/Users/nicolassantos/Desktop/Proyectos/source_data/reporte_sucesores (4).xlsx');
 
 // Map names to expediente IDs
 const nameToExp = {

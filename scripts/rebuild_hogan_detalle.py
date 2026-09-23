@@ -8,7 +8,7 @@ import unicodedata
 import re
 import openpyxl
 
-BASE_DIR = "/Users/nicolassantos/Desktop/Proyectos/RV_ Reportes  Hogan Final "
+BASE_DIR = "/Users/nicolassantos/Desktop/Proyectos/source_data/RV_Reportes_Hogan_Final"
 OUT_FULL = os.path.join(os.path.dirname(__file__), "hogan_detalle_full.json")
 OUT_KEYED = os.path.join(os.path.dirname(__file__), "hogan_detalle_keyed.json")
 

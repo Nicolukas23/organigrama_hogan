@@ -3,6 +3,22 @@
 Repositorio oficial: `https://github.com/Nicolukas23/organigrama_hogan` (main branch).
 Despliegue: GitHub Pages (`https://nicolukas23.github.io/organigrama_hogan/<archivo>.html`) y Netlify.
 
+## Estructura del repo (reorganizado 2026-09-23)
+
+- `index.html`, `tableros/`, `data/`, `scripts/`, `supabase/`, `docs/`, `analisis/` — la app y su
+  código, sin cambios.
+- `source_data/` (gitignored) — excels fuente ACTIVOS, confirmados por referencia real en algún
+  script de `scripts/`. Si un script deja de usar un archivo de aquí, muévelo a
+  `pendiente_revision/`.
+- `pendiente_revision/` (gitignored) — todo lo que estaba suelto en la raíz sin ningún script que
+  lo referenciara: excels de propósito no confirmado, carpetas de fotos que no solapan con
+  `data/FOTOS/` (`fotos/`), credenciales en texto plano (`credenciales/`), y `sync_hub/` (app
+  Streamlit de sync Excel→Supabase→Git, sin tocar desde el 21-ago-2026). Nada de esto se borró
+  por si tiene valor histórico — revisar y decidir caso a caso.
+- Se eliminaron ~185 archivos: scripts de parcheo puntual de sesiones previas (`fix_*`, `test_*`,
+  `patch_*`, etc. en la raíz), lock files de Excel (`~$*`), y versiones de excels claramente
+  superadas por una más reciente (mismo nombre, fecha posterior).
+
 ## Regla de oro para todas las tareas
 
 Cuando el usuario pida actualizar o revisar UN tablero, trabajar SOLO sobre ese archivo.
@@ -47,13 +63,13 @@ Si se agrega/quita un usuario, actualizar TODOS los que lo requieran.
   (se eliminan personas con caja 0 y que no son jefe de nadie; DE GUSMAO no cuenta).
 - OTROS_SUCESORES en el HTML. Filtro "Comité Directivo" muestra 69 reportes
   (personas cuyo jefe es miembro CD), no los 9 miembros CD.
-- Scripts de origen: `scripts/rebuild_ficha.js` (lee `PARTICIPANTES NINE BOX (22).xlsx` y la
-  `Planta_de_Personal_Mayo_2026.xlsx`).
+- Scripts de origen: `scripts/rebuild_ficha.js` (lee `source_data/PARTICIPANTES NINE BOX (24).xlsx`
+  y `source_data/Planta_de_Personal_Mayo_2026.xlsx`).
 
 ### ficha_talento.html (data externa)
 - La data está en `data/ficha_data.js` (770KB), NO embebida en el HTML.
-- Para regenerarla: ejecutar `node scripts/rebuild_ficha.js` (lee `Info Ficha Talento 1.xlsx`,
-  `Info Ficha Talento 2.xlsx`, `Planta_de_Personal_Mayo_2026.xlsx`).
+- Para regenerarla: ejecutar `node scripts/rebuild_ficha.js` (lee `source_data/Info Ficha Talento 1.xlsx`,
+  `source_data/Info Ficha Talento 2.xlsx`, `source_data/Planta_de_Personal_Mayo_2026.xlsx`).
 - El HTML la carga con `<script src="../data/ficha_data.js?v=...">` (linea 295).
 - Las fotos se cargan desde la carpeta `data/FOTOS/` usando el expediente (`p.exp`).
 - IMPORTANTE: `data/ficha_data.js` es enorme (770KB). NUNCA leerlo completo con Read;
@@ -61,13 +77,23 @@ Si se agrega/quita un usuario, actualizar TODOS los que lo requieran.
 
 ### hogan.html, organigrama_hogan_claro.html, index.html
 - Perfiles embebidos en el HTML (objeto por expediente con competencias, HPI, HDS, MVPI).
-- Para regenerar: `scripts/rebuild_hogan_final.js`.
-- Fuente: `fichas_hogan_actualizado (4) (1).xlsx`, `Competencias Hogan.xlsx`,
-  `Resultados Hogan.xlsx`, `Hogan comite directivo.xlsx`.
+- Para regenerar: `scripts/rebuild_hogan_final.js` (lee `source_data/reporte_sucesores (4).xlsx`
+  y reescribe `data/ficha_data.js`). NOTA (2026-09-23): a pesar de lo que decía esta doc antes,
+  el script NO lee `fichas_hogan_actualizado`/`Competencias Hogan`/`Resultados Hogan`/`Hogan comite
+  directivo` — esos excels quedaron sin conectar a ningún script y se movieron a
+  `pendiente_revision/` en la limpieza del repo; si siguen siendo fuente real de algo, hay que
+  revisarlos e incorporarlos.
+- `data/hogan_detalle.json` (consumido vía Supabase `tableros_json.hogan_detalle`) se regenera con
+  `scripts/rebuild_hogan_detalle.py`, que lee los 10 excels en `source_data/RV_Reportes_Hogan_Final/`.
 
 ### practicantes.html
 - Array embebido en el HTML con todos los practicantes (fallback).
-- Fuente: `HC Practicantes y Aprendices (1).xlsx`.
+- Fuente (sin conectar a script activo, movida a `pendiente_revision/`): `HC Practicantes y
+  Aprendices (1).xlsx`.
+- BUG detectado en la limpieza del 2026-09-23: `tableros/practicantes.html` referencia la ruta
+  relativa `'Practicantes fotos/'+doc+'.jpg'`, que no existe desde `tableros/` ni se despliega
+  (la carpeta está en `.gitignore`) — las fotos de practicantes probablemente no cargan en
+  producción. Pendiente de revisar.
 
 ### dimensionamiento.html
 - Data embebida en el HTML.

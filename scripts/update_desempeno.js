@@ -4,7 +4,7 @@ const fs = require('fs');
 function gv(row, i) { return row && row[i] !== undefined ? row[i] : null; }
 
 // Read Excel
-const wb = XLSX.readFile('/Users/nicolassantos/Desktop/Proyectos/Info Ficha Talento 2.xlsx');
+const wb = XLSX.readFile('/Users/nicolassantos/Desktop/Proyectos/source_data/Info Ficha Talento 2.xlsx');
 
 // === DESEMPENO ===
 const desempeno = {};

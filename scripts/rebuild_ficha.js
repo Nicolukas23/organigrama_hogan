@@ -7,10 +7,10 @@ function getVal(row, idx) {
 }
 
 // Read Excel files
-const wb1 = XLSX.readFile('/Users/nicolassantos/Desktop/Proyectos/Info Ficha Talento 1.xlsx');
-const wb2 = XLSX.readFile('/Users/nicolassantos/Desktop/Proyectos/Info Ficha Talento 2.xlsx');
-const wbPlantilla = XLSX.readFile('/Users/nicolassantos/Desktop/Proyectos/Planta_de_Personal_Mayo_2026.xlsx');
-const wb9box = XLSX.readFile('/Users/nicolassantos/Desktop/Proyectos/PARTICIPANTES NINE BOX (22).xlsx');
+const wb1 = XLSX.readFile('/Users/nicolassantos/Desktop/Proyectos/source_data/Info Ficha Talento 1.xlsx');
+const wb2 = XLSX.readFile('/Users/nicolassantos/Desktop/Proyectos/source_data/Info Ficha Talento 2.xlsx');
+const wbPlantilla = XLSX.readFile('/Users/nicolassantos/Desktop/Proyectos/source_data/Planta_de_Personal_Mayo_2026.xlsx');
+const wb9box = XLSX.readFile('/Users/nicolassantos/Desktop/Proyectos/source_data/PARTICIPANTES NINE BOX (24).xlsx');
 
 // ============ 1. INFORMACION (from Planta) ============
 const informacion = {};

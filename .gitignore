@@ -9,3 +9,5 @@ node_modules/
 ~$*
 Practicantes fotos/
 .env
+/source_data/
+/pendiente_revision/

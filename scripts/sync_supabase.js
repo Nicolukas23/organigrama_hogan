@@ -17,7 +17,7 @@ const XLSX = require('xlsx');
 const fs = require('fs');
 const path = require('path');
 
-const PROYECTOS = '/Users/nicolassantos/Desktop/Proyectos';
+const PROYECTOS = '/Users/nicolassantos/Desktop/Proyectos/source_data';
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
@@ -329,7 +329,7 @@ function extractClima() {
 // ------------------------------------------------------------
 function extractSucesores() {
   const out = {};
-  const data = readSheet(`${PROYECTOS}/PARTICIPANTES NINE BOX (22).xlsx`, 'observaciones');
+  const data = readSheet(`${PROYECTOS}/PARTICIPANTES NINE BOX (24).xlsx`, 'observaciones');
   if (!data) return out;
   const hr = findHeaderRow(data, 'expediente');
   if (hr < 0) return out;
