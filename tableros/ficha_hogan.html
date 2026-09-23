@@ -455,6 +455,12 @@ function loadFicha(p) {
   if (detalle && detalle.competencias && detalle.competencias.length > 0) {
     detalleSection.style.display = 'block';
     detalleSection.innerHTML = buildHoganDetalleHtml(detalle);
+  } else if (h && h.hpi && h.hds && h.mvpi) {
+    // Sin reporte de competencias, pero con reporte de escalas crudas
+    // (window.COMITE_HOGAN vía data/comite_hogan.js) — hoy solo Freddy
+    // Vargas y Daniel Dominguez caen en este caso.
+    detalleSection.style.display = 'block';
+    detalleSection.innerHTML = buildHoganEscalasHtml(h);
   } else {
     detalleSection.style.display = 'none';
     detalleSection.innerHTML = '';
@@ -559,6 +565,132 @@ function buildHoganDetalleHtml(d){
       html += '<div style="padding:14px 18px; font-size:12.5px; color:var(--text-dim); line-height:1.7; white-space:pre-line;">'+esc(d.recomendaciones_nota)+'</div>';
     }
     html += '</div>';
+  }
+
+  return html;
+}
+
+// Construye el HTML del detalle Hogan para personas que solo tienen el
+// reporte de ESCALAS crudas (HPI/HDS/MVPI) en vez del reporte de
+// competencias interpretadas — hoy solo aplica a 2 del Comité Directivo
+// (Freddy Vargas, Daniel Dominguez) via window.COMITE_HOGAN en
+// data/comite_hogan.js. No es el mismo dato que "competencias": no hay
+// fórmula pública para convertir escalas Hogan en las 10 competencias que
+// usa buildHoganDetalleHtml, así que se muestra tal cual viene el reporte.
+function buildHoganEscalasHtml(h){
+  const esc = (s) => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  let html = '';
+
+  html += '<div style="background:#1a1a2e; color:#fff; padding:14px 20px; text-align:center; font-size:16px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; border-radius:8px; margin-bottom:24px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);">RESULTADOS PRUEBA POTENCIAL HOGAN</div>';
+  html += buildHoganDisclaimerHtml();
+
+  const hasHpi = h && h.hpi && Object.keys(h.hpi).length;
+  const hasHds = h && h.hds && Object.keys(h.hds).length;
+  const hasMvpi = h && h.mvpi && Object.keys(h.mvpi).length;
+  if (!hasHpi && !hasHds && !hasMvpi) return html;
+
+  // Mismo diseño de barras HPI/HDS/MVPI + tarjetas de texto que ya usa
+  // ficha_talento.html (icono por escala, color por tipo, tarjeta verde de
+  // Foco de Desarrollo con el top-3 de cada escala) — portado tal cual
+  // para que ambas fichas se vean iguales.
+  function barColor(type){
+    if(type==='hpi') return '#eab308';
+    if(type==='hds') return '#dc2626';
+    return '#2563eb';
+  }
+  function titleColor(type){
+    if(type==='hpi') return '#a16207';
+    if(type==='hds') return '#b91c1c';
+    return '#1d4ed8';
+  }
+  const icons={hpi:'<svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>',
+    hds:'<svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>',
+    mvpi:'<svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2z"/></svg>'};
+  const iconBg={hpi:'background:#fef9c3;color:#a16207;',hds:'background:#fee2e2;color:#b91c1c;',mvpi:'background:#dbeafe;color:#1d4ed8;'};
+
+  function renderBarSection(title, data, type){
+    let s='<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:16px 20px;">';
+    s+='<div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;">';
+    s+='<div style="width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;'+iconBg[type]+'">'+icons[type]+'</div>';
+    s+='<div style="font-family:\'Space Grotesk\',sans-serif;font-size:13px;font-weight:700;color:'+titleColor(type)+';text-align:center;">'+esc(title)+'</div>';
+    s+='</div>';
+    Object.entries(data).forEach(([name,val])=>{
+      s+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">';
+      s+='<div style="width:140px;text-align:right;font-size:11px;color:var(--text-dim);flex-shrink:0;">'+esc(name)+'</div>';
+      s+='<div style="flex:1;height:14px;background:var(--border);border-radius:4px;overflow:hidden;">';
+      s+='<div style="width:'+val+'%;height:100%;background:'+barColor(type)+';border-radius:4px;"></div>';
+      s+='</div>';
+      s+='<div style="width:28px;font-size:12px;font-weight:700;color:var(--text);text-align:right;">'+val+'</div>';
+      s+='</div>';
+    });
+    s+='</div>';
+    return s;
+  }
+
+  const barSections=[];
+  if(hasHpi) barSections.push({title:'COMPETENCIAS / FORTALEZAS & ESTILO',data:h.hpi,type:'hpi'});
+  if(hasHds) barSections.push({title:'HDS – RIESGOS BAJO PRESIÓN',data:h.hds,type:'hds'});
+  if(hasMvpi) barSections.push({title:'MVPI – MOTIVADORES & VALORES',data:h.mvpi,type:'mvpi'});
+  const gridCols = barSections.length===1?'1fr':barSections.length===2?'1fr 1fr':'1fr 1fr 1fr';
+
+  const tipoColors={'Alta Versatilidad':'#059669','Sólido':'#2563eb','Experto':'#e97b1a','Alto potencial':'#7c3aed'};
+  html += '<div style="display:flex;align-items:center;justify-content:center;gap:10px;font-family:\'Space Grotesk\',sans-serif;font-size:16px;font-weight:700;color:#fff;background:#dc2626;padding:10px 0;border-radius:8px;margin-bottom:12px;">Valoración de Comportamientos Hogan'+(h.tipo?'<span style="padding:2px 12px;border-radius:100px;font-size:11px;font-weight:700;color:#fff;background:'+(tipoColors[h.tipo]||'rgba(255,255,255,0.25)')+';">'+esc(h.tipo)+'</span>':'')+'</div>';
+  html += '<div style="display:grid; grid-template-columns:'+gridCols+'; gap:12px; margin-bottom:12px;">';
+  html += barSections.map(s=>renderBarSection(s.title,s.data,s.type)).join('');
+  html += '</div>';
+
+  function formatBullets(text){
+    if(!text) return '';
+    let t = esc(text).replace(/\n+/g,' ').replace(/•\s*/g,'•').trim();
+    let parts = t.split('•').map(s=>s.trim()).filter(Boolean);
+    return parts.map(p=>'• '+p).join('\n');
+  }
+
+  const hasDesc = !!(h.descarriladores && h.descarriladores.trim());
+  const hasOport = !!(h.oportunidades && h.oportunidades.trim());
+  const hasMotiv = !!(h.motivadores && h.motivadores.trim());
+  const cardTextStyle = 'font-size:11px;color:var(--text);line-height:1.7;white-space:pre-line;';
+  const cardEmptyStyle = 'font-size:11px;color:var(--text-dim);font-style:italic;text-align:center;padding:8px;';
+
+  html += '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:12px;">';
+
+  html += '<div><div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#a16207;padding:6px 16px;background:#fef9c3;justify-content:center;border-radius:8px;margin-bottom:10px;"><svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>FORTALEZAS (HPI)</div>'+
+    '<div style="'+cardTextStyle+'">'+formatBullets(h.fortalezas)+'</div></div>';
+
+  if(hasDesc){
+    html += '<div><div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#b91c1c;padding:6px 16px;background:#fee2e2;justify-content:center;border-radius:8px;margin-bottom:10px;"><svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>DESCARRILADORES (HDS)</div>'+
+      '<div style="'+cardTextStyle+'">'+formatBullets(h.descarriladores)+'</div></div>';
+  } else if(hasOport){
+    html += '<div><div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#b91c1c;padding:6px 16px;background:#fee2e2;justify-content:center;border-radius:8px;margin-bottom:10px;"><svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>OPORTUNIDADES DE DESARROLLO</div>'+
+      '<div style="'+cardTextStyle+'">'+formatBullets(h.oportunidades)+'</div></div>';
+  } else {
+    html += '<div><div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#b91c1c;padding:6px 16px;background:#fee2e2;justify-content:center;border-radius:8px;margin-bottom:10px;"><svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>DESCARRILADORES (HDS)</div>'+
+      '<div style="'+cardEmptyStyle+'">Sin datos</div></div>';
+  }
+
+  if(hasMotiv){
+    html += '<div><div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1d4ed8;padding:6px 16px;background:#dbeafe;justify-content:center;border-radius:8px;margin-bottom:10px;"><svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>MOTIVADORES (MVPI)</div>'+
+      '<div style="'+cardTextStyle+'">'+formatBullets(h.motivadores)+'</div></div>';
+  } else {
+    html += '<div><div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1d4ed8;padding:6px 16px;background:#dbeafe;justify-content:center;border-radius:8px;margin-bottom:10px;"><svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>MOTIVADORES (MVPI)</div>'+
+      '<div style="'+cardEmptyStyle+'">Sin datos</div></div>';
+  }
+
+  html += '</div>';
+
+  if(h.foco && h.foco.trim()){
+    const topHpi=hasHpi?Object.entries(h.hpi).sort((a,b)=>b[1]-a[1]).slice(0,3):[];
+    const hpiLine=topHpi.map(([n,v])=>'<b>'+esc(n)+'</b> '+v).join(' · ');
+    let focoLines='<div style="font-size:12px;color:#a16207;margin-bottom:4px;text-align:center;">HPI Fortalezas: '+hpiLine+'</div>';
+    if(hasHds){const topHds=Object.entries(h.hds).sort((a,b)=>b[1]-a[1]).slice(0,3);focoLines+='<div style="font-size:12px;color:#dc2626;margin-bottom:4px;text-align:center;">HDS Riesgo: '+topHds.map(([n,v])=>'<b>'+esc(n)+'</b> '+v).join(' · ')+'</div>';}
+    if(hasMvpi){const topMvpi=Object.entries(h.mvpi).sort((a,b)=>b[1]-a[1]).slice(0,3);focoLines+='<div style="font-size:12px;color:#2563eb;margin-bottom:12px;text-align:center;">MVPI Motivadores: '+topMvpi.map(([n,v])=>'<b>'+esc(n)+'</b> '+v).join(' · ')+'</div>';}
+    const focoItems=h.foco.split(/•\s*/).map(s=>s.trim()).filter(Boolean);
+    const focoBullets=focoItems.map(item=>'<div style="display:flex;gap:6px;margin-bottom:4px;font-size:11px;color:#14532d;line-height:1.5;"><span style="color:#15803d;flex-shrink:0;">•</span><span>'+esc(item)+'</span></div>').join('');
+    html += '<div style="font-family:\'Space Grotesk\',sans-serif;font-size:14px;font-weight:700;color:#15803d;text-align:center;margin-bottom:10px;margin-top:16px;">FOCO DE DESARROLLO</div>'+
+      '<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:20px 24px;">'+
+        focoLines+
+        '<div style="margin-top:8px;">'+focoBullets+'</div>'+
+      '</div>';
   }
 
   return html;
