@@ -20,7 +20,7 @@
 <script src="../data/sucesor_pairs.js?v=1789144585"></script>
 <script src="../data/sucesor_pendientes.js?v=1789401896"></script>
 <script src="../data/umc_organigrama.js?v=1790870000"></script>
-<script src="../data/tecnologia_organigrama.js?v=1790870000"></script>
+<script src="../data/tecnologia_organigrama.js?v=1790990000"></script>
 <script src="../data/auditoria_organigrama.js?v=1790950000"></script>
 <script src="../data/umm_organigrama.js?v=1790960000"></script>
 <style>
@@ -62,7 +62,13 @@ body.og-mode #statsGrid, body.og-mode #instructionsBanner, body.og-mode #filters
 .og-tools{display:flex;flex-wrap:wrap;gap:6px}
 .og-tools button{background:var(--panel);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:4px 10px;font-weight:700;font-size:.75rem;cursor:pointer;font-family:inherit}
 .og-tools button:hover{border-color:var(--crimson)}
-.og-summary{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.og-top{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:12px}
+.og-top .og-legend{padding-top:14px}
+.og-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.og-tools-wrap{display:flex;flex-wrap:wrap;gap:10px;margin-left:auto}
+.og-summary{display:flex;flex-wrap:wrap;gap:10px}
+.og-dsuc-btn{display:block;margin:8px auto 0;background:var(--crimson-soft);border:1px solid transparent;border-radius:999px;padding:4px 12px;font:inherit;font-size:.7rem;font-weight:800;color:var(--crimson);cursor:pointer}
+.og-dsuc-btn:hover,.og-dsuc-btn.on{border-color:var(--crimson)}
 .og-pill{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-size:.78rem;color:var(--text-dim)}
 .og-pill b{color:var(--text);font-size:.95rem;margin-right:4px}
 .og-scroll{overflow:auto;border:1px solid var(--border);border-radius:14px;background:var(--panel-2, var(--panel));padding:24px 16px}
@@ -522,16 +528,23 @@ body.og-mode #statsGrid, body.og-mode #instructionsBanner, body.og-mode #filters
   <!-- ORGANIGRAMA VIEW (por dirección: director → reportes directos →
        clic → sucesores). Datos: data/*_organigrama.js -->
   <section id="viewOG" style="display:none">
-    <div class="og-orgs" id="ogOrgs"></div>
+    <div class="og-top">
+      <div class="og-orgs" id="ogOrgs"></div>
+      <div class="og-legend">
+        <span><i class="og-dot og-baja"></i>Brecha baja</span>
+        <span><i class="og-dot og-media"></i>Brecha media</span>
+        <span><i class="og-dot og-alta"></i>Brecha alta</span>
+      </div>
+    </div>
     <div class="og-head">
       <div>
         <h2 id="ogTitle">Organigrama</h2>
         <div class="og-sub">Haz clic en un líder para ver sus sucesores. Cada caja compara el tipo de talento que requiere el cargo con el de la persona.</div>
       </div>
-      <div class="og-legend">
-        <span><i class="og-dot og-baja"></i>Brecha baja</span>
-        <span><i class="og-dot og-media"></i>Brecha media</span>
-        <span><i class="og-dot og-alta"></i>Brecha alta</span>
+    </div>
+    <div class="og-bar">
+      <div class="og-summary" id="ogSummary"></div>
+      <div class="og-tools-wrap">
         <div class="og-tools">
           <button onclick="ogExpandAll(true)" title="Mostrar los sucesores de todos">Expandir todo</button>
           <button onclick="ogExpandAll(false)" title="Ocultar todos los sucesores">Contraer todo</button>
@@ -543,7 +556,6 @@ body.og-mode #statsGrid, body.og-mode #instructionsBanner, body.og-mode #filters
         </div>
       </div>
     </div>
-    <div class="og-summary" id="ogSummary"></div>
     <div class="og-scroll" id="ogScroll"><div class="og-tree" id="ogTree"></div></div>
   </section>
 
@@ -2669,6 +2681,7 @@ const OG_ORGS = window.ORGANIGRAMAS || [];
 let OG_ORG_ID = null;              // dirección seleccionada
 const OG_OPEN = {};                // orgId → Set de índices de reportes directos desplegados
 const OG_DIRECTS_HIDDEN = {};      // orgId → true si se contrajo el director
+const OG_DIRSUC_OPEN = {};         // orgId → true si se desplegaron los sucesores del director
 let OG_SUC_LIVE = null;            // expediente → { sucesor, tiempo } desde Supabase
 let OG_ZOOM = null;                // null = recalcular zoom automático
 let OG_ZOOM_MANUAL = false;
@@ -2789,11 +2802,18 @@ function ogClickAttrs(fn){
 
 function ogCardDirector(org, open){
   const n = org.directos.length;
+  const ns = ogDirSucesores(org).length;
+  const sucOpen = !!OG_DIRSUC_OPEN[org.id];
+  // Botón propio para la rama de sucesores del director (no despliega el equipo).
+  const sucBtn = ns
+    ? `<button class="og-dsuc-btn${sucOpen ? ' on' : ''}" onclick="event.stopPropagation();ogToggleDirSuc()">${sucOpen ? '▾ Ocultar' : '▸ Ver'} ${ns} sucesor${ns === 1 ? '' : 'es'} del director</button>`
+    : `<div class="og-toggle og-none" style="border:0;padding-top:4px;margin-top:4px">Sin sucesor identificado</div>`;
   return `<div class="og-card og-dir og-click" ${ogClickAttrs('ogToggleDirector()')}>
     ${ogPhoto(org.director)}
     <div class="og-name">${ogEsc(org.director.nombre)}</div>
     <div class="og-cargo">${ogEsc(org.director.cargo)}</div>
     ${ogFichaBtn(org.director)}
+    ${sucBtn}
     <div class="og-toggle">${open ? '▾ Ocultar equipo' : `▸ Ver ${n} reportes directos`}</div>
   </div>`;
 }
@@ -2837,8 +2857,8 @@ function ogCardSucesor(org, s, lider){
     <div class="og-k">Candidato a suceder</div>
     <div class="og-target">${ogEsc(lider.cargo)}</div>
     <div class="og-vs">
-      <div>El cargo requiere<b>${ogEsc(ogTitle(lider.posicion))}</b></div><i>→</i>
-      <div>La persona es<b>${ogEsc(ogTitle(s.persona))}</b></div>
+      <div>El cargo requiere<b>${ogEsc(String(lider.posicion || '—').toUpperCase())}</b></div><i>→</i>
+      <div>La persona es<b>${ogEsc(String(s.persona || '—').toUpperCase())}</b></div>
     </div>
     <div class="og-meta">
       <div><span>Alistamiento</span><b>${ogEsc(ogTiempo(org, s))}</b></div>
@@ -2957,10 +2977,11 @@ function renderOrganigrama(recenter){
     return `<li>${ogCardDirecto(p, i, isOpen)}${sucHTML}</li>`;
   }).join('');
   const dsucs = ogDirSucesores(org);
-  const dirSucHTML = dsucs.length
+  const dirSucHTML = dsucs.length && OG_DIRSUC_OPEN[org.id]
     ? `<div class="og-dline"><div class="og-dsucs"><span class="og-sucs-lbl">Sucesores del director (${dsucs.length})</span>${dsucs.map(s => ogCardDirSucesor(org, s)).join('')}</div></div>`
     : '';
-  tree.innerHTML = `<ul><li>${ogCardDirector(org, dirOpen)}${dirOpen ? `${dirSucHTML}<ul>${branches}</ul>` : ''}</li></ul>`;
+  // Los sucesores del director se pueden ver aunque el equipo esté contraído.
+  tree.innerHTML = `<ul><li>${ogCardDirector(org, dirOpen)}${dirSucHTML}${dirOpen ? `<ul>${branches}</ul>` : ''}</li></ul>`;
 
   // Resumen: brechas de los reportes directos y de los sucesores.
   const count = (arr) => arr.reduce((a, x) => { const k = String(x.clasif || '').toUpperCase(); if(k) a[k] = (a[k] || 0) + 1; return a; }, {});
@@ -2994,10 +3015,15 @@ function ogToggleDirector(){
   OG_DIRECTS_HIDDEN[OG_ORG_ID] = !OG_DIRECTS_HIDDEN[OG_ORG_ID];
   renderOrganigrama(false);
 }
+function ogToggleDirSuc(){
+  OG_DIRSUC_OPEN[OG_ORG_ID] = !OG_DIRSUC_OPEN[OG_ORG_ID];
+  renderOrganigrama(false);
+}
 function ogExpandAll(on){
   const org = OG_ORGS.find(o => o.id === OG_ORG_ID);
   if(!org) return;
   OG_DIRECTS_HIDDEN[org.id] = false;
+  OG_DIRSUC_OPEN[org.id] = on;
   OG_OPEN[org.id] = new Set(on ? org.directos.map((d, i) => (d.sucesores || []).length ? i : -1).filter(i => i >= 0) : []);
   renderOrganigrama(false);
 }
