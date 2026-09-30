@@ -145,6 +145,41 @@ body.og-mode #statsGrid, body.og-mode #instructionsBanner, body.og-mode #filters
 .og-media{--og-c:#eab308;--og-bg:#fef9c3;--og-fg:#854d0e}
 .og-alta{--og-c:#dc2626;--og-bg:#fee2e2;--og-fg:#991b1b}
 .og-na{--og-c:#94a3b8;--og-bg:#f1f5f9;--og-fg:#475569}
+
+/* ── CELULAR ─────────────────────────────────────────────────────────
+   Ajustes solo de este tablero (tableros.css lo comparten otros). */
+@media (max-width: 640px){
+  /* Matriz 9-Box: las 3 columnas caben en pantalla; ejes compactos y sin
+     la lista de nombres dentro de cada caja (se ve al tocar la caja). */
+  .matrix-wrap{grid-template-columns:28px minmax(0,1fr);gap:6px}
+  .matrix-yaxis .ylabel{writing-mode:vertical-rl;transform:rotate(180deg);font-size:10.5px;padding:0}
+  .matrix-xaxis{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;height:auto;min-height:28px}
+  .matrix-xaxis .xlabel{font-size:10.5px;line-height:1.15}
+  .matrix-yaxis{grid-template-rows:28px 1fr 1fr 1fr;gap:4px}
+  .matrix-yaxis .yspacer{height:28px}
+  .matrix-main{gap:4px}
+  .matrix-cells{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(92px,auto));gap:4px}
+  .cell{padding:7px;min-height:92px}
+  .cell .cellname{font-size:10.5px;line-height:1.15}
+  .cell .count{font-size:22px}
+  .cell .count-lbl{display:none}
+  .cell .badge{width:18px;height:18px;font-size:9px}
+  .cell .cell-names{display:none !important}  /* el JS la muestra con style inline */
+  /* Tablas: se desplazan de lado dentro de su caja en vez de ensanchar la página */
+  .table-wrap{overflow-x:auto}
+  /* Organigrama */
+  .og-top{flex-direction:column;gap:6px}
+  .og-orgs{display:block;width:100%}
+  .og-pick-btn{min-width:0;width:100%}
+  .og-pick-menu{min-width:0}
+  .og-top .og-legend{padding-top:0;gap:10px}
+  .og-head h2{font-size:1rem}
+  .og-summary{gap:6px}
+  .og-pill{padding:5px 9px;font-size:.7rem}
+  .og-pill b{font-size:.85rem}
+  .og-tools-wrap{margin-left:0}
+  .og-scroll{padding:14px 6px}
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
@@ -616,7 +651,7 @@ body.og-mode #statsGrid, body.og-mode #instructionsBanner, body.og-mode #filters
 
     <!-- BODY PROFILE -->
     <div style="padding:32px;background:var(--bg-1);display:flex;flex-direction:column;gap:24px">
-      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0;color:#f3f4f6;border-bottom:1px solid #374151;padding-bottom:12px">Detalle del Perfil</h3>
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0;color:var(--text);border-bottom:1px solid var(--border);padding-bottom:12px">Detalle del Perfil</h3>
       <div id="mProfileGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:20px">
         <!-- JS will fill this with profile details -->
       </div>
