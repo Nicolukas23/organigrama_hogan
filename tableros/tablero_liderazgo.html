@@ -21,6 +21,8 @@
 <script src="../data/sucesor_pendientes.js?v=1789401896"></script>
 <script src="../data/umc_organigrama.js?v=1790870000"></script>
 <script src="../data/tecnologia_organigrama.js?v=1790870000"></script>
+<script src="../data/auditoria_organigrama.js?v=1790950000"></script>
+<script src="../data/umm_organigrama.js?v=1790950000"></script>
 <style>
 /* ── ORGANIGRAMA POR DIRECCIÓN ───────────────────────────────────────
    Director → reportes directos → (clic) sucesores, con semáforo de
@@ -86,9 +88,6 @@ body.og-mode #statsGrid, body.og-mode #instructionsBanner, body.og-mode #filters
 .og-vs > div{display:flex;flex-direction:column;align-items:center;gap:3px}
 .og-vs b{font-size:.72rem;color:var(--text);letter-spacing:0;line-height:1.15}
 .og-vs > i{font-style:normal;font-weight:800;color:var(--text-faint);align-self:center;font-size:.62rem}
-.og-lvl{display:inline-flex;gap:3px}
-.og-lvl s{width:7px;height:7px;border-radius:50%;background:var(--border);text-decoration:none}
-.og-lvl s.on{background:var(--text-dim)}
 .og-gap{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:4px 10px;border-radius:999px;font-size:.7rem;font-weight:800;background:var(--og-bg);color:var(--og-fg)}
 .og-dot{width:10px;height:10px;border-radius:50%;background:var(--og-c);display:inline-block;box-shadow:0 0 0 2px rgba(255,255,255,.6)}
 .og-meta{font-size:.68rem;color:var(--text-faint);margin-top:6px}
@@ -2619,8 +2618,9 @@ function switchView(v){
 }
 
 /* ── ORGANIGRAMA POR DIRECCIÓN ───────────────────────────────────────
-   Datos: data/umc_organigrama.js y data/tecnologia_organigrama.js (Excel
-   "Recalibrado" de cada dirección), que se registran en ORGANIGRAMAS.
+   Datos: data/<direccion>_organigrama.js (Excel "Recalibrado" de cada
+   dirección: UMC, Tecnología, Auditoría, UMM), que se registran en
+   ORGANIGRAMAS.
    Arranca mostrando director + reportes directos; clic en un reporte
    directo despliega sus sucesores. El tiempo de alistamiento se refresca
    en vivo desde la tabla "sucesores" de Supabase. */
@@ -2692,16 +2692,6 @@ function ogTone(clasif){
   const c = String(clasif || '').toUpperCase();
   return c === 'BAJA' ? 'og-baja' : c === 'MEDIA' ? 'og-media' : c === 'ALTA' ? 'og-alta' : 'og-na';
 }
-// Nivel 1-3 del tipo de talento (posición y persona usan nombres distintos
-// según la dirección: PROFUNDIDAD≈EXPERTO, MEDIA VERSATILIDAD≈SÓLIDO,
-// ALTA VERSATILIDAD≈VERSÁTIL). Se pinta como 3 puntos para comparar a ojo.
-const OG_LEVELS = { 'EXPERTO': 1, 'PROFUNDIDAD': 1, 'SOLIDO': 2, 'MEDIA VERSATILIDAD': 2, 'VERSATIL': 3, 'ALTA VERSATILIDAD': 3 };
-function ogLvlDots(label){
-  const k = String(label || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase().trim();
-  const n = OG_LEVELS[k];
-  if(!n) return '';
-  return `<span class="og-lvl" title="Nivel ${n} de 3 (1 = profundidad · 3 = versatilidad)">${[1,2,3].map(i => `<s class="${i <= n ? 'on' : ''}"></s>`).join('')}</span>`;
-}
 function ogPhoto(p){
   const ini = String(p.nombre || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('');
   if(!p.foto) return `<div class="og-photo og-initials">${p.vacante ? '—' : ogEsc(ini)}</div>`;
@@ -2710,8 +2700,8 @@ function ogPhoto(p){
 }
 function ogVs(lblA, valA, lblB, valB){
   return `<div class="og-vs">
-    <div>${lblA}<b>${ogEsc(valA || '—')}</b>${ogLvlDots(valA)}</div><i>vs</i>
-    <div>${lblB}<b>${ogEsc(valB || '—')}</b>${ogLvlDots(valB)}</div>
+    <div>${lblA}<b>${ogEsc(valA || '—')}</b></div><i>vs</i>
+    <div>${lblB}<b>${ogEsc(valB || '—')}</b></div>
   </div>`;
 }
 function ogGap(p){
