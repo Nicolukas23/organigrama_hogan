@@ -47,11 +47,11 @@
         { expediente: '88002967', foto: '88002967.png', nombre: 'DUARTE MENDOZA HERMES ALFONSO', cargo: 'Gerente Regional Agentes PDV', tiempo: '2 AÑOS', caja: '6', persona: 'VERSÁTIL', brecha: 0, clasif: 'BAJA' }
       ] },
     { expediente: '66881732', foto: '66881732.jpg', nombre: 'OCAMPO GIRON MARIA DEL PILAR', cargo: 'Director(a) Canales Atencion UMM',
-      posicion: 'SÓLIDO', persona: 'SÓLIDO', caja: '8', brecha: 0, clasif: 'MEDIA',
+      posicion: 'SÓLIDO', persona: 'SÓLIDO', caja: '8', brecha: 0, clasif: 'BAJA',
       sucesores: [
-        { expediente: '80055143', foto: '80055143.png', nombre: 'MARTINEZ NIÑO JESUS GIOVANY', cargo: 'Gerente Planeacion y Control Operativo SAC', tiempo: '2 AÑOS', caja: '9', persona: 'VERSÁTIL', brecha: -1, clasif: 'ALTA' },
-        { expediente: '88227648', foto: '88227648.png', nombre: 'GALVIS CLARO JOSE LUIS', cargo: 'Gerente Regional CAVS', tiempo: '2 AÑOS', caja: '9', persona: 'VERSÁTIL', brecha: -1, clasif: 'ALTA' },
-        { expediente: '29284580', foto: '29284580.png', nombre: 'CORREA PELAEZ TATIANA', cargo: 'Gerente Regional Cavs', tiempo: '1 AÑO', caja: '9', persona: 'VERSÁTIL', brecha: -1, clasif: 'ALTA' }
+        { expediente: '80055143', foto: '80055143.png', nombre: 'MARTINEZ NIÑO JESUS GIOVANY', cargo: 'Gerente Planeacion y Control Operativo SAC', tiempo: '2 AÑOS', caja: '9', persona: 'VERSÁTIL', brecha: -1, clasif: 'MEDIA' },
+        { expediente: '88227648', foto: '88227648.png', nombre: 'GALVIS CLARO JOSE LUIS', cargo: 'Gerente Regional CAVS', tiempo: '2 AÑOS', caja: '9', persona: 'VERSÁTIL', brecha: -1, clasif: 'MEDIA' },
+        { expediente: '29284580', foto: '29284580.png', nombre: 'CORREA PELAEZ TATIANA', cargo: 'Gerente Regional Cavs', tiempo: '1 AÑO', caja: '9', persona: 'VERSÁTIL', brecha: -1, clasif: 'MEDIA' }
       ] },
     { expediente: '32842621', foto: '32842621.jpg', nombre: 'MANOTAS SALCEDO ELIANA MARIA', cargo: 'Director(a) Canales de Venta Agentes',
       posicion: 'VERSÁTIL', persona: 'VERSÁTIL', caja: '6', brecha: 0, clasif: 'BAJA',
@@ -59,9 +59,9 @@
         { expediente: '1016030752', foto: '1016030752.png', nombre: 'MURILLO BOBADILLA CARLOS ARTURO', cargo: 'Gerente Nacional PDV', tiempo: 'LISTO YA', caja: '9', persona: 'VERSÁTIL', brecha: 0, clasif: 'BAJA' }
       ] },
     { expediente: '80471459', foto: '80471459.jpg', nombre: 'MEDINA PEÑA IVAN RICARDO', cargo: 'Director(a) Ecommerce y Telemercadeo',
-      posicion: 'SÓLIDO', persona: 'VERSÁTIL', caja: '6', brecha: -1, clasif: 'ALTA',
+      posicion: 'SÓLIDO', persona: 'VERSÁTIL', caja: '6', brecha: -1, clasif: 'MEDIA',
       sucesores: [
-        { expediente: '80895159', foto: '80895159.png', nombre: 'NORIEGA NIEBLES ESTEBAN JOSE', cargo: 'Gerente Ecommerce y Canales Digitales', tiempo: '2 AÑOS', caja: '9', persona: 'VERSÁTIL', brecha: -1, clasif: 'ALTA' }
+        { expediente: '80895159', foto: '80895159.png', nombre: 'NORIEGA NIEBLES ESTEBAN JOSE', cargo: 'Gerente Ecommerce y Canales Digitales', tiempo: '2 AÑOS', caja: '9', persona: 'VERSÁTIL', brecha: -1, clasif: 'MEDIA' }
       ] },
     { expediente: '79556029', foto: '79556029.jpg', nombre: 'CARLESIMO REY ANDRES', cargo: 'Director(a) Producto Masivo',
       posicion: 'VERSÁTIL', persona: 'SÓLIDO', caja: '8', brecha: 1, clasif: 'MEDIA',
