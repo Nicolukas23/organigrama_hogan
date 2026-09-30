@@ -19,66 +19,86 @@
 <script src="../data/otros_sucesores.js?v=1789144585"></script>
 <script src="../data/sucesor_pairs.js?v=1789144585"></script>
 <script src="../data/sucesor_pendientes.js?v=1789401896"></script>
-<script src="../data/umc_organigrama.js?v=1790784000"></script>
+<script src="../data/umc_organigrama.js?v=1790870000"></script>
+<script src="../data/tecnologia_organigrama.js?v=1790870000"></script>
 <style>
-/* ── ORGANIGRAMA UMC ─────────────────────────────────────────────────
-   Director → reportes directos → sucesores, con semáforo de brecha de
-   tipo de talento (posición vs persona). */
+/* ── ORGANIGRAMA POR DIRECCIÓN ───────────────────────────────────────
+   Director → reportes directos → (clic) sucesores, con semáforo de
+   brecha de tipo de talento: lo que el cargo requiere vs lo que la
+   persona es. */
 body.og-mode #statsGrid, body.og-mode #instructionsBanner, body.og-mode #filtersBar{display:none !important}
+.og-orgs{display:inline-flex;flex-wrap:wrap;gap:4px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:14px}
+.og-orgs button{background:transparent;border:0;border-radius:9px;padding:7px 14px;font:inherit;font-size:.8rem;font-weight:700;color:var(--text-dim);cursor:pointer}
+.og-orgs button:hover{color:var(--text)}
+.og-orgs button.active{background:var(--crimson);color:#fff}
 .og-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
 .og-head h2{margin:0;font-size:1.15rem;font-weight:800;letter-spacing:-.01em}
 .og-head .og-sub{font-size:.8rem;color:var(--text-dim);margin-top:2px}
 .og-legend{display:flex;flex-wrap:wrap;gap:14px;align-items:center;font-size:.75rem;color:var(--text-dim)}
 .og-legend span{display:inline-flex;align-items:center;gap:6px}
-.og-zoom{display:flex;gap:6px}
-.og-zoom button{background:var(--panel);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:4px 10px;font-weight:700;cursor:pointer;font-family:inherit}
-.og-zoom button:hover{border-color:var(--crimson)}
+.og-tools{display:flex;flex-wrap:wrap;gap:6px}
+.og-tools button{background:var(--panel);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:4px 10px;font-weight:700;font-size:.75rem;cursor:pointer;font-family:inherit}
+.og-tools button:hover{border-color:var(--crimson)}
 .og-summary{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
 .og-pill{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-size:.78rem;color:var(--text-dim)}
 .og-pill b{color:var(--text);font-size:.95rem;margin-right:4px}
 .og-scroll{overflow:auto;border:1px solid var(--border);border-radius:14px;background:var(--panel-2, var(--panel));padding:24px 16px}
-.og-tree{width:max-content;margin:0 auto}
+.og-tree{width:max-content;margin:0 auto;--og-line:var(--text-faint)}
 .og-tree ul{display:flex;justify-content:center;padding:22px 0 0;margin:0;position:relative;list-style:none}
 .og-tree li{display:flex;flex-direction:column;align-items:center;position:relative;padding:22px 7px 0}
 /* conectores: línea horizontal sobre los hermanos + bajante a cada caja */
-.og-tree li::before,.og-tree li::after{content:'';position:absolute;top:0;width:50%;height:22px;border-top:2px solid var(--border)}
+.og-tree li::before,.og-tree li::after{content:'';position:absolute;top:0;width:50%;height:22px;border-top:2px solid var(--og-line)}
 .og-tree li::before{right:50%}
-.og-tree li::after{left:50%;border-left:2px solid var(--border)}
+.og-tree li::after{left:50%;border-left:2px solid var(--og-line)}
 .og-tree li:only-child::before,.og-tree li:only-child::after{display:none}
 .og-tree li:only-child{padding-top:0}
 .og-tree li:first-child::before,.og-tree li:last-child::after{border:0 none}
-.og-tree li:last-child::before{border-right:2px solid var(--border);border-radius:0 6px 0 0}
+.og-tree li:last-child::before{border-right:2px solid var(--og-line);border-radius:0 6px 0 0}
 .og-tree li:first-child::after{border-radius:6px 0 0 0}
-.og-tree ul ul::before{content:'';position:absolute;top:0;left:50%;height:22px;border-left:2px solid var(--border)}
+.og-tree ul ul::before{content:'';position:absolute;top:0;left:50%;height:22px;border-left:2px solid var(--og-line)}
 .og-tree > ul{padding-top:0}
 .og-tree > ul > li{padding-top:0}
-/* columna de sucesores: apilados en vertical bajo su reporte directo */
-.og-sucs{display:flex;flex-direction:column;align-items:center;gap:10px;padding-top:18px;position:relative}
-.og-sucs::before{content:'';position:absolute;top:0;left:50%;height:18px;border-left:2px dashed var(--border)}
-.og-sucs-lbl{font-size:.62rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);background:var(--panel-2, var(--panel));padding:0 6px;position:relative}
-.og-card{width:200px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px 10px 10px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.08);position:relative;border-top:4px solid var(--og-c, var(--border))}
+/* sucesores: se despliegan en columna bajo su líder, unidos por la línea */
+.og-sucs{display:flex;flex-direction:column;align-items:center;animation:ogIn .25s ease-out}
+.og-sitem{position:relative;padding-top:18px;display:flex;justify-content:center}
+.og-sitem::before{content:'';position:absolute;top:0;left:50%;height:18px;border-left:2px solid var(--og-line)}
+.og-sucs-lbl{font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:3px 10px}
+@keyframes ogIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.og-card{width:210px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px 10px 10px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.08);position:relative;border-top:4px solid var(--og-c, var(--border));transition:box-shadow .15s,transform .15s}
 .og-card.og-dir{width:240px;border-top-color:var(--crimson)}
-.og-card.og-suc{width:190px;background:var(--panel);border-style:solid}
+.og-card.og-suc{width:220px}
 .og-card.og-vac{border-style:dashed}
+.og-card.og-click{cursor:pointer}
+.og-card.og-click:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.15)}
+.og-card.og-open{box-shadow:0 0 0 2px var(--og-c, var(--crimson)),0 8px 20px rgba(0,0,0,.15)}
 .og-photo{width:64px;height:64px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 8px;border:3px solid var(--og-c, var(--border));background:var(--bg-2, #e2e8f0)}
 .og-dir .og-photo{width:84px;height:84px}
 .og-suc .og-photo{width:52px;height:52px}
 .og-initials{display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--text-dim);font-size:1.1rem}
-.og-name{font-size:.74rem;font-weight:800;line-height:1.25;color:var(--text);text-transform:uppercase}
-.og-cargo{font-size:.68rem;color:var(--text-dim);line-height:1.3;margin-top:3px;min-height:1.8em}
-.og-vs{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:4px;margin-top:8px;font-size:.6rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:.04em}
-.og-vs div{display:flex;flex-direction:column;gap:2px}
-.og-vs b{font-size:.66rem;color:var(--text);background:var(--bg-2, rgba(148,163,184,.15));border-radius:6px;padding:3px 4px;letter-spacing:0}
-.og-vs i{font-style:normal;font-weight:800;color:var(--text-faint)}
-.og-gap{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:4px 10px;border-radius:999px;font-size:.66rem;font-weight:800;background:var(--og-bg);color:var(--og-fg)}
+.og-name{font-size:.78rem;font-weight:800;line-height:1.25;color:var(--text);text-transform:uppercase}
+.og-cargo{font-size:.72rem;color:var(--text-dim);line-height:1.3;margin-top:3px;min-height:1.8em}
+.og-cargo small{display:block;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text-faint)}
+/* "versus": qué requiere el cargo vs qué tipo de talento es la persona */
+.og-target{margin-top:8px;font-size:.62rem;line-height:1.3;color:var(--text-faint);background:var(--bg-2, rgba(148,163,184,.12));border:1px solid var(--border);border-bottom:0;border-radius:8px 8px 0 0;padding:5px 6px;text-transform:uppercase;letter-spacing:.04em;font-weight:700}
+.og-target b{display:block;color:var(--text);font-size:.72rem;text-transform:none;letter-spacing:0}
+.og-vs{display:grid;grid-template-columns:1fr auto 1fr;align-items:start;gap:4px;margin-top:8px;font-size:.6rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:.04em;border:1px solid var(--border);border-radius:8px;padding:6px 4px}
+.og-target + .og-vs{margin-top:0;border-radius:0 0 8px 8px}
+.og-vs > div{display:flex;flex-direction:column;align-items:center;gap:3px}
+.og-vs b{font-size:.72rem;color:var(--text);letter-spacing:0;line-height:1.15}
+.og-vs > i{font-style:normal;font-weight:800;color:var(--text-faint);align-self:center;font-size:.62rem}
+.og-lvl{display:inline-flex;gap:3px}
+.og-lvl s{width:7px;height:7px;border-radius:50%;background:var(--border);text-decoration:none}
+.og-lvl s.on{background:var(--text-dim)}
+.og-gap{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:4px 10px;border-radius:999px;font-size:.7rem;font-weight:800;background:var(--og-bg);color:var(--og-fg)}
 .og-dot{width:10px;height:10px;border-radius:50%;background:var(--og-c);display:inline-block;box-shadow:0 0 0 2px rgba(255,255,255,.6)}
-.og-meta{font-size:.62rem;color:var(--text-faint);margin-top:6px}
+.og-meta{font-size:.68rem;color:var(--text-faint);margin-top:6px}
 .og-meta b{color:var(--text-dim)}
+.og-toggle{margin-top:9px;padding-top:8px;border-top:1px dashed var(--border);font-size:.72rem;font-weight:800;color:var(--crimson)}
+.og-toggle.og-none{color:var(--text-faint);font-weight:600}
 .og-baja{--og-c:#16a34a;--og-bg:#dcfce7;--og-fg:#166534}
 .og-media{--og-c:#eab308;--og-bg:#fef9c3;--og-fg:#854d0e}
 .og-alta{--og-c:#dc2626;--og-bg:#fee2e2;--og-fg:#991b1b}
 .og-na{--og-c:#94a3b8;--og-bg:#f1f5f9;--og-fg:#475569}
-.og-note{font-size:.72rem;color:var(--text-faint);margin-top:10px}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
@@ -459,18 +479,24 @@ body.og-mode #statsGrid, body.og-mode #instructionsBanner, body.og-mode #filters
     <div id="hoganGrid"></div>
   </section>
 
-  <!-- ORGANIGRAMA VIEW (UMC: director → reportes directos → sucesores) -->
+  <!-- ORGANIGRAMA VIEW (por dirección: director → reportes directos →
+       clic → sucesores). Datos: data/*_organigrama.js -->
   <section id="viewOG" style="display:none">
+    <div class="og-orgs" id="ogOrgs"></div>
     <div class="og-head">
       <div>
-        <h2>Organigrama · Unidad Mercado Corporativo</h2>
-        <div class="og-sub">Tipo de talento de la posición vs. tipo de talento de la persona, y su brecha</div>
+        <h2 id="ogTitle">Organigrama</h2>
+        <div class="og-sub">Haz clic en un líder para ver sus sucesores. Cada caja compara el tipo de talento que requiere el cargo con el de la persona.</div>
       </div>
       <div class="og-legend">
-        <span><i class="og-dot og-baja"></i>Brecha baja (0)</span>
-        <span><i class="og-dot og-media"></i>Brecha media (±1)</span>
-        <span><i class="og-dot og-alta"></i>Brecha alta (±2)</span>
-        <div class="og-zoom">
+        <span><i class="og-dot og-baja"></i>Brecha baja</span>
+        <span><i class="og-dot og-media"></i>Brecha media</span>
+        <span><i class="og-dot og-alta"></i>Brecha alta</span>
+        <div class="og-tools">
+          <button onclick="ogExpandAll(true)" title="Mostrar los sucesores de todos">Expandir todo</button>
+          <button onclick="ogExpandAll(false)" title="Ocultar todos los sucesores">Contraer todo</button>
+        </div>
+        <div class="og-tools">
           <button onclick="ogZoom(-0.1)" title="Alejar">−</button>
           <button onclick="ogZoom(0)" title="Ajustar al ancho">Ajustar</button>
           <button onclick="ogZoom(0.1)" title="Acercar">+</button>
@@ -479,7 +505,6 @@ body.og-mode #statsGrid, body.og-mode #instructionsBanner, body.og-mode #filters
     </div>
     <div class="og-summary" id="ogSummary"></div>
     <div class="og-scroll" id="ogScroll"><div class="og-tree" id="ogTree"></div></div>
-    <div class="og-note">Escala de tipo de talento: Experto = 1 · Sólido = 2 · Versátil = 3. Brecha = posición − persona. Tiempo de alistamiento de sucesores: tabla <i>sucesores</i> de Supabase.</div>
   </section>
 
   <!-- TABLE VIEW -->
@@ -2590,43 +2615,55 @@ function switchView(v){
   });
   // KPIs, instrucciones y filtros son de la ninebox: no aplican al organigrama.
   document.body.classList.toggle('og-mode', v === 'organigrama');
-  if(v === 'organigrama') renderOrganigrama();
+  if(v === 'organigrama') renderOrganigrama(true);
 }
 
-/* ── ORGANIGRAMA UMC ─────────────────────────────────────────────────
-   Datos: data/umc_organigrama.js (Excel "UMC - Recalibrado"). El tiempo
-   de alistamiento de los sucesores se refresca en vivo desde la tabla
-   "sucesores" de Supabase. */
-const UMC_DIRECTOR_EXP = '32781111';
+/* ── ORGANIGRAMA POR DIRECCIÓN ───────────────────────────────────────
+   Datos: data/umc_organigrama.js y data/tecnologia_organigrama.js (Excel
+   "Recalibrado" de cada dirección), que se registran en ORGANIGRAMAS.
+   Arranca mostrando director + reportes directos; clic en un reporte
+   directo despliega sus sucesores. El tiempo de alistamiento se refresca
+   en vivo desde la tabla "sucesores" de Supabase. */
+const OG_ORGS = window.ORGANIGRAMAS || [];
+let OG_ORG_ID = null;              // dirección seleccionada
+const OG_OPEN = {};                // orgId → Set de índices de reportes directos desplegados
+const OG_DIRECTS_HIDDEN = {};      // orgId → true si se contrajo el director
+let OG_SUC_LIVE = null;            // expediente → { sucesor, tiempo } desde Supabase
+let OG_ZOOM = null;                // null = recalcular zoom automático
+let OG_ZOOM_MANUAL = false;
 
-// Admin ve todo; un BP (admin_restricted) solo si UMC está en su alcance;
-// además la propia directora de UMC. El resto de líderes no ve la pestaña.
-function canSeeOrganigrama(){
-  if(!CUR || !window.UMC_ORGANIGRAMA) return false;
+// Admin ve todas; un BP (admin_restricted) las direcciones de su alcance;
+// cada director(a) ve la suya. El resto de líderes no ve la pestaña.
+function canSeeOrg(org){
+  if(!CUR) return false;
   if(CUR.rol === 'admin') return true;
-  if(String(CUR.expediente || '') === UMC_DIRECTOR_EXP) return true;
-  if(CUR.rol === 'admin_restricted'){
-    const dir = window.UMC_ORGANIGRAMA.direccion;
-    return getScopedData().some(r => r.direccion === dir);
-  }
+  if(String(CUR.expediente || '') === org.director.expediente) return true;
+  if(CUR.rol === 'admin_restricted') return getScopedData().some(r => r.direccion === org.direccion);
   return false;
 }
+function ogVisibleOrgs(){ return OG_ORGS.filter(canSeeOrg); }
 
 function updateOrgTabVisibility(){
-  const ok = canSeeOrganigrama();
+  const orgs = ogVisibleOrgs();
   const bar = document.getElementById('tabsBar');
-  if(bar) bar.style.display = ok ? '' : 'none';
-  if(!ok && VIEW === 'organigrama') switchView('ninebox');
+  if(bar) bar.style.display = orgs.length ? '' : 'none';
+  if(!orgs.some(o => o.id === OG_ORG_ID)){
+    OG_ORG_ID = orgs.length ? orgs[0].id : null;
+    OG_ZOOM = null; OG_ZOOM_MANUAL = false;
+  }
+  if(!orgs.length && VIEW === 'organigrama') switchView('ninebox');
 }
 
-let OG_SUC_LIVE = null;   // expediente → { sucesor, tiempo } desde Supabase
-let OG_ZOOM = null;       // null = zoom automático (ver ogApplyZoom)
+function ogSelectOrg(id){
+  OG_ORG_ID = id;
+  OG_ZOOM = null; OG_ZOOM_MANUAL = false;
+  renderOrganigrama(true);
+}
 
 function loadOrgSucesoresLive(){
   if(OG_SUC_LIVE) return Promise.resolve(OG_SUC_LIVE);
-  const org = window.UMC_ORGANIGRAMA;
   const exps = new Set();
-  org.directos.forEach(d => (d.sucesores || []).forEach(s => exps.add(s.expediente)));
+  OG_ORGS.forEach(o => o.directos.forEach(d => (d.sucesores || []).forEach(s => exps.add(s.expediente))));
   const url = SUPABASE_URL + '/rest/v1/sucesores?select=expediente,sucesor,tiempo&expediente=in.(' + Array.from(exps).join(',') + ')';
   return fetch(url, { headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY } })
     .then(r => r.ok ? r.json() : [])
@@ -2638,6 +2675,16 @@ function loadOrgSucesoresLive(){
     .catch(() => (OG_SUC_LIVE = {}));
 }
 
+// Supabase guarda un solo tiempo por persona; si alguien es sucesor de más
+// de un cargo en la dirección, se usa el tiempo por cargo del Excel.
+function ogTiempo(org, s){
+  const multi = org.directos.filter(d => (d.sucesores || []).some(x => x.expediente === s.expediente)).length > 1;
+  const live = !multi && OG_SUC_LIVE && OG_SUC_LIVE[s.expediente];
+  const t = live && live.tiempo && !/^n\/?a$/i.test(String(live.tiempo).trim()) ? live.tiempo : s.tiempo;
+  const txt = String(t || '—').replace(/\s+/g, ' ').trim().toLowerCase();
+  return txt.charAt(0).toUpperCase() + txt.slice(1);   // "1 año", "Listo ya"
+}
+
 function ogEsc(s){
   return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
@@ -2645,84 +2692,118 @@ function ogTone(clasif){
   const c = String(clasif || '').toUpperCase();
   return c === 'BAJA' ? 'og-baja' : c === 'MEDIA' ? 'og-media' : c === 'ALTA' ? 'og-alta' : 'og-na';
 }
+// Nivel 1-3 del tipo de talento (posición y persona usan nombres distintos
+// según la dirección: PROFUNDIDAD≈EXPERTO, MEDIA VERSATILIDAD≈SÓLIDO,
+// ALTA VERSATILIDAD≈VERSÁTIL). Se pinta como 3 puntos para comparar a ojo.
+const OG_LEVELS = { 'EXPERTO': 1, 'PROFUNDIDAD': 1, 'SOLIDO': 2, 'MEDIA VERSATILIDAD': 2, 'VERSATIL': 3, 'ALTA VERSATILIDAD': 3 };
+function ogLvlDots(label){
+  const k = String(label || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase().trim();
+  const n = OG_LEVELS[k];
+  if(!n) return '';
+  return `<span class="og-lvl" title="Nivel ${n} de 3 (1 = profundidad · 3 = versatilidad)">${[1,2,3].map(i => `<s class="${i <= n ? 'on' : ''}"></s>`).join('')}</span>`;
+}
 function ogPhoto(p){
   const ini = String(p.nombre || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('');
   if(!p.foto) return `<div class="og-photo og-initials">${p.vacante ? '—' : ogEsc(ini)}</div>`;
   return `<img class="og-photo" src="../data/FOTOS/${ogEsc(p.foto)}" alt="${ogEsc(p.nombre)}"
     onerror="this.outerHTML='<div class=&quot;og-photo og-initials&quot;>${ogEsc(ini)}</div>'">`;
 }
-function ogVs(posicion, persona, labelPersona){
+function ogVs(lblA, valA, lblB, valB){
   return `<div class="og-vs">
-    <div>Posición<b>${ogEsc(posicion || '—')}</b></div><i>vs</i>
-    <div>${labelPersona}<b>${ogEsc(persona || '—')}</b></div>
+    <div>${lblA}<b>${ogEsc(valA || '—')}</b>${ogLvlDots(valA)}</div><i>vs</i>
+    <div>${lblB}<b>${ogEsc(valB || '—')}</b>${ogLvlDots(valB)}</div>
   </div>`;
 }
 function ogGap(p){
   if(p.brecha == null || p.clasif == null) return `<div class="og-gap og-na"><i class="og-dot"></i>Sin brecha</div>`;
   const b = Number(p.brecha);
-  return `<div class="og-gap ${ogTone(p.clasif)}" title="Brecha = posición − persona"><i class="og-dot"></i>Brecha ${b > 0 ? '+' + b : b} · ${ogEsc(p.clasif)}</div>`;
+  return `<div class="og-gap ${ogTone(p.clasif)}" title="Brecha = nivel que requiere el cargo − nivel de la persona"><i class="og-dot"></i>Brecha ${b > 0 ? '+' + b : b} · ${ogEsc(p.clasif)}</div>`;
+}
+function ogClickAttrs(fn){
+  return `role="button" tabindex="0" onclick="${fn}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${fn}}"`;
 }
 
-function ogCardDirector(d){
-  return `<div class="og-card og-dir">
-    ${ogPhoto(d)}
-    <div class="og-name">${ogEsc(d.nombre)}</div>
-    <div class="og-cargo">${ogEsc(d.cargo)}</div>
+function ogCardDirector(org, open){
+  const n = org.directos.length;
+  return `<div class="og-card og-dir og-click" ${ogClickAttrs('ogToggleDirector()')}>
+    ${ogPhoto(org.director)}
+    <div class="og-name">${ogEsc(org.director.nombre)}</div>
+    <div class="og-cargo">${ogEsc(org.director.cargo)}</div>
+    <div class="og-toggle">${open ? '▾ Ocultar equipo' : `▸ Ver ${n} reportes directos`}</div>
   </div>`;
 }
-function ogCardDirecto(p){
+function ogCardDirecto(p, i, open){
+  const n = (p.sucesores || []).length;
+  const toggle = n
+    ? `<div class="og-toggle">${open ? '▾ Ocultar sucesores' : `▸ Ver ${n} sucesor${n === 1 ? '' : 'es'}`}</div>`
+    : `<div class="og-toggle og-none">Sin sucesor identificado</div>`;
+  const attrs = n ? `og-click${open ? ' og-open' : ''}" ${ogClickAttrs(`ogToggle(${i})`)}` : '"';
   if(p.vacante){
-    return `<div class="og-card og-vac og-na">
+    return `<div class="og-card og-vac og-na ${attrs}>
       ${ogPhoto(p)}
       <div class="og-name">Vacante</div>
       <div class="og-cargo">${ogEsc(p.cargo)}</div>
-      ${ogVs(p.posicion, '—', 'Persona')}
+      ${ogVs('El cargo requiere', p.posicion, 'Ocupante', '—')}
       <div class="og-gap og-na"><i class="og-dot"></i>Posición vacante</div>
+      ${toggle}
     </div>`;
   }
-  return `<div class="og-card ${ogTone(p.clasif)}">
+  return `<div class="og-card ${ogTone(p.clasif)} ${attrs}>
     ${ogPhoto(p)}
     <div class="og-name">${ogEsc(p.nombre)}</div>
     <div class="og-cargo">${ogEsc(p.cargo)}</div>
-    ${ogVs(p.posicion, p.persona, 'Persona')}
+    ${ogVs('El cargo requiere', p.posicion, 'La persona es', p.persona)}
     ${ogGap(p)}
     <div class="og-meta">9-Box: <b>${ogEsc(p.caja || '—')}</b></div>
+    ${toggle}
   </div>`;
 }
-function ogCardSucesor(s, posicion){
-  const live = (OG_SUC_LIVE || {})[s.expediente];
-  const tiempoLive = live && live.tiempo && !/^n\/?a$/i.test(String(live.tiempo).trim()) ? String(live.tiempo).trim() : '';
-  const tiempo = tiempoLive || s.tiempo || '—';
+// El versus del sucesor es contra el cargo al que sucedería (el de su
+// líder en el organigrama), no contra su cargo actual.
+function ogCardSucesor(org, s, lider){
   return `<div class="og-card og-suc ${ogTone(s.clasif)}">
     ${ogPhoto(s)}
     <div class="og-name">${ogEsc(s.nombre)}</div>
-    <div class="og-cargo">${ogEsc(s.cargo)}</div>
-    ${ogVs(posicion, s.persona, 'Sucesor')}
+    <div class="og-cargo"><small>Cargo actual</small>${ogEsc(s.cargo)}</div>
+    <div class="og-target">Candidato a suceder el cargo<b>${ogEsc(lider.cargo)}</b></div>
+    ${ogVs('Ese cargo requiere', lider.posicion, 'El sucesor es', s.persona)}
     ${ogGap(s)}
-    <div class="og-meta">Alistamiento: <b>${ogEsc(tiempo)}</b> · 9-Box: <b>${ogEsc(s.caja || '—')}</b></div>
+    <div class="og-meta">Alistamiento: <b>${ogEsc(ogTiempo(org, s))}</b> · 9-Box: <b>${ogEsc(s.caja || '—')}</b></div>
   </div>`;
 }
 
-function renderOrganigrama(){
-  const org = window.UMC_ORGANIGRAMA;
+function renderOrganigrama(recenter){
+  const orgs = ogVisibleOrgs();
   const tree = document.getElementById('ogTree');
-  if(!org || !tree) return;
+  if(!tree) return;
+  const org = orgs.find(o => o.id === OG_ORG_ID) || orgs[0];
+  if(!org){ tree.innerHTML = ''; return; }
+  OG_ORG_ID = org.id;
 
+  const sel = document.getElementById('ogOrgs');
+  sel.style.display = orgs.length > 1 ? '' : 'none';
+  sel.innerHTML = orgs.map(o => `<button class="${o.id === org.id ? 'active' : ''}" onclick="ogSelectOrg('${o.id}')">${ogEsc(o.titulo)}</button>`).join('');
+  document.getElementById('ogTitle').textContent = 'Organigrama · ' + org.titulo;
+
+  const open = OG_OPEN[org.id] || (OG_OPEN[org.id] = new Set());
+  const dirOpen = !OG_DIRECTS_HIDDEN[org.id];
   const directos = org.directos;
-  const branches = directos.map(p => {
+  const branches = directos.map((p, i) => {
     const sucs = p.sucesores || [];
-    const sucHTML = sucs.length
-      ? `<div class="og-sucs"><div class="og-sucs-lbl">Sucesores (${sucs.length})</div>${sucs.map(s => ogCardSucesor(s, p.posicion)).join('')}</div>`
-      : `<div class="og-sucs"><div class="og-sucs-lbl">Sin sucesor identificado</div></div>`;
-    return `<li>${ogCardDirecto(p)}${sucHTML}</li>`;
+    const isOpen = open.has(i) && sucs.length > 0;
+    const sucHTML = isOpen
+      ? `<div class="og-sucs"><div class="og-sitem"><span class="og-sucs-lbl">Sucesores (${sucs.length})</span></div>${sucs.map(s => `<div class="og-sitem">${ogCardSucesor(org, s, p)}</div>`).join('')}</div>`
+      : '';
+    return `<li>${ogCardDirecto(p, i, isOpen)}${sucHTML}</li>`;
   }).join('');
-  tree.innerHTML = `<ul><li>${ogCardDirector(org.director)}<ul>${branches}</ul></li></ul>`;
+  tree.innerHTML = `<ul><li>${ogCardDirector(org, dirOpen)}${dirOpen ? `<ul>${branches}</ul>` : ''}</li></ul>`;
 
   // Resumen: brechas de los reportes directos y de los sucesores.
   const count = (arr) => arr.reduce((a, x) => { const k = String(x.clasif || '').toUpperCase(); if(k) a[k] = (a[k] || 0) + 1; return a; }, {});
   const ocupados = directos.filter(d => !d.vacante);
   const allSucs = directos.flatMap(d => d.sucesores || []);
   const cd = count(ocupados), cs = count(allSucs);
+  const vacantes = directos.length - ocupados.length;
   const pill = (n, t) => `<div class="og-pill"><b>${n}</b>${t}</div>`;
   const tri = (c) => `<span style="display:inline-flex;gap:8px;margin-left:6px">
     <span><i class="og-dot og-baja"></i> ${c.BAJA || 0}</span>
@@ -2730,17 +2811,34 @@ function renderOrganigrama(){
     <span><i class="og-dot og-alta"></i> ${c.ALTA || 0}</span></span>`;
   document.getElementById('ogSummary').innerHTML =
     pill(directos.length, 'reportes directos') +
-    pill(directos.length - ocupados.length, 'vacante(s)') +
+    (vacantes ? pill(vacantes, vacantes === 1 ? 'vacante' : 'vacantes') : '') +
     pill(allSucs.length, 'sucesores mapeados') +
     `<div class="og-pill">Brecha directos:${tri(cd)}</div>` +
     `<div class="og-pill">Brecha sucesores:${tri(cs)}</div>`;
 
-  ogApplyZoom();
+  ogApplyZoom(recenter);
   // Primera vez: trae el tiempo de alistamiento en vivo y repinta.
-  if(!OG_SUC_LIVE) loadOrgSucesoresLive().then(() => { if(VIEW === 'organigrama') renderOrganigrama(); });
+  if(!OG_SUC_LIVE) loadOrgSucesoresLive().then(() => { if(VIEW === 'organigrama') renderOrganigrama(false); });
 }
 
-// Zoom automático: se ajusta al ancho disponible pero sin bajar de 70%
+function ogToggle(i){
+  const s = OG_OPEN[OG_ORG_ID] || (OG_OPEN[OG_ORG_ID] = new Set());
+  if(s.has(i)) s.delete(i); else s.add(i);
+  renderOrganigrama(false);
+}
+function ogToggleDirector(){
+  OG_DIRECTS_HIDDEN[OG_ORG_ID] = !OG_DIRECTS_HIDDEN[OG_ORG_ID];
+  renderOrganigrama(false);
+}
+function ogExpandAll(on){
+  const org = OG_ORGS.find(o => o.id === OG_ORG_ID);
+  if(!org) return;
+  OG_DIRECTS_HIDDEN[org.id] = false;
+  OG_OPEN[org.id] = new Set(on ? org.directos.map((d, i) => (d.sucesores || []).length ? i : -1).filter(i => i >= 0) : []);
+  renderOrganigrama(false);
+}
+
+// Zoom automático: se ajusta al ancho disponible pero sin bajar de 80%
 // (más pequeño ya no se lee); lo que no quepa queda con scroll horizontal
 // centrado en el director. "Ajustar" muestra el árbol completo (mín. 40%).
 function ogFitZoom(minZoom){
@@ -2752,22 +2850,24 @@ function ogFitZoom(minZoom){
   if(!(avail > 0) || need <= avail) return 1;
   return Math.max(minZoom, Math.floor(avail / need * 100) / 100);
 }
-function ogApplyZoom(){
+function ogApplyZoom(recenter){
   const tree = document.getElementById('ogTree');
   const box = document.getElementById('ogScroll');
   if(!tree || !box || !box.clientWidth) return;
-  const z = OG_ZOOM === null ? ogFitZoom(0.7) : OG_ZOOM;
-  tree.style.zoom = z;
-  box.scrollLeft = Math.max(0, (box.scrollWidth - box.clientWidth) / 2);
+  if(OG_ZOOM === null) OG_ZOOM = ogFitZoom(0.8);
+  tree.style.zoom = OG_ZOOM;
+  if(recenter) box.scrollLeft = Math.max(0, (box.scrollWidth - box.clientWidth) / 2);
 }
 function ogZoom(step){
-  const tree = document.getElementById('ogTree');
-  const cur = parseFloat(tree && tree.style.zoom) || 1;
+  OG_ZOOM_MANUAL = true;
   OG_ZOOM = step === 0 ? ogFitZoom(0.4)
-    : Math.min(1.5, Math.max(0.3, Math.round((cur + step) * 100) / 100));
-  ogApplyZoom();
+    : Math.min(1.5, Math.max(0.3, Math.round(((OG_ZOOM || 1) + step) * 100) / 100));
+  ogApplyZoom(step === 0);
 }
-window.addEventListener('resize', () => { if(VIEW === 'organigrama' && OG_ZOOM === null) ogApplyZoom(); });
+window.addEventListener('resize', () => {
+  if(VIEW === 'organigrama' && !OG_ZOOM_MANUAL){ OG_ZOOM = null; ogApplyZoom(true); }
+});
+
 
 /* ── MODAL ─────────────────────────────────────────────────────────── */
 // Placeholder del apartado "Actualizar datos del tablero" (admin): por

@@ -14,7 +14,9 @@
    brecha = N° posición − N° persona; clasificación del Excel:
    0 → BAJA, ±1 → MEDIA, ±2 → ALTA.
    ═══════════════════════════════════════════════════════════════════════ */
-window.UMC_ORGANIGRAMA = {
+(window.ORGANIGRAMAS = window.ORGANIGRAMAS || []).push({
+  id: 'umc',
+  titulo: 'Unidad Mercado Corporativo',
   direccion: 'Unidad Mercado Corporativo',
   director: {
     expediente: '32781111', foto: '32781111.png',
@@ -80,4 +82,4 @@ window.UMC_ORGANIGRAMA = {
         { expediente: '72182013', foto: '72182013.jpg', nombre: 'MORALES BERMEJO EDWIN RIGOBERTO', cargo: 'Gerente Cuentas Estrategicas Norte', tiempo: '2 AÑOS', caja: '8', persona: 'SÓLIDO', brecha: -1, clasif: 'MEDIA' }
       ] }
   ]
-};
+});
