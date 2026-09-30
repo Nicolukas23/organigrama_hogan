@@ -29,10 +29,31 @@
    brecha de tipo de talento: lo que el cargo requiere vs lo que la
    persona es. */
 body.og-mode #statsGrid, body.og-mode #instructionsBanner, body.og-mode #filtersBar{display:none !important}
-.og-orgs{display:inline-flex;flex-wrap:wrap;gap:4px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:14px}
-.og-orgs button{background:transparent;border:0;border-radius:9px;padding:7px 14px;font:inherit;font-size:.8rem;font-weight:700;color:var(--text-dim);cursor:pointer}
-.og-orgs button:hover{color:var(--text)}
-.og-orgs button.active{background:var(--crimson);color:#fff}
+/* Selector de dirección: un solo botón desplegable con buscador (escala a
+   muchas direcciones sin llenar la pantalla de botones) */
+.og-orgs{position:relative;display:inline-block;margin-bottom:14px}
+.og-pick-btn{display:flex;align-items:center;gap:12px;min-width:340px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:8px 14px;font:inherit;color:var(--text);cursor:pointer;text-align:left}
+.og-pick-btn:hover,.og-orgs.open .og-pick-btn{border-color:var(--crimson)}
+.og-pick-btn img,.og-pick-item img{width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0;background:var(--bg-2,#e2e8f0)}
+.og-pick-txt{flex:1;min-width:0}
+.og-pick-txt small{display:block;font-size:.62rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint)}
+.og-pick-txt b{display:block;font-size:.9rem;line-height:1.2}
+.og-pick-txt span{display:block;font-size:.72rem;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.og-pick-chev{color:var(--text-faint);transition:transform .15s}
+.og-orgs.open .og-pick-chev{transform:rotate(180deg)}
+.og-pick-menu{display:none;position:absolute;z-index:50;top:calc(100% + 6px);left:0;width:100%;min-width:380px;background:var(--panel);border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:8px}
+.og-orgs.open .og-pick-menu{display:block}
+.og-pick-menu input{width:100%;box-sizing:border-box;background:var(--bg-2,transparent);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font:inherit;font-size:.8rem;color:var(--text);margin-bottom:6px;outline:none}
+.og-pick-menu input:focus{border-color:var(--crimson)}
+.og-pick-list{max-height:320px;overflow:auto}
+.og-pick-item{display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:0;border-radius:8px;padding:7px 8px;font:inherit;color:var(--text);cursor:pointer;text-align:left}
+.og-pick-item:hover{background:var(--bg-2,rgba(148,163,184,.12))}
+.og-pick-item.active{background:var(--crimson-soft)}
+.og-pick-item.active b{color:var(--crimson)}
+.og-pick-empty{font-size:.78rem;color:var(--text-faint);padding:8px}
+/* Botón "Ver ficha de talento" en las cajas del organigrama */
+.og-ficha{display:inline-flex;align-items:center;gap:5px;margin-top:8px;background:transparent;border:1px solid var(--border);border-radius:999px;padding:3px 10px;font:inherit;font-size:.68rem;font-weight:700;color:var(--text-dim);cursor:pointer}
+.og-ficha:hover{border-color:var(--crimson);color:var(--crimson)}
 .og-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
 .og-head h2{margin:0;font-size:1.15rem;font-weight:800;letter-spacing:-.01em}
 .og-head .og-sub{font-size:.8rem;color:var(--text-dim);margin-top:2px}
@@ -2772,6 +2793,7 @@ function ogCardDirector(org, open){
     ${ogPhoto(org.director)}
     <div class="og-name">${ogEsc(org.director.nombre)}</div>
     <div class="og-cargo">${ogEsc(org.director.cargo)}</div>
+    ${ogFichaBtn(org.director)}
     <div class="og-toggle">${open ? '▾ Ocultar equipo' : `▸ Ver ${n} reportes directos`}</div>
   </div>`;
 }
@@ -2798,6 +2820,7 @@ function ogCardDirecto(p, i, open){
     <div class="og-cargo">${ogEsc(p.cargo)}</div>
     ${ogVs('El cargo requiere', p.posicion, 'La persona es', p.persona)}
     <div class="og-meta">9-Box: <b>${ogEsc(p.caja || '—')}</b></div>
+    ${ogFichaBtn(p)}
     ${toggle}
   </div>`;
 }
@@ -2821,6 +2844,7 @@ function ogCardSucesor(org, s, lider){
       <div><span>Alistamiento</span><b>${ogEsc(ogTiempo(org, s))}</b></div>
       <div><span>9-Box</span><b>${s.caja ? 'Caja ' + ogEsc(s.caja) : '—'}</b></div>
     </div>
+    ${ogFichaBtn(s)}
   </div>`;
 }
 
@@ -2838,7 +2862,74 @@ function ogCardDirSucesor(org, s){
       <div><span>Alistamiento</span><b>${ogEsc(ogTiempoLive(s.expediente))}</b></div>
       <div><span>9-Box</span><b>${s.caja ? 'Caja ' + ogEsc(s.caja) : '—'}</b></div>
     </div>
+    ${ogFichaBtn(s)}
   </div>`;
+}
+
+// Selector de dirección: botón con la dirección actual (foto y nombre del
+// director) que despliega la lista completa con buscador.
+function ogPickSub(o){
+  const n = o.directos.length;
+  return `${ogTitle(o.director.nombre)} · ${n} reporte${n === 1 ? '' : 's'} directo${n === 1 ? '' : 's'}`;
+}
+function ogRenderPicker(sel, orgs, org){
+  const img = o => `<img src="../data/FOTOS/${ogEsc(o.director.foto)}" alt="" onerror="this.style.visibility='hidden'">`;
+  sel.className = 'og-orgs';
+  sel.innerHTML = `
+    <button class="og-pick-btn" onclick="ogPickToggle(event)" aria-haspopup="listbox">
+      ${img(org)}
+      <div class="og-pick-txt"><small>Dirección</small><b>${ogEsc(org.titulo)}</b><span>${ogEsc(ogPickSub(org))}</span></div>
+      <span class="og-pick-chev">▾</span>
+    </button>
+    <div class="og-pick-menu" onclick="event.stopPropagation()">
+      <input type="text" placeholder="Buscar dirección o director…" oninput="ogPickFilter(this.value)">
+      <div class="og-pick-list" role="listbox">
+        ${orgs.map(o => `<button class="og-pick-item${o.id === org.id ? ' active' : ''}" data-q="${ogEsc(normWords(o.titulo + ' ' + o.director.nombre))}" onclick="ogPickSelect('${o.id}')">
+          ${img(o)}<div class="og-pick-txt"><b>${ogEsc(o.titulo)}</b><span>${ogEsc(ogPickSub(o))}</span></div></button>`).join('')}
+        <div class="og-pick-empty" style="display:none">Sin resultados</div>
+      </div>
+    </div>`;
+}
+function ogPickToggle(ev){
+  ev.stopPropagation();
+  const box = document.getElementById('ogOrgs');
+  box.classList.toggle('open');
+  if(box.classList.contains('open')){
+    const inp = box.querySelector('input');
+    inp.value = ''; ogPickFilter('');
+    inp.focus();
+  }
+}
+function ogPickFilter(q){
+  const k = normWords(q);
+  let visibles = 0;
+  document.querySelectorAll('#ogOrgs .og-pick-item').forEach(b => {
+    const ok = !k || k.split(' ').every(w => b.dataset.q.includes(w));
+    b.style.display = ok ? '' : 'none';
+    if(ok) visibles++;
+  });
+  const empty = document.querySelector('#ogOrgs .og-pick-empty');
+  if(empty) empty.style.display = visibles ? 'none' : '';
+}
+function ogPickSelect(id){
+  document.getElementById('ogOrgs').classList.remove('open');
+  ogSelectOrg(id);
+}
+document.addEventListener('click', () => { const b = document.getElementById('ogOrgs'); if(b) b.classList.remove('open'); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape'){ const b = document.getElementById('ogOrgs'); if(b) b.classList.remove('open'); } });
+
+// Abre la ficha de talento (el mismo modal de la matriz 9-Box) de la persona
+// de una caja del organigrama; se busca por expediente y, si no, por nombre.
+function ogVerFicha(ev, exp, nombre){
+  ev.stopPropagation();
+  const k = normWords(nombre);
+  const p = (ALL || []).find(r => String(r.expediente) === String(exp)) || (ALL || []).find(r => normWords(r.nombre) === k);
+  if(p) openModal(p);
+  else alert('No se encontró la ficha de talento de ' + nombre + '.');
+}
+function ogFichaBtn(p){
+  if(!p.expediente && !p.nombre) return '';
+  return `<button class="og-ficha" onclick="ogVerFicha(event, '${ogEsc(p.expediente || '')}', '${ogEsc(p.nombre)}')" title="Ver ficha de talento">👤 Ver ficha de talento</button>`;
 }
 
 function renderOrganigrama(recenter){
@@ -2851,7 +2942,7 @@ function renderOrganigrama(recenter){
 
   const sel = document.getElementById('ogOrgs');
   sel.style.display = orgs.length > 1 ? '' : 'none';
-  sel.innerHTML = orgs.map(o => `<button class="${o.id === org.id ? 'active' : ''}" onclick="ogSelectOrg('${o.id}')">${ogEsc(o.titulo)}</button>`).join('');
+  ogRenderPicker(sel, orgs, org);
   document.getElementById('ogTitle').textContent = 'Organigrama · ' + org.titulo;
 
   const open = OG_OPEN[org.id] || (OG_OPEN[org.id] = new Set());
