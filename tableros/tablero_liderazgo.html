@@ -66,32 +66,45 @@ body.og-mode #statsGrid, body.og-mode #instructionsBanner, body.og-mode #filters
 .og-sitem::before{content:'';position:absolute;top:0;left:50%;height:18px;border-left:2px solid var(--og-line)}
 .og-sucs-lbl{font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:3px 10px}
 @keyframes ogIn{from{transform:translateY(-8px)}to{transform:none}}
-/* Ficha: encabezado (foto en marco + nombre + cargo) → candidato a
-   suceder → versus del color de la brecha → brecha → alistamiento/9-Box */
-.og-card{width:300px;box-sizing:border-box;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:left;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:box-shadow .15s,transform .15s}
+/* Director y reportes directos: tarjeta vertical centrada */
+.og-card{width:210px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px 10px 10px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.08);position:relative;border-top:4px solid var(--og-c, var(--border));transition:box-shadow .15s,transform .15s}
+.og-card.og-dir{width:240px;border-top-color:var(--crimson)}
 .og-card.og-vac{border-style:dashed}
 .og-card.og-click{cursor:pointer}
 .og-card.og-click:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.15)}
 .og-card.og-open{box-shadow:0 0 0 2px var(--og-c, var(--crimson)),0 8px 20px rgba(0,0,0,.15)}
-.og-hd{display:flex;align-items:center;gap:12px}
-.og-photo{width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;flex-shrink:0;border:3px solid var(--og-c, var(--border));background:var(--bg-2, #e2e8f0)}
-.og-dir .og-photo{border-color:var(--crimson)}
-.og-initials{display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--text-dim);font-size:1rem}
-.og-name{font-size:.95rem;font-weight:700;line-height:1.25;color:var(--text)}
-.og-cargo{font-size:.8rem;color:var(--text-dim);line-height:1.3;margin-top:2px}
-.og-k{font-size:.75rem;color:var(--text-dim);margin-top:14px}
-.og-target{font-size:.88rem;font-weight:700;color:var(--text);line-height:1.3;margin-top:2px}
-.og-vs{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;gap:8px;margin-top:12px}
-.og-vs > div{background:var(--og-bg);color:var(--og-fg);border-radius:8px;padding:8px 10px;font-size:.72rem;line-height:1.3}
-.og-vs b{display:block;font-size:.85rem;font-weight:700}
-.og-vs > i{font-style:normal;color:var(--text-faint);align-self:center}
-.og-gap{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:4px 12px;border-radius:999px;font-size:.8rem;font-weight:700;background:var(--og-bg);color:var(--og-fg)}
-.og-dot{width:10px;height:10px;border-radius:50%;background:var(--og-c);display:inline-block}
-.og-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
-.og-meta span{display:block;font-size:.75rem;color:var(--text-dim)}
-.og-meta b{font-size:.88rem;color:var(--text)}
-.og-toggle{margin-top:12px;padding-top:10px;border-top:1px dashed var(--border);font-size:.78rem;font-weight:700;color:var(--crimson);text-align:center}
-.og-toggle.og-none{color:var(--text-faint);font-weight:500}
+.og-photo{width:64px;height:64px;border-radius:50%;object-fit:cover;display:block;flex-shrink:0;margin:0 auto 8px;border:3px solid var(--og-c, var(--border));background:var(--bg-2, #e2e8f0)}
+.og-dir .og-photo{width:84px;height:84px}
+.og-initials{display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--text-dim);font-size:1.1rem}
+.og-name{font-size:.78rem;font-weight:800;line-height:1.25;color:var(--text);text-transform:uppercase}
+.og-cargo{font-size:.72rem;color:var(--text-dim);line-height:1.3;margin-top:3px;min-height:1.8em}
+.og-vs{display:grid;grid-template-columns:1fr auto 1fr;align-items:start;gap:4px;margin-top:8px;font-size:.6rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:.04em;border:1px solid var(--border);border-radius:8px;padding:6px 4px}
+.og-vs > div{display:flex;flex-direction:column;align-items:center;gap:3px}
+.og-vs b{font-size:.72rem;color:var(--text);letter-spacing:0;line-height:1.15}
+.og-vs > i{font-style:normal;font-weight:800;color:var(--text-faint);align-self:center;font-size:.62rem}
+.og-gap{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:4px 10px;border-radius:999px;font-size:.7rem;font-weight:800;background:var(--og-bg);color:var(--og-fg)}
+.og-dot{width:10px;height:10px;border-radius:50%;background:var(--og-c);display:inline-block;box-shadow:0 0 0 2px rgba(255,255,255,.6)}
+.og-meta{font-size:.68rem;color:var(--text-faint);margin-top:6px}
+.og-meta b{color:var(--text-dim)}
+.og-toggle{margin-top:9px;padding-top:8px;border-top:1px dashed var(--border);font-size:.72rem;font-weight:800;color:var(--crimson)}
+.og-toggle.og-none{color:var(--text-faint);font-weight:600}
+/* Sucesores: ficha horizontal (foto en marco + nombre + cargo) →
+   candidato a suceder → un solo cuadro "requiere → es" del color de la
+   brecha → alistamiento y 9-Box */
+.og-card.og-suc{width:300px;box-sizing:border-box;padding:16px;text-align:left;border-top-width:1px;border-top-color:var(--border);border-radius:14px}
+.og-suc .og-hd{display:flex;align-items:center;gap:12px}
+.og-suc .og-photo{width:56px;height:56px;margin:0}
+.og-suc .og-name{font-size:.95rem;font-weight:700;text-transform:none}
+.og-suc .og-cargo{font-size:.8rem;margin-top:2px;min-height:0}
+.og-suc .og-k{font-size:.75rem;color:var(--text-dim);margin-top:14px}
+.og-suc .og-target{font-size:.88rem;font-weight:700;color:var(--text);line-height:1.3;margin-top:2px}
+.og-suc .og-vs{grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin-top:12px;padding:10px 12px;border:0;border-radius:10px;background:var(--og-bg);color:var(--og-fg);font-size:.72rem;text-transform:none;letter-spacing:0}
+.og-suc .og-vs > div{align-items:flex-start;gap:1px}
+.og-suc .og-vs b{font-size:.88rem;font-weight:700;color:var(--og-fg)}
+.og-suc .og-vs > i{color:var(--og-fg);font-size:.9rem;font-weight:400}
+.og-suc .og-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;padding-top:8px;border-top:1px solid var(--border);font-size:.66rem;color:var(--text-dim)}
+.og-suc .og-meta span{display:block}
+.og-suc .og-meta b{font-size:.74rem;color:var(--text)}
 .og-baja{--og-c:#16a34a;--og-bg:#dcfce7;--og-fg:#166534}
 .og-media{--og-c:#eab308;--og-bg:#fef9c3;--og-fg:#854d0e}
 .og-alta{--og-c:#dc2626;--og-bg:#fee2e2;--og-fg:#991b1b}
@@ -2700,25 +2713,16 @@ function ogPhoto(p){
 function ogTitle(s){
   return String(s || '').toLowerCase().replace(/(^|[\s(])(\S)/g, (m, a, b) => a + b.toUpperCase());
 }
-function ogHead(p, nombre){
-  return `<div class="og-hd">${ogPhoto(p)}<div>
-    <div class="og-name">${ogEsc(nombre)}</div>
-    <div class="og-cargo">${ogEsc(p.cargo)}</div>
-  </div></div>`;
-}
-// Cuadros "requiere → es" con el color de la brecha de la ficha.
 function ogVs(lblA, valA, lblB, valB){
   return `<div class="og-vs">
-    <div>${lblA}<b>${ogEsc(ogTitle(valA) || '—')}</b></div><i>→</i>
-    <div>${lblB}<b>${ogEsc(ogTitle(valB) || '—')}</b></div>
+    <div>${lblA}<b>${ogEsc(valA || '—')}</b></div><i>vs</i>
+    <div>${lblB}<b>${ogEsc(valB || '—')}</b></div>
   </div>`;
 }
 function ogGap(p){
+  if(p.brecha == null || p.clasif == null) return `<div class="og-gap og-na"><i class="og-dot"></i>Sin brecha</div>`;
   const b = Number(p.brecha);
-  return `<div class="og-gap" title="Brecha = nivel que requiere el cargo − nivel de la persona"><i class="og-dot"></i>Brecha ${b > 0 ? '+' + b : b} · ${ogEsc(String(p.clasif).toLowerCase())}</div>`;
-}
-function ogMeta(k1, v1, k2, v2){
-  return `<div class="og-meta"><div><span>${k1}</span><b>${ogEsc(v1)}</b></div><div><span>${k2}</span><b>${ogEsc(v2)}</b></div></div>`;
+  return `<div class="og-gap ${ogTone(p.clasif)}" title="Brecha = nivel que requiere el cargo − nivel de la persona"><i class="og-dot"></i>Brecha ${b > 0 ? '+' + b : b} · ${ogEsc(p.clasif)}</div>`;
 }
 function ogClickAttrs(fn){
   return `role="button" tabindex="0" onclick="${fn}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${fn}}"`;
@@ -2727,7 +2731,9 @@ function ogClickAttrs(fn){
 function ogCardDirector(org, open){
   const n = org.directos.length;
   return `<div class="og-card og-dir og-click" ${ogClickAttrs('ogToggleDirector()')}>
-    ${ogHead(org.director, ogTitle(org.director.nombre))}
+    ${ogPhoto(org.director)}
+    <div class="og-name">${ogEsc(org.director.nombre)}</div>
+    <div class="og-cargo">${ogEsc(org.director.cargo)}</div>
     <div class="og-toggle">${open ? '▾ Ocultar equipo' : `▸ Ver ${n} reportes directos`}</div>
   </div>`;
 }
@@ -2739,30 +2745,44 @@ function ogCardDirecto(p, i, open){
   const attrs = n ? `og-click${open ? ' og-open' : ''}" ${ogClickAttrs(`ogToggle(${i})`)}` : '"';
   if(p.vacante){
     return `<div class="og-card og-vac og-na ${attrs}>
-      ${ogHead(p, 'Vacante')}
-      ${ogVs('El cargo requiere', p.posicion, 'La persona es', '—')}
-      <div class="og-gap"><i class="og-dot"></i>Posición vacante</div>
+      ${ogPhoto(p)}
+      <div class="og-name">Vacante</div>
+      <div class="og-cargo">${ogEsc(p.cargo)}</div>
+      ${ogVs('El cargo requiere', p.posicion, 'Ocupante', '—')}
+      <div class="og-gap og-na"><i class="og-dot"></i>Posición vacante</div>
       ${toggle}
     </div>`;
   }
   return `<div class="og-card ${ogTone(p.clasif)} ${attrs}>
-    ${ogHead(p, ogTitle(p.nombre))}
+    ${ogPhoto(p)}
+    <div class="og-name">${ogEsc(p.nombre)}</div>
+    <div class="og-cargo">${ogEsc(p.cargo)}</div>
     ${ogVs('El cargo requiere', p.posicion, 'La persona es', p.persona)}
     ${ogGap(p)}
-    ${ogMeta('Sucesores', String(n), '9-Box', p.caja ? 'Caja ' + p.caja : '—')}
+    <div class="og-meta">9-Box: <b>${ogEsc(p.caja || '—')}</b></div>
     ${toggle}
   </div>`;
 }
-// El versus del sucesor es contra el cargo al que sucedería (el de su
-// líder en el organigrama), no contra su cargo actual.
+// Ficha del sucesor. El versus es contra el cargo al que sucedería (el de
+// su líder en el organigrama), no contra su cargo actual; el cuadro va del
+// color de la brecha, por eso no lleva la etiqueta de brecha aparte.
 function ogCardSucesor(org, s, lider){
-  return `<div class="og-card og-suc ${ogTone(s.clasif)}">
-    ${ogHead(s, ogTitle(s.nombre))}
+  const b = Number(s.brecha);
+  return `<div class="og-card og-suc ${ogTone(s.clasif)}" title="Brecha ${b > 0 ? '+' + b : b} · ${ogEsc(String(s.clasif).toLowerCase())}">
+    <div class="og-hd">${ogPhoto(s)}<div>
+      <div class="og-name">${ogEsc(ogTitle(s.nombre))}</div>
+      <div class="og-cargo">${ogEsc(s.cargo)}</div>
+    </div></div>
     <div class="og-k">Candidato a suceder</div>
     <div class="og-target">${ogEsc(lider.cargo)}</div>
-    ${ogVs('El cargo requiere', lider.posicion, 'La persona es', s.persona)}
-    ${ogGap(s)}
-    ${ogMeta('Alistamiento', ogTiempo(org, s), '9-Box', s.caja ? 'Caja ' + s.caja : '—')}
+    <div class="og-vs">
+      <div>El cargo requiere<b>${ogEsc(ogTitle(lider.posicion))}</b></div><i>→</i>
+      <div>La persona es<b>${ogEsc(ogTitle(s.persona))}</b></div>
+    </div>
+    <div class="og-meta">
+      <div><span>Alistamiento</span><b>${ogEsc(ogTiempo(org, s))}</b></div>
+      <div><span>9-Box</span><b>${s.caja ? 'Caja ' + ogEsc(s.caja) : '—'}</b></div>
+    </div>
   </div>`;
 }
 
