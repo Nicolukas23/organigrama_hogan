@@ -23,7 +23,7 @@
 <script src="../data/tecnologia_organigrama.js?v=1790990000"></script>
 <script src="../data/auditoria_organigrama.js?v=1790950000"></script>
 <script src="../data/umm_organigrama.js?v=1790960000"></script>
-<script src="../data/comite_ejecutivo.js?v=1791000000"></script>
+<script src="../data/comite_ejecutivo.js?v=1791010000"></script>
 <style>
 /* ── ORGANIGRAMA POR DIRECCIÓN ───────────────────────────────────────
    Director → reportes directos → (clic) sucesores, con semáforo de
@@ -144,6 +144,7 @@ body.og-mode #statsGrid, body.og-mode #instructionsBanner, body.og-mode #filters
 .og-dsucs > *{position:relative;z-index:1;flex-shrink:0}
 .og-dsucs .og-sucs-lbl{white-space:nowrap}
 .og-dline + ul{padding-top:22px}
+.og-dline:last-child::before{bottom:50%}  /* sin reportes directos: la línea termina en la rama */
 .og-baja{--og-c:#16a34a;--og-bg:#dcfce7;--og-fg:#166534}
 .og-media{--og-c:#eab308;--og-bg:#fef9c3;--og-fg:#854d0e}
 .og-alta{--og-c:#dc2626;--og-bg:#fee2e2;--og-fg:#991b1b}
@@ -2715,7 +2716,22 @@ function switchView(v){
    Arranca mostrando director + reportes directos; clic en un reporte
    directo despliega sus sucesores. El tiempo de alistamiento se refresca
    en vivo desde la tabla "sucesores" de Supabase. */
-const OG_ORGS = window.ORGANIGRAMAS || [];
+const OG_ORGS = (window.ORGANIGRAMAS || []).slice();
+// Directores del Comité Ejecutivo que aún no tienen el Excel de su
+// dirección: se muestran con el director y sus sucesores (sin reportes
+// directos) hasta que se cargue su <direccion>_organigrama.js.
+Object.entries(window.COMITE_EJECUTIVO || {}).forEach(([exp, ce]) => {
+  if(!ce.titulo || OG_ORGS.some(o => o.director.expediente === exp)) return;
+  OG_ORGS.push({
+    id: 'ce-' + exp, titulo: ce.titulo, direccion: ce.direccion,
+    director: { expediente: exp, foto: ce.foto, nombre: ce.nombre, cargo: ce.cargo },
+    directos: []
+  });
+});
+// Sin reportes directos cargados, la rama de sucesores del director arranca abierta.
+function ogDirSucOpen(org){
+  return OG_DIRSUC_OPEN[org.id] !== undefined ? OG_DIRSUC_OPEN[org.id] : !org.directos.length;
+}
 let OG_ORG_ID = null;              // dirección seleccionada
 const OG_OPEN = {};                // orgId → Set de índices de reportes directos desplegados
 const OG_DIRECTS_HIDDEN = {};      // orgId → true si se contrajo el director
@@ -2843,7 +2859,7 @@ function ogClickAttrs(fn){
 function ogCardDirector(org, open){
   const n = org.directos.length;
   const ns = ogDirSucesores(org).length;
-  const sucOpen = !!OG_DIRSUC_OPEN[org.id];
+  const sucOpen = ogDirSucOpen(org);
   const ce = (window.COMITE_EJECUTIVO || {})[org.director.expediente];
   // Botón propio para la rama de sucesores del director (no despliega el equipo).
   const sucBtn = ns
@@ -2856,7 +2872,8 @@ function ogCardDirector(org, open){
     ${ce ? `<div class="og-dpos">El cargo requiere <b>${ogEsc(String(ce.posicion).toUpperCase())}</b></div>` : ''}
     ${ogFichaBtn(org.director)}
     ${sucBtn}
-    <div class="og-toggle">${open ? '▾ Ocultar equipo' : `▸ Ver ${n} reportes directos`}</div>
+    ${n ? `<div class="og-toggle">${open ? '▾ Ocultar equipo' : `▸ Ver ${n} reportes directos`}</div>`
+        : `<div class="og-toggle og-none">Reportes directos pendientes de cargar</div>`}
   </div>`;
 }
 function ogCardDirecto(p, i, open){
@@ -2945,6 +2962,7 @@ function ogCardDirSucesor(org, s){
 // director) que despliega la lista completa con buscador.
 function ogPickSub(o){
   const n = o.directos.length;
+  if(!n) return `${ogTitle(o.director.nombre)} · reportes directos pendientes`;
   return `${ogTitle(o.director.nombre)} · ${n} reporte${n === 1 ? '' : 's'} directo${n === 1 ? '' : 's'}`;
 }
 function ogRenderPicker(sel, orgs, org){
@@ -3032,11 +3050,11 @@ function renderOrganigrama(recenter){
     return `<li>${ogCardDirecto(p, i, isOpen)}${sucHTML}</li>`;
   }).join('');
   const dsucs = ogDirSucesores(org);
-  const dirSucHTML = dsucs.length && OG_DIRSUC_OPEN[org.id]
+  const dirSucHTML = dsucs.length && ogDirSucOpen(org)
     ? `<div class="og-dline"><div class="og-dsucs"><span class="og-sucs-lbl">Sucesores del director (${dsucs.length})</span>${dsucs.map(s => ogCardDirSucesor(org, s)).join('')}</div></div>`
     : '';
   // Los sucesores del director se pueden ver aunque el equipo esté contraído.
-  tree.innerHTML = `<ul><li>${ogCardDirector(org, dirOpen)}${dirSucHTML}${dirOpen ? `<ul>${branches}</ul>` : ''}</li></ul>`;
+  tree.innerHTML = `<ul><li>${ogCardDirector(org, dirOpen)}${dirSucHTML}${dirOpen && directos.length ? `<ul>${branches}</ul>` : ''}</li></ul>`;
 
   // Resumen: brechas de los reportes directos y de los sucesores.
   const count = (arr) => arr.reduce((a, x) => { const k = String(x.clasif || '').toUpperCase(); if(k) a[k] = (a[k] || 0) + 1; return a; }, {});
@@ -3049,12 +3067,16 @@ function renderOrganigrama(recenter){
     <span><i class="og-dot og-baja"></i> ${c.BAJA || 0}</span>
     <span><i class="og-dot og-media"></i> ${c.MEDIA || 0}</span>
     <span><i class="og-dot og-alta"></i> ${c.ALTA || 0}</span></span>`;
+  // Sucesores del director con versus (Excel del Comité) entran en su propia píldora.
+  const dsVs = dsucs.filter(s => s.clasif);
   document.getElementById('ogSummary').innerHTML =
-    pill(directos.length, 'reportes directos') +
+    (directos.length ? pill(directos.length, 'reportes directos') : '') +
     (vacantes ? pill(vacantes, vacantes === 1 ? 'vacante' : 'vacantes') : '') +
-    pill(allSucs.length, 'sucesores mapeados') +
-    `<div class="og-pill">Brecha directos:${tri(cd)}</div>` +
-    `<div class="og-pill">Brecha sucesores:${tri(cs)}</div>`;
+    (directos.length ? pill(allSucs.length, 'sucesores mapeados') : '') +
+    (directos.length ? `<div class="og-pill">Brecha directos:${tri(cd)}</div>` : '') +
+    (directos.length ? `<div class="og-pill">Brecha sucesores:${tri(cs)}</div>` : '') +
+    (dsucs.length ? pill(dsucs.length, dsucs.length === 1 ? 'sucesor del director' : 'sucesores del director') : '') +
+    (dsVs.length ? `<div class="og-pill">Brecha sucesores del director:${tri(count(dsVs))}</div>` : '');
 
   ogApplyZoom(recenter);
   // Primera vez: trae el tiempo de alistamiento en vivo y repinta.
@@ -3071,7 +3093,8 @@ function ogToggleDirector(){
   renderOrganigrama(false);
 }
 function ogToggleDirSuc(){
-  OG_DIRSUC_OPEN[OG_ORG_ID] = !OG_DIRSUC_OPEN[OG_ORG_ID];
+  const org = OG_ORGS.find(o => o.id === OG_ORG_ID);
+  if(org) OG_DIRSUC_OPEN[org.id] = !ogDirSucOpen(org);
   renderOrganigrama(false);
 }
 function ogExpandAll(on){
