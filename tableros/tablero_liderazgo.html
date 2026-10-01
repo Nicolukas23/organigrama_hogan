@@ -23,8 +23,6 @@
 <script src="../data/tecnologia_organigrama.js?v=1790990000"></script>
 <script src="../data/auditoria_organigrama.js?v=1790950000"></script>
 <script src="../data/umm_organigrama.js?v=1790960000"></script>
-<script src="../data/comite_ejecutivo.js?v=1791000000"></script>
-<script src="../data/comite_organigrama.js?v=1791020000"></script>
 <style>
 /* ── ORGANIGRAMA POR DIRECCIÓN ───────────────────────────────────────
    Director → reportes directos → (clic) sucesores, con semáforo de
@@ -71,8 +69,6 @@ body.og-mode #statsGrid, body.og-mode #instructionsBanner, body.og-mode #filters
 .og-summary{display:flex;flex-wrap:wrap;gap:10px}
 .og-dsuc-btn{display:block;margin:8px auto 0;background:var(--crimson-soft);border:1px solid transparent;border-radius:999px;padding:4px 12px;font:inherit;font-size:.7rem;font-weight:800;color:var(--crimson);cursor:pointer}
 .og-dsuc-btn:hover,.og-dsuc-btn.on{border-color:var(--crimson)}
-.og-dpos{display:inline-block;margin-top:6px;padding:3px 10px;border-radius:8px;background:var(--bg-2,rgba(148,163,184,.12));font-size:.62rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.04em}
-.og-dpos b{color:var(--text);font-size:.7rem;letter-spacing:0}
 .og-pill{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-size:.78rem;color:var(--text-dim)}
 .og-pill b{color:var(--text);font-size:.95rem;margin-right:4px}
 .og-scroll{overflow:auto;border:1px solid var(--border);border-radius:14px;background:var(--panel-2, var(--panel));padding:24px 16px}
@@ -2771,13 +2767,11 @@ function loadOrgSucesoresLive(){
     .catch(() => (OG_SUC_LIVE = {}));
 }
 
-// Sucesores del director corporativo. Fuente principal: Excel del Comité
-// Ejecutivo (data/comite_ejecutivo.js), que trae tipo de talento y brecha.
-// Si el director no está ahí, respaldo: parejas "JEFE|SUCESOR" del
-// consolidado de sucesores (data/sucesor_pairs.js) con datos de la ninebox.
+// Sucesores del director corporativo: parejas "JEFE|SUCESOR" del
+// consolidado de sucesores (data/sucesor_pairs.js) cuyo jefe es el
+// director; los datos de cada persona salen de la ninebox (ALL) y el
+// tiempo de alistamiento de la tabla "sucesores" de Supabase.
 function ogDirSucesores(org){
-  const ce = (window.COMITE_EJECUTIVO || {})[org.director.expediente];
-  if(ce) return ce.sucesores;
   const jefe = normWords(org.director.nombre);
   const byName = new Map((ALL || []).map(r => [normWords(r.nombre), r]));
   return (window.SUCESOR_PAIRS || [])
@@ -2845,17 +2839,14 @@ function ogCardDirector(org, open){
   const n = org.directos.length;
   const ns = ogDirSucesores(org).length;
   const sucOpen = !!OG_DIRSUC_OPEN[org.id];
-  const ce = (window.COMITE_EJECUTIVO || {})[org.director.expediente];
   // Botón propio para la rama de sucesores del director (no despliega el equipo).
-  const sucBtn = !org.director.expediente ? ''   // caja raíz sin persona (Comité Ejecutivo)
-    : ns
+  const sucBtn = ns
     ? `<button class="og-dsuc-btn${sucOpen ? ' on' : ''}" onclick="event.stopPropagation();ogToggleDirSuc()">${sucOpen ? '▾ Ocultar' : '▸ Ver'} ${ns} sucesor${ns === 1 ? '' : 'es'} del director</button>`
     : `<div class="og-toggle og-none" style="border:0;padding-top:4px;margin-top:4px">Sin sucesor identificado</div>`;
   return `<div class="og-card og-dir og-click" ${ogClickAttrs('ogToggleDirector()')}>
     ${ogPhoto(org.director)}
     <div class="og-name">${ogEsc(org.director.nombre)}</div>
     <div class="og-cargo">${ogEsc(org.director.cargo)}</div>
-    ${ce ? `<div class="og-dpos">El cargo requiere <b>${ogEsc(String(ce.posicion).toUpperCase())}</b></div>` : ''}
     ${ogFichaBtn(org.director)}
     ${sucBtn}
     <div class="og-toggle">${open ? '▾ Ocultar equipo' : `▸ Ver ${n} reportes directos`}</div>
@@ -2873,19 +2864,6 @@ function ogCardDirecto(p, i, open){
       <div class="og-name">Vacante</div>
       <div class="og-cargo">${ogEsc(p.cargo)}</div>
       ${ogVs('El cargo requiere', p.posicion, 'Ocupante', '—')}
-      ${toggle}
-    </div>`;
-  }
-  // Sin tipo de talento de la persona (organigrama del Comité Ejecutivo: el
-  // Excel solo trae lo que requiere el cargo): tarjeta neutra sin versus.
-  if(!p.persona){
-    return `<div class="og-card og-na ${attrs}>
-      ${ogPhoto(p)}
-      <div class="og-name">${ogEsc(p.nombre)}</div>
-      <div class="og-cargo">${ogEsc(p.cargo)}</div>
-      ${p.posicion ? `<div class="og-dpos">El cargo requiere <b>${ogEsc(String(p.posicion).toUpperCase())}</b></div>` : ''}
-      ${p.caja ? `<div class="og-meta">9-Box: <b>${ogEsc(p.caja)}</b></div>` : ''}
-      ${ogFichaBtn(p)}
       ${toggle}
     </div>`;
   }
@@ -2925,31 +2903,18 @@ function ogCardSucesor(org, s, lider){
   </div>`;
 }
 
-// Ficha de sucesor del director: mismo formato que la de los demás
-// sucesores; el versus es contra el cargo del director (Excel del Comité
-// Ejecutivo). Sin ese dato (respaldo por consolidado) va en gris sin versus.
+// Ficha de sucesor del director: mismo formato, sin versus (los Excel no
+// traen el tipo de talento del cargo de director).
 function ogCardDirSucesor(org, s){
-  const ce = (window.COMITE_EJECUTIVO || {})[org.director.expediente];
-  const b = Number(s.brecha);
-  const vs = ce && s.persona
-    ? `<div class="og-vs">
-        <div>El cargo requiere<b>${ogEsc(String(ce.posicion).toUpperCase())}</b></div><i>→</i>
-        <div>La persona es<b>${ogEsc(String(s.persona).toUpperCase())}</b></div>
-      </div>`
-    : '';
-  // Tiempo por cargo del Excel; si viene vacío, el de la tabla "sucesores" de Supabase.
-  const tx = String(s.tiempo || '').replace(/\s+/g, ' ').trim().toLowerCase();
-  const tiempo = tx ? tx.charAt(0).toUpperCase() + tx.slice(1) : ogTiempoLive(s.expediente);
-  return `<div class="og-card og-suc ${vs ? ogTone(s.clasif) : 'og-na'}"${vs ? ` title="Brecha ${b > 0 ? '+' + b : b} · ${ogEsc(String(s.clasif).toLowerCase())}"` : ''}>
+  return `<div class="og-card og-suc og-na">
     <div class="og-hd">${ogPhoto(s)}<div>
       <div class="og-name">${ogEsc(s.nombre)}</div>
       <div class="og-cargo">${ogEsc(s.cargo)}</div>
     </div></div>
     <div class="og-k">Candidato a suceder</div>
     <div class="og-target">${ogEsc(org.director.cargo)}</div>
-    ${vs}
     <div class="og-meta">
-      <div><span>Alistamiento</span><b>${ogEsc(tiempo)}</b></div>
+      <div><span>Alistamiento</span><b>${ogEsc(ogTiempoLive(s.expediente))}</b></div>
       <div><span>9-Box</span><b>${s.caja ? 'Caja ' + ogEsc(s.caja) : '—'}</b></div>
     </div>
     ${ogFichaBtn(s)}
@@ -2963,9 +2928,7 @@ function ogPickSub(o){
   return `${ogTitle(o.director.nombre)} · ${n} reporte${n === 1 ? '' : 's'} directo${n === 1 ? '' : 's'}`;
 }
 function ogRenderPicker(sel, orgs, org){
-  const img = o => o.director.foto
-    ? `<img src="../data/FOTOS/${ogEsc(o.director.foto)}" alt="" onerror="this.style.visibility='hidden'">`
-    : `<img alt="" style="visibility:hidden">`;
+  const img = o => `<img src="../data/FOTOS/${ogEsc(o.director.foto)}" alt="" onerror="this.style.visibility='hidden'">`;
   sel.className = 'og-orgs';
   sel.innerHTML = `
     <button class="og-pick-btn" onclick="ogPickToggle(event)" aria-haspopup="listbox">
@@ -3020,7 +2983,7 @@ function ogVerFicha(ev, exp, nombre){
   else alert('No se encontró la ficha de talento de ' + nombre + '.');
 }
 function ogFichaBtn(p){
-  if(!p.expediente) return '';   // caja raíz "Comité Ejecutivo" o vacante: no es una persona
+  if(!p.expediente && !p.nombre) return '';
   return `<button class="og-ficha" onclick="ogVerFicha(event, '${ogEsc(p.expediente || '')}', '${ogEsc(p.nombre)}')" title="Ver ficha de talento">👤 Ver ficha de talento</button>`;
 }
 
@@ -3070,7 +3033,7 @@ function renderOrganigrama(recenter){
     pill(directos.length, 'reportes directos') +
     (vacantes ? pill(vacantes, vacantes === 1 ? 'vacante' : 'vacantes') : '') +
     pill(allSucs.length, 'sucesores mapeados') +
-    (ocupados.some(d => d.clasif) ? `<div class="og-pill">Brecha directos:${tri(cd)}</div>` : '') +
+    `<div class="og-pill">Brecha directos:${tri(cd)}</div>` +
     `<div class="og-pill">Brecha sucesores:${tri(cs)}</div>`;
 
   ogApplyZoom(recenter);
