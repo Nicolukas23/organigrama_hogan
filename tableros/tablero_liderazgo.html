@@ -24,6 +24,7 @@
 <script src="../data/auditoria_organigrama.js?v=1790950000"></script>
 <script src="../data/umm_organigrama.js?v=1790960000"></script>
 <script src="../data/comite_ejecutivo.js?v=1791000000"></script>
+<script src="../data/comite_organigrama.js?v=1791020000"></script>
 <style>
 /* ── ORGANIGRAMA POR DIRECCIÓN ───────────────────────────────────────
    Director → reportes directos → (clic) sucesores, con semáforo de
@@ -2846,7 +2847,8 @@ function ogCardDirector(org, open){
   const sucOpen = !!OG_DIRSUC_OPEN[org.id];
   const ce = (window.COMITE_EJECUTIVO || {})[org.director.expediente];
   // Botón propio para la rama de sucesores del director (no despliega el equipo).
-  const sucBtn = ns
+  const sucBtn = !org.director.expediente ? ''   // caja raíz sin persona (Comité Ejecutivo)
+    : ns
     ? `<button class="og-dsuc-btn${sucOpen ? ' on' : ''}" onclick="event.stopPropagation();ogToggleDirSuc()">${sucOpen ? '▾ Ocultar' : '▸ Ver'} ${ns} sucesor${ns === 1 ? '' : 'es'} del director</button>`
     : `<div class="og-toggle og-none" style="border:0;padding-top:4px;margin-top:4px">Sin sucesor identificado</div>`;
   return `<div class="og-card og-dir og-click" ${ogClickAttrs('ogToggleDirector()')}>
@@ -2871,6 +2873,19 @@ function ogCardDirecto(p, i, open){
       <div class="og-name">Vacante</div>
       <div class="og-cargo">${ogEsc(p.cargo)}</div>
       ${ogVs('El cargo requiere', p.posicion, 'Ocupante', '—')}
+      ${toggle}
+    </div>`;
+  }
+  // Sin tipo de talento de la persona (organigrama del Comité Ejecutivo: el
+  // Excel solo trae lo que requiere el cargo): tarjeta neutra sin versus.
+  if(!p.persona){
+    return `<div class="og-card og-na ${attrs}>
+      ${ogPhoto(p)}
+      <div class="og-name">${ogEsc(p.nombre)}</div>
+      <div class="og-cargo">${ogEsc(p.cargo)}</div>
+      ${p.posicion ? `<div class="og-dpos">El cargo requiere <b>${ogEsc(String(p.posicion).toUpperCase())}</b></div>` : ''}
+      ${p.caja ? `<div class="og-meta">9-Box: <b>${ogEsc(p.caja)}</b></div>` : ''}
+      ${ogFichaBtn(p)}
       ${toggle}
     </div>`;
   }
@@ -2948,7 +2963,9 @@ function ogPickSub(o){
   return `${ogTitle(o.director.nombre)} · ${n} reporte${n === 1 ? '' : 's'} directo${n === 1 ? '' : 's'}`;
 }
 function ogRenderPicker(sel, orgs, org){
-  const img = o => `<img src="../data/FOTOS/${ogEsc(o.director.foto)}" alt="" onerror="this.style.visibility='hidden'">`;
+  const img = o => o.director.foto
+    ? `<img src="../data/FOTOS/${ogEsc(o.director.foto)}" alt="" onerror="this.style.visibility='hidden'">`
+    : `<img alt="" style="visibility:hidden">`;
   sel.className = 'og-orgs';
   sel.innerHTML = `
     <button class="og-pick-btn" onclick="ogPickToggle(event)" aria-haspopup="listbox">
@@ -3003,7 +3020,7 @@ function ogVerFicha(ev, exp, nombre){
   else alert('No se encontró la ficha de talento de ' + nombre + '.');
 }
 function ogFichaBtn(p){
-  if(!p.expediente && !p.nombre) return '';
+  if(!p.expediente) return '';   // caja raíz "Comité Ejecutivo" o vacante: no es una persona
   return `<button class="og-ficha" onclick="ogVerFicha(event, '${ogEsc(p.expediente || '')}', '${ogEsc(p.nombre)}')" title="Ver ficha de talento">👤 Ver ficha de talento</button>`;
 }
 
@@ -3053,7 +3070,7 @@ function renderOrganigrama(recenter){
     pill(directos.length, 'reportes directos') +
     (vacantes ? pill(vacantes, vacantes === 1 ? 'vacante' : 'vacantes') : '') +
     pill(allSucs.length, 'sucesores mapeados') +
-    `<div class="og-pill">Brecha directos:${tri(cd)}</div>` +
+    (ocupados.some(d => d.clasif) ? `<div class="og-pill">Brecha directos:${tri(cd)}</div>` : '') +
     `<div class="og-pill">Brecha sucesores:${tri(cs)}</div>`;
 
   ogApplyZoom(recenter);
