@@ -22,7 +22,8 @@
 <script src="../data/umc_organigrama.js?v=1790870000"></script>
 <script src="../data/tecnologia_organigrama.js?v=1790990000"></script>
 <script src="../data/auditoria_organigrama.js?v=1790950000"></script>
-<script src="../data/umm_organigrama.js?v=1791100000"></script>
+<script src="../data/umm_organigrama.js?v=1791200000"></script>
+<script src="../data/gestion_humana_organigrama.js?v=1791200000"></script>
 <style>
 /* ── ORGANIGRAMA POR DIRECCIÓN ───────────────────────────────────────
    Director → reportes directos → (clic) sucesores, con semáforo de
@@ -94,6 +95,7 @@ body.og-mode #statsGrid, body.og-mode #instructionsBanner, body.og-mode #filters
 /* Sucesores comunes (p. ej. de las 5 regionales de UMM): columna aparte unida
    con línea azul punteada a las tarjetas a las que aplica (ogDrawComunes) */
 .og-tree li.og-comun::after{border-left:0}
+.og-tree li.og-comun:first-child::before,.og-tree li.og-comun:first-child::after{border:0}.og-tree li.og-comun:first-child + li::before{border:0}.og-tree li.og-comun:first-child + li::after{border-radius:6px 0 0 0}
 .og-comun-col{display:flex;flex-direction:column;align-items:center}
 .og-comun-lbl{position:relative;z-index:1;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#1d4ed8;background:#dbeafe;border-radius:999px;padding:4px 12px;white-space:nowrap}
 .og-sitem.og-dash::before{border-left:2px dashed #2563eb}
@@ -2894,7 +2896,9 @@ function ogCardDirecto(p, i, open){
 // color de la brecha, por eso no lleva la etiqueta de brecha aparte.
 function ogCardSucesor(org, s, lider, comun){
   const b = Number(s.brecha);
-  return `<div class="og-card og-suc ${ogTone(s.clasif)}${comun ? ' og-comun-card' : ''}" title="Brecha ${b > 0 ? '+' + b : b} · ${ogEsc(String(s.clasif).toLowerCase())}">
+  // Sin tipo de talento en el Excel: ficha gris, versus con "—" y sin brecha.
+  const title = s.clasif ? `Brecha ${b > 0 ? '+' + b : b} · ${ogEsc(String(s.clasif).toLowerCase())}` : 'Sin tipo de talento ni brecha en el Excel';
+  return `<div class="og-card og-suc ${ogTone(s.clasif)}${comun ? ' og-comun-card' : ''}" title="${title}">
     <div class="og-hd">${ogPhoto(s)}<div>
       <div class="og-name">${ogEsc(s.nombre)}</div>
       <div class="og-cargo">${ogEsc(s.cargo)}</div>
@@ -2951,10 +2955,14 @@ function ogDrawComunes(org){
     const l0 = rel(lbl);
     col.style.marginTop = Math.round(busY - (l0.top + l0.height / 2)) + 'px';
     const l = rel(lbl);
-    const xs = cards.map(r => r.left + r.width * 0.78);
+    // La línea baja por el lado de la tarjeta que mira a la columna de comunes.
+    const izq = l.right <= Math.min(...cards.map(r => r.left));
+    const xs = cards.map(r => r.left + r.width * (izq ? 0.22 : 0.78));
     const dash = 'stroke="#2563eb" stroke-width="2.5" stroke-dasharray="6 5" fill="none"';
     xs.forEach((x, i) => { svg += `<line x1="${x}" y1="${cards[i].bottom}" x2="${x}" y2="${busY}" ${dash}/>`; });
-    svg += `<line x1="${Math.min(...xs)}" y1="${busY}" x2="${l.left}" y2="${busY}" ${dash}/>`;
+    svg += izq
+      ? `<line x1="${l.right}" y1="${busY}" x2="${Math.max(...xs)}" y2="${busY}" ${dash}/>`
+      : `<line x1="${Math.min(...xs)}" y1="${busY}" x2="${l.left}" y2="${busY}" ${dash}/>`;
   });
   if(svg) tree.insertAdjacentHTML('beforeend', `<svg class="og-comun-svg" xmlns="http://www.w3.org/2000/svg">${svg}</svg>`);
 }
@@ -3039,7 +3047,7 @@ function ogVerFicha(ev, exp, nombre){
   else alert('No se encontró la ficha de talento de ' + nombre + '.');
 }
 function ogFichaBtn(p){
-  if(!p.expediente && !p.nombre) return '';
+  if(!p.expediente) return '';   // sin registro en la ninebox: no hay ficha que abrir
   return `<button class="og-ficha" onclick="ogVerFicha(event, '${ogEsc(p.expediente || '')}', '${ogEsc(p.nombre)}')" title="Ver ficha de talento">👤 Ver ficha de talento</button>`;
 }
 
@@ -3065,12 +3073,12 @@ function renderOrganigrama(recenter){
     const sucHTML = isOpen
       ? `<div class="og-sucs"><div class="og-sitem"><span class="og-sucs-lbl">Sucesores (${sucs.length})</span></div>${sucs.map(s => `<div class="og-sitem">${ogCardSucesor(org, s, p)}</div>`).join('')}</div>`
       : '';
-    // Columna de sucesores comunes justo después del último reporte directo al que aplica.
+    // Columna de sucesores comunes a la izquierda del primer reporte directo al que aplica.
     const comunesAqui = (org.comunes || []).map((g, k) => {
       const idx = directos.map((d, j) => (g.aplicaA || []).includes(d.expediente) ? j : -1).filter(j => j >= 0);
-      return idx.length && Math.max(...idx) === i ? ogComunHTML(org, g, k) : '';
+      return idx.length && Math.min(...idx) === i ? ogComunHTML(org, g, k) : '';
     }).join('');
-    return `<li data-exp="${ogEsc(p.expediente || '')}">${ogCardDirecto(p, i, isOpen)}${sucHTML}</li>${comunesAqui}`;
+    return `${comunesAqui}<li data-exp="${ogEsc(p.expediente || '')}">${ogCardDirecto(p, i, isOpen)}${sucHTML}</li>`;
   }).join('');
   const dsucs = ogDirSucesores(org);
   const dirSucHTML = dsucs.length && OG_DIRSUC_OPEN[org.id]
