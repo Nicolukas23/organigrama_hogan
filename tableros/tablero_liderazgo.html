@@ -25,6 +25,7 @@
 <script src="../data/umm_organigrama.js?v=1791200000"></script>
 <script src="../data/gestion_humana_organigrama.js?v=1791200000"></script>
 <script src="../data/financiera_organigrama.js?v=1791500000"></script>
+<script src="../data/juridica_organigrama.js?v=1791600000"></script>
 <script src="../data/comite_brechas.js?v=1791400000"></script>
 <style>
 /* ── ORGANIGRAMA POR DIRECCIÓN ───────────────────────────────────────
@@ -2878,7 +2879,7 @@ function ogCardDirecto(p, i, open){
   const n = (p.sucesores || []).length;
   const toggle = n
     ? `<div class="og-toggle">${open ? '▾ Ocultar sucesores' : `▸ Ver ${n} sucesor${n === 1 ? '' : 'es'}`}</div>`
-    : `<div class="og-toggle og-none">Sin sucesor identificado</div>`;
+    : `<div class="og-toggle og-none">${ogEsc(p.sinSucesor || 'Sin sucesor identificado')}</div>`;
   const attrs = n ? `og-click${open ? ' og-open' : ''}" ${ogClickAttrs(`ogToggle(${i})`)}` : '"';
   if(p.vacante){
     return `<div class="og-card og-vac og-na ${attrs}>
