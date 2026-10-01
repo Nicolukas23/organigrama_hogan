@@ -26,6 +26,8 @@
 <script src="../data/gestion_humana_organigrama.js?v=1791200000"></script>
 <script src="../data/financiera_organigrama.js?v=1791500000"></script>
 <script src="../data/juridica_organigrama.js?v=1791600000"></script>
+<script src="../data/riesgo_organigrama.js?v=1791700000"></script>
+<script src="../data/fotos_index.js?v=1791800000"></script>
 <script src="../data/comite_brechas.js?v=1791400000"></script>
 <style>
 /* ── ORGANIGRAMA POR DIRECCIÓN ───────────────────────────────────────
@@ -580,7 +582,7 @@ body.og-mode #statsGrid, body.og-mode #instructionsBanner, body.og-mode #filters
   <section id="viewOG" style="display:none">
     <div class="og-top">
       <div class="og-orgs" id="ogOrgs"></div>
-      <div class="og-legend">
+      <div class="og-legend" id="ogLegend">
         <span><i class="og-dot og-baja"></i>Brecha baja</span>
         <span><i class="og-dot og-media"></i>Brecha media</span>
         <span><i class="og-dot og-alta"></i>Brecha alta</span>
@@ -589,7 +591,7 @@ body.og-mode #statsGrid, body.og-mode #instructionsBanner, body.og-mode #filters
     <div class="og-head">
       <div>
         <h2 id="ogTitle">Organigrama</h2>
-        <div class="og-sub">Haz clic en un líder para ver sus sucesores. Cada caja compara el tipo de talento que requiere el cargo con el de la persona.</div>
+        <div class="og-sub" id="ogSub">Haz clic en un líder para ver sus sucesores. Cada caja compara el tipo de talento que requiere el cargo con el de la persona.</div>
       </div>
     </div>
     <div class="og-bar">
@@ -2831,7 +2833,10 @@ function ogPhoto(p){
   const ini = String(p.nombre || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('');
   const fallback = `this.outerHTML='<div class=&quot;og-photo og-initials&quot;>${ogEsc(ini)}</div>'`;
   if(!p.foto && p.expediente){
-    // Sin archivo conocido (sucesores del director): se prueba .jpg → .png → .jpeg por expediente.
+    // Sin archivo conocido (sucesores del director): primero el índice de fotos
+    // por expediente; si no está, se prueba .jpg → .png → .jpeg.
+    const idx = fotoPorExpediente(p.expediente);
+    if(idx) return `<img class="og-photo" src="${ogEsc(idx)}" alt="${ogEsc(p.nombre)}" onerror="${fallback}">`;
     const base = '../data/FOTOS/' + ogEsc(p.expediente);
     return `<img class="og-photo" src="${base}.jpg" alt="${ogEsc(p.nombre)}"
       onerror="if(!this.dataset.t){this.dataset.t=1;this.src='${base}.png'}else if(this.dataset.t==1){this.dataset.t=2;this.src='${base}.jpeg'}else{${fallback}}">`;
@@ -2875,7 +2880,7 @@ function ogCardDirector(org, open){
     <div class="og-toggle">${open ? '▾ Ocultar equipo' : `▸ Ver ${n} reportes directos`}</div>
   </div>`;
 }
-function ogCardDirecto(p, i, open){
+function ogCardDirecto(p, i, open, org){
   const n = (p.sucesores || []).length;
   const toggle = n
     ? `<div class="og-toggle">${open ? '▾ Ocultar sucesores' : `▸ Ver ${n} sucesor${n === 1 ? '' : 'es'}`}</div>`
@@ -2887,6 +2892,17 @@ function ogCardDirecto(p, i, open){
       <div class="og-name">Vacante</div>
       <div class="og-cargo">${ogEsc(p.cargo)}</div>
       ${ogVs('El cargo requiere', p.posicion, 'Ocupante', '—')}
+      ${toggle}
+    </div>`;
+  }
+  // Organigrama sin brechas (org.sinBrechas): tarjeta neutra, sin versus.
+  if(org && org.sinBrechas){
+    return `<div class="og-card og-na ${attrs}>
+      ${ogPhoto(p)}
+      <div class="og-name">${ogEsc(p.nombre)}</div>
+      <div class="og-cargo">${ogEsc(p.cargo)}</div>
+      <div class="og-meta">9-Box: <b>${ogEsc(p.caja || '—')}</b></div>
+      ${ogFichaBtn(p)}
       ${toggle}
     </div>`;
   }
@@ -2909,17 +2925,18 @@ function ogCardSucesor(org, s, lider, comun){
   const b = Number(s.brecha);
   // Sin tipo de talento en el Excel: ficha gris, versus con "—" y sin brecha.
   const title = s.clasif ? `Brecha ${b > 0 ? '+' + b : b} · ${ogEsc(String(s.clasif).toLowerCase())}` : 'Sin tipo de talento ni brecha en el Excel';
-  return `<div class="og-card og-suc ${ogTone(s.clasif)}${comun ? ' og-comun-card' : ''}" title="${title}">
+  const sinB = !!(org && org.sinBrechas);   // organigrama sin brechas: sin versus ni color
+  return `<div class="og-card og-suc ${sinB ? 'og-na' : ogTone(s.clasif)}${comun ? ' og-comun-card' : ''}"${sinB ? '' : ` title="${title}"`}>
     <div class="og-hd">${ogPhoto(s)}<div>
       <div class="og-name">${ogEsc(s.nombre)}</div>
       <div class="og-cargo">${ogEsc(s.cargo)}</div>
     </div></div>
     <div class="og-k">Candidato a suceder</div>
     <div class="og-target">${ogEsc(lider.cargo)}</div>
-    <div class="og-vs">
+    ${sinB ? '' : `<div class="og-vs">
       <div>El cargo requiere<b>${ogEsc(String(lider.posicion || '—').toUpperCase())}</b></div><i>→</i>
       <div>La persona es<b>${ogEsc(String(s.persona || '—').toUpperCase())}</b></div>
-    </div>
+    </div>`}
     <div class="og-meta">
       <div><span>Alistamiento</span><b>${ogEsc(ogTiempo(org, s))}</b></div>
       <div><span>9-Box</span><b>${s.caja ? 'Caja ' + ogEsc(s.caja) : '—'}</b></div>
@@ -2983,7 +3000,7 @@ function ogDrawComunes(org){
 // color de la brecha; sin ellos (solo consolidado) va en gris sin versus.
 function ogCardDirSucesor(org, s){
   const ce = (window.COMITE_BRECHAS || {})[org.director.expediente];
-  const conBrecha = !!(ce && s.persona && s.clasif);
+  const conBrecha = !!(ce && s.persona && s.clasif && !org.sinBrechas);
   const b = Number(s.brecha);
   const vs = conBrecha
     ? `<div class="og-vs">
@@ -3088,6 +3105,11 @@ function renderOrganigrama(recenter){
   sel.style.display = orgs.length > 1 ? '' : 'none';
   ogRenderPicker(sel, orgs, org);
   document.getElementById('ogTitle').textContent = 'Organigrama · ' + org.titulo;
+  // Sin brechas: no aplica la leyenda de colores ni la explicación del versus.
+  document.getElementById('ogLegend').style.visibility = org.sinBrechas ? 'hidden' : '';
+  document.getElementById('ogSub').textContent = org.sinBrechas
+    ? 'Haz clic en un líder para ver sus sucesores.'
+    : 'Haz clic en un líder para ver sus sucesores. Cada caja compara el tipo de talento que requiere el cargo con el de la persona.';
 
   const open = OG_OPEN[org.id] || (OG_OPEN[org.id] = new Set());
   const dirOpen = !OG_DIRECTS_HIDDEN[org.id];
@@ -3103,7 +3125,7 @@ function renderOrganigrama(recenter){
       const idx = directos.map((d, j) => (g.aplicaA || []).includes(d.expediente) ? j : -1).filter(j => j >= 0);
       return idx.length && Math.min(...idx) === i ? ogComunHTML(org, g, k) : '';
     }).join('');
-    return `${comunesAqui}<li data-exp="${ogEsc(p.expediente || '')}">${ogCardDirecto(p, i, isOpen)}${sucHTML}</li>`;
+    return `${comunesAqui}<li data-exp="${ogEsc(p.expediente || '')}">${ogCardDirecto(p, i, isOpen, org)}${sucHTML}</li>`;
   }).join('');
   const dsucs = ogDirSucesores(org);
   const dirSucHTML = dsucs.length && OG_DIRSUC_OPEN[org.id]
@@ -3127,8 +3149,8 @@ function renderOrganigrama(recenter){
     pill(directos.length, 'reportes directos') +
     (vacantes ? pill(vacantes, vacantes === 1 ? 'vacante' : 'vacantes') : '') +
     pill(allSucs.length, 'sucesores mapeados') +
-    `<div class="og-pill">Brecha directos:${tri(cd)}</div>` +
-    `<div class="og-pill">Brecha sucesores:${tri(cs)}</div>`;
+    (org.sinBrechas ? '' : `<div class="og-pill">Brecha directos:${tri(cd)}</div>`) +
+    (org.sinBrechas ? '' : `<div class="og-pill">Brecha sucesores:${tri(cs)}</div>`);
 
   ogApplyZoom(recenter);
   ogDrawComunes(org);
@@ -3204,8 +3226,29 @@ function adminUploadPlaceholder(){
   status.style.color = 'var(--text-dim)';
 }
 
+// Foto de la persona por expediente (data/fotos_index.js). Se busca SOLO por
+// expediente, nunca por nombre, para no mostrar la foto de otra persona.
+function fotoPorExpediente(exp){
+  const f = exp != null && window.FOTOS_INDEX ? window.FOTOS_INDEX[String(exp).trim()] : null;
+  return f ? '../data/FOTOS/' + f : null;
+}
+
 function openModal(p, hideFicha){
-  document.getElementById('mAv').textContent = p.nombre.charAt(0);
+  // Círculo del encabezado: foto si existe; si no (o si no carga), la inicial.
+  const av = document.getElementById('mAv');
+  const inicial = (p.nombre || '?').charAt(0);
+  const foto = fotoPorExpediente(p.expediente);
+  av.textContent = '';
+  if(foto){
+    const img = document.createElement('img');
+    img.src = foto;
+    img.alt = p.nombre || '';
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;display:block';
+    img.onerror = () => { av.textContent = inicial; };
+    av.appendChild(img);
+  } else {
+    av.textContent = inicial;
+  }
   document.getElementById('mNombre').textContent = p.nombre;
   document.getElementById('mCargo').textContent = p.cargo || '-';
   document.getElementById('mJefe').textContent = 'Jefe Directo: ' + (p.jefe || '-');
