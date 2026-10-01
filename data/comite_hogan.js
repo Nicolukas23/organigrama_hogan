@@ -988,7 +988,7 @@ window.COMITE_HOGAN["ARCE CLAVIJO PABLO ALEJANDRO"].fortalezas = "Genera relacio
 window.COMITE_HOGAN["ARCE CLAVIJO PABLO ALEJANDRO"].oportunidades = "Profundizar en el an\u00e1lisis de la causa ra\u00edz de los problemas y asegurar la calidad de los datos antes de la toma de decisiones.\nFortalecer la gesti\u00f3n del equipo y su capacidad para mantener el foco en escenarios de presi\u00f3n o crisis.\nDesarrollar mayor versatilidad y consistencia en la comunicaci\u00f3n, generando mayor confianza y credibilidad.\nMejorar los resultados del negocio, especialmente en indicadores como NPS Pymes, y fortalecer el desarrollo del talento de su equipo.";
 
 window.COMITE_HOGAN["BERRIO GARCIA JULIO CESAR"] = window.COMITE_HOGAN["BERRIO GARCIA JULIO CESAR"] || {};
-window.COMITE_HOGAN["BERRIO GARCIA JULIO CESAR"].fortalezas = "Se destaca por su alto potencial, s\u00f3lido conocimiento t\u00e9cnico y capacidad para resolver situaciones complejas.\nEjerce un buen liderazgo, impulsa el desarrollo de su equipo y genera aportes de alto valor.\nSe mantiene en Caja 8, con potencial para asumir mayores responsabilidades.";
+window.COMITE_HOGAN["BERRIO GARCIA JULIO CESAR"].fortalezas = "Se destaca por su s\u00f3lido conocimiento t\u00e9cnico y capacidad para resolver situaciones complejas.\nEjerce un buen liderazgo, impulsa el desarrollo de su equipo y genera aportes de alto valor.";
 window.COMITE_HOGAN["BERRIO GARCIA JULIO CESAR"].oportunidades = "Fortalecer la humildad y la cercan\u00eda con el equipo.\nEscuchar activamente otras perspectivas y evitar estilos de liderazgo que puedan percibirse como impositivos o prepotentes.";
 
 window.COMITE_HOGAN["GERENA PAEZ FABIAN LEONARDO"] = window.COMITE_HOGAN["GERENA PAEZ FABIAN LEONARDO"] || {};
@@ -2319,7 +2319,7 @@ window.HOGAN_EXTRAS["79684854"].fortalezas = "Genera relacionamiento con los dif
 window.HOGAN_EXTRAS["79684854"].oportunidades = "Profundizar en el an\u00e1lisis de la causa ra\u00edz de los problemas y asegurar la calidad de los datos antes de la toma de decisiones.\nFortalecer la gesti\u00f3n del equipo y su capacidad para mantener el foco en escenarios de presi\u00f3n o crisis.\nDesarrollar mayor versatilidad y consistencia en la comunicaci\u00f3n, generando mayor confianza y credibilidad.\nMejorar los resultados del negocio, especialmente en indicadores como NPS Pymes, y fortalecer el desarrollo del talento de su equipo.";
 
 window.HOGAN_EXTRAS["72273597"] = window.HOGAN_EXTRAS["72273597"] || {};
-window.HOGAN_EXTRAS["72273597"].fortalezas = "Se destaca por su alto potencial, s\u00f3lido conocimiento t\u00e9cnico y capacidad para resolver situaciones complejas.\nEjerce un buen liderazgo, impulsa el desarrollo de su equipo y genera aportes de alto valor.\nSe mantiene en Caja 8, con potencial para asumir mayores responsabilidades.";
+window.HOGAN_EXTRAS["72273597"].fortalezas = "Se destaca por su s\u00f3lido conocimiento t\u00e9cnico y capacidad para resolver situaciones complejas.\nEjerce un buen liderazgo, impulsa el desarrollo de su equipo y genera aportes de alto valor.";
 window.HOGAN_EXTRAS["72273597"].oportunidades = "Fortalecer la humildad y la cercan\u00eda con el equipo.\nEscuchar activamente otras perspectivas y evitar estilos de liderazgo que puedan percibirse como impositivos o prepotentes.";
 
 window.HOGAN_EXTRAS["1001053538"] = window.HOGAN_EXTRAS["1001053538"] || {};

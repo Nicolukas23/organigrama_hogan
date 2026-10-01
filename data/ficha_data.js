@@ -3736,7 +3736,7 @@ window.DATA = {
       "oportunidades": "Como oportunidad de desarrollo, puede fortalecer una participación más activa y posicionarse aún más como la voz del área en espacios donde se requiera mayor liderazgo."
     },
     "72273597": {
-      "fortalezas": "Se destaca por su alto potencial, sólido conocimiento técnico y capacidad para resolver situaciones complejas.\nEjerce un buen liderazgo, impulsa el desarrollo de su equipo y genera aportes de alto valor.\nSe mantiene en Caja 8, con potencial para asumir mayores responsabilidades.",
+      "fortalezas": "Se destaca por su sólido conocimiento técnico y capacidad para resolver situaciones complejas.\nEjerce un buen liderazgo, impulsa el desarrollo de su equipo y genera aportes de alto valor.",
       "oportunidades": "Fortalecer la humildad y la cercanía con el equipo.\nEscuchar activamente otras perspectivas y evitar estilos de liderazgo que puedan percibirse como impositivos o prepotentes."
     },
     "72285538": {
