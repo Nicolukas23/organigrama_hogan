@@ -7,10 +7,7 @@
      · hoja CARGO            → tipo de talento que requiere cada cargo
      · hoja CARGO VS SUCESOR → sucesores de cada director, con su tipo de
                                talento, brecha y tiempo de alistamiento
-   Llave: expediente del director. Los directores que aún no tienen
-   <direccion>_organigrama.js traen además nombre, cargo, foto, direccion
-   y titulo: el tablero les arma su organigrama solo con director y
-   sucesores. Expediente y foto de cada sucesor
+   Llave: expediente del director. Expediente y foto de cada sucesor
    (data/FOTOS/<expediente>.<ext>) cruzados con la tabla ninebox de
    Supabase. Tiempo vacío en el Excel → se usa el de la tabla "sucesores"
    de Supabase.
@@ -22,26 +19,22 @@ window.COMITE_EJECUTIVO = {
     { expediente: '52492548', foto: '52492548.jpg', nombre: 'MORENO MORENO ADRIANA', cargo: 'Gerente Auditoria Sistemas', tiempo: '', caja: '8', persona: 'SÓLIDO', brecha: 0, clasif: 'BAJA' }
   ] },
   // BORDA FERRO WALTER JAVIER · Director(a) Corporativo Financiero
-  '79947402': { nombre: 'BORDA FERRO WALTER JAVIER', cargo: 'Director(a) Corporativo Financiero', foto: '79947402.png', direccion: 'Direccion Corporativa Financiera', titulo: 'Dirección Corporativa Financiera',
-    posicion: 'SÓLIDO', sucesores: [
+  '79947402': { posicion: 'SÓLIDO', sucesores: [
     { expediente: '53120673', foto: '53120673.png', nombre: 'SALAS MAHECHA VIVIANA ANDREA', cargo: 'Director(a) Planeacion Financiera y Tesoreria', tiempo: '1 AÑO', caja: '5', persona: 'SÓLIDO', brecha: 0, clasif: 'BAJA' },
     { expediente: '1128466768', foto: '1128466768.png', nombre: 'GUZMAN FLOREZ DANIEL', cargo: 'Director(a) Corporativo Planeacion Estrategica e Innovacion', tiempo: '', caja: '6', persona: 'VERSÁTIL', brecha: -1, clasif: 'MEDIA' }
   ] },
   // BUSTOS SUAREZ GERMAN LEONARDO · Director(a) Corporativo Gestion Humana y Administrativo
-  '79516122': { nombre: 'BUSTOS SUAREZ GERMAN LEONARDO', cargo: 'Director(a) Corporativo Gestion Humana y Administrativo', foto: '79516122.png', direccion: 'Direccion Corporativa Gestion Humana y Administrativo', titulo: 'Dirección Corporativa Gestión Humana y Administrativa',
-    posicion: 'SÓLIDO', sucesores: [
+  '79516122': { posicion: 'SÓLIDO', sucesores: [
     { expediente: '79297860', foto: '79297860.png', nombre: 'MORALES CLAVIJO LUIS GERMAN', cargo: 'Gerente Gestion Humana Negocio Y Transversales', tiempo: '1 AÑO', caja: '9', persona: 'VERSÁTIL', brecha: -1, clasif: 'MEDIA' },
     { expediente: '52804512', foto: '52804512.png', nombre: 'LOPEZ TAVERA MARIA PAULA CATALINA', cargo: 'Gerente Talento Cultura y Comunicaciones', tiempo: '3 AÑOS', caja: '5', persona: 'SÓLIDO', brecha: 0, clasif: 'BAJA' }
   ] },
   // PARDO FAJARDO SANTIAGO · Director(a) Corporativo Juridica y Sostenibilidad
-  '80425417': { nombre: 'PARDO FAJARDO SANTIAGO', cargo: 'Director(a) Corporativo Juridica y Sostenibilidad', foto: '80425417.png', direccion: 'Direccion Corporativa Juridica y Sostenibilidad', titulo: 'Dirección Corporativa Jurídica y Sostenibilidad',
-    posicion: 'SÓLIDO', sucesores: [
+  '80425417': { posicion: 'SÓLIDO', sucesores: [
     { expediente: '52709691', foto: '52709691.jpeg', nombre: 'CASTAÑEDA GUERRERO MARIA TERESA DEL PILAR', cargo: 'Gerente Regulacion Y Relacion Con Operadores', tiempo: '2 AÑOS', caja: '5', persona: 'SÓLIDO', brecha: 0, clasif: 'BAJA' },
     { expediente: '1085273858', foto: '1085273858.jpeg', nombre: 'OJEDA LUNA JUAN MANUEL', cargo: 'Gerente Asuntos Contenciosos', tiempo: '2 AÑOS', caja: '5', persona: 'SÓLIDO', brecha: 0, clasif: 'BAJA' }
   ] },
   // GUZMAN FLOREZ DANIEL · Director(a) Corporativo Planeacion Estrategica e Innovacion
-  '1128466768': { nombre: 'GUZMAN FLOREZ DANIEL', cargo: 'Director(a) Corporativo Planeacion Estrategica e Innovacion', foto: '1128466768.png', direccion: 'Direccion Corporativa Planeacion Estrategica e Innovacion', titulo: 'Dirección Corporativa Planeación Estratégica e Innovación',
-    posicion: 'SÓLIDO', sucesores: [
+  '1128466768': { posicion: 'SÓLIDO', sucesores: [
     { expediente: '4617732', foto: '4617732.jpeg', nombre: 'ESTUPIÑAN LOPEZ ANDRES FERNANDO', cargo: 'Director(a) Datos y Analitica de Negocios', tiempo: '2 AÑOS', caja: '8', persona: 'SÓLIDO', brecha: 0, clasif: 'BAJA' },
     { expediente: '1032365189', foto: '1032365189.png', nombre: 'MONTAGUT MORALES PEDRO ANGEL', cargo: 'Director(a) Marketing Corporativo y Producto', tiempo: '3 AÑOS', caja: '6', persona: 'VERSÁTIL', brecha: -1, clasif: 'MEDIA' },
     { expediente: '80096815', foto: '80096815.jpg', nombre: 'TRUJILLO REHBEIN PABLO', cargo: 'Director(a) Supply Chain', tiempo: '', caja: '6', persona: 'VERSÁTIL', brecha: -1, clasif: 'MEDIA' }
@@ -52,8 +45,7 @@ window.COMITE_EJECUTIVO = {
     { expediente: '80099040', foto: '80099040.jpeg', nombre: 'AVILA PLATA OSCAR MAURICIO', cargo: 'Director(a) Aseguramiento Calidad de Servicio', tiempo: '3 AÑOS', caja: '6', persona: 'VERSÁTIL', brecha: -1, clasif: 'MEDIA' }
   ] },
   // VARGAS BLANCO FREDDY ALEXANDER · Director(a) Gestion de Riesgo y Control Interno
-  '80150353': { nombre: 'VARGAS BLANCO FREDDY ALEXANDER', cargo: 'Director(a) Gestion de Riesgo y Control Interno', foto: '80150353.png', direccion: 'Direccion Gestion de Riesgo y Control Interno', titulo: 'Dirección Gestión de Riesgo y Control Interno',
-    posicion: 'SÓLIDO', sucesores: [
+  '80150353': { posicion: 'SÓLIDO', sucesores: [
     { expediente: '79965710', foto: '79965710.png', nombre: 'GONZALEZ CHAVES DIEGO MIGUEL', cargo: 'Gerente Riesgo Operativo y Control Interno', tiempo: '2 AÑOS', caja: '5', persona: 'SÓLIDO', brecha: 0, clasif: 'BAJA' },
     { expediente: '52185300', foto: '52185300.png', nombre: 'HERNANDEZ HERNANDEZ SANDRA LILIANA', cargo: 'Director(a) Auditoria', tiempo: 'LISTO YA', caja: '4', persona: 'EXPERTO', brecha: 1, clasif: 'MEDIA' }
   ] },
