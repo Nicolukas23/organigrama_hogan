@@ -19,6 +19,19 @@
     nombre: 'DOMINGUEZ DANIEL ARNALDO',
     cargo: 'Director(a) Ejecutivo Unidad Mercado Masivo'
   },
+  // Sucesores mapeados en el Excel con jefe "DIRECTOR REGIONAL" y sin región:
+  // aplican a las 5 regionales. El tablero los une a las 5 tarjetas con una
+  // línea punteada (no cuelgan de ninguna persona).
+  comunes: [{
+    titulo: 'Sucesores de las 5 regionales',
+    cargo: 'Director(a) Región 1 a 5',
+    posicion: 'VERSÁTIL',
+    aplicaA: ['8533055', '8126425', '1032396133', '79861675', '13871736'],
+    sucesores: [
+      { expediente: '1016030752', foto: '1016030752.png', nombre: 'MURILLO BOBADILLA CARLOS ARTURO', cargo: 'Gerente Nacional PDV', tiempo: '2 AÑOS', caja: '9', persona: 'VERSÁTIL', brecha: 0, clasif: 'BAJA' },
+      { expediente: '79904332', foto: '79904332.png', nombre: 'PICON RUIZ GERMAN', cargo: 'Gerente Producto Hogar', tiempo: '3 AÑOS', caja: '6', persona: 'VERSÁTIL', brecha: 0, clasif: 'BAJA' }
+    ]
+  }],
   directos: [
     { expediente: '8533055', foto: '8533055.jpg', nombre: 'PORTO VELASQUEZ LUIS MIGUEL', cargo: 'Director(a) Region 1',
       posicion: 'VERSÁTIL', persona: 'SÓLIDO', caja: '5', brecha: 1, clasif: 'MEDIA',
