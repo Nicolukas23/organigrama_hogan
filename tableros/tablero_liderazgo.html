@@ -15,7 +15,7 @@
   <link rel="manifest" href="../manifest.json">
   <script src="../data/global_search.js" defer></script>
 <link rel="stylesheet" href="../data/nav.css">
-<script src="../data/ficha_data.js?v=1791300000"></script>
+<script src="../data/ficha_data.js?v=1791400000"></script>
 <script src="../data/otros_sucesores.js?v=1789144585"></script>
 <script src="../data/sucesor_pairs.js?v=1789144585"></script>
 <script src="../data/sucesor_pendientes.js?v=1789401896"></script>
@@ -24,6 +24,7 @@
 <script src="../data/auditoria_organigrama.js?v=1790950000"></script>
 <script src="../data/umm_organigrama.js?v=1791200000"></script>
 <script src="../data/gestion_humana_organigrama.js?v=1791200000"></script>
+<script src="../data/comite_brechas.js?v=1791400000"></script>
 <style>
 /* ── ORGANIGRAMA POR DIRECCIÓN ───────────────────────────────────────
    Director → reportes directos → (clic) sucesores, con semáforo de
@@ -2783,14 +2784,21 @@ function loadOrgSucesoresLive(){
 // consolidado de sucesores (data/sucesor_pairs.js) cuyo jefe es el
 // director; los datos de cada persona salen de la ninebox (ALL) y el
 // tiempo de alistamiento de la tabla "sucesores" de Supabase.
+// Si el director está en el Excel del Comité Ejecutivo (data/comite_brechas.js),
+// sus sucesores de ese Excel van primero y traen tipo de talento y brecha.
 function ogDirSucesores(org){
   const jefe = normWords(org.director.nombre);
   const byName = new Map((ALL || []).map(r => [normWords(r.nombre), r]));
-  return (window.SUCESOR_PAIRS || [])
+  const base = (window.SUCESOR_PAIRS || [])
     .filter(k => k.split('|')[0] === jefe)
     .map(k => byName.get(k.split('|')[1]))
     .filter(Boolean)
     .map(r => ({ expediente: String(r.expediente), nombre: r.nombre, cargo: r.cargo, caja: r.caja }));
+  const ce = (window.COMITE_BRECHAS || {})[org.director.expediente];
+  if(!ce) return base;
+  const out = ce.sucesores.map(s => ({ ...s }));
+  base.forEach(b => { if(!out.some(s => s.expediente === b.expediente)) out.push(b); });
+  return out;
 }
 function ogTiempoLive(exp){
   const live = OG_SUC_LIVE && OG_SUC_LIVE[exp];
@@ -2968,18 +2976,32 @@ function ogDrawComunes(org){
   if(svg) tree.insertAdjacentHTML('beforeend', `<svg class="og-comun-svg" xmlns="http://www.w3.org/2000/svg">${svg}</svg>`);
 }
 
-// Ficha de sucesor del director: mismo formato, sin versus (los Excel no
-// traen el tipo de talento del cargo de director).
+// Ficha de sucesor del director: mismo formato que la de los demás
+// sucesores. Con datos del Excel del Comité Ejecutivo lleva el versus del
+// color de la brecha; sin ellos (solo consolidado) va en gris sin versus.
 function ogCardDirSucesor(org, s){
-  return `<div class="og-card og-suc og-na">
+  const ce = (window.COMITE_BRECHAS || {})[org.director.expediente];
+  const conBrecha = !!(ce && s.persona && s.clasif);
+  const b = Number(s.brecha);
+  const vs = conBrecha
+    ? `<div class="og-vs">
+        <div>El cargo requiere<b>${ogEsc(String(ce.posicion).toUpperCase())}</b></div><i>→</i>
+        <div>La persona es<b>${ogEsc(String(s.persona).toUpperCase())}</b></div>
+      </div>`
+    : '';
+  // Tiempo por cargo del Excel; si viene vacío, el de la tabla "sucesores" de Supabase.
+  const tx = String(s.tiempo || '').replace(/\s+/g, ' ').trim().toLowerCase();
+  const tiempo = tx ? tx.charAt(0).toUpperCase() + tx.slice(1) : ogTiempoLive(s.expediente);
+  return `<div class="og-card og-suc ${conBrecha ? ogTone(s.clasif) : 'og-na'}"${conBrecha ? ` title="Brecha ${b > 0 ? '+' + b : b} · ${ogEsc(String(s.clasif).toLowerCase())}"` : ''}>
     <div class="og-hd">${ogPhoto(s)}<div>
       <div class="og-name">${ogEsc(s.nombre)}</div>
       <div class="og-cargo">${ogEsc(s.cargo)}</div>
     </div></div>
     <div class="og-k">Candidato a suceder</div>
     <div class="og-target">${ogEsc(org.director.cargo)}</div>
+    ${vs}
     <div class="og-meta">
-      <div><span>Alistamiento</span><b>${ogEsc(ogTiempoLive(s.expediente))}</b></div>
+      <div><span>Alistamiento</span><b>${ogEsc(tiempo)}</b></div>
       <div><span>9-Box</span><b>${s.caja ? 'Caja ' + ogEsc(s.caja) : '—'}</b></div>
     </div>
     ${ogFichaBtn(s)}

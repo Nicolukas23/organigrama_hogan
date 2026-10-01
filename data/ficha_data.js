@@ -3225,6 +3225,10 @@ window.DATA = {
   },
   "evaluaciones": {},
   "observaciones": {
+    "52392875": {
+      "fortalezas": "Se destaca por su capacidad para gestionar múltiples procesos de manera simultánea, así como capacidad de ejecución y toma de decisiones. Es una persona orientada a resultados, con determinación para hacer que las cosas sucedan.",
+      "oportunidades": "Debe fortalecer su capacidad para pensar fuera de lo convencional, manteniendo una mayor apertura a nuevas perspectivas y explorando alternativas innovadoras para abordar los retos y hacer las cosas de manera diferente."
+    },
     "2968977": {
       "fortalezas": "Profesional con alto seniority y amplia experiencia, reconocido por su profundo conocimiento del negocio y su capacidad para desenvolverse en diferentes escenarios. Se caracteriza por ser un experto en su campo, con iniciativa, orientación a la acción y disposición para asumir retos, lo que le permite aportar valor en entornos de cambio.",
       "oportunidades": "Requiere fortalecer la flexibilidad frente a diferentes perspectivas, mejorando la gestión de su temperamento y la apertura a otros puntos de vista. Asimismo, es importante equilibrar la búsqueda de exposición con el impacto de su gestión, fortalecer su conocimiento en ATL y desarrollar mayor atención a los numeros  para complementar su enfoque."
