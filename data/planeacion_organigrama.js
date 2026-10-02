@@ -38,8 +38,8 @@
     { expediente: '3216158', foto: '3216158.png', nombre: 'SARMIENTO GONZALEZ LUIS ALEJANDRO', cargo: 'Gerente Gestion del Portafolio',
       posicion: 'SÓLIDO', persona: 'SÓLIDO', caja: '5', brecha: 0, clasif: 'BAJA',
       sucesores: [
-        // 9-Box #N/A en el Excel y sin registro en la ninebox.
-        { expediente: '', foto: '', nombre: 'MEJIA PULIDO WILMER ALEXANDER', cargo: 'Jefe Implementacion y Mejoramiento CAV y Tiendas', tiempo: '3 AÑOS', caja: '', posicion: 'VERSÁTIL', persona: 'SÓLIDO', brecha: 0, clasif: 'MEDIA' }
+        // Sin 9-Box, tipo de talento ni brecha en el Excel (columnas H–L vacías) y sin registro en la ninebox.
+        { expediente: '', foto: '', nombre: 'MEJIA PULIDO WILMER ALEXANDER', cargo: 'Jefe Implementacion y Mejoramiento CAV y Tiendas', tiempo: '3 AÑOS', caja: '', posicion: 'VERSÁTIL', persona: '', brecha: null, clasif: '' }
       ] }
   ]
 });
