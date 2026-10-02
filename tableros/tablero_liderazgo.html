@@ -3082,13 +3082,14 @@ function ogPickSelect(id){
 document.addEventListener('click', () => { const b = document.getElementById('ogOrgs'); if(b) b.classList.remove('open'); });
 document.addEventListener('keydown', e => { if(e.key === 'Escape'){ const b = document.getElementById('ogOrgs'); if(b) b.classList.remove('open'); } });
 
-// Abre la ficha de talento (el mismo modal de la matriz 9-Box) de la persona
-// de una caja del organigrama; se busca por expediente y, si no, por nombre.
+// Abre directamente en otra pestaña la ficha de talento de la persona de una
+// caja del organigrama (sin pasar por el modal de detalle): la misma página a
+// la que lleva el botón del modal. Se busca por expediente y, si no, por nombre.
 function ogVerFicha(ev, exp, nombre){
   ev.stopPropagation();
   const k = normWords(nombre);
   const p = (ALL || []).find(r => String(r.expediente) === String(exp)) || (ALL || []).find(r => normWords(r.nombre) === k);
-  if(p) openModal(p);
+  if(p) window.open(hasFichaData(p) ? `ficha_talento.html?expediente=${p.expediente}` : `ficha_hogan.html?exp=${p.expediente}`, '_blank');
   else alert('No se encontró la ficha de talento de ' + nombre + '.');
 }
 function ogFichaBtn(p){
