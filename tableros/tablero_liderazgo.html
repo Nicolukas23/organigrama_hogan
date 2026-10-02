@@ -27,6 +27,7 @@
 <script src="../data/financiera_organigrama.js?v=1791500000"></script>
 <script src="../data/juridica_organigrama.js?v=1791600000"></script>
 <script src="../data/riesgo_organigrama.js?v=1791700000"></script>
+<script src="../data/planeacion_organigrama.js?v=1791900000"></script>
 <script src="../data/fotos_index.js?v=1791800000"></script>
 <script src="../data/comite_brechas.js?v=1791400000"></script>
 <style>
@@ -2934,7 +2935,7 @@ function ogCardSucesor(org, s, lider, comun){
     <div class="og-k">Candidato a suceder</div>
     <div class="og-target">${ogEsc(lider.cargo)}</div>
     ${sinB ? '' : `<div class="og-vs">
-      <div>El cargo requiere<b>${ogEsc(String(lider.posicion || '—').toUpperCase())}</b></div><i>→</i>
+      <div>El cargo requiere<b>${ogEsc(String(s.posicion || lider.posicion || '—').toUpperCase())}</b></div><i>→</i>
       <div>La persona es<b>${ogEsc(String(s.persona || '—').toUpperCase())}</b></div>
     </div>`}
     <div class="og-meta">
@@ -2996,11 +2997,13 @@ function ogDrawComunes(org){
 }
 
 // Ficha de sucesor del director: mismo formato que la de los demás
-// sucesores. Con datos del Excel del Comité Ejecutivo lleva el versus del
-// color de la brecha; sin ellos (solo consolidado) va en gris sin versus.
+// sucesores, en gris y SIN brecha (a pedido: los sucesores del Comité
+// Ejecutivo no muestran versus ni color). Del Excel del Comité solo se
+// usan la lista de sucesores, el tiempo de alistamiento y la caja 9-Box.
+const OG_DIRSUC_CON_BRECHA = false;
 function ogCardDirSucesor(org, s){
   const ce = (window.COMITE_BRECHAS || {})[org.director.expediente];
-  const conBrecha = !!(ce && s.persona && s.clasif && !org.sinBrechas);
+  const conBrecha = !!(OG_DIRSUC_CON_BRECHA && ce && s.persona && s.clasif && !org.sinBrechas);
   const b = Number(s.brecha);
   const vs = conBrecha
     ? `<div class="og-vs">
