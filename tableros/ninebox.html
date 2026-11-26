@@ -296,7 +296,11 @@
   // bloque HTML ya no existe, no hay nada que mostrar aquí.
 }}catch(e){}}})();
 /* ---------- Data & config ---------- */
-let RAW = JSON.parse(document.getElementById('dataStore').textContent);
+// Personas que no deben aparecer en la Nine Box (ni en la data embebida ni en
+// la de Supabase): Celis Sarmiento Hector Geovanni (Presidencia), que salía
+// en nivel de reporte 1 aunque su jefe es Rojas Rincón.
+const NB_EXCLUIR = new Set(['79876492']);
+let RAW = JSON.parse(document.getElementById('dataStore').textContent).filter(r => !NB_EXCLUIR.has(String(r.expediente)));
 
 // ── CARGADOR SUPABASE ────────────────────────────────────────────
 // Intenta cargar la data viva desde Supabase. Si falla, usa el dataStore embebido.
@@ -308,7 +312,7 @@ async function loadNineboxSupabase(){
     const hdr={headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY}};
     const rows=await fetch(SUPABASE_URL+'/rest/v1/ninebox?select=*',hdr).then(r=>r.json());
     if(!Array.isArray(rows)||!rows.length) throw new Error('sin datos');
-    RAW=rows.map(({updated_at,...r})=>{if(r.caja!==null)r.caja=+r.caja;if(r.nivel_reporte!==null)r.nivel_reporte=+r.nivel_reporte;if(typeof r.expediente==='string'&&r.expediente.endsWith('-C')){r.fichaExp=r.expediente.slice(0,-2);}return r;});
+    RAW=rows.filter(r=>!NB_EXCLUIR.has(String(r.expediente))).map(({updated_at,...r})=>{if(r.caja!==null)r.caja=+r.caja;if(r.nivel_reporte!==null)r.nivel_reporte=+r.nivel_reporte;if(typeof r.expediente==='string'&&r.expediente.endsWith('-C')){r.fichaExp=r.expediente.slice(0,-2);}return r;});
     document.getElementById('dataStore').textContent=JSON.stringify(RAW);
     renderTableHead();
     renderAll();
@@ -330,6 +334,10 @@ const FICHA_IDS = new Set();
 if (window.DATA && window.DATA.informacion) {
   Object.keys(window.DATA.informacion).forEach(id => FICHA_IDS.add(id));
 }
+// Con botón de ficha aunque no sean sucesores (Presidencia): González Sánchez,
+// Morales Naranjo y Rojas Rincón. Abren la ficha de talento (ficha_hogan.html),
+// la misma que abre "Ver ficha de talento" en el tablero de liderazgo.
+const FICHA_SIEMPRE = new Set(['1020751309', '79577126', '79695754']);
 
 const BOX_META = {
   9:{ name:'Alto potencial',              short:'Alto potencial',        color:'var(--c9)', row:0, col:2 },
@@ -954,7 +962,9 @@ function renderTable(){
       const isPresidencia=['79577126','79695754','1020751309'].includes(p.expediente);
       const showNo = isCD || isPresidencia;
       const fichaExp = p.fichaExp || p.expediente;
-      const fichaLink = (sucesorVal==='si' && (FICHA_IDS.has(fichaExp) || FICHA_IDS.has(p.expediente)))
+      const fichaLink = FICHA_SIEMPRE.has(p.expediente)
+        ? `<a href="ficha_hogan.html?exp=${p.expediente}" target="_blank" onclick="event.stopPropagation()" style="color:#fff;background:var(--crimson);padding:4px 10px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600;white-space:nowrap;">Ver Ficha</a>`
+        : (sucesorVal==='si' && (FICHA_IDS.has(fichaExp) || FICHA_IDS.has(p.expediente)))
         ? `<a href="ficha_talento.html?expediente=${fichaExp}" target="_blank" onclick="event.stopPropagation()" style="color:#fff;background:var(--crimson);padding:4px 10px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600;white-space:nowrap;">Ver Ficha</a>`
         : '—';
       const cajaOptions = '<option value="0" '+(0===p.caja?'selected':'')+'>0 · Sin ubicación</option>' + Object.entries(BOX_META).map(([k,v])=>`<option value="${k}" ${parseInt(k)===p.caja?'selected':''}>${k} · ${v.short}</option>`).join('');
